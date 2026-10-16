@@ -1,0 +1,23 @@
+{
+  "name": "OmniVibe Ink Jade",
+  "background": "#111B18",
+  "foreground": "#E5DFCF",
+  "cursorColor": "#D9BC78",
+  "selectionBackground": "#3A5144",
+  "black": "#22342B",
+  "red": "#DD8070",
+  "green": "#94C29F",
+  "yellow": "#D9BC78",
+  "blue": "#93B9D6",
+  "purple": "#B9A6D2",
+  "cyan": "#8BC8BC",
+  "white": "#DBD5C5",
+  "brightBlack": "#95A296",
+  "brightRed": "#F19B86",
+  "brightGreen": "#B0DBB5",
+  "brightYellow": "#F1D89B",
+  "brightBlue": "#B2D3ED",
+  "brightPurple": "#D4BEEA",
+  "brightCyan": "#ADE2D4",
+  "brightWhite": "#FFF3DC"
+}

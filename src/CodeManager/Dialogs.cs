@@ -44,7 +44,7 @@ public static class Dialogs
         var occupied = (slots ?? Array.Empty<Slot>()).Where(s => s.Number != number && Native.Matches(s.Window)).Select(s => s.Window!.Handle).ToHashSet();
         int Score(WindowIdentity window) => (window.ProcessName == reconnect?.Window?.ProcessName ? 10 : 0) + (window.Title == reconnect?.Window?.Title ? 50 : 0) + (reconnect?.ProjectLabel.Length > 0 && window.Title.Contains(reconnect.ProjectLabel, StringComparison.OrdinalIgnoreCase) ? 30 : 0) + (window.ProcessName.ToLowerInvariant() is "windowsterminal" or "powershell" or "pwsh" or "cmd" or "conhost" ? 5 : 0);
         var candidates = Native.Windows().Where(w => !occupied.Contains(w.Handle)).OrderByDescending(Score).ToList();
-        var list = new ListBox { Background = WuxiaTheme.Wood, Foreground = Brushes.White, BorderThickness = new Thickness(0), DisplayMemberPath = "Title", Padding = new Thickness(5), ItemsSource = candidates };
+        var list = new ListBox { Background = WuxiaTheme.Wood, Foreground = WuxiaTheme.Ivory, BorderThickness = new Thickness(0), DisplayMemberPath = "Title", Padding = new Thickness(5), ItemsSource = candidates };
         panel.Children.Add(list);
         search.TextChanged += (_, _) => list.ItemsSource = candidates.Where(w => (w.Title + " " + w.ProcessName).Contains(search.Text, StringComparison.OrdinalIgnoreCase)).ToList();
         confirm.Click += (_, _) => { if (list.SelectedItem != null) window.DialogResult = true; };

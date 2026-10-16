@@ -10,7 +10,7 @@ namespace CodeManager;
 public enum AgentState { Unknown, Running, Waiting, Ready, Error }
 public enum WakeMode { LastPosition, WorkArea }
 public enum ArrangementMode { Balanced, Columns, Rows, MainLeft }
-public enum Skin { InkJade, Midnight, Cinnabar }
+public enum Skin { InkJade = 0, Midnight = 1, Cinnabar = 2, Hextech, Tactical, Protocol, Adventure, Arsenal, Relic, Starlight, Formation, Astral, Wonderland }
 public enum LaunchMode { Unconfigured, Terminal, Claude, Codex }
 public enum ShortcutModifiers { Alt = 1, Ctrl = 2, CtrlAlt = 3, AltShift = 5, CtrlShift = 6, CtrlAltShift = 7 }
 
@@ -33,6 +33,7 @@ public sealed class Preferences
     public WakeMode WakeMode { get; set; } = WakeMode.LastPosition;
     public bool Compact { get; set; } = true;
     public bool Animate { get; set; } = true;
+    public bool DecorationsEnabled { get; set; } = true;
     public bool SoundEffects { get; set; } = true;
     public bool ShowRecoveryOnStartup { get; set; } = true;
     public bool AutoReconnectExisting { get; set; } = true;
@@ -99,17 +100,19 @@ public sealed class Slot : INotifyPropertyChanged
     };
     [JsonIgnore] public string StateLabel => !Occupied ? "拖入或点击添加" : !Connected ? "已断开 · 点击重连" : State switch
     { AgentState.Running => "正在执行", AgentState.Waiting => "等待你处理", AgentState.Ready => "本轮已回复", AgentState.Error => "发生错误", _ => "状态未知" };
-    [JsonIgnore] public string StateColor => !Connected ? "#81765C" : State switch
-    { AgentState.Running => "#82B89B", AgentState.Waiting => "#D8B56B", AgentState.Ready => "#A1C6A1", AgentState.Error => "#D16D5B", _ => "#9B9E85" };
-    [JsonIgnore] public string SurfaceColor => IsDropTarget ? Occupied ? "#493C20" : "#283E2D" : IsSelected ? "#3C3524" : IsActive ? "#273B2F" : "#241F18";
-    [JsonIgnore] public string OutlineColor => IsDropTarget ? Occupied ? "#D8B56B" : "#9BC7A6" : JustCaptured ? "#9BC7A6" : IsSelected ? "#D8B56B" : IsActive ? "#82B89B" : "#675637";
-    [JsonIgnore] public string NumberColor => IsSelected ? "#D8B56B" : IsDropTarget || IsActive ? "#A1C6A1" : Unread && Connected ? StateColor : "#BBAA82";
-    [JsonIgnore] public string ActivityColor => IsSelected ? "#D8B56B" : IsActive ? "#A1C6A1" : StateColor;
+    [JsonIgnore] public string StateColor => !Connected ? SkinCatalog.Current.Unknown : State switch
+    { AgentState.Running => SkinCatalog.Current.Running, AgentState.Waiting => SkinCatalog.Current.Waiting, AgentState.Ready => SkinCatalog.Current.Ready, AgentState.Error => SkinCatalog.Current.Error, _ => SkinCatalog.Current.Unknown };
+    [JsonIgnore] public string StatusGlyph => !Occupied ? "+" : !Connected ? "↺" : State switch
+    { AgentState.Running => "▶", AgentState.Waiting => "Ⅱ", AgentState.Ready => "✓", AgentState.Error => "!", _ => "?" };
+    [JsonIgnore] public string SurfaceColor => IsDropTarget || IsSelected || IsActive ? SkinCatalog.Current.Elevated : SkinCatalog.Current.Surface;
+    [JsonIgnore] public string OutlineColor => IsDropTarget || IsSelected ? SkinCatalog.Current.Accent : JustCaptured || IsActive ? SkinCatalog.Current.Running : SkinCatalog.Current.Border;
+    [JsonIgnore] public string NumberColor => IsSelected ? SkinCatalog.Current.Accent : IsDropTarget || IsActive ? SkinCatalog.Current.Running : Unread && Connected ? StateColor : SkinCatalog.Current.Muted;
+    [JsonIgnore] public string ActivityColor => IsSelected ? SkinCatalog.Current.Accent : IsActive ? SkinCatalog.Current.Running : StateColor;
     [JsonIgnore] public string Detail => IsDropTarget ? Occupied ? "松手调整任务顺序" : "松手收纳到这个槽位" : JustCaptured ? "已收录 · 右键可编辑任务" : Occupied ? !IntegrationConnected && State == AgentState.Unknown ? "未接入自动状态 · 右键连接" : (AgentProvider == "" ? ToolName : AgentProvider == "claude" ? "Claude Code" : "Codex") + " · " + StateLabel : StateLabel;
     [JsonIgnore] public string IntegrationLabel => (IntegrationConnected ? "已接入 " + (AgentProvider == "claude" ? "Claude Code" : "Codex") : "未接入 / 会话已结束") + (UpdatedAt.HasValue ? "\n最近事件：" + UpdatedAt.Value.ToLocalTime().ToString("MM-dd HH:mm:ss") + " · " + StateLabel + "\n来源：" + StateSource : "\n尚未收到任务状态事件");
     [JsonIgnore] public string ActivityLabel => IsSelected ? "选择" : IsActive ? "当前" : Unread && Connected ? "新" : "";
     [JsonIgnore] public string ProjectLabel => string.IsNullOrWhiteSpace(ProjectDirectory) ? "" : System.IO.Path.GetFileName(ProjectDirectory.TrimEnd('\\', '/'));
-    [JsonIgnore] public string Inscription => WuxiaTheme.Numeral(Number);
+    [JsonIgnore] public string Inscription => SkinCatalog.Current.SlotNumber(Number);
     [JsonIgnore] public string WuxiaStateLabel => !Occupied ? "空阵眼" : !Connected ? "已断开 · 待重连" : State switch { AgentState.Running => "运转中", AgentState.Waiting => "候君决断", AgentState.Ready => "本轮已回复", AgentState.Error => "阵法崩坏 · 发生错误", _ => "状态未知" };
     [JsonIgnore] public string Tooltip => DisplayName + "\n" + (Window?.Title ?? "空槽位") + (ProjectDirectory == "" ? "" : "\n" + ProjectDirectory) + "\n" + (IntegrationConnected ? "已连接 " + AgentProvider + " 状态事件" : "未连接自动状态") + (Message == "" ? "" : "\n" + Message);
     [JsonIgnore] public string RecoveryLabel => Recovery != null ? "正在打开并重连…" : Connected ? "窗口已连接" : RecoveryError != "" ? RecoveryError : RecoveryLaunch.Validation(this) is string error ? error : "可以恢复 · " + (LaunchMode == LaunchMode.Terminal ? "项目终端" : LaunchMode == LaunchMode.Claude ? "Claude Code" : "Codex") + (ResumeConversation && LaunchMode != LaunchMode.Terminal ? " · 原会话" : "");

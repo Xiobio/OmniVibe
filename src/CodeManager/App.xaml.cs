@@ -40,10 +40,10 @@ public partial class App : Application
                 }
                 Shutdown(); return;
             }
-            if (e.Args.FirstOrDefault() == "--self-test")
+            if (e.Args.FirstOrDefault() is "--self-test" or "--skin-test")
             {
                 string path = e.Args.Length > 1 ? Path.GetFullPath(e.Args[1]) : Path.Combine(AppContext.BaseDirectory, "self-test.json");
-                var results = SelfTests.Run();
+                var results = e.Args[0] == "--skin-test" ? SkinTests.Run().ToList() : SelfTests.Run();
                 Directory.CreateDirectory(Path.GetDirectoryName(path)!);
                 File.WriteAllText(path, JsonSerializer.Serialize(results, StateStore.Json));
                 Shutdown(results.All(r => r.Passed) ? 0 : 1); return;
@@ -116,22 +116,25 @@ public partial class App : Application
     }
     private static void RenderPreview(string path, string mode)
     {
-        WuxiaTheme.Apply(mode.Contains("midnight") ? Skin.Midnight : mode.Contains("cinnabar") ? Skin.Cinnabar : Skin.InkJade);
+        // Match the complete suffix first: ink-jade and settings-skin both contain hyphens.
+        var skin = SkinCatalog.All.OrderByDescending(s => s.Slug.Length).FirstOrDefault(s => mode.EndsWith("-" + s.Slug, StringComparison.OrdinalIgnoreCase));
+        if (skin != null) mode = mode[..^(skin.Slug.Length + 1)];
+        WuxiaTheme.Apply(skin?.Id ?? (mode.Contains("midnight") ? Skin.Midnight : mode.Contains("cinnabar") ? Skin.Cinnabar : Skin.InkJade));
         var slots = Enumerable.Range(1, 9).Select(n => new Slot { Number = n }).ToList();
-        string[] names = { "商城 · 修复登录", "官网 · 调整首页", "API · 排查超时", "数据脚本 · 清洗数据", "文档 · 补充接口说明" };
-        AgentState[] states = { AgentState.Running, AgentState.Waiting, AgentState.Ready, AgentState.Unknown, AgentState.Error };
+        string[] names = { "商城 · 修复登录与多语言账户验证", "OmniVibe · Permission required / 等待确认", "API gateway · Response ready", "数据脚本 · 状态未知", "CI / Build failed · 构建错误", "昨日任务 · 窗口已断开" };
+        AgentState[] states = { AgentState.Running, AgentState.Waiting, AgentState.Ready, AgentState.Unknown, AgentState.Error, AgentState.Running };
         for (int i = 0; i < names.Length; i++)
         {
             slots[i].Name = names[i]; slots[i].Window = new() { ProcessName = i % 2 == 0 ? "WindowsTerminal" : "powershell" };
-            slots[i].Connected = true; slots[i].State = states[i]; slots[i].Unread = i is 1 or 2 or 4;
+            slots[i].Connected = i != 5; slots[i].State = states[i]; slots[i].Unread = i is 1 or 2 or 4;
         }
         slots[0].IsActive = true; slots[2].IsSelected = true;
         slots[1].TagColor = "#A8A0F5"; slots[2].TagColor = "#F2BC78"; slots[3].TagColor = "#EE97B6";
         Window window;
         System.Windows.Controls.ContextMenu? previewMenu = null;
         if (mode == "recovery") { slots[0].Notes = "下次检查登录接口的错误处理"; slots[0].ProjectDirectory = "D:\\projects\\shop"; window = new RecoveryWindow(slots, new Native.Rect(0, 0, 1920, 1040)); }
-        else if (mode == "inventory") window = new InventoryWindow(slots, new Native.Rect(0, 0, 1920, 1040), 1, 3, false, presentationPreview: true);
-        else if (mode.StartsWith("settings")) window = new SettingsWindow(new(), new Native.Rect(0, 0, 1920, 1040), "", page: mode.Contains("layout") ? 1 : mode.Contains("skin") ? 2 : mode.Contains("general") ? 3 : 0);
+        else if (mode is "inventory" or "inventory-small" or "inventory-hidpi" or "inventory-short") window = new InventoryWindow(slots, mode == "inventory-small" ? new Native.Rect(0, 0, 836, 698) : mode == "inventory-short" ? new Native.Rect(0, 0, 1920, 698) : new Native.Rect(0, 0, 1920, 1040), mode is "inventory-hidpi" or "inventory-short" ? 2 : 1, 3, false, presentationPreview: true);
+        else if (mode.StartsWith("settings")) window = new SettingsWindow(new() { Skin = SkinCatalog.Current.Id, Animate = false, SoundEffects = false }, new Native.Rect(0, 0, 1920, 1040), "", page: mode.Contains("layout") ? 1 : mode.Contains("skin") ? 2 : mode.Contains("general") ? 3 : 0);
         else if (mode == "menu")
         {
             var menu = new System.Windows.Controls.ContextMenu();
@@ -150,9 +153,9 @@ public partial class App : Application
         {
             var dock = new DockWindow(); dock.SetSlots(slots); dock.SetPreviewLabel(mode == "expanded");
             if (mode == "mini") dock.SetCollapsed(true);
-            dock.Width = mode == "mini" ? 48 : mode == "expanded" ? 286 : 226; dock.Height = dock.DesiredDockHeight; window = dock;
+            dock.Width = mode == "mini" ? 48 : mode == "expanded" ? 286 : mode == "narrow" ? 210 : 250; dock.Height = dock.DesiredDockHeight; window = dock;
         }
-        window.ShowActivated = false; window.Show(); window.UpdateLayout();
+        window.ShowActivated = false; window.Topmost = false; window.Show(); window.UpdateLayout();
         Dispatcher.CurrentDispatcher.Invoke(() => { }, DispatcherPriority.ApplicationIdle);
         if (previewMenu != null)
         {

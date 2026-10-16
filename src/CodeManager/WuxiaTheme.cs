@@ -12,19 +12,39 @@ public static class WuxiaTheme
     public static readonly FontFamily Calligraphy = new("KaiTi, STKaiti, FangSong, SimSun");
     public static readonly FontFamily BodyFont = new("Microsoft YaHei UI, Segoe UI");
     public static Brush Ink { get; private set; } = Brush("#111714");
-    public static readonly Brush Ivory = Brush("#E7D8B6"), Bronze = Brush("#A58A53");
-    public static readonly Brush Jade = Brush("#82B89B"), Gold = Brush("#D8B56B"), Cinnabar = Brush("#CB6555");
-    public static readonly Brush Paper = Texture(false);
+    public static Brush Ivory { get; private set; } = Brush("#E7D8B6");
+    public static Brush Bronze { get; private set; } = Brush("#A58A53");
+    public static Brush Jade { get; private set; } = Brush("#82B89B");
+    public static Brush Gold { get; private set; } = Brush("#D8B56B");
+    public static Brush Cinnabar { get; private set; } = Brush("#CB6555");
+    public static Brush Paper { get; private set; } = Texture(false);
     public static DrawingBrush Wood { get; private set; } = (DrawingBrush)Texture(true);
-    public static void Apply(Skin skin)
+    public static void Apply(Skin skin, bool animate = true)
     {
-        CurrentSkin = skin;
-        Ink = Brush(skin == Skin.Midnight ? "#111827" : skin == Skin.Cinnabar ? "#211516" : "#111714");
-        var group = new DrawingGroup(); group.Children.Add(new GeometryDrawing(Texture(true), null, new RectangleGeometry(new Rect(0, 0, 256, 256))));
-        group.Children.Add(new GeometryDrawing(new SolidColorBrush(skin == Skin.Midnight ? Color.FromArgb(165, 14, 34, 66) : skin == Skin.Cinnabar ? Color.FromArgb(145, 71, 16, 25) : Color.FromArgb(35, 20, 52, 35)), null, new RectangleGeometry(new Rect(0, 0, 256, 256))));
-        Wood = new DrawingBrush(group) { TileMode = TileMode.Tile, Viewport = new Rect(0, 0, 256, 256), ViewportUnits = BrushMappingMode.Absolute }; Wood.Freeze();
+        CurrentSkin = SkinCatalog.Get(skin).Id;
+        var s = SkinCatalog.Current;
+        Ink = Brush(s.Background); Ivory = Brush(s.Text); Bronze = Brush(s.Border);
+        Jade = Brush(s.Running); Gold = Brush(s.Waiting); Cinnabar = Brush(s.Error);
+        Paper = s.Family == "ink" ? Texture(false) : SkinMaterials.Create(s, true);
+        Wood = SkinMaterials.Create(s, false);
+        GoldPaper = TintPaper(Color.FromArgb(26, 201, 153, 47)); RedPaper = TintPaper(Color.FromArgb(36, 173, 57, 42));
+        if (Application.Current != null)
+        {
+            var resources = Application.Current.Resources;
+            foreach (var pair in new[] {
+                ("SkinBackgroundBrush", s.Background), ("SkinSurfaceBrush", s.Surface), ("SkinElevatedBrush", s.Elevated),
+                ("SkinTextBrush", s.Text), ("SkinMutedBrush", s.Muted), ("SkinAccentBrush", s.Accent),
+                ("SkinSecondaryBrush", s.Secondary), ("SkinBorderBrush", s.Border), ("SkinCardBrush", s.CardBackground),
+                ("SkinCardTextBrush", s.CardText), ("SkinRunningBrush", s.Running), ("SkinWaitingBrush", s.Waiting),
+                ("SkinReadyBrush", s.Ready), ("SkinErrorBrush", s.Error), ("SkinUnknownBrush", s.Unknown),
+                ("TextBrush", s.Text), ("MutedBrush", s.Muted) }) resources[pair.Item1] = Brush(pair.Item2);
+            resources["SkinTitleFont"] = s.TitleFont;
+            resources["SkinCornerRadius"] = new CornerRadius(s.CornerRadius);
+            resources["SkinPopupAnimation"] = animate ? System.Windows.Controls.Primitives.PopupAnimation.Fade : System.Windows.Controls.Primitives.PopupAnimation.None;
+        }
     }
-    public static readonly Brush GoldPaper = TintPaper(Color.FromArgb(26, 201, 153, 47)), RedPaper = TintPaper(Color.FromArgb(36, 173, 57, 42));
+    public static Brush GoldPaper { get; private set; } = TintPaper(Color.FromArgb(26, 201, 153, 47));
+    public static Brush RedPaper { get; private set; } = TintPaper(Color.FromArgb(36, 173, 57, 42));
     private static Brush TintPaper(Color color)
     {
         var group = new DrawingGroup();

@@ -243,7 +243,7 @@ public static class Native
         if (noActivate) style |= 0x08000000;
         if (clickThrough) style |= 0x20;
         SetWindowLongPtr(hwnd, -20, new IntPtr(style));
-        int dark = 1, rounded = 2;
+        int dark = SkinCatalog.Current.IsLight ? 0 : 1, rounded = 2;
         DwmSetWindowAttribute(hwnd, 20, ref dark, sizeof(int));
         DwmSetWindowAttribute(hwnd, 33, ref rounded, sizeof(int));
     }

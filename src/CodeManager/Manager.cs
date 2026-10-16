@@ -51,7 +51,7 @@ public sealed class Manager : IDisposable
     {
         _startRecovery = startRecovery ?? (info => { using var process = Process.Start(info); if (process == null) throw new InvalidOperationException("启动器没有返回进程"); });
         Store = store ?? new StateStore(); State = Store.Load();
-        WuxiaTheme.Apply(State.Preferences.Skin);
+        SkinCatalog.DecorationsEnabled = State.Preferences.DecorationsEnabled; WuxiaTheme.Apply(State.Preferences.Skin, State.Preferences.Animate);
         Dock = new DockWindow(interactionTest) { Manager = this }; Dock.SetSlots(State.Slots);
         Dock.Show();
         if (State.Preferences.HasDockAnchor) { var screen = Native.ScreenAt(State.Preferences.DockAnchor); WorkArea = screen.Work; _scale = screen.Scale; }
@@ -71,7 +71,7 @@ public sealed class Manager : IDisposable
         _heartbeat.Tick += (_, _) => Tick(); _heartbeat.Start();
         _dragTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(30) };
         _dragTimer.Tick += (_, _) => DragTick();
-        _tray = new Forms.NotifyIcon { Icon = System.Drawing.SystemIcons.Application, Text = "CodeManager · AI 任务武器栏", Visible = true };
+        _tray = new Forms.NotifyIcon { Icon = System.Drawing.SystemIcons.Application, Text = "OmniVibe · AI 任务武器栏", Visible = true };
         var menu = new Forms.ContextMenuStrip { BackColor = System.Drawing.Color.FromArgb(22, 30, 27), ForeColor = System.Drawing.Color.FromArgb(250, 234, 203), Font = new System.Drawing.Font("Microsoft YaHei UI", 10), Renderer = new TrayMenuRenderer() };
         menu.Items.Add("显示 / 隐藏武器栏", null, (_, _) => Dock.Dispatcher.Invoke(ToggleVisibility));
         menu.Items.Add(InventoryMenuLabel, null, (_, _) => Dock.Dispatcher.Invoke(ToggleInventory));
@@ -81,7 +81,7 @@ public sealed class Manager : IDisposable
         menu.Items.Add("设置", null, (_, _) => Dock.Dispatcher.Invoke(ShowSettings));
         menu.Items.Add("使用说明", null, (_, _) => Dock.Dispatcher.Invoke(ShowHelp));
         menu.Items.Add("退出并恢复窗口", null, (_, _) => Dock.Dispatcher.Invoke(Exit));
-        _tray.ContextMenuStrip = menu;
+        _tray.ContextMenuStrip = menu; RefreshTrayTheme();
         _tray.DoubleClick += (_, _) => Dock.Dispatcher.Invoke(() => { Dock.Show(); Expand(); });
         if (State.AutoHide) Collapse();
         Microsoft.Win32.SystemEvents.DisplaySettingsChanged += DisplayChanged;
@@ -92,6 +92,13 @@ public sealed class Manager : IDisposable
         else if (_input.Warnings.Count > 0) Hint(string.Join("；", _input.Warnings));
         else Hint("拖动窗口标题栏到槽位；右键可选择窗口");
         foreach (string warning in _input.Warnings) Store.Log(warning);
+    }
+    private void RefreshTrayTheme()
+    {
+        if (_tray.ContextMenuStrip is not { } menu) return;
+        menu.BackColor = System.Drawing.ColorTranslator.FromHtml(SkinCatalog.Current.Background);
+        menu.ForeColor = System.Drawing.ColorTranslator.FromHtml(SkinCatalog.Current.Text);
+        menu.Invalidate();
     }
     public bool Save()
     {
@@ -226,7 +233,7 @@ public sealed class Manager : IDisposable
         _inventoryPreviousFocus = Native.GetForegroundWindow();
         CancelInteraction(); Dock.ClosePreview(); RefreshConnections();
         int? selected = State.Slots.FirstOrDefault(s => s.IsActive)?.Number;
-        var window = new InventoryWindow(State.Slots, WorkArea, _scale, selected, State.Preferences.Animate, duringDrag: Dragging);
+        var window = new InventoryWindow(State.Slots, WorkArea, _scale, selected, State.Preferences.Animate && !ShortcutsPaused, duringDrag: Dragging);
         _inventory = window;
         window.Choose += number => { CloseInventory(restoreFocus: false); var slot = State.Slots.Single(s => s.Number == number); if (!slot.Occupied) PickWindow(slot); else ActivateSlot(number); };
         window.Dismiss += () => CloseInventory(restoreFocus: true);
@@ -697,7 +704,11 @@ public sealed class Manager : IDisposable
             if (settings.ShowDialog() == true)
             {
                 State.Preferences = settings.Result; State.MinimizeOnCapture = settings.MinimizeOnCapture;
-                WuxiaTheme.Apply(State.Preferences.Skin); Dock.RefreshTheme(); SetAutoHide(settings.AutoHide); Save(); UpdateSlotsVisibility();
+                InkEffects.CancelVisuals();
+                SkinCatalog.DecorationsEnabled = State.Preferences.DecorationsEnabled;
+                WuxiaTheme.Apply(State.Preferences.Skin, State.Preferences.Animate);
+                foreach (var slot in State.Slots) slot.Refresh();
+                Dock.RefreshTheme(); RefreshTrayTheme(); SetAutoHide(settings.AutoHide); Save(); UpdateSlotsVisibility();
                 _tray.ContextMenuStrip!.Items[1].Text = InventoryMenuLabel;
                 Hint("设置已保存，快捷键在关闭设置后生效");
             }
@@ -732,7 +743,7 @@ public sealed class Manager : IDisposable
             string text = "拖动窗口标题栏到右侧空槽位，松手收纳。点击空槽位也可添加窗口。\n\n" + TaskChord + "+1–9：唤出任务，再按同一编号恢复原样\n" + MouseChord + "+滚轮：直接切换窗口\nTab：打开任务总览，滚轮浏览、Enter / 数字 / 点击进入\nAlt+反引号：直接全部排列 / 恢复布局\n" + ToggleShortcut + "：显示 / 隐藏武器栏\n\n排列中唤出任务会临时放大，再按编号回到原格子。\n\n右键任务：编辑名称与颜色、重连窗口、连接 Claude/Codex 状态。\n右上角菜单：设置、暂停快捷键、自动收起、退出。\n\n任务状态来自真实 CLI hooks；右键任务复制接入命令，在对应终端执行。已经运行的 CLI 需要重新启动才会加载新 hooks。Codex 首次接入需在 /hooks 中确认观察脚本。\n未接入时显示状态未知，不猜测 AI 是否完成。\n\n关闭窗口会保留槽位，点击即可重连。退出只恢复由本工具收起的窗口，CLI 继续运行。";
             if (State.Preferences.TabTogglesInventory) text += "\n\nTab：打开 / 关闭任务总览。会接管终端 Tab 补全，可在设置中关闭。";
             if (_input.Warnings.Count > 0) text += "\n\n快捷键 / 监听提示：\n" + string.Join("\n", _input.Warnings);
-            MessageBox.Show(text, "CodeManager · 本地开发版", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(text, "OmniVibe · 本地开发版", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         finally { EndDialog(); }
     }
@@ -746,7 +757,7 @@ public sealed class Manager : IDisposable
         if (_disposed) return; _disposed = true; Exiting = true;
         _heartbeat.Stop(); _dragTimer.Stop();
         CheckpointWindows();
-        _input.Dispose(); CancelInteraction(); Dock.ClosePreview();
+        _input.Dispose(); CancelInteraction(); Dock.ClosePreview(); InkEffects.CancelVisuals();
         Microsoft.Win32.SystemEvents.DisplaySettingsChanged -= DisplayChanged;
         RestorePopup(restoreFocus: false);
         if (State.Layout.Count > 0) RestoreLayout();

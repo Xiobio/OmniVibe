@@ -11,4 +11,6 @@
     <Version>0.1.1</Version>
   </PropertyGroup>
   <ItemGroup><Content Include="../../scripts/*.ps1" Link="scripts/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" /></ItemGroup>
+  <ItemGroup><Content Include="../../skins/**/*" Link="skins/%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" /></ItemGroup>
+  <ItemGroup><Content Include="../../themes/windows-terminal/**/*" Link="themes/windows-terminal/%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" /></ItemGroup>
 </Project>

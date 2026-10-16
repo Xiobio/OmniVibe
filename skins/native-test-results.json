@@ -1,0 +1,137 @@
+[
+  {
+    "Name": "Tiling: 1–9 windows fill the work area exactly, including odd dimensions and negative origins",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Arrangement preferences: every mode fills work area; gaps stay bounded",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Selection: fixed sparse slots, high-resolution wheel, cancel and wrap",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Alt mouse gestures: wheel routing, AltGr exclusion and middle-click passthrough",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Settings: configurable modifiers, valid toggle keys and off-screen placement",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Input: connected digits only; Tab toggles inventory and yields when paused or disabled",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Agent events: real lifecycle mapping, nested-agent filtering and idle notifications",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Persistence: identity, stable task ID, placement, atomic events and corrupt recovery",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Win32: enumerate, validate identity, tile/minimize/restore owned fixture",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Win32: activating an already focused window raises it above a nonactivating covering window",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Win32: hotkey registration and low-level mouse/keyboard/drag hooks",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Win32: DWM live preview relationship between owned fixture windows",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Integration: capture, rename, external status, move fixed slot, overview and cleanup",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Hook transport: PowerShell observer emits Unicode event without agent instructions",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Recovery: exact matching, ambiguity rejection, startup quoting and saved session metadata",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Recovery: repeat suppression, title handshake, stable identity, move and timeout",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Recovery: Claude launcher forwards only the specified resume ID",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Skins: all 13 palettes meet body, panel, card and status text contrast >= 4.5",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Skins: terminal/native JSON palette contract matches every new skin",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Skins: switching and rendering each task state preserves task IDs, launch, session and window snapshots",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Skins: family glyphs are distinct and decorations-off renders a clean interactive background",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Skins: narrow task dock keeps its themed five-pixel scrollbar after content rendering",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Skins: 13 settings choices use stable enum tags; cancel and save preserve preference boundaries",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Skins: nine-card overview remains readable at 780x650 and 200-percent display scaling",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Skins: themed settings scroll viewer retains vertical and horizontal scrolling",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Skins: short work areas scroll all nine tasks and suppress clipped native thumbnails",
+    "Passed": true,
+    "Detail": "OK"
+  },
+  {
+    "Name": "Skins: themed slider retains native commands; menu and combo popups honor animation off/on",
+    "Passed": true,
+    "Detail": "OK"
+  }
+]

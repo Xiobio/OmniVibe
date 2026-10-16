@@ -29,6 +29,7 @@ public partial class DockWindow : Window
     public DockWindow(bool interactionTest = false)
     {
         InitializeComponent();
+        RefreshTheme();
         PreviewMouseLeftButtonDown += BeginSlotDrag;
         PreviewMouseMove += TrackSlotDrag;
         PreviewMouseLeftButtonUp += EndSlotDrag;
@@ -61,18 +62,18 @@ public partial class DockWindow : Window
         if (Manager == null) return;
         int count = Manager.State.Slots.Count(s => s.Occupied);
         int unread = Manager.State.Slots.Count(s => s.Connected && (s.Unread || s.State == AgentState.Waiting));
-        Summary.Text = Manager.ShortcutsPaused ? "机关暂歇 · 快捷键已暂停" : Manager.Dragging ? "择空阵眼，松手归匣" : unread > 0 ? unread + " 卷待君查阅" : count > 0 ? "诸卷归位 · 随时出鞘" : "拖入窗口 · 收纳第一卷";
+        Summary.Text = Manager.ShortcutsPaused ? "快捷键已暂停" : Manager.Dragging ? "选择槽位，松手接入" : unread > 0 ? unread + " 项需要你查看" : count > 0 ? "所有任务 · 随时切换" : "拖入窗口 · 添加第一个任务";
         Summary.Foreground = unread > 0 ? WuxiaTheme.Gold : WuxiaTheme.Ivory;
         CountLabel.Text = count + " / 9";
         OverviewLabel.Text = Manager.State.Layout.Count > 0 ? "恢复布局" : "全部排列";
-        Subtitle.Text = StateCount() + " 个窗口 · 机枢相连";
+        Subtitle.Text = SkinCatalog.Current.DockTitle + " · " + StateCount() + " 在线";
     }
     private int StateCount() => Manager?.State.Slots.Count(s => s.Connected) ?? 0;
     public void UpdateChrome()
     {
         if (Manager == null) return;
         ShortcutHint.Text = Manager.TaskChord + " 1–9 唤出/恢复 · " + Manager.MouseChord + " 滚轮切换";
-        DockParticles.SetEnabled(Manager.State.Preferences.Animate);
+        DockSceneryHost.Child?.InvalidateVisual();
         OverviewShortcut.Text = Manager.State.Preferences.ArrangeGesture.Replace("Oem3", "反引号");
         ShortcutHint.ToolTip = Manager.State.Preferences.TabTogglesInventory ? Manager.State.Preferences.InventoryGesture + " 任务总览 · 滚轮浏览 / 数字直达 / 点击进入" : Manager.ToggleShortcut + " 显示 / 隐藏侧栏";
         UpdateSummary();
@@ -80,13 +81,22 @@ public partial class DockWindow : Window
     public void SetHint(string text) => Hint.Text = text;
     public void RefreshTheme()
     {
-        Background = WuxiaTheme.Wood;
-        void Update(DependencyObject node)
-        {
-            if (node is Border border && border.Background is DrawingBrush) border.Background = WuxiaTheme.Wood;
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(node); i++) Update(VisualTreeHelper.GetChild(node, i));
-        }
-        Update(DockFrame);
+        var skin = SkinCatalog.Current;
+        Title = "OmniVibe · " + skin.DockTitle;
+        Background = WuxiaTheme.Brush(skin.Background); DockFrame.Background = WuxiaTheme.Wood;
+        DockFrame.BorderBrush = WuxiaTheme.Brush(skin.Border); DockFrame.CornerRadius = new CornerRadius(skin.CornerRadius);
+        DockTitle.Text = "OmniVibe"; DockTitle.FontFamily = WuxiaTheme.BodyFont;
+        Subtitle.Text = skin.DockTitle; Subtitle.ToolTip = skin.Name;
+        DockEmblem.FontFamily = skin.TitleFont; MiniEmblem.FontFamily = skin.TitleFont;
+        DockEmblem.Text = MiniEmblem.Text = skin.Family switch { "tactical" => "⌖", "protocol" => "/", "mechanical" => "◇", "equipment" => "▣", "arsenal" => "兵", "relic" => "灵", "fantasy" => "✦", "formation" => "♟", "astral" => "✧", "wonderland" => "宝", _ => "匣" };
+        DockEmblemFrame.CornerRadius = new CornerRadius(skin.Family is "fantasy" or "mechanical" ? 15 : skin.CornerRadius);
+        DockSceneryHost.Child = new SkinBackdrop();
+        // Recreate realized item content so its geometry and font change with the palette.
+        var fullTemplate = SlotsList.ItemTemplate; var miniTemplate = MiniSlots.ItemTemplate;
+        SlotsList.ItemTemplate = null; MiniSlots.ItemTemplate = null;
+        SlotsList.ItemTemplate = fullTemplate; MiniSlots.ItemTemplate = miniTemplate;
+        SlotsList.Items.Refresh(); MiniSlots.Items.Refresh();
+        UpdateSummary();
     }
     private void DockBoundsStart(object sender, DragStartedEventArgs e) { _boundsDragging = true; Native.GetCursorPos(out _cursorAtDragStart); Native.GetWindowRect(new System.Windows.Interop.WindowInteropHelper(this).Handle, out _boundsAtDragStart); ClosePreview(); }
     private void DockMove(object sender, DragDeltaEventArgs e) => Manager?.DragDockBounds(_boundsAtDragStart, _cursorAtDragStart, false);

@@ -14,18 +14,19 @@ public sealed class SettingsWindow : Window
     public SettingsWindow(Preferences source, Native.Rect workArea, string warnings, bool autoHide = false, bool minimize = true, int page = 0)
     {
         Result = source.Copy(); AutoHide = autoHide; MinimizeOnCapture = minimize;
-        Title = "CodeManager · 设置"; Width = 780; Height = 700; MinWidth = 620; MinHeight = 430;
+        Title = "OmniVibe · 设置"; Width = 780; Height = 700; MinWidth = 620; MinHeight = 430;
         Background = WuxiaTheme.Ink; Foreground = WuxiaTheme.Ivory; Topmost = true; ShowInTaskbar = false;
         SourceInitialized += (_, _) => Native.Decorate(this, noActivate: false);
         double scale = Native.ScreenAtCursor().Scale;
         Width = Math.Min(780, (workArea.Right - workArea.Left) / scale - 40); Height = Math.Min(700, (workArea.Bottom - workArea.Top) / scale - 40);
         Left = (workArea.Left + workArea.Right) / (2 * scale) - Width / 2; Top = (workArea.Top + workArea.Bottom) / (2 * scale) - Height / 2;
         var root = new DockPanel { Margin = new Thickness(22) };
-        var title = new TextBlock { Text = "机 枢 设 定", FontFamily = WuxiaTheme.Calligraphy, FontSize = 30, Margin = new Thickness(0, 0, 0, 18) }; DockPanel.SetDock(title, Dock.Top); root.Children.Add(title);
+        var title = new TextBlock { Text = "OmniVibe · 偏好设置", FontFamily = SkinCatalog.Current.TitleFont, FontSize = 27, Margin = new Thickness(0, 0, 0, 18) }; DockPanel.SetDock(title, Dock.Top); root.Children.Add(title);
         var bottom = new StackPanel(); DockPanel.SetDock(bottom, Dock.Bottom); root.Children.Add(bottom);
         var error = new TextBlock { Foreground = WuxiaTheme.Cinnabar, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 8, 0, 8) }; bottom.Children.Add(error);
         var actions = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right };
         var reset = new Button { Content = "恢复默认", Margin = new Thickness(0, 0, 16, 0) }; var cancel = new Button { Content = "取消", IsCancel = true, Margin = new Thickness(0, 0, 10, 0) }; var save = new Button { Content = "保存并应用", IsDefault = true, Background = WuxiaTheme.Brush("#354730") };
+        save.Background = WuxiaTheme.Brush(SkinCatalog.Current.Elevated);
         actions.Children.Add(reset); actions.Children.Add(cancel); actions.Children.Add(save); bottom.Children.Add(actions);
         var nav = new StackPanel { Width = 128, Margin = new Thickness(0, 0, 24, 0) }; DockPanel.SetDock(nav, Dock.Left); root.Children.Add(nav);
         var pages = new Grid(); root.Children.Add(pages);
@@ -33,7 +34,7 @@ public sealed class SettingsWindow : Window
         {
             var panel = new StackPanel { Margin = new Thickness(0, 0, 12, 12) }; var scroll = new ScrollViewer { Content = panel, VerticalScrollBarVisibility = ScrollBarVisibility.Auto, Visibility = pages.Children.Count == 0 ? Visibility.Visible : Visibility.Collapsed }; pages.Children.Add(scroll);
             var b = new Button { Content = name, HorizontalContentAlignment = HorizontalAlignment.Left, Padding = new Thickness(12, 11, 12, 11), Margin = new Thickness(0, 0, 0, 8) };
-            b.Click += (_, _) => { foreach (UIElement page in pages.Children) page.Visibility = page == scroll ? Visibility.Visible : Visibility.Collapsed; foreach (Button button in nav.Children) button.Background = button == b ? WuxiaTheme.Brush("#3B4C3A") : WuxiaTheme.Brush("#2B261D"); }; nav.Children.Add(b); return panel;
+            b.Click += (_, _) => { foreach (UIElement page in pages.Children) page.Visibility = page == scroll ? Visibility.Visible : Visibility.Collapsed; foreach (Button button in nav.Children) button.Background = WuxiaTheme.Brush(button == b ? SkinCatalog.Current.Elevated : SkinCatalog.Current.Surface); }; nav.Children.Add(b); return panel;
         }
         var keys = Page("快捷键"); Label(keys, "快捷唤出", 20); Label(keys, "数字键修饰键（1–9 对应当前排序）"); var number = Modifiers(source.TaskModifiers); keys.Children.Add(number);
         Label(keys, "滚轮切换修饰键"); var mouse = Modifiers(source.MouseModifiers); keys.Children.Add(mouse);
@@ -48,9 +49,8 @@ public sealed class SettingsWindow : Window
         var hide = Check("全部排列时隐藏侧栏", source.HideDockOnArrange); layout.Children.Add(hide);
         Label(layout, "单个窗口唤出方式", 18); var wake = Options(new[] { "恢复最近使用的大小与位置", "铺满侧栏所在屏幕工作区" }, (int)source.WakeMode); layout.Children.Add(wake);
         Label(layout, "排列中，Alt+数字临时放大任务，再按返回原格子。偏好在下次排列时使用。", 12);
-        var appearance = Page("皮肤与侧栏"); Label(appearance, "机关外观", 20);
-        var skin = Options(new[] { "墨玉 · 青竹真气", "夜阑 · 深蓝玄铁", "朱砂 · 赤木剑匣" }, (int)source.Skin); appearance.Children.Add(skin);
-        Label(appearance, "皮肤应用于剑匣、卷轴木轴和窗口底色，保存后切换。", 12);
+        var appearance = Page("皮肤与侧栏"); Label(appearance, "完整皮肤套装", 20);
+        var skin = new SkinPicker(source.Skin); appearance.Children.Add(skin);
         Label(appearance, "侧栏宽度"); var width = Slider(210, 520, source.DockWidth, appearance);
         Label(appearance, "侧栏高度（0 为随任务数量自动调整）"); var height = Slider(0, Math.Max(260, (workArea.Bottom - workArea.Top) / scale - 32), source.DockHeight, appearance);
         var position = Check("恢复右侧贴边位置", !source.FreeDockPosition); appearance.Children.Add(position);
@@ -59,8 +59,11 @@ public sealed class SettingsWindow : Window
         var compact = Check("紧凑列表（拖入时展开空槽）", source.Compact); general.Children.Add(compact);
         var auto = Check("鼠标离开后收起侧栏", autoHide); general.Children.Add(auto);
         var mini = Check("收纳窗口后最小化原窗口", minimize); general.Children.Add(mini);
-        var animate = Check("启用动态法阵、卷轴入场与切换反馈", source.Animate); general.Children.Add(animate);
-        var sound = Check("启用出鞘 / 机关音效", source.SoundEffects); general.Children.Add(sound);
+        var animate = Check("启用皮肤动效、任务入场与切换反馈", source.Animate); general.Children.Add(animate);
+        var decorations = Check("启用材质、插画与装饰（关闭后保留状态和操作）", source.DecorationsEnabled); general.Children.Add(decorations);
+        var sound = Check("启用皮肤交互音效", source.SoundEffects); general.Children.Add(sound);
+        skin.EffectsEnabled = () => animate.IsChecked == true;
+        skin.DecorationsEnabled = () => decorations.IsChecked == true;
         Label(general, "启动与工作现场", 20);
         var recoveryPage = Check("启动时显示未恢复的任务清单", source.ShowRecoveryOnStartup); general.Children.Add(recoveryPage);
         var reconnect = Check("启动时自动重连可唯一确认的已有窗口", source.AutoReconnectExisting); general.Children.Add(reconnect);
@@ -85,8 +88,8 @@ public sealed class SettingsWindow : Window
             if (!Validate(toggleKey, false) || !Validate(arrangeKey, false) || inventoryEnabled.IsChecked == true && !Validate(inventoryKey, true)) return;
             Result.TaskModifiers = taskMods; Result.MouseModifiers = Enum.GetValues<ShortcutModifiers>()[mouse.SelectedIndex]; Result.ToggleGesture = toggleKey; Result.ArrangeGesture = arrangeKey; Result.InventoryGesture = inventoryKey; Result.TabTogglesInventory = inventoryEnabled.IsChecked == true;
             Result.Arrangement = (ArrangementMode)arrangement.SelectedIndex; Result.LayoutGap = (int)gap.Value; Result.HideDockOnArrange = hide.IsChecked == true; Result.WakeMode = (WakeMode)wake.SelectedIndex;
-            Result.Skin = (Skin)skin.SelectedIndex; Result.DockWidth = width.Value; Result.DockHeight = height.Value < 260 ? 0 : height.Value; if (position.IsChecked == true) Result.FreeDockPosition = false;
-            Result.Compact = compact.IsChecked == true; Result.Animate = animate.IsChecked == true; Result.SoundEffects = sound.IsChecked == true; AutoHide = auto.IsChecked == true; MinimizeOnCapture = mini.IsChecked == true;
+            Result.Skin = skin.SelectedSkin; Result.DockWidth = width.Value; Result.DockHeight = height.Value < 260 ? 0 : height.Value; if (position.IsChecked == true) Result.FreeDockPosition = false;
+            Result.Compact = compact.IsChecked == true; Result.Animate = animate.IsChecked == true; Result.DecorationsEnabled = decorations.IsChecked == true; Result.SoundEffects = sound.IsChecked == true; AutoHide = auto.IsChecked == true; MinimizeOnCapture = mini.IsChecked == true;
             Result.ShowRecoveryOnStartup = recoveryPage.IsChecked == true; Result.AutoReconnectExisting = reconnect.IsChecked == true; Result.AutoRestoreOnStartup = restore.IsChecked == true; DialogResult = true;
         };
         Content = root;

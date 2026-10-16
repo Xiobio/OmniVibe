@@ -1,0 +1,476 @@
+{
+    "version":  1,
+    "paletteSource":  "skins/catalog.json",
+    "skins":  [
+                  {
+                      "slug":  "hextech",
+                      "name":  "海克斯枢纽",
+                      "scheme":  {
+                                     "name":  "OmniVibe / 海克斯枢纽",
+                                     "background":  "#091A27",
+                                     "foreground":  "#F1E8D2",
+                                     "cursorColor":  "#E6BE75",
+                                     "selectionBackground":  "#3E413A",
+                                     "black":  "#A9C4D0",
+                                     "red":  "#FF9B89",
+                                     "green":  "#65E4C5",
+                                     "yellow":  "#FFD279",
+                                     "blue":  "#81B6EF",
+                                     "purple":  "#D1ACEB",
+                                     "cyan":  "#5EE6E0",
+                                     "white":  "#F1E8D2",
+                                     "brightBlack":  "#BFCFD1",
+                                     "brightRed":  "#FCAA98",
+                                     "brightGreen":  "#81E5C8",
+                                     "brightYellow":  "#FCD68B",
+                                     "brightBlue":  "#ADD1FF",
+                                     "brightPurple":  "#E6C8FF",
+                                     "brightCyan":  "#7BE6DD",
+                                     "brightWhite":  "#F1E8D2"
+                                 },
+                      "theme":  {
+                                    "name":  "OmniVibe / 海克斯枢纽",
+                                    "window":  {
+                                                   "applicationTheme":  "dark"
+                                               },
+                                    "tab":  {
+                                                "background":  "#102B3B",
+                                                "unfocusedBackground":  "#091A27",
+                                                "showCloseButton":  "hover"
+                                            },
+                                    "tabRow":  {
+                                                   "background":  "#091A27",
+                                                   "unfocusedBackground":  "#091A27"
+                                               }
+                                },
+                      "artwork":  "skins/hextech/illustration.png",
+                      "shader":  "shaders/hextech.hlsl",
+                      "imageOpacity":  0.12,
+                      "decorationWidthDip":  24,
+                      "padding":  "36, 32, 36, 32"
+                  },
+                  {
+                      "slug":  "tactical",
+                      "name":  "战术终端",
+                      "scheme":  {
+                                     "name":  "OmniVibe / 战术终端",
+                                     "background":  "#101714",
+                                     "foreground":  "#E9EFE7",
+                                     "cursorColor":  "#D9BA6C",
+                                     "selectionBackground":  "#403E29",
+                                     "black":  "#B4C4B8",
+                                     "red":  "#FFA08D",
+                                     "green":  "#A6D6A0",
+                                     "yellow":  "#FFD274",
+                                     "blue":  "#81B6EF",
+                                     "purple":  "#D1ACEB",
+                                     "cyan":  "#A6C994",
+                                     "white":  "#E9EFE7",
+                                     "brightBlack":  "#C4D1C6",
+                                     "brightRed":  "#FBB09F",
+                                     "brightGreen":  "#B3DBAE",
+                                     "brightYellow":  "#FBD88B",
+                                     "brightBlue":  "#ADD1FF",
+                                     "brightPurple":  "#E6C8FF",
+                                     "brightCyan":  "#B3D1A5",
+                                     "brightWhite":  "#E9EFE7"
+                                 },
+                      "theme":  {
+                                    "name":  "OmniVibe / 战术终端",
+                                    "window":  {
+                                                   "applicationTheme":  "dark"
+                                               },
+                                    "tab":  {
+                                                "background":  "#1A2520",
+                                                "unfocusedBackground":  "#101714",
+                                                "showCloseButton":  "hover"
+                                            },
+                                    "tabRow":  {
+                                                   "background":  "#101714",
+                                                   "unfocusedBackground":  "#101714"
+                                               }
+                                },
+                      "artwork":  "skins/tactical/illustration.png",
+                      "shader":  "shaders/tactical.hlsl",
+                      "imageOpacity":  0.12,
+                      "decorationWidthDip":  24,
+                      "padding":  "36, 32, 36, 32"
+                  },
+                  {
+                      "slug":  "protocol",
+                      "name":  "行动协议",
+                      "scheme":  {
+                                     "name":  "OmniVibe / 行动协议",
+                                     "background":  "#151D26",
+                                     "foreground":  "#F4EEE3",
+                                     "cursorColor":  "#FF8C8E",
+                                     "selectionBackground":  "#4D383F",
+                                     "black":  "#C2C9D1",
+                                     "red":  "#FF9B9B",
+                                     "green":  "#81E0C0",
+                                     "yellow":  "#FAD27B",
+                                     "blue":  "#81B6EF",
+                                     "purple":  "#D1ACEB",
+                                     "cyan":  "#75E0D4",
+                                     "white":  "#F4EEE3",
+                                     "brightBlack":  "#D1D4D6",
+                                     "brightRed":  "#FDACA9",
+                                     "brightGreen":  "#98E3C7",
+                                     "brightYellow":  "#F9D890",
+                                     "brightBlue":  "#ADD1FF",
+                                     "brightPurple":  "#E6C8FF",
+                                     "brightCyan":  "#8EE3D7",
+                                     "brightWhite":  "#F4EEE3"
+                                 },
+                      "theme":  {
+                                    "name":  "OmniVibe / 行动协议",
+                                    "window":  {
+                                                   "applicationTheme":  "dark"
+                                               },
+                                    "tab":  {
+                                                "background":  "#25313E",
+                                                "unfocusedBackground":  "#151D26",
+                                                "showCloseButton":  "hover"
+                                            },
+                                    "tabRow":  {
+                                                   "background":  "#151D26",
+                                                   "unfocusedBackground":  "#151D26"
+                                               }
+                                },
+                      "artwork":  "skins/protocol/illustration.png",
+                      "shader":  "shaders/protocol.hlsl",
+                      "imageOpacity":  0.12,
+                      "decorationWidthDip":  24,
+                      "padding":  "36, 32, 36, 32"
+                  },
+                  {
+                      "slug":  "adventure",
+                      "name":  "冒险装备栏",
+                      "scheme":  {
+                                     "name":  "OmniVibe / 冒险装备栏",
+                                     "background":  "#211A17",
+                                     "foreground":  "#F0E0C1",
+                                     "cursorColor":  "#EAC480",
+                                     "selectionBackground":  "#514330",
+                                     "black":  "#C8B899",
+                                     "red":  "#FF9B7F",
+                                     "green":  "#A8DAAF",
+                                     "yellow":  "#FFD27B",
+                                     "blue":  "#81B6EF",
+                                     "purple":  "#D1ACEB",
+                                     "cyan":  "#91BCD4",
+                                     "white":  "#F0E0C1",
+                                     "brightBlack":  "#D4C4A5",
+                                     "brightRed":  "#FCA98C",
+                                     "brightGreen":  "#B6DBB3",
+                                     "brightYellow":  "#FCD589",
+                                     "brightBlue":  "#ADD1FF",
+                                     "brightPurple":  "#E6C8FF",
+                                     "brightCyan":  "#A4C3D0",
+                                     "brightWhite":  "#F0E0C1"
+                                 },
+                      "theme":  {
+                                    "name":  "OmniVibe / 冒险装备栏",
+                                    "window":  {
+                                                   "applicationTheme":  "dark"
+                                               },
+                                    "tab":  {
+                                                "background":  "#342820",
+                                                "unfocusedBackground":  "#211A17",
+                                                "showCloseButton":  "hover"
+                                            },
+                                    "tabRow":  {
+                                                   "background":  "#211A17",
+                                                   "unfocusedBackground":  "#211A17"
+                                               }
+                                },
+                      "artwork":  "skins/adventure/illustration.png",
+                      "shader":  "shaders/adventure.hlsl",
+                      "imageOpacity":  0.12,
+                      "decorationWidthDip":  24,
+                      "padding":  "36, 32, 36, 32"
+                  },
+                  {
+                      "slug":  "arsenal",
+                      "name":  "无间兵器匣",
+                      "scheme":  {
+                                     "name":  "OmniVibe / 无间兵器匣",
+                                     "background":  "#191719",
+                                     "foreground":  "#EFDFCA",
+                                     "cursorColor":  "#E1AD79",
+                                     "selectionBackground":  "#493B30",
+                                     "black":  "#C4AFA3",
+                                     "red":  "#FF9C8C",
+                                     "green":  "#ACD6B0",
+                                     "yellow":  "#F3CA7E",
+                                     "blue":  "#81B6EF",
+                                     "purple":  "#D1ACEB",
+                                     "cyan":  "#D68984",
+                                     "white":  "#EFDFCA",
+                                     "brightBlack":  "#D1BDAF",
+                                     "brightRed":  "#FCA998",
+                                     "brightGreen":  "#B9D8B5",
+                                     "brightYellow":  "#F2CE8D",
+                                     "brightBlue":  "#ADD1FF",
+                                     "brightPurple":  "#E6C8FF",
+                                     "brightCyan":  "#D9948C",
+                                     "brightWhite":  "#EFDFCA"
+                                 },
+                      "theme":  {
+                                    "name":  "OmniVibe / 无间兵器匣",
+                                    "window":  {
+                                                   "applicationTheme":  "dark"
+                                               },
+                                    "tab":  {
+                                                "background":  "#2D2528",
+                                                "unfocusedBackground":  "#191719",
+                                                "showCloseButton":  "hover"
+                                            },
+                                    "tabRow":  {
+                                                   "background":  "#191719",
+                                                   "unfocusedBackground":  "#191719"
+                                               }
+                                },
+                      "artwork":  "skins/arsenal/illustration.png",
+                      "shader":  "shaders/arsenal.hlsl",
+                      "imageOpacity":  0.12,
+                      "decorationWidthDip":  24,
+                      "padding":  "36, 32, 36, 32"
+                  },
+                  {
+                      "slug":  "relic",
+                      "name":  "灵蕴法宝匣",
+                      "scheme":  {
+                                     "name":  "OmniVibe / 灵蕴法宝匣",
+                                     "background":  "#1A1B19",
+                                     "foreground":  "#E8DDC3",
+                                     "cursorColor":  "#D6B674",
+                                     "selectionBackground":  "#47402F",
+                                     "black":  "#C1B79C",
+                                     "red":  "#F3A08A",
+                                     "green":  "#B1CEAD",
+                                     "yellow":  "#EBD08B",
+                                     "blue":  "#81B6EF",
+                                     "purple":  "#D1ACEB",
+                                     "cyan":  "#ADBA9A",
+                                     "white":  "#E8DDC3",
+                                     "brightBlack":  "#CDC2A8",
+                                     "brightRed":  "#F1AC95",
+                                     "brightGreen":  "#BCD1B1",
+                                     "brightYellow":  "#EAD396",
+                                     "brightBlue":  "#ADD1FF",
+                                     "brightPurple":  "#E6C8FF",
+                                     "brightCyan":  "#B9C1A2",
+                                     "brightWhite":  "#E8DDC3"
+                                 },
+                      "theme":  {
+                                    "name":  "OmniVibe / 灵蕴法宝匣",
+                                    "window":  {
+                                                   "applicationTheme":  "dark"
+                                               },
+                                    "tab":  {
+                                                "background":  "#2C2C27",
+                                                "unfocusedBackground":  "#1A1B19",
+                                                "showCloseButton":  "hover"
+                                            },
+                                    "tabRow":  {
+                                                   "background":  "#1A1B19",
+                                                   "unfocusedBackground":  "#1A1B19"
+                                               }
+                                },
+                      "artwork":  "skins/relic/illustration.png",
+                      "shader":  "shaders/relic.hlsl",
+                      "imageOpacity":  0.12,
+                      "decorationWidthDip":  24,
+                      "padding":  "36, 32, 36, 32"
+                  },
+                  {
+                      "slug":  "starlight",
+                      "name":  "星曜指挥台",
+                      "scheme":  {
+                                     "name":  "OmniVibe / 星曜指挥台",
+                                     "background":  "#112238",
+                                     "foreground":  "#F1E7D3",
+                                     "cursorColor":  "#ECD097",
+                                     "selectionBackground":  "#464C4F",
+                                     "black":  "#B7C9D9",
+                                     "red":  "#FFAAA0",
+                                     "green":  "#94E0C5",
+                                     "yellow":  "#FFE097",
+                                     "blue":  "#81B6EF",
+                                     "purple":  "#D1ACEB",
+                                     "cyan":  "#82DBDF",
+                                     "white":  "#F1E7D3",
+                                     "brightBlack":  "#C8D2D7",
+                                     "brightRed":  "#FCB6AA",
+                                     "brightGreen":  "#A7E1C8",
+                                     "brightYellow":  "#FCE1A3",
+                                     "brightBlue":  "#ADD1FF",
+                                     "brightPurple":  "#E6C8FF",
+                                     "brightCyan":  "#98DDDD",
+                                     "brightWhite":  "#F1E7D3"
+                                 },
+                      "theme":  {
+                                    "name":  "OmniVibe / 星曜指挥台",
+                                    "window":  {
+                                                   "applicationTheme":  "dark"
+                                               },
+                                    "tab":  {
+                                                "background":  "#1C3550",
+                                                "unfocusedBackground":  "#112238",
+                                                "showCloseButton":  "hover"
+                                            },
+                                    "tabRow":  {
+                                                   "background":  "#112238",
+                                                   "unfocusedBackground":  "#112238"
+                                               }
+                                },
+                      "artwork":  "skins/starlight/illustration.png",
+                      "shader":  "shaders/starlight.hlsl",
+                      "imageOpacity":  0.12,
+                      "decorationWidthDip":  24,
+                      "padding":  "36, 32, 36, 32"
+                  },
+                  {
+                      "slug":  "formation",
+                      "name":  "Agent 备战席",
+                      "scheme":  {
+                                     "name":  "OmniVibe / Agent 备战席",
+                                     "background":  "#1D1A35",
+                                     "foreground":  "#F2E8D9",
+                                     "cursorColor":  "#F0CE88",
+                                     "selectionBackground":  "#504549",
+                                     "black":  "#C6BEDB",
+                                     "red":  "#FFA5AE",
+                                     "green":  "#9CE0C7",
+                                     "yellow":  "#FFDA8B",
+                                     "blue":  "#81B6EF",
+                                     "purple":  "#D1ACEB",
+                                     "cyan":  "#BCA9EF",
+                                     "white":  "#F2E8D9",
+                                     "brightBlack":  "#D3CBDA",
+                                     "brightRed":  "#FCB2B7",
+                                     "brightGreen":  "#ADE2CB",
+                                     "brightYellow":  "#FCDD9B",
+                                     "brightBlue":  "#ADD1FF",
+                                     "brightPurple":  "#E6C8FF",
+                                     "brightCyan":  "#C7B6EB",
+                                     "brightWhite":  "#F2E8D9"
+                                 },
+                      "theme":  {
+                                    "name":  "OmniVibe / Agent 备战席",
+                                    "window":  {
+                                                   "applicationTheme":  "dark"
+                                               },
+                                    "tab":  {
+                                                "background":  "#2B2848",
+                                                "unfocusedBackground":  "#1D1A35",
+                                                "showCloseButton":  "hover"
+                                            },
+                                    "tabRow":  {
+                                                   "background":  "#1D1A35",
+                                                   "unfocusedBackground":  "#1D1A35"
+                                               }
+                                },
+                      "artwork":  "skins/formation/illustration.png",
+                      "shader":  "shaders/formation.hlsl",
+                      "imageOpacity":  0.12,
+                      "decorationWidthDip":  24,
+                      "padding":  "36, 32, 36, 32"
+                  },
+                  {
+                      "slug":  "astral",
+                      "name":  "星旅背包",
+                      "scheme":  {
+                                     "name":  "OmniVibe / 星旅背包",
+                                     "background":  "#172A41",
+                                     "foreground":  "#F1EBDD",
+                                     "cursorColor":  "#EAD6AE",
+                                     "selectionBackground":  "#4A535B",
+                                     "black":  "#C2CDD8",
+                                     "red":  "#FFB0A2",
+                                     "green":  "#A8DCCF",
+                                     "yellow":  "#F5D797",
+                                     "blue":  "#81B6EF",
+                                     "purple":  "#D1ACEB",
+                                     "cyan":  "#9DCAD9",
+                                     "white":  "#F1EBDD",
+                                     "brightBlack":  "#D0D6DA",
+                                     "brightRed":  "#FCBCAE",
+                                     "brightGreen":  "#B7DFD2",
+                                     "brightYellow":  "#F4DBA5",
+                                     "brightBlue":  "#ADD1FF",
+                                     "brightPurple":  "#E6C8FF",
+                                     "brightCyan":  "#AED1DA",
+                                     "brightWhite":  "#F1EBDD"
+                                 },
+                      "theme":  {
+                                    "name":  "OmniVibe / 星旅背包",
+                                    "window":  {
+                                                   "applicationTheme":  "dark"
+                                               },
+                                    "tab":  {
+                                                "background":  "#223B54",
+                                                "unfocusedBackground":  "#172A41",
+                                                "showCloseButton":  "hover"
+                                            },
+                                    "tabRow":  {
+                                                   "background":  "#172A41",
+                                                   "unfocusedBackground":  "#172A41"
+                                               }
+                                },
+                      "artwork":  "skins/astral/illustration.png",
+                      "shader":  "shaders/astral.hlsl",
+                      "imageOpacity":  0.12,
+                      "decorationWidthDip":  24,
+                      "padding":  "36, 32, 36, 32"
+                  },
+                  {
+                      "slug":  "wonderland",
+                      "name":  "三界百宝袋",
+                      "scheme":  {
+                                     "name":  "OmniVibe / 三界百宝袋",
+                                     "background":  "#EFF8F6",
+                                     "foreground":  "#183C48",
+                                     "cursorColor":  "#7A5718",
+                                     "selectionBackground":  "#D3D2C1",
+                                     "black":  "#46616A",
+                                     "red":  "#A63739",
+                                     "green":  "#236653",
+                                     "yellow":  "#7B5716",
+                                     "blue":  "#235C96",
+                                     "purple":  "#7B3982",
+                                     "cyan":  "#1F6771",
+                                     "white":  "#183C48",
+                                     "brightBlack":  "#385660",
+                                     "brightRed":  "#8A383C",
+                                     "brightGreen":  "#215E51",
+                                     "brightYellow":  "#6C5621",
+                                     "brightBlue":  "#174E8A",
+                                     "brightPurple":  "#6B2C75",
+                                     "brightCyan":  "#1F626E",
+                                     "brightWhite":  "#183C48"
+                                 },
+                      "theme":  {
+                                    "name":  "OmniVibe / 三界百宝袋",
+                                    "window":  {
+                                                   "applicationTheme":  "light"
+                                               },
+                                    "tab":  {
+                                                "background":  "#E1F0EA",
+                                                "unfocusedBackground":  "#EFF8F6",
+                                                "showCloseButton":  "hover"
+                                            },
+                                    "tabRow":  {
+                                                   "background":  "#EFF8F6",
+                                                   "unfocusedBackground":  "#EFF8F6"
+                                               }
+                                },
+                      "artwork":  "skins/wonderland/illustration.png",
+                      "shader":  "shaders/wonderland.hlsl",
+                      "imageOpacity":  0.12,
+                      "decorationWidthDip":  24,
+                      "padding":  "36, 32, 36, 32"
+                  }
+              ]
+}

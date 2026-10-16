@@ -1,0 +1,950 @@
+{
+  "date": "2026-10-16",
+  "build": {
+    "configuration": "Debug",
+    "completedAt": "2026-10-16T19:46:27+08:00",
+    "warnings": 0,
+    "errors": 0,
+    "sha256": "c9cb48ac74ab2dc339be2bbc2035c986317fe366aa6ba858caedb215e0662adf"
+  },
+  "tests": {
+    "passed": 27,
+    "total": 27,
+    "baselineTests": 17,
+    "baselineRecordedAt": "2026-10-16T19:42:44+08:00",
+    "finalSkinTests": 10,
+    "finalSkinRecordedAt": "2026-10-16T19:46:33+08:00",
+    "note": "The 17 baseline tests passed in the full regression; all 10 skin tests were rerun after the final popup-animation and clipping changes."
+  },
+  "palettes": {
+    "allNativePalettes": 13,
+    "newSuites": 10,
+    "textContrastMinimum": 4.5,
+    "checkedCombinations": 338,
+    "actualCardMetadataOpacity": 0.8
+  },
+  "screenshots": {
+    "skins": 10,
+    "modesPerSkin": 13,
+    "total": 130,
+    "gallerySuites": 10,
+    "galleryBytes": 6681450,
+    "files": [
+      {
+        "skin": "hextech",
+        "mode": "inventory",
+        "width": 1280,
+        "height": 960,
+        "renderedAt": "2026-10-16T19:37:46+08:00"
+      },
+      {
+        "skin": "hextech",
+        "mode": "inventory-small",
+        "width": 780,
+        "height": 650,
+        "renderedAt": "2026-10-16T19:37:47+08:00"
+      },
+      {
+        "skin": "hextech",
+        "mode": "inventory-hidpi",
+        "width": 904,
+        "height": 472,
+        "renderedAt": "2026-10-16T19:37:47+08:00"
+      },
+      {
+        "skin": "hextech",
+        "mode": "inventory-short",
+        "width": 904,
+        "height": 302,
+        "renderedAt": "2026-10-16T19:46:34+08:00"
+      },
+      {
+        "skin": "hextech",
+        "mode": "compact",
+        "width": 250,
+        "height": 610,
+        "renderedAt": "2026-10-16T19:36:15+08:00"
+      },
+      {
+        "skin": "hextech",
+        "mode": "narrow",
+        "width": 210,
+        "height": 610,
+        "renderedAt": "2026-10-16T19:36:17+08:00"
+      },
+      {
+        "skin": "hextech",
+        "mode": "mini",
+        "width": 48,
+        "height": 310,
+        "renderedAt": "2026-10-16T19:43:14+08:00"
+      },
+      {
+        "skin": "hextech",
+        "mode": "expanded",
+        "width": 286,
+        "height": 730,
+        "renderedAt": "2026-10-16T19:43:15+08:00"
+      },
+      {
+        "skin": "hextech",
+        "mode": "menu",
+        "width": 256,
+        "height": 326,
+        "renderedAt": "2026-10-16T19:36:18+08:00"
+      },
+      {
+        "skin": "hextech",
+        "mode": "settings-skin",
+        "width": 780,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:42:56+08:00"
+      },
+      {
+        "skin": "hextech",
+        "mode": "task",
+        "width": 560,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:41:24+08:00"
+      },
+      {
+        "skin": "hextech",
+        "mode": "integration",
+        "width": 590,
+        "height": 510,
+        "renderedAt": "2026-10-16T19:41:25+08:00"
+      },
+      {
+        "skin": "hextech",
+        "mode": "recovery",
+        "width": 920,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:41:25+08:00"
+      },
+      {
+        "skin": "tactical",
+        "mode": "inventory",
+        "width": 1280,
+        "height": 960,
+        "renderedAt": "2026-10-16T19:37:48+08:00"
+      },
+      {
+        "skin": "tactical",
+        "mode": "inventory-small",
+        "width": 780,
+        "height": 650,
+        "renderedAt": "2026-10-16T19:37:49+08:00"
+      },
+      {
+        "skin": "tactical",
+        "mode": "inventory-hidpi",
+        "width": 904,
+        "height": 472,
+        "renderedAt": "2026-10-16T19:37:50+08:00"
+      },
+      {
+        "skin": "tactical",
+        "mode": "inventory-short",
+        "width": 904,
+        "height": 302,
+        "renderedAt": "2026-10-16T19:46:35+08:00"
+      },
+      {
+        "skin": "tactical",
+        "mode": "compact",
+        "width": 250,
+        "height": 610,
+        "renderedAt": "2026-10-16T19:36:20+08:00"
+      },
+      {
+        "skin": "tactical",
+        "mode": "narrow",
+        "width": 210,
+        "height": 610,
+        "renderedAt": "2026-10-16T19:36:22+08:00"
+      },
+      {
+        "skin": "tactical",
+        "mode": "mini",
+        "width": 48,
+        "height": 310,
+        "renderedAt": "2026-10-16T19:43:16+08:00"
+      },
+      {
+        "skin": "tactical",
+        "mode": "expanded",
+        "width": 286,
+        "height": 730,
+        "renderedAt": "2026-10-16T19:43:16+08:00"
+      },
+      {
+        "skin": "tactical",
+        "mode": "menu",
+        "width": 256,
+        "height": 326,
+        "renderedAt": "2026-10-16T19:36:23+08:00"
+      },
+      {
+        "skin": "tactical",
+        "mode": "settings-skin",
+        "width": 780,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:42:57+08:00"
+      },
+      {
+        "skin": "tactical",
+        "mode": "task",
+        "width": 560,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:41:27+08:00"
+      },
+      {
+        "skin": "tactical",
+        "mode": "integration",
+        "width": 590,
+        "height": 510,
+        "renderedAt": "2026-10-16T19:41:28+08:00"
+      },
+      {
+        "skin": "tactical",
+        "mode": "recovery",
+        "width": 920,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:41:28+08:00"
+      },
+      {
+        "skin": "protocol",
+        "mode": "inventory",
+        "width": 1280,
+        "height": 960,
+        "renderedAt": "2026-10-16T19:37:50+08:00"
+      },
+      {
+        "skin": "protocol",
+        "mode": "inventory-small",
+        "width": 780,
+        "height": 650,
+        "renderedAt": "2026-10-16T19:37:51+08:00"
+      },
+      {
+        "skin": "protocol",
+        "mode": "inventory-hidpi",
+        "width": 904,
+        "height": 472,
+        "renderedAt": "2026-10-16T19:37:52+08:00"
+      },
+      {
+        "skin": "protocol",
+        "mode": "inventory-short",
+        "width": 904,
+        "height": 302,
+        "renderedAt": "2026-10-16T19:46:35+08:00"
+      },
+      {
+        "skin": "protocol",
+        "mode": "compact",
+        "width": 250,
+        "height": 610,
+        "renderedAt": "2026-10-16T19:36:25+08:00"
+      },
+      {
+        "skin": "protocol",
+        "mode": "narrow",
+        "width": 210,
+        "height": 610,
+        "renderedAt": "2026-10-16T19:36:26+08:00"
+      },
+      {
+        "skin": "protocol",
+        "mode": "mini",
+        "width": 48,
+        "height": 310,
+        "renderedAt": "2026-10-16T19:43:17+08:00"
+      },
+      {
+        "skin": "protocol",
+        "mode": "expanded",
+        "width": 286,
+        "height": 730,
+        "renderedAt": "2026-10-16T19:43:17+08:00"
+      },
+      {
+        "skin": "protocol",
+        "mode": "menu",
+        "width": 256,
+        "height": 326,
+        "renderedAt": "2026-10-16T19:36:27+08:00"
+      },
+      {
+        "skin": "protocol",
+        "mode": "settings-skin",
+        "width": 780,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:42:58+08:00"
+      },
+      {
+        "skin": "protocol",
+        "mode": "task",
+        "width": 560,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:41:30+08:00"
+      },
+      {
+        "skin": "protocol",
+        "mode": "integration",
+        "width": 590,
+        "height": 510,
+        "renderedAt": "2026-10-16T19:41:31+08:00"
+      },
+      {
+        "skin": "protocol",
+        "mode": "recovery",
+        "width": 920,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:41:31+08:00"
+      },
+      {
+        "skin": "adventure",
+        "mode": "inventory",
+        "width": 1280,
+        "height": 960,
+        "renderedAt": "2026-10-16T19:37:52+08:00"
+      },
+      {
+        "skin": "adventure",
+        "mode": "inventory-small",
+        "width": 780,
+        "height": 650,
+        "renderedAt": "2026-10-16T19:37:53+08:00"
+      },
+      {
+        "skin": "adventure",
+        "mode": "inventory-hidpi",
+        "width": 904,
+        "height": 472,
+        "renderedAt": "2026-10-16T19:37:54+08:00"
+      },
+      {
+        "skin": "adventure",
+        "mode": "inventory-short",
+        "width": 904,
+        "height": 302,
+        "renderedAt": "2026-10-16T19:46:36+08:00"
+      },
+      {
+        "skin": "adventure",
+        "mode": "compact",
+        "width": 250,
+        "height": 610,
+        "renderedAt": "2026-10-16T19:36:29+08:00"
+      },
+      {
+        "skin": "adventure",
+        "mode": "narrow",
+        "width": 210,
+        "height": 610,
+        "renderedAt": "2026-10-16T19:36:31+08:00"
+      },
+      {
+        "skin": "adventure",
+        "mode": "mini",
+        "width": 48,
+        "height": 310,
+        "renderedAt": "2026-10-16T19:43:18+08:00"
+      },
+      {
+        "skin": "adventure",
+        "mode": "expanded",
+        "width": 286,
+        "height": 730,
+        "renderedAt": "2026-10-16T19:43:19+08:00"
+      },
+      {
+        "skin": "adventure",
+        "mode": "menu",
+        "width": 256,
+        "height": 326,
+        "renderedAt": "2026-10-16T19:36:32+08:00"
+      },
+      {
+        "skin": "adventure",
+        "mode": "settings-skin",
+        "width": 780,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:42:58+08:00"
+      },
+      {
+        "skin": "adventure",
+        "mode": "task",
+        "width": 560,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:41:33+08:00"
+      },
+      {
+        "skin": "adventure",
+        "mode": "integration",
+        "width": 590,
+        "height": 510,
+        "renderedAt": "2026-10-16T19:41:34+08:00"
+      },
+      {
+        "skin": "adventure",
+        "mode": "recovery",
+        "width": 920,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:41:34+08:00"
+      },
+      {
+        "skin": "arsenal",
+        "mode": "inventory",
+        "width": 1280,
+        "height": 960,
+        "renderedAt": "2026-10-16T19:37:55+08:00"
+      },
+      {
+        "skin": "arsenal",
+        "mode": "inventory-small",
+        "width": 780,
+        "height": 650,
+        "renderedAt": "2026-10-16T19:37:55+08:00"
+      },
+      {
+        "skin": "arsenal",
+        "mode": "inventory-hidpi",
+        "width": 904,
+        "height": 472,
+        "renderedAt": "2026-10-16T19:37:56+08:00"
+      },
+      {
+        "skin": "arsenal",
+        "mode": "inventory-short",
+        "width": 904,
+        "height": 302,
+        "renderedAt": "2026-10-16T19:46:37+08:00"
+      },
+      {
+        "skin": "arsenal",
+        "mode": "compact",
+        "width": 250,
+        "height": 610,
+        "renderedAt": "2026-10-16T19:36:34+08:00"
+      },
+      {
+        "skin": "arsenal",
+        "mode": "narrow",
+        "width": 210,
+        "height": 610,
+        "renderedAt": "2026-10-16T19:36:36+08:00"
+      },
+      {
+        "skin": "arsenal",
+        "mode": "mini",
+        "width": 48,
+        "height": 310,
+        "renderedAt": "2026-10-16T19:43:19+08:00"
+      },
+      {
+        "skin": "arsenal",
+        "mode": "expanded",
+        "width": 286,
+        "height": 730,
+        "renderedAt": "2026-10-16T19:43:20+08:00"
+      },
+      {
+        "skin": "arsenal",
+        "mode": "menu",
+        "width": 256,
+        "height": 326,
+        "renderedAt": "2026-10-16T19:36:36+08:00"
+      },
+      {
+        "skin": "arsenal",
+        "mode": "settings-skin",
+        "width": 780,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:42:59+08:00"
+      },
+      {
+        "skin": "arsenal",
+        "mode": "task",
+        "width": 560,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:41:36+08:00"
+      },
+      {
+        "skin": "arsenal",
+        "mode": "integration",
+        "width": 590,
+        "height": 510,
+        "renderedAt": "2026-10-16T19:41:37+08:00"
+      },
+      {
+        "skin": "arsenal",
+        "mode": "recovery",
+        "width": 920,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:41:37+08:00"
+      },
+      {
+        "skin": "relic",
+        "mode": "inventory",
+        "width": 1280,
+        "height": 960,
+        "renderedAt": "2026-10-16T19:37:57+08:00"
+      },
+      {
+        "skin": "relic",
+        "mode": "inventory-small",
+        "width": 780,
+        "height": 650,
+        "renderedAt": "2026-10-16T19:37:58+08:00"
+      },
+      {
+        "skin": "relic",
+        "mode": "inventory-hidpi",
+        "width": 904,
+        "height": 472,
+        "renderedAt": "2026-10-16T19:37:58+08:00"
+      },
+      {
+        "skin": "relic",
+        "mode": "inventory-short",
+        "width": 904,
+        "height": 302,
+        "renderedAt": "2026-10-16T19:46:37+08:00"
+      },
+      {
+        "skin": "relic",
+        "mode": "compact",
+        "width": 250,
+        "height": 610,
+        "renderedAt": "2026-10-16T19:36:38+08:00"
+      },
+      {
+        "skin": "relic",
+        "mode": "narrow",
+        "width": 210,
+        "height": 610,
+        "renderedAt": "2026-10-16T19:36:40+08:00"
+      },
+      {
+        "skin": "relic",
+        "mode": "mini",
+        "width": 48,
+        "height": 310,
+        "renderedAt": "2026-10-16T19:43:21+08:00"
+      },
+      {
+        "skin": "relic",
+        "mode": "expanded",
+        "width": 286,
+        "height": 730,
+        "renderedAt": "2026-10-16T19:43:21+08:00"
+      },
+      {
+        "skin": "relic",
+        "mode": "menu",
+        "width": 256,
+        "height": 326,
+        "renderedAt": "2026-10-16T19:36:41+08:00"
+      },
+      {
+        "skin": "relic",
+        "mode": "settings-skin",
+        "width": 780,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:42:59+08:00"
+      },
+      {
+        "skin": "relic",
+        "mode": "task",
+        "width": 560,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:41:39+08:00"
+      },
+      {
+        "skin": "relic",
+        "mode": "integration",
+        "width": 590,
+        "height": 510,
+        "renderedAt": "2026-10-16T19:41:40+08:00"
+      },
+      {
+        "skin": "relic",
+        "mode": "recovery",
+        "width": 920,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:41:40+08:00"
+      },
+      {
+        "skin": "starlight",
+        "mode": "inventory",
+        "width": 1280,
+        "height": 960,
+        "renderedAt": "2026-10-16T19:37:59+08:00"
+      },
+      {
+        "skin": "starlight",
+        "mode": "inventory-small",
+        "width": 780,
+        "height": 650,
+        "renderedAt": "2026-10-16T19:38:00+08:00"
+      },
+      {
+        "skin": "starlight",
+        "mode": "inventory-hidpi",
+        "width": 904,
+        "height": 472,
+        "renderedAt": "2026-10-16T19:38:00+08:00"
+      },
+      {
+        "skin": "starlight",
+        "mode": "inventory-short",
+        "width": 904,
+        "height": 302,
+        "renderedAt": "2026-10-16T19:46:38+08:00"
+      },
+      {
+        "skin": "starlight",
+        "mode": "compact",
+        "width": 250,
+        "height": 610,
+        "renderedAt": "2026-10-16T19:36:43+08:00"
+      },
+      {
+        "skin": "starlight",
+        "mode": "narrow",
+        "width": 210,
+        "height": 610,
+        "renderedAt": "2026-10-16T19:36:45+08:00"
+      },
+      {
+        "skin": "starlight",
+        "mode": "mini",
+        "width": 48,
+        "height": 310,
+        "renderedAt": "2026-10-16T19:43:22+08:00"
+      },
+      {
+        "skin": "starlight",
+        "mode": "expanded",
+        "width": 286,
+        "height": 730,
+        "renderedAt": "2026-10-16T19:43:22+08:00"
+      },
+      {
+        "skin": "starlight",
+        "mode": "menu",
+        "width": 256,
+        "height": 326,
+        "renderedAt": "2026-10-16T19:36:45+08:00"
+      },
+      {
+        "skin": "starlight",
+        "mode": "settings-skin",
+        "width": 780,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:43:00+08:00"
+      },
+      {
+        "skin": "starlight",
+        "mode": "task",
+        "width": 560,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:41:42+08:00"
+      },
+      {
+        "skin": "starlight",
+        "mode": "integration",
+        "width": 590,
+        "height": 510,
+        "renderedAt": "2026-10-16T19:41:43+08:00"
+      },
+      {
+        "skin": "starlight",
+        "mode": "recovery",
+        "width": 920,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:41:43+08:00"
+      },
+      {
+        "skin": "formation",
+        "mode": "inventory",
+        "width": 1280,
+        "height": 960,
+        "renderedAt": "2026-10-16T19:38:01+08:00"
+      },
+      {
+        "skin": "formation",
+        "mode": "inventory-small",
+        "width": 780,
+        "height": 650,
+        "renderedAt": "2026-10-16T19:38:02+08:00"
+      },
+      {
+        "skin": "formation",
+        "mode": "inventory-hidpi",
+        "width": 904,
+        "height": 472,
+        "renderedAt": "2026-10-16T19:38:03+08:00"
+      },
+      {
+        "skin": "formation",
+        "mode": "inventory-short",
+        "width": 904,
+        "height": 302,
+        "renderedAt": "2026-10-16T19:46:39+08:00"
+      },
+      {
+        "skin": "formation",
+        "mode": "compact",
+        "width": 250,
+        "height": 610,
+        "renderedAt": "2026-10-16T19:36:47+08:00"
+      },
+      {
+        "skin": "formation",
+        "mode": "narrow",
+        "width": 210,
+        "height": 610,
+        "renderedAt": "2026-10-16T19:36:49+08:00"
+      },
+      {
+        "skin": "formation",
+        "mode": "mini",
+        "width": 48,
+        "height": 310,
+        "renderedAt": "2026-10-16T19:43:23+08:00"
+      },
+      {
+        "skin": "formation",
+        "mode": "expanded",
+        "width": 286,
+        "height": 730,
+        "renderedAt": "2026-10-16T19:43:24+08:00"
+      },
+      {
+        "skin": "formation",
+        "mode": "menu",
+        "width": 256,
+        "height": 326,
+        "renderedAt": "2026-10-16T19:36:50+08:00"
+      },
+      {
+        "skin": "formation",
+        "mode": "settings-skin",
+        "width": 780,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:43:01+08:00"
+      },
+      {
+        "skin": "formation",
+        "mode": "task",
+        "width": 560,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:41:45+08:00"
+      },
+      {
+        "skin": "formation",
+        "mode": "integration",
+        "width": 590,
+        "height": 510,
+        "renderedAt": "2026-10-16T19:41:45+08:00"
+      },
+      {
+        "skin": "formation",
+        "mode": "recovery",
+        "width": 920,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:41:46+08:00"
+      },
+      {
+        "skin": "astral",
+        "mode": "inventory",
+        "width": 1280,
+        "height": 960,
+        "renderedAt": "2026-10-16T19:38:03+08:00"
+      },
+      {
+        "skin": "astral",
+        "mode": "inventory-small",
+        "width": 780,
+        "height": 650,
+        "renderedAt": "2026-10-16T19:38:04+08:00"
+      },
+      {
+        "skin": "astral",
+        "mode": "inventory-hidpi",
+        "width": 904,
+        "height": 472,
+        "renderedAt": "2026-10-16T19:38:05+08:00"
+      },
+      {
+        "skin": "astral",
+        "mode": "inventory-short",
+        "width": 904,
+        "height": 302,
+        "renderedAt": "2026-10-16T19:46:39+08:00"
+      },
+      {
+        "skin": "astral",
+        "mode": "compact",
+        "width": 250,
+        "height": 610,
+        "renderedAt": "2026-10-16T19:36:52+08:00"
+      },
+      {
+        "skin": "astral",
+        "mode": "narrow",
+        "width": 210,
+        "height": 610,
+        "renderedAt": "2026-10-16T19:36:54+08:00"
+      },
+      {
+        "skin": "astral",
+        "mode": "mini",
+        "width": 48,
+        "height": 310,
+        "renderedAt": "2026-10-16T19:43:24+08:00"
+      },
+      {
+        "skin": "astral",
+        "mode": "expanded",
+        "width": 286,
+        "height": 730,
+        "renderedAt": "2026-10-16T19:43:25+08:00"
+      },
+      {
+        "skin": "astral",
+        "mode": "menu",
+        "width": 256,
+        "height": 326,
+        "renderedAt": "2026-10-16T19:36:54+08:00"
+      },
+      {
+        "skin": "astral",
+        "mode": "settings-skin",
+        "width": 780,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:43:01+08:00"
+      },
+      {
+        "skin": "astral",
+        "mode": "task",
+        "width": 560,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:41:48+08:00"
+      },
+      {
+        "skin": "astral",
+        "mode": "integration",
+        "width": 590,
+        "height": 510,
+        "renderedAt": "2026-10-16T19:41:48+08:00"
+      },
+      {
+        "skin": "astral",
+        "mode": "recovery",
+        "width": 920,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:41:49+08:00"
+      },
+      {
+        "skin": "wonderland",
+        "mode": "inventory",
+        "width": 1280,
+        "height": 960,
+        "renderedAt": "2026-10-16T19:38:06+08:00"
+      },
+      {
+        "skin": "wonderland",
+        "mode": "inventory-small",
+        "width": 780,
+        "height": 650,
+        "renderedAt": "2026-10-16T19:38:06+08:00"
+      },
+      {
+        "skin": "wonderland",
+        "mode": "inventory-hidpi",
+        "width": 904,
+        "height": 472,
+        "renderedAt": "2026-10-16T19:38:07+08:00"
+      },
+      {
+        "skin": "wonderland",
+        "mode": "inventory-short",
+        "width": 904,
+        "height": 302,
+        "renderedAt": "2026-10-16T19:46:40+08:00"
+      },
+      {
+        "skin": "wonderland",
+        "mode": "compact",
+        "width": 250,
+        "height": 610,
+        "renderedAt": "2026-10-16T19:36:56+08:00"
+      },
+      {
+        "skin": "wonderland",
+        "mode": "narrow",
+        "width": 210,
+        "height": 610,
+        "renderedAt": "2026-10-16T19:36:58+08:00"
+      },
+      {
+        "skin": "wonderland",
+        "mode": "mini",
+        "width": 48,
+        "height": 310,
+        "renderedAt": "2026-10-16T19:43:25+08:00"
+      },
+      {
+        "skin": "wonderland",
+        "mode": "expanded",
+        "width": 286,
+        "height": 730,
+        "renderedAt": "2026-10-16T19:43:26+08:00"
+      },
+      {
+        "skin": "wonderland",
+        "mode": "menu",
+        "width": 256,
+        "height": 326,
+        "renderedAt": "2026-10-16T19:36:59+08:00"
+      },
+      {
+        "skin": "wonderland",
+        "mode": "settings-skin",
+        "width": 780,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:43:02+08:00"
+      },
+      {
+        "skin": "wonderland",
+        "mode": "task",
+        "width": 560,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:41:51+08:00"
+      },
+      {
+        "skin": "wonderland",
+        "mode": "integration",
+        "width": 590,
+        "height": 510,
+        "renderedAt": "2026-10-16T19:41:51+08:00"
+      },
+      {
+        "skin": "wonderland",
+        "mode": "recovery",
+        "width": 920,
+        "height": 654,
+        "renderedAt": "2026-10-16T19:41:52+08:00"
+      }
+    ]
+  },
+  "runtimeSafety": {
+    "packaged": false,
+    "appliedRealTerminalPresetsDuringQA": false,
+    "startedUserAISessions": false
+  }
+}

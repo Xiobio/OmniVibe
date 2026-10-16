@@ -444,6 +444,7 @@ public static class SelfTests
             }
             finally { if (Directory.Exists(directory)) Directory.Delete(directory, true); }
         });
+        results.AddRange(SkinTests.Run());
         return results;
     }
     public static Result RecoverySmoke()
