@@ -1,0 +1,2237 @@
+{
+  "schemaVersion": 1,
+  "packs": [
+    {
+      "skin": "InkJade",
+      "slug": "ink-jade",
+      "title": "墨玉机关",
+      "subtitle": "水墨 · 机关 · 玉石",
+      "items": [
+        {
+          "id": "ink-jade-jade-sword",
+          "name": "玉魄剑",
+          "kind": "原创风格器物",
+          "image": "ink-jade/jade-sword.png",
+          "source": "original-atlas:ink-jade",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            372,
+            416
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "ink-jade-crane-fan",
+          "name": "墨鹤羽扇",
+          "kind": "原创风格器物",
+          "image": "ink-jade/crane-fan.png",
+          "source": "original-atlas:ink-jade",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            403,
+            397
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "ink-jade-armillary",
+          "name": "青铜浑仪",
+          "kind": "原创风格器物",
+          "image": "ink-jade/armillary.png",
+          "source": "original-atlas:ink-jade",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            359,
+            399
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "ink-jade-jade-flute",
+          "name": "碧玉箫",
+          "kind": "原创风格器物",
+          "image": "ink-jade/jade-flute.png",
+          "source": "original-atlas:ink-jade",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            377,
+            400
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "ink-jade-clockwork-crossbow",
+          "name": "机关连弩",
+          "kind": "原创风格器物",
+          "image": "ink-jade/clockwork-crossbow.png",
+          "source": "original-atlas:ink-jade",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            394,
+            296
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "ink-jade-lion-censer",
+          "name": "狻猊香炉",
+          "kind": "原创风格器物",
+          "image": "ink-jade/lion-censer.png",
+          "source": "original-atlas:ink-jade",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            365,
+            386
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "ink-jade-bamboo-scroll",
+          "name": "竹简玉印",
+          "kind": "原创风格器物",
+          "image": "ink-jade/bamboo-scroll.png",
+          "source": "original-atlas:ink-jade",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            382,
+            401
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "ink-jade-lotus-lantern",
+          "name": "玉莲灯",
+          "kind": "原创风格器物",
+          "image": "ink-jade/lotus-lantern.png",
+          "source": "original-atlas:ink-jade",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            315,
+            459
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "ink-jade-dragon-key",
+          "name": "蟠龙铜钥",
+          "kind": "原创风格器物",
+          "image": "ink-jade/dragon-key.png",
+          "source": "original-atlas:ink-jade",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            354,
+            398
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        }
+      ],
+      "artDirection": "九个独立可辨识实体；原创游戏风格演绎，非官方素材",
+      "generation": {
+        "tool": "built-in image_gen.imagegen",
+        "prompt": "Create ONE production game UI sprite atlas asset for the OmniVibe theme 'Ink Jade Mechanism' (original Chinese ink-wash clockwork fantasy). Transparent background with real alpha, square 3072x3072 if possible. EXACT 3 columns x 3 rows aligned equal cells. Nine different single isolated heirloom artifacts, one centered object per cell in this reading order: 1 long jade ritual sword with black bronze hilt; 2 folding white crane feather fan with ink tips; 3 ornate bronze mechanical astrolabe shaped as interlocking open rings; 4 carved white jade flute with green silk tassel; 5 compact black wood crossbow with bronze gears; 6 antique gilt incense burner shaped like a mythical lion; 7 closed bamboo scroll bound with jade seal; 8 jade green jade lotus lantern; 9 large bronze key with dragon engraving. Rich premium realistic hand-painted game inventory illustration, refined metal/jade/wood surface details, strong distinctive silhouettes readable at 56 px. Single objects only, no characters, NO text, NO frames, NO square backplates, NO circles behind objects, NO environment, NO floor shadows. Plenty of fully transparent space (at least 8% of each cell) separating objects, every object entirely contained in its cell, axes align with 1/3 and 2/3 boundaries. Do not connect cells. Soft detailed rim light, absolutely no opaque background. Objects occupy 70-78% of cell, consistent scale and exquisite material detailing.",
+        "atlasSha256": "498d23f707afec98faa94f7c2ad6df66b5294ea93dead6741b3b1adc768ddd2e",
+        "atlasNativePixels": [
+          1254,
+          1254
+        ]
+      }
+    },
+    {
+      "skin": "Midnight",
+      "slug": "midnight",
+      "title": "玄夜青金",
+      "subtitle": "夜色 · 青金 · 山海",
+      "items": [
+        {
+          "id": "midnight-moon-halberd",
+          "name": "弦月戟",
+          "kind": "原创风格器物",
+          "image": "midnight/moon-halberd.png",
+          "source": "original-atlas:midnight",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            386,
+            396
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "midnight-star-compass",
+          "name": "青金星盘",
+          "kind": "原创风格器物",
+          "image": "midnight/star-compass.png",
+          "source": "original-atlas:midnight",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            361,
+            411
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "midnight-celestial-fan",
+          "name": "星图折扇",
+          "kind": "原创风格器物",
+          "image": "midnight/celestial-fan.png",
+          "source": "original-atlas:midnight",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            421,
+            367
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "midnight-crane-lantern",
+          "name": "银鹤宫灯",
+          "kind": "原创风格器物",
+          "image": "midnight/crane-lantern.png",
+          "source": "original-atlas:midnight",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            415,
+            416
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "midnight-dragon-orb",
+          "name": "苍龙星珠",
+          "kind": "原创风格器物",
+          "image": "midnight/dragon-orb.png",
+          "source": "original-atlas:midnight",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            337,
+            374
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "midnight-night-zither",
+          "name": "玄夜古琴",
+          "kind": "原创风格器物",
+          "image": "midnight/night-zither.png",
+          "source": "original-atlas:midnight",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            413,
+            357
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "midnight-meteor-dagger",
+          "name": "陨铁短匕",
+          "kind": "原创风格器物",
+          "image": "midnight/meteor-dagger.png",
+          "source": "original-atlas:midnight",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            400,
+            412
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "midnight-whale-pendant",
+          "name": "银鲸佩",
+          "kind": "原创风格器物",
+          "image": "midnight/whale-pendant.png",
+          "source": "original-atlas:midnight",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            342,
+            375
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "midnight-lunar-tome",
+          "name": "月华秘卷",
+          "kind": "原创风格器物",
+          "image": "midnight/lunar-tome.png",
+          "source": "original-atlas:midnight",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            375,
+            377
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        }
+      ],
+      "artDirection": "九个独立可辨识实体；原创游戏风格演绎，非官方素材",
+      "generation": {
+        "tool": "built-in image_gen.imagegen",
+        "prompt": "ONE production sprite ATLAS asset, real transparent alpha, exact 3 by 3 equal-grid cells, square high resolution. Nine different isolated artifacts centered one per cell, with large 10% transparent gutters inside each cell. No text, no frames, no pedestals, no environment, no circles behind objects, no shadows, no unrelated effects. Each fully contained in its own cell, no overlap across cell boundaries. Exquisite painterly-realistic AAA inventory render, highly detailed materials, clear distinct silhouettes readable at 56px. Theme: original midnight celestial Chinese fantasy, deep indigo enamel, silver and luminous moonstone. Objects reading order: 1 silver crescent halberd, 2 celestial compass with lapis inlay, 3 star-map folding fan, 4 winged crane lantern, 5 blue crystal orb held by silver dragon talons, 6 polished dark zither with silver strings, 7 meteor-iron dagger with pale-blue tassel, 8 silver whale pendant, 9 ornate closed lunar scripture tome. All are unique physical heirlooms, not abstract geometric symbols. Restrained cool highlights.",
+        "atlasSha256": "04832cc714907b63cd1eb37ecef2525e2f572457d45b28757313e2d50372f73e",
+        "atlasNativePixels": [
+          1254,
+          1254
+        ]
+      }
+    },
+    {
+      "skin": "Cinnabar",
+      "slug": "cinnabar",
+      "title": "朱砂藏锋",
+      "subtitle": "漆红 · 古铜 · 藏锋",
+      "items": [
+        {
+          "id": "cinnabar-dragon-saber",
+          "name": "赤绫龙刀",
+          "kind": "原创风格器物",
+          "image": "cinnabar/dragon-saber.png",
+          "source": "original-atlas:cinnabar",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            369,
+            397
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "cinnabar-war-drum",
+          "name": "朱漆战鼓",
+          "kind": "原创风格器物",
+          "image": "cinnabar/war-drum.png",
+          "source": "original-atlas:cinnabar",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            398,
+            372
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "cinnabar-gourd-flask",
+          "name": "鎏金酒葫",
+          "kind": "原创风格器物",
+          "image": "cinnabar/gourd-flask.png",
+          "source": "original-atlas:cinnabar",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            278,
+            410
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "cinnabar-phoenix-mask",
+          "name": "丹凤面具",
+          "kind": "原创风格器物",
+          "image": "cinnabar/phoenix-mask.png",
+          "source": "original-atlas:cinnabar",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            369,
+            390
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "cinnabar-tiger-tally",
+          "name": "青铜虎符",
+          "kind": "原创风格器物",
+          "image": "cinnabar/tiger-tally.png",
+          "source": "original-atlas:cinnabar",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            356,
+            386
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "cinnabar-lacquer-crossbow",
+          "name": "赤漆弩",
+          "kind": "原创风格器物",
+          "image": "cinnabar/lacquer-crossbow.png",
+          "source": "original-atlas:cinnabar",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            405,
+            331
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "cinnabar-temple-bell",
+          "name": "红缨铜铃",
+          "kind": "原创风格器物",
+          "image": "cinnabar/temple-bell.png",
+          "source": "original-atlas:cinnabar",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            274,
+            409
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "cinnabar-lotus-crown",
+          "name": "焰莲冠",
+          "kind": "原创风格器物",
+          "image": "cinnabar/lotus-crown.png",
+          "source": "original-atlas:cinnabar",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            408,
+            404
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "cinnabar-dragon-brush",
+          "name": "朱砂龙笔",
+          "kind": "原创风格器物",
+          "image": "cinnabar/dragon-brush.png",
+          "source": "original-atlas:cinnabar",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            333,
+            418
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        }
+      ],
+      "artDirection": "九个独立可辨识实体；原创游戏风格演绎，非官方素材",
+      "generation": {
+        "tool": "built-in image_gen.imagegen",
+        "prompt": "ONE production sprite ATLAS asset, real transparent alpha, exact 3 by 3 equal-grid cells, square high resolution. Nine different isolated artifacts centered one per cell, with large 10% transparent gutters inside each cell. No text, no frames, no pedestals, no environment, no circles behind objects, no shadows, no unrelated effects. Each fully contained in its own cell, no overlap across cell boundaries. Exquisite painterly-realistic AAA inventory render, highly detailed materials, clear distinct silhouettes readable at 56px. Theme: original crimson lacquer martial arts fantasy, cinnabar red, aged bronze and warm gold. Objects reading order: 1 dragon-engraved saber red silk grip, 2 war drum with vermilion lacquer and bronze tacks, 3 golden gourd flask red rope, 4 ornate phoenix mask, 5 bronze tiger command tally, 6 lacquered red imperial crossbow, 7 small ornamental bronze temple bell red tassel, 8 intricate fire-red lotus crown, 9 sealed cinnabar lacquer brush with carved dragon handle. Authentic varied forms, material craftsmanship, not recolors of same objects.",
+        "atlasSha256": "69aed6be398ca634844a3a66b1cbd88b4ea5223a52b18f86d76fa2c83c5f669a",
+        "atlasNativePixels": [
+          1254,
+          1254
+        ]
+      }
+    },
+    {
+      "skin": "Hextech",
+      "slug": "hextech",
+      "title": "英雄联盟 · 海克斯枢纽",
+      "subtitle": "黄铜齿环 · 棱晶能量",
+      "items": [
+        {
+          "id": "hextech-shark-launcher",
+          "name": "金克丝 · 鲨齿火箭炮",
+          "kind": "原创风格器物",
+          "image": "hextech/shark-launcher.png",
+          "source": "original-atlas:hextech",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            417,
+            300
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "hextech-hex-gauntlet",
+          "name": "蔚 · 海克斯拳套",
+          "kind": "原创风格器物",
+          "image": "hextech/hex-gauntlet.png",
+          "source": "original-atlas:hextech",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            303,
+            340
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "hextech-long-rifle",
+          "name": "凯特琳 · 精密长枪",
+          "kind": "原创风格器物",
+          "image": "hextech/long-rifle.png",
+          "source": "original-atlas:hextech",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            400,
+            343
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "hextech-hex-hammer",
+          "name": "杰斯 · 水晶战锤",
+          "kind": "原创风格器物",
+          "image": "hextech/hex-hammer.png",
+          "source": "original-atlas:hextech",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            391,
+            408
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "hextech-time-blade",
+          "name": "艾克 · 时光刃",
+          "kind": "原创风格器物",
+          "image": "hextech/time-blade.png",
+          "source": "original-atlas:hextech",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            372,
+            380
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "hextech-fox-orb",
+          "name": "阿狸 · 灵狐宝珠",
+          "kind": "原创风格器物",
+          "image": "hextech/fox-orb.png",
+          "source": "original-atlas:hextech",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            415,
+            397
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "hextech-wind-katana",
+          "name": "亚索 · 御风长刀",
+          "kind": "原创风格器物",
+          "image": "hextech/wind-katana.png",
+          "source": "original-atlas:hextech",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            436,
+            365
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "hextech-frost-bow",
+          "name": "艾希 · 臻冰弓",
+          "kind": "原创风格器物",
+          "image": "hextech/frost-bow.png",
+          "source": "original-atlas:hextech",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            374,
+            419
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "hextech-soul-lantern",
+          "name": "锤石 · 幽魂灯笼",
+          "kind": "原创风格器物",
+          "image": "hextech/soul-lantern.png",
+          "source": "original-atlas:hextech",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            404,
+            411
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        }
+      ],
+      "artDirection": "九个独立可辨识实体；原创游戏风格演绎，非官方素材",
+      "generation": {
+        "tool": "built-in image_gen.imagegen",
+        "prompt": "Create ONE production game UI SPRITE ATLAS with genuine transparent alpha. Exact 3x3 equal grid on square canvas at highest resolution available. NINE different isolated single objects, one centered in each cell in reading order. IMPORTANT each object occupies 65-72% of its cell and every edge is separated from cell boundaries by generous transparent gutters (minimum 12% margin on each side). NO text, logos, frames, tiles, floor shadows, environment or background circles; no connecting cells. Exquisite rich hand-painted AAA inventory render, highly detailed surfaces and strong distinctive silhouettes recognizable at small UI size. Single collection unified by a game's aesthetic, each object distinct not recolors. Theme: League of Legends champion signature equipment, original visual reinterpretations, Hextech brass/teal and hand-painted fantasy weapons. 1 Jinx's shark-shaped rocket launcher, blue steel toothy muzzle and pink details; 2 Vi's giant single bronze mechanical gauntlet with glowing teal pistons; 3 Caitlyn's elegant long brass scoped rifle with blue hex crystal; 4 Jayce's oversized golden hextech hammer with bright blue core; 5 Ekko's futuristic asymmetrical time sword with green glass hourglass energy; 6 Ahri's luminous blue fox-spirit orb with NINE small wispy fox tails around it (one compact object); 7 Yasuo's narrow curved steel katana with blue wrapping and tassel; 8 Ashe's frosty ornate recurve bow formed from ice; 9 Thresh's hooked spectral green lantern with rugged chains. These are original fan-inspired props, no character portraits.",
+        "atlasSha256": "33a84e8a2079a7fbed70321ccadb88936b13b189b6accf692afd7c5452a9d708",
+        "atlasNativePixels": [
+          1254,
+          1254
+        ]
+      }
+    },
+    {
+      "skin": "Tactical",
+      "slug": "tactical",
+      "title": "三角洲行动 · 战术终端",
+      "subtitle": "炭黑合金 · 坐标标尺",
+      "items": [
+        {
+          "id": "tactical-mcx",
+          "name": "MCX · 短突击步枪",
+          "kind": "原创风格器物",
+          "image": "tactical/mcx.png",
+          "source": "original-atlas:tactical",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            416,
+            321
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "tactical-m4",
+          "name": "M4 · 战术卡宾枪",
+          "kind": "原创风格器物",
+          "image": "tactical/m4.png",
+          "source": "original-atlas:tactical",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            431,
+            342
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "tactical-awm",
+          "name": "AWM · 精密狙击枪",
+          "kind": "原创风格器物",
+          "image": "tactical/awm.png",
+          "source": "original-atlas:tactical",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            428,
+            369
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "tactical-mp5",
+          "name": "MP5 · 冲锋枪",
+          "kind": "原创风格器物",
+          "image": "tactical/mp5.png",
+          "source": "original-atlas:tactical",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            415,
+            338
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "tactical-ak",
+          "name": "AK · 木托突击步枪",
+          "kind": "原创风格器物",
+          "image": "tactical/ak.png",
+          "source": "original-atlas:tactical",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            444,
+            345
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "tactical-shotgun",
+          "name": "泵动霰弹枪",
+          "kind": "原创风格器物",
+          "image": "tactical/shotgun.png",
+          "source": "original-atlas:tactical",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            421,
+            357
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "tactical-lmg",
+          "name": "弹链轻机枪",
+          "kind": "原创风格器物",
+          "image": "tactical/lmg.png",
+          "source": "original-atlas:tactical",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            509,
+            314
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "tactical-combat-knife",
+          "name": "战术匕首",
+          "kind": "原创风格器物",
+          "image": "tactical/combat-knife.png",
+          "source": "original-atlas:tactical",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            342,
+            358
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "tactical-recon-drone",
+          "name": "侦察四轴无人机",
+          "kind": "原创风格器物",
+          "image": "tactical/recon-drone.png",
+          "source": "original-atlas:tactical",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            404,
+            296
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        }
+      ],
+      "artDirection": "九个独立可辨识实体；原创游戏风格演绎，非官方素材",
+      "generation": {
+        "tool": "built-in image_gen.imagegen",
+        "prompt": "Create ONE production game UI SPRITE ATLAS with genuine transparent alpha. Exact 3x3 equal grid on square canvas at highest resolution available. NINE different isolated single objects, one centered in each cell in reading order. IMPORTANT each object occupies 65-72% of its cell and every edge is separated from cell boundaries by generous transparent gutters (minimum 12% margin on each side). NO text, logos, frames, tiles, floor shadows, environment or background circles; no connecting cells. Exquisite rich hand-painted AAA inventory render, highly detailed surfaces and strong distinctive silhouettes recognizable at small UI size. Single collection unified by a game's aesthetic, each object distinct not recolors. Theme: Delta Force modern tactical loadout, nine distinct realistic military firearms/tools. Cool charcoal steel, olive polymer, worn tan surfaces and restrained green optics. 1 compact tan MCX assault rifle with holographic sight; 2 black long-barrel M4 carbine with vertical grip; 3 olive AWM bolt-action sniper rifle with long optic; 4 compact black MP5 submachine gun with curved magazine; 5 weathered wood-and-steel AK assault rifle; 6 black tactical combat shotgun with shell carrier; 7 bulky belt-fed light machine gun with box magazine; 8 matte black combat dagger with serrated spine; 9 folded reconnaissance quadcopter with round lens and olive chassis. Each gun photographed as complete full silhouette diagonal to fit cell, no cropping, independent high-grade realistic product illustration.",
+        "atlasSha256": "3acc59c63e5271c398ccf512e31dcf37ac9ee2c574a6d5bde78b0d0a0966e349",
+        "atlasNativePixels": [
+          1254,
+          1254
+        ]
+      }
+    },
+    {
+      "skin": "Protocol",
+      "slug": "protocol",
+      "title": "无畏契约 · 行动协议",
+      "subtitle": "几何切角 · 高对比指令",
+      "items": [
+        {
+          "id": "protocol-jett",
+          "name": "捷风 · Jett",
+          "kind": "特工 · 原游戏立绘",
+          "image": "protocol/jett.png",
+          "source": "https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/fullportrait.png",
+          "sourcePage": "https://playvalorant.com/en-us/agents/jett/",
+          "sourceSha256": "4b103d4002ec803d0905a53b18ad1f7a37daf05a45dbfb37b1008345b83f6d10",
+          "sourcePixels": [
+            2048,
+            1860
+          ],
+          "nativeContentPixels": [
+            858,
+            1658
+          ],
+          "provenance": "Riot Games《无畏契约》原游戏特工立绘，Valorant-API社区镜像；版权属于Riot Games，不属于OmniVibe开源代码许可证；非官方合作。",
+          "processing": "Transparent bounds trimmed; Lanczos downsample to max 1200 content edge; 12px transparent safety margin."
+        },
+        {
+          "id": "protocol-sage",
+          "name": "贤者 · Sage",
+          "kind": "特工 · 原游戏立绘",
+          "image": "protocol/sage.png",
+          "source": "https://media.valorant-api.com/agents/569fdd95-4d10-43ab-ca70-79becc718b46/fullportrait.png",
+          "sourcePage": "https://playvalorant.com/en-us/agents/sage/",
+          "sourceSha256": "9aeed282ee46d7a46f1ad21e455f998d948f022c74ea47aa1a88395b29d279b2",
+          "sourcePixels": [
+            2048,
+            1860
+          ],
+          "nativeContentPixels": [
+            1049,
+            1633
+          ],
+          "provenance": "Riot Games《无畏契约》原游戏特工立绘，Valorant-API社区镜像；版权属于Riot Games，不属于OmniVibe开源代码许可证；非官方合作。",
+          "processing": "Transparent bounds trimmed; Lanczos downsample to max 1200 content edge; 12px transparent safety margin."
+        },
+        {
+          "id": "protocol-reyna",
+          "name": "蕾娜 · Reyna",
+          "kind": "特工 · 原游戏立绘",
+          "image": "protocol/reyna.png",
+          "source": "https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/fullportrait.png",
+          "sourcePage": "https://playvalorant.com/en-us/agents/reyna/",
+          "sourceSha256": "dda6192a4354cc7924e97d1a8941f69df1a82aeffa74bdfedffa6bc4abdc5d88",
+          "sourcePixels": [
+            2048,
+            1860
+          ],
+          "nativeContentPixels": [
+            993,
+            1839
+          ],
+          "provenance": "Riot Games《无畏契约》原游戏特工立绘，Valorant-API社区镜像；版权属于Riot Games，不属于OmniVibe开源代码许可证；非官方合作。",
+          "processing": "Transparent bounds trimmed; Lanczos downsample to max 1200 content edge; 12px transparent safety margin."
+        },
+        {
+          "id": "protocol-raze",
+          "name": "雷兹 · Raze",
+          "kind": "特工 · 原游戏立绘",
+          "image": "protocol/raze.png",
+          "source": "https://media.valorant-api.com/agents/f94c3b30-42be-e959-889c-5aa313dba261/fullportrait.png",
+          "sourcePage": "https://playvalorant.com/en-us/agents/raze/",
+          "sourceSha256": "b2104cb01fde715583df1f664e4894043f0934636a2f967e98610afd1fff9751",
+          "sourcePixels": [
+            2048,
+            1860
+          ],
+          "nativeContentPixels": [
+            1320,
+            1782
+          ],
+          "provenance": "Riot Games《无畏契约》原游戏特工立绘，Valorant-API社区镜像；版权属于Riot Games，不属于OmniVibe开源代码许可证；非官方合作。",
+          "processing": "Transparent bounds trimmed; Lanczos downsample to max 1200 content edge; 12px transparent safety margin."
+        },
+        {
+          "id": "protocol-cypher",
+          "name": "零 · Cypher",
+          "kind": "特工 · 原游戏立绘",
+          "image": "protocol/cypher.png",
+          "source": "https://media.valorant-api.com/agents/117ed9e3-49f3-6512-3ccf-0cada7e3823b/fullportrait.png",
+          "sourcePage": "https://playvalorant.com/en-us/agents/cypher/",
+          "sourceSha256": "7804cd71ecd155c336f5443835eee1b3a8ccf9b3ef0857826eb991c50520f0b9",
+          "sourcePixels": [
+            2048,
+            1860
+          ],
+          "nativeContentPixels": [
+            813,
+            1654
+          ],
+          "provenance": "Riot Games《无畏契约》原游戏特工立绘，Valorant-API社区镜像；版权属于Riot Games，不属于OmniVibe开源代码许可证；非官方合作。",
+          "processing": "Transparent bounds trimmed; Lanczos downsample to max 1200 content edge; 12px transparent safety margin."
+        },
+        {
+          "id": "protocol-killjoy",
+          "name": "奇乐 · Killjoy",
+          "kind": "特工 · 原游戏立绘",
+          "image": "protocol/killjoy.png",
+          "source": "https://media.valorant-api.com/agents/1e58de9c-4950-5125-93e9-a0aee9f98746/fullportrait.png",
+          "sourcePage": "https://playvalorant.com/en-us/agents/killjoy/",
+          "sourceSha256": "29e4d63ee7bde75f8d537ade4d358334ce2af959db3dc4767678a8ac1e6b2e8e",
+          "sourcePixels": [
+            2048,
+            1860
+          ],
+          "nativeContentPixels": [
+            1138,
+            1730
+          ],
+          "provenance": "Riot Games《无畏契约》原游戏特工立绘，Valorant-API社区镜像；版权属于Riot Games，不属于OmniVibe开源代码许可证；非官方合作。",
+          "processing": "Transparent bounds trimmed; Lanczos downsample to max 1200 content edge; 12px transparent safety margin."
+        },
+        {
+          "id": "protocol-sova",
+          "name": "猎枭 · Sova",
+          "kind": "特工 · 原游戏立绘",
+          "image": "protocol/sova.png",
+          "source": "https://media.valorant-api.com/agents/320b2a48-4d9b-a075-30f1-1f93a9b638fa/fullportrait.png",
+          "sourcePage": "https://playvalorant.com/en-us/agents/sova/",
+          "sourceSha256": "c44e404ccd4f6f957df737818264aa9213bb7649cb1b6b2377e4ca84028a5990",
+          "sourcePixels": [
+            2048,
+            1860
+          ],
+          "nativeContentPixels": [
+            1266,
+            1663
+          ],
+          "provenance": "Riot Games《无畏契约》原游戏特工立绘，Valorant-API社区镜像；版权属于Riot Games，不属于OmniVibe开源代码许可证；非官方合作。",
+          "processing": "Transparent bounds trimmed; Lanczos downsample to max 1200 content edge; 12px transparent safety margin."
+        },
+        {
+          "id": "protocol-omen",
+          "name": "幽影 · Omen",
+          "kind": "特工 · 原游戏立绘",
+          "image": "protocol/omen.png",
+          "source": "https://media.valorant-api.com/agents/8e253930-4c05-31dd-1b6c-968525494517/fullportrait.png",
+          "sourcePage": "https://playvalorant.com/en-us/agents/omen/",
+          "sourceSha256": "2e441ed5abe0bcbd8a0a798fa19f03fd8e6abd94bf9d93eb074ff3810122217d",
+          "sourcePixels": [
+            2048,
+            1860
+          ],
+          "nativeContentPixels": [
+            1014,
+            1628
+          ],
+          "provenance": "Riot Games《无畏契约》原游戏特工立绘，Valorant-API社区镜像；版权属于Riot Games，不属于OmniVibe开源代码许可证；非官方合作。",
+          "processing": "Transparent bounds trimmed; Lanczos downsample to max 1200 content edge; 12px transparent safety margin."
+        },
+        {
+          "id": "protocol-viper",
+          "name": "蝰蛇 · Viper",
+          "kind": "特工 · 原游戏立绘",
+          "image": "protocol/viper.png",
+          "source": "https://media.valorant-api.com/agents/707eab51-4836-f488-046a-cda6bf494859/fullportrait.png",
+          "sourcePage": "https://playvalorant.com/en-us/agents/viper/",
+          "sourceSha256": "341523b31be642541dcf2c61c066bd531d05a950558bf4dbde3cd64e6468948c",
+          "sourcePixels": [
+            2048,
+            1860
+          ],
+          "nativeContentPixels": [
+            767,
+            1590
+          ],
+          "provenance": "Riot Games《无畏契约》原游戏特工立绘，Valorant-API社区镜像；版权属于Riot Games，不属于OmniVibe开源代码许可证；非官方合作。",
+          "processing": "Transparent bounds trimmed; Lanczos downsample to max 1200 content edge; 12px transparent safety margin."
+        }
+      ],
+      "artDirection": "原游戏特工透明立绘；权利归属与来源逐项保留"
+    },
+    {
+      "skin": "Adventure",
+      "slug": "adventure",
+      "title": "地下城与勇士 · 冒险装备栏",
+      "subtitle": "锻钢浮雕 · 皮革装具",
+      "items": [
+        {
+          "id": "adventure-demon-sword",
+          "name": "狂战士 · 魔剑",
+          "kind": "原创风格器物",
+          "image": "adventure/demon-sword.png",
+          "source": "original-atlas:adventure",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            418,
+            391
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "adventure-violet-katana",
+          "name": "剑宗 · 紫刃",
+          "kind": "原创风格器物",
+          "image": "adventure/violet-katana.png",
+          "source": "original-atlas:adventure",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            417,
+            386
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "adventure-crystal-staff",
+          "name": "魔法师 · 晶杖",
+          "kind": "原创风格器物",
+          "image": "adventure/crystal-staff.png",
+          "source": "original-atlas:adventure",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            370,
+            397
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "adventure-silver-revolver",
+          "name": "神枪手 · 银色左轮",
+          "kind": "原创风格器物",
+          "image": "adventure/silver-revolver.png",
+          "source": "original-atlas:adventure",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            407,
+            371
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "adventure-holy-cross",
+          "name": "圣职者 · 圣十字",
+          "kind": "原创风格器物",
+          "image": "adventure/holy-cross.png",
+          "source": "original-atlas:adventure",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            339,
+            404
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "adventure-iron-gauntlets",
+          "name": "格斗家 · 铁拳",
+          "kind": "原创风格器物",
+          "image": "adventure/iron-gauntlets.png",
+          "source": "original-atlas:adventure",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            375,
+            350
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "adventure-twin-daggers",
+          "name": "暗夜使者 · 双匕",
+          "kind": "原创风格器物",
+          "image": "adventure/twin-daggers.png",
+          "source": "original-atlas:adventure",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            391,
+            423
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "adventure-emerald-bow",
+          "name": "弓箭手 · 翡翠弓",
+          "kind": "原创风格器物",
+          "image": "adventure/emerald-bow.png",
+          "source": "original-atlas:adventure",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            372,
+            432
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "adventure-dragon-spear",
+          "name": "魔枪士 · 龙枪",
+          "kind": "原创风格器物",
+          "image": "adventure/dragon-spear.png",
+          "source": "original-atlas:adventure",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            393,
+            432
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        }
+      ],
+      "artDirection": "九个独立可辨识实体；原创游戏风格演绎，非官方素材",
+      "generation": {
+        "tool": "built-in image_gen.imagegen",
+        "prompt": "Create ONE production game UI SPRITE ATLAS with genuine transparent alpha. Exact 3x3 equal grid on square canvas at highest resolution available. NINE different isolated single objects, one centered in each cell in reading order. IMPORTANT each object occupies 65-72% of its cell and every edge is separated from cell boundaries by generous transparent gutters (minimum 12% margin on each side). NO text, logos, frames, tiles, floor shadows, environment or background circles; no connecting cells. Exquisite rich hand-painted AAA inventory render, highly detailed surfaces and strong distinctive silhouettes recognizable at small UI size. Single collection unified by a game's aesthetic, each object distinct not recolors. Theme: Dungeon and Fighter heroic side-scrolling RPG, original class signature equipment. Dynamic painterly ornate equipment, burnished gold, violet enchantments and iron leather. 1 Berserker's broad jagged crimson demon sword; 2 Swordmaster's elegant long violet katana; 3 female mage's carved wooden staff with vivid blue crystal; 4 male gunner's massive engraved silver revolver; 5 priest's golden holy cross reliquary; 6 female fighter's pair of spiked leather gauntlets as one compact pair; 7 thief's two curved daggers held crossed compactly; 8 archer's intricately curved emerald dragon bow; 9 lancer's silver dragon-wing spear. Each instantly distinct, premium RPG loot painting, no characters.",
+        "atlasSha256": "94029db4ed92b145b77498b04d5344b951e46920e759ed7476f778c33e2eaf97",
+        "atlasNativePixels": [
+          1254,
+          1254
+        ]
+      }
+    },
+    {
+      "skin": "Arsenal",
+      "slug": "arsenal",
+      "title": "永劫无间 · 无间兵器匣",
+      "subtitle": "玄铁兵装 · 赤铜符印",
+      "items": [
+        {
+          "id": "katana",
+          "name": "宁红夜",
+          "kind": "角色持武器 · 高清演绎",
+          "image": "arsenal/katana.png",
+          "source": "https://www.narakathegame.com/pc/gw/20210601195432/img/nhy-bg_45da5fc5.png",
+          "sourceSha256": "fa9d022bd6ebaffc13a9f19e3a1598c50e4f23451a889f45f0c31e5d26d12b06",
+          "sourcePixels": [
+            1024,
+            1536
+          ],
+          "nativeContentPixels": [
+            1024,
+            1536
+          ],
+          "provenance": "复用OmniVibe已有characters-v2：参考NetEase永劫无间官方角色立绘，由内置imagegen生成透明持械演绎。不是原始官方渲染，角色权利属于NetEase。",
+          "processing": "Existing approved character render reused; transparent bounds trimmed and downsampled to max 1024 content edge; 12px safety margin."
+        },
+        {
+          "id": "greatsword",
+          "name": "妖刀姬",
+          "kind": "角色持武器 · 高清演绎",
+          "image": "arsenal/greatsword.png",
+          "source": "https://www.narakathegame.com/pc/gw/20210601195432/img/ydj-bg_56b3b9ef.png",
+          "sourceSha256": "d2801bded1a00e7a82cf5becc020741686baba605082c3f7783bac4086933cc6",
+          "sourcePixels": [
+            1024,
+            1536
+          ],
+          "nativeContentPixels": [
+            1024,
+            1536
+          ],
+          "provenance": "复用OmniVibe已有characters-v2：参考NetEase永劫无间官方角色立绘，由内置imagegen生成透明持械演绎。不是原始官方渲染，角色权利属于NetEase。",
+          "processing": "Existing approved character render reused; transparent bounds trimmed and downsampled to max 1024 content edge; 12px safety margin."
+        },
+        {
+          "id": "longsword",
+          "name": "无尘",
+          "kind": "角色持武器 · 高清演绎",
+          "image": "arsenal/longsword.png",
+          "source": "https://www.narakathegame.com/pc/gw/20210601195432/img/wc-bg_79fd7d48.png",
+          "sourceSha256": "238c1a46c581d8c81bc480646275fa25ff93b6100e1d5205e53a4f371dafd816",
+          "sourcePixels": [
+            1024,
+            1536
+          ],
+          "nativeContentPixels": [
+            1024,
+            1536
+          ],
+          "provenance": "复用OmniVibe已有characters-v2：参考NetEase永劫无间官方角色立绘，由内置imagegen生成透明持械演绎。不是原始官方渲染，角色权利属于NetEase。",
+          "processing": "Existing approved character render reused; transparent bounds trimmed and downsampled to max 1024 content edge; 12px safety margin."
+        },
+        {
+          "id": "spear",
+          "name": "岳山",
+          "kind": "角色持武器 · 高清演绎",
+          "image": "arsenal/spear.png",
+          "source": "https://www.narakathegame.com/pc/gw/20210601195432/img/ys-bg_ea9f2a13.png",
+          "sourceSha256": "902cfb392aa678a3bbc3cfe7d388a8dc92f650df4bf5b172dda039e91a1a5ae7",
+          "sourcePixels": [
+            1024,
+            1536
+          ],
+          "nativeContentPixels": [
+            1024,
+            1536
+          ],
+          "provenance": "复用OmniVibe已有characters-v2：参考NetEase永劫无间官方角色立绘，由内置imagegen生成透明持械演绎。不是原始官方渲染，角色权利属于NetEase。",
+          "processing": "Existing approved character render reused; transparent bounds trimmed and downsampled to max 1024 content edge; 12px safety margin."
+        },
+        {
+          "id": "dagger",
+          "name": "顾清寒",
+          "kind": "角色持武器 · 高清演绎",
+          "image": "arsenal/dagger.png",
+          "source": "https://www.narakathegame.com/pc/gw/20210601195432/img/gqh-bg_de2173f3.png",
+          "sourceSha256": "73caf17762cbf2280bf1386a9935bf2e899eb65eea83a126ab7f94b21088f4ce",
+          "sourcePixels": [
+            1024,
+            1536
+          ],
+          "nativeContentPixels": [
+            1024,
+            1536
+          ],
+          "provenance": "复用OmniVibe已有characters-v2：参考NetEase永劫无间官方角色立绘，由内置imagegen生成透明持械演绎。不是原始官方渲染，角色权利属于NetEase。",
+          "processing": "Existing approved character render reused; transparent bounds trimmed and downsampled to max 1024 content edge; 12px safety margin."
+        },
+        {
+          "id": "staff",
+          "name": "土御门胡桃",
+          "kind": "角色持武器 · 高清演绎",
+          "image": "arsenal/staff.png",
+          "source": "https://www.narakathegame.com/pc/gw/20210601195432/img/tymht-bg_2c45c203.png",
+          "sourceSha256": "dd049f114fc8b2511fc8f70b28cc1367a59baeccbfb10a08e7a24cac46a90271",
+          "sourcePixels": [
+            1024,
+            1536
+          ],
+          "nativeContentPixels": [
+            1024,
+            1536
+          ],
+          "provenance": "复用OmniVibe已有characters-v2：参考NetEase永劫无间官方角色立绘，由内置imagegen生成透明持械演绎。不是原始官方渲染，角色权利属于NetEase。",
+          "processing": "Existing approved character render reused; transparent bounds trimmed and downsampled to max 1024 content edge; 12px safety margin."
+        },
+        {
+          "id": "bow",
+          "name": "殷紫萍",
+          "kind": "角色持武器 · 高清演绎",
+          "image": "arsenal/bow.png",
+          "source": "https://www.narakathegame.com/pc/gw/20210601195432/img/yzp-bg_0bcfe398.png",
+          "sourceSha256": "6c9d2e7b45fd5f33a3b104abe71d5d6e85acfe7a5a0101cb2d6e627f9d612736",
+          "sourcePixels": [
+            1024,
+            1536
+          ],
+          "nativeContentPixels": [
+            1024,
+            1536
+          ],
+          "provenance": "复用OmniVibe已有characters-v2：参考NetEase永劫无间官方角色立绘，由内置imagegen生成透明持械演绎。不是原始官方渲染，角色权利属于NetEase。",
+          "processing": "Existing approved character render reused; transparent bounds trimmed and downsampled to max 1024 content edge; 12px safety margin."
+        },
+        {
+          "id": "dualblades",
+          "name": "季莹莹",
+          "kind": "角色持武器 · 高清演绎",
+          "image": "arsenal/dualblades.png",
+          "source": "https://www.narakathegame.com/pc/gw/20210601195432/img/jyy-bg_76b5618e.png",
+          "sourceSha256": "c40917ba40f359d5b34d6326d39aea5a51aab46f176201c93012192cf188bcee",
+          "sourcePixels": [
+            1024,
+            1536
+          ],
+          "nativeContentPixels": [
+            1024,
+            1520
+          ],
+          "provenance": "复用OmniVibe已有characters-v2：参考NetEase永劫无间官方角色立绘，由内置imagegen生成透明持械演绎。不是原始官方渲染，角色权利属于NetEase。",
+          "processing": "Existing approved character render reused; transparent bounds trimmed and downsampled to max 1024 content edge; 12px safety margin."
+        },
+        {
+          "id": "halberds",
+          "name": "崔三娘",
+          "kind": "角色持武器 · 高清演绎",
+          "image": "arsenal/halberds.png",
+          "source": "https://www.narakathegame.com/pc/gw/20210601195432/img/csn-bg_ab073144.png",
+          "sourceSha256": "1f5a2fd85fb402fbb408d76332cecc6e3a971f631a13354c162fb7a22fcbe818",
+          "sourcePixels": [
+            1024,
+            1536
+          ],
+          "nativeContentPixels": [
+            1024,
+            1536
+          ],
+          "provenance": "复用OmniVibe已有characters-v2：参考NetEase永劫无间官方角色立绘，由内置imagegen生成透明持械演绎。不是原始官方渲染，角色权利属于NetEase。",
+          "processing": "Existing approved character render reused; transparent bounds trimmed and downsampled to max 1024 content edge; 12px safety margin."
+        }
+      ],
+      "artDirection": "既有九位持械角色高清透明演绎；保留旧配装ID兼容"
+    },
+    {
+      "skin": "Relic",
+      "slug": "relic",
+      "title": "黑神话：悟空 · 灵蕴法宝匣",
+      "subtitle": "玄岩石龛 · 錾金灵蕴",
+      "items": [
+        {
+          "id": "relic-iron-staff",
+          "name": "金箍铁杖 · 演绎",
+          "kind": "原创风格器物",
+          "image": "relic/iron-staff.png",
+          "source": "original-atlas:relic",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            420,
+            402
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "relic-healing-gourd",
+          "name": "赤漆宝葫 · 演绎",
+          "kind": "原创风格器物",
+          "image": "relic/healing-gourd.png",
+          "source": "original-atlas:relic",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            314,
+            404
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "relic-gold-cicada",
+          "name": "金蝉 · 演绎",
+          "kind": "原创风格器物",
+          "image": "relic/gold-cicada.png",
+          "source": "original-atlas:relic",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            383,
+            360
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "relic-wind-pearl",
+          "name": "定风灵珠 · 演绎",
+          "kind": "原创风格器物",
+          "image": "relic/wind-pearl.png",
+          "source": "original-atlas:relic",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            346,
+            381
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "relic-ritual-bell",
+          "name": "辟火铜钟 · 演绎",
+          "kind": "原创风格器物",
+          "image": "relic/ritual-bell.png",
+          "source": "original-atlas:relic",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            326,
+            425
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "relic-leaf-fan",
+          "name": "蕉叶宝扇 · 演绎",
+          "kind": "原创风格器物",
+          "image": "relic/leaf-fan.png",
+          "source": "original-atlas:relic",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            406,
+            414
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "relic-monkey-mask",
+          "name": "灵猴面甲 · 演绎",
+          "kind": "原创风格器物",
+          "image": "relic/monkey-mask.png",
+          "source": "original-atlas:relic",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            392,
+            383
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "relic-relic-pagoda",
+          "name": "古刹灵塔 · 演绎",
+          "kind": "原创风格器物",
+          "image": "relic/relic-pagoda.png",
+          "source": "original-atlas:relic",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            223,
+            405
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "relic-dragon-circlet",
+          "name": "双龙金冠 · 演绎",
+          "kind": "原创风格器物",
+          "image": "relic/dragon-circlet.png",
+          "source": "original-atlas:relic",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            414,
+            226
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        }
+      ],
+      "artDirection": "九个独立可辨识实体；原创游戏风格演绎，非官方素材",
+      "generation": {
+        "tool": "built-in image_gen.imagegen",
+        "prompt": "ONE production sprite ATLAS asset, real transparent alpha, exact 3 by 3 equal-grid cells, square high resolution. Nine different isolated artifacts centered one per cell, with large 10% transparent gutters inside each cell. No text, no frames, no pedestals, no environment, no circles behind objects, no shadows, no unrelated effects. Each fully contained in its own cell, no overlap across cell boundaries. Exquisite painterly-realistic AAA inventory render, highly detailed materials, clear distinct silhouettes readable at 56px. Theme: Chinese dark mythological pilgrimage, inspired by the world of Black Myth Wukong, original artifacts not official replicas. Objects reading order: 1 battle-worn gold-banded iron staff, 2 red lacquer healing gourd with worn bronze chain, 3 golden cicada with jewel eyes, 4 wind-taming prayer pearl surrounded by THREE small jade beads (compact grouping), 5 bronze fireproof ritual bell, 6 ornate banana leaf fan carved wooden handle, 7 dark golden monkey-face half mask, 8 small bronze Buddhist pagoda relic with weathered roofs, 9 black iron ring crown with curling gold dragons. Dark oxidized stone/bronze, ancient gold etching, modest cinnabar cloth. Exquisite museum-quality artifact texture.",
+        "atlasSha256": "c63b57a376cc18a8a4912443787bb03db579037b177f35a6ec6e416565a133a2",
+        "atlasNativePixels": [
+          1254,
+          1254
+        ]
+      }
+    },
+    {
+      "skin": "Starlight",
+      "slug": "starlight",
+      "title": "王者荣耀 · 星曜指挥台",
+      "subtitle": "蓝金星冠 · 玉石辉光",
+      "items": [
+        {
+          "id": "starlight-sun-staff",
+          "name": "孙悟空 · 金箍长棍",
+          "kind": "原创风格器物",
+          "image": "starlight/sun-staff.png",
+          "source": "original-atlas:starlight",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            386,
+            373
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "starlight-mulan-swords",
+          "name": "花木兰 · 双形重剑",
+          "kind": "原创风格器物",
+          "image": "starlight/mulan-swords.png",
+          "source": "original-atlas:starlight",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            381,
+            407
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "starlight-sun-cannon",
+          "name": "孙尚香 · 机巧弩炮",
+          "kind": "原创风格器物",
+          "image": "starlight/sun-cannon.png",
+          "source": "original-atlas:starlight",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            387,
+            360
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "starlight-lotus-sword",
+          "name": "李白 · 青莲剑",
+          "kind": "原创风格器物",
+          "image": "starlight/lotus-sword.png",
+          "source": "original-atlas:starlight",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            383,
+            405
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "starlight-ice-staff",
+          "name": "王昭君 · 冰雪法杖",
+          "kind": "原创风格器物",
+          "image": "starlight/ice-staff.png",
+          "source": "original-atlas:starlight",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            378,
+            402
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "starlight-butterfly-fan",
+          "name": "貂蝉 · 蝶舞扇",
+          "kind": "原创风格器物",
+          "image": "starlight/butterfly-fan.png",
+          "source": "original-atlas:starlight",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            387,
+            371
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "starlight-jade-rings",
+          "name": "大乔 · 潮汐灯",
+          "kind": "原创风格器物",
+          "image": "starlight/jade-rings.png",
+          "source": "original-atlas:starlight",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            371,
+            394
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "starlight-flame-spear",
+          "name": "哪吒 · 火尖枪",
+          "kind": "原创风格器物",
+          "image": "starlight/flame-spear.png",
+          "source": "original-atlas:starlight",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            419,
+            417
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "starlight-guan-blade",
+          "name": "关羽 · 青龙长刀",
+          "kind": "原创风格器物",
+          "image": "starlight/guan-blade.png",
+          "source": "original-atlas:starlight",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            402,
+            404
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        }
+      ],
+      "artDirection": "九个独立可辨识实体；原创游戏风格演绎，非官方素材",
+      "generation": {
+        "tool": "built-in image_gen.imagegen",
+        "prompt": "Create ONE premium SPRITE ATLAS asset on genuinely transparent alpha background, exact 3 columns x 3 rows on square canvas. NINE distinct isolated individual entities in reading order, each fully contained and centered inside own equal cell. CRITICAL empty gutters: each entity maximum 65% cell width and 65% cell height, leaving minimum 17% totally transparent border on EACH side. Do not connect entities or let weapons/cloth cross cells. NO text, labels, logos, frames, square tiles, circles behind entities, environment, pedestals, floor shadows. Exquisite highly detailed hand-painted Chinese AAA game concept illustration; instantly distinguishable silhouettes at 56px, rich materials. Theme: Honor of Kings hero signature weapons, original stylish fan interpretations with luminous blue/gold jade fantasy art direction. 1 Sun Wukong's gold-banded red iron staff; 2 Hua Mulan's very broad elegant pink-red double-edged greatsword; 3 Sun Shangxiang's blue bronze mechanical hand cannon with large barrel; 4 Li Bai's slender turquoise lotus-engraved straight sword; 5 Wang Zhaojun's ice blue silver crystal staff; 6 Diaochan's ornate lilac butterfly folding fan; 7 Da Qiao's azure sea-tide lantern on curved gold frame; 8 Nezha's scarlet flame-tipped spear; 9 Guan Yu's large jade dragon crescent blade. Nine single physical props, not characters, all weapons diagonal to maximize silhouette.",
+        "atlasSha256": "4faf302d4df4dd0ebe1e0ec011344374aa43aa5ea8a0820ac5937d08c8475b78",
+        "atlasNativePixels": [
+          1254,
+          1254
+        ]
+      }
+    },
+    {
+      "skin": "Formation",
+      "slug": "formation",
+      "title": "金铲铲之战 · Agent 备战席",
+      "subtitle": "蓝紫棋局 · 金色羁绊",
+      "items": [
+        {
+          "id": "formation-feather-knight",
+          "name": "羽饰小骑士 · 原创棋灵",
+          "kind": "原创风格角色",
+          "image": "formation/feather-knight.png",
+          "source": "original-atlas:formation",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            353,
+            394
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "formation-river-sprite",
+          "name": "蓝河灵 · 原创棋灵",
+          "kind": "原创风格角色",
+          "image": "formation/river-sprite.png",
+          "source": "original-atlas:formation",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            368,
+            361
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "formation-tiny-dragon",
+          "name": "紫晶幼龙 · 原创棋灵",
+          "kind": "原创风格角色",
+          "image": "formation/tiny-dragon.png",
+          "source": "original-atlas:formation",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            405,
+            391
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "formation-forest-fox",
+          "name": "翡翠灵狐 · 原创棋灵",
+          "kind": "原创风格角色",
+          "image": "formation/forest-fox.png",
+          "source": "original-atlas:formation",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            403,
+            419
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "formation-gold-penguin",
+          "name": "金冠小企鹅 · 原创棋灵",
+          "kind": "原创风格角色",
+          "image": "formation/gold-penguin.png",
+          "source": "original-atlas:formation",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            387,
+            395
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "formation-horned-cub",
+          "name": "双角石狮 · 原创棋灵",
+          "kind": "原创风格角色",
+          "image": "formation/horned-cub.png",
+          "source": "original-atlas:formation",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            360,
+            389
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "formation-star-owl",
+          "name": "月帽星鸮 · 原创棋灵",
+          "kind": "原创风格角色",
+          "image": "formation/star-owl.png",
+          "source": "original-atlas:formation",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            390,
+            396
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "formation-mushroom-sprite",
+          "name": "蘑菇精灵 · 原创棋灵",
+          "kind": "原创风格角色",
+          "image": "formation/mushroom-sprite.png",
+          "source": "original-atlas:formation",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            358,
+            390
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "formation-cloud-ram",
+          "name": "云团小羊 · 原创棋灵",
+          "kind": "原创风格角色",
+          "image": "formation/cloud-ram.png",
+          "source": "original-atlas:formation",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            408,
+            373
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        }
+      ],
+      "artDirection": "九个独立可辨识实体；原创游戏风格演绎，非官方素材",
+      "generation": {
+        "tool": "built-in image_gen.imagegen",
+        "prompt": "Create ONE premium SPRITE ATLAS asset on genuinely transparent alpha background, exact 3 columns x 3 rows on square canvas. NINE distinct isolated individual entities in reading order, each fully contained and centered inside own equal cell. CRITICAL empty gutters: each entity maximum 65% cell width and 65% cell height, leaving minimum 17% totally transparent border on EACH side. Do not connect entities or let weapons/cloth cross cells. NO text, labels, logos, frames, square tiles, circles behind entities, environment, pedestals, floor shadows. Exquisite highly detailed hand-painted Chinese AAA game concept illustration; instantly distinguishable silhouettes at 56px, rich materials. Theme: Teamfight Tactics little legends companion aesthetic, nine ORIGINAL whimsical tiny chess spirit mascots (not claimed official skins). High-end stylized 3D-ish hand-painted fantasy creatures, round adorable forms, big expressive eyes. 1 brave blue feather-armored penguin knight holding a tiny gold sword; 2 translucent round water sprite with a leaf hat; 3 small purple crystalline baby dragon with wings; 4 long-eared emerald fox with bushy cream tail; 5 chubby white penguin wearing a huge gold crown; 6 tiny dark stone horned lion cub with glowing amber eyes; 7 sleepy lavender owl wearing a crescent wizard hat; 8 pink-capped mushroom woodland sprite with tiny feet; 9 fluffy ivory cloud ram with spiral golden horns. One whole cute full body creature per cell, nine very different silhouettes and colors, no bases.",
+        "atlasSha256": "ec68f6a001060abbbd911b84114b75d245dd79b99b14363c9e822a0970dc5193",
+        "atlasNativePixels": [
+          1254,
+          1254
+        ]
+      }
+    },
+    {
+      "skin": "Astral",
+      "slug": "astral",
+      "title": "原神 · 星旅背包",
+      "subtitle": "深蓝星图 · 香槟细线",
+      "items": [
+        {
+          "id": "astral-anemo-lyre",
+          "name": "风吟诗琴 · 演绎",
+          "kind": "原创风格器物",
+          "image": "astral/anemo-lyre.png",
+          "source": "original-atlas:astral",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            369,
+            391
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "astral-geo-spear",
+          "name": "岩纹长枪 · 演绎",
+          "kind": "原创风格器物",
+          "image": "astral/geo-spear.png",
+          "source": "original-atlas:astral",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            346,
+            400
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "astral-electro-sword",
+          "name": "雷光薙刀 · 演绎",
+          "kind": "原创风格器物",
+          "image": "astral/electro-sword.png",
+          "source": "original-atlas:astral",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            367,
+            401
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "astral-dendro-lamp",
+          "name": "草木灵灯 · 演绎",
+          "kind": "原创风格器物",
+          "image": "astral/dendro-lamp.png",
+          "source": "original-atlas:astral",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            331,
+            383
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "astral-hydro-cane",
+          "name": "水华手杖 · 演绎",
+          "kind": "原创风格器物",
+          "image": "astral/hydro-cane.png",
+          "source": "original-atlas:astral",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            263,
+            406
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "astral-pyro-claymore",
+          "name": "赤焰大剑 · 演绎",
+          "kind": "原创风格器物",
+          "image": "astral/pyro-claymore.png",
+          "source": "original-atlas:astral",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            348,
+            423
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "astral-cryo-bow",
+          "name": "霜星长弓 · 演绎",
+          "kind": "原创风格器物",
+          "image": "astral/cryo-bow.png",
+          "source": "original-atlas:astral",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            395,
+            416
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "astral-star-compass",
+          "name": "星旅罗盘 · 演绎",
+          "kind": "原创风格器物",
+          "image": "astral/star-compass.png",
+          "source": "original-atlas:astral",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            358,
+            419
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "astral-fairy-bottle",
+          "name": "流光仙灵瓶 · 演绎",
+          "kind": "原创风格器物",
+          "image": "astral/fairy-bottle.png",
+          "source": "original-atlas:astral",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            296,
+            419
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        }
+      ],
+      "artDirection": "九个独立可辨识实体；原创游戏风格演绎，非官方素材",
+      "generation": {
+        "tool": "built-in image_gen.imagegen",
+        "prompt": "Create ONE premium SPRITE ATLAS asset on genuinely transparent alpha background, exact 3 columns x 3 rows on square canvas. NINE distinct isolated individual entities in reading order, each fully contained and centered inside own equal cell. CRITICAL empty gutters: each entity maximum 65% cell width and 65% cell height, leaving minimum 17% totally transparent border on EACH side. Do not connect entities or let weapons/cloth cross cells. NO text, labels, logos, frames, square tiles, circles behind entities, environment, pedestals, floor shadows. Exquisite highly detailed hand-painted Chinese AAA game concept illustration; instantly distinguishable silhouettes at 56px, rich materials. Theme: Genshin Impact seven elements and travel artifacts, original stylized elegant cel-shaded fantasy prop interpretations, ivory/blue/gold craftsmanship. 1 Anemo green-winged bard lyre with delicate strings; 2 Geo black-and-gold long spear with faceted amber spearhead; 3 Electro violet elegant naginata with lightning-shaped blade and purple ribbon; 4 Dendro green lotus lamp with leafy brass enclosure; 5 Hydro silver cane with a blue waterdrop crystal ornament; 6 Pyro huge black-and-red fiery two-handed claymore; 7 Cryo ivory and ice-blue crystalline bow; 8 gilded star shaped explorer's compass on navy enamel; 9 glass bottle holding a small bright blue fairy spirit, white filigree cap. Make distinctly physical objects with crafted materials, not abstract element symbols.",
+        "atlasSha256": "198d554da5948a064287c425faafd97b05fa08d45ea8dff9712228fb87a2bd87",
+        "atlasNativePixels": [
+          1254,
+          1254
+        ]
+      }
+    },
+    {
+      "skin": "Wonderland",
+      "slug": "wonderland",
+      "title": "梦幻西游 · 三界百宝袋",
+      "subtitle": "青瓷彩绘 · 云纹绣金",
+      "items": [
+        {
+          "id": "wonderland-sword-knight",
+          "name": "青衫剑侠 · 原创",
+          "kind": "原创风格角色",
+          "image": "wonderland/sword-knight.png",
+          "source": "original-atlas:wonderland",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            414,
+            420
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "wonderland-fox-maiden",
+          "name": "灵狐少女 · 原创",
+          "kind": "原创风格角色",
+          "image": "wonderland/fox-maiden.png",
+          "source": "original-atlas:wonderland",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            366,
+            414
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "wonderland-dragon-prince",
+          "name": "碧海龙子 · 原创",
+          "kind": "原创风格角色",
+          "image": "wonderland/dragon-prince.png",
+          "source": "original-atlas:wonderland",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            343,
+            420
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "wonderland-bone-sprite",
+          "name": "紫蝶骨灵 · 原创",
+          "kind": "原创风格角色",
+          "image": "wonderland/bone-sprite.png",
+          "source": "original-atlas:wonderland",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            411,
+            413
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "wonderland-tiger-warrior",
+          "name": "虎头武者 · 原创",
+          "kind": "原创风格角色",
+          "image": "wonderland/tiger-warrior.png",
+          "source": "original-atlas:wonderland",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            428,
+            402
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "wonderland-dancing-fairy",
+          "name": "彩带天女 · 原创",
+          "kind": "原创风格角色",
+          "image": "wonderland/dancing-fairy.png",
+          "source": "original-atlas:wonderland",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            373,
+            416
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "wonderland-rabbit-spirit",
+          "name": "月兔灵宠 · 原创",
+          "kind": "原创风格角色",
+          "image": "wonderland/rabbit-spirit.png",
+          "source": "original-atlas:wonderland",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            394,
+            385
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "wonderland-lotus-fairy",
+          "name": "莲叶花妖 · 原创",
+          "kind": "原创风格角色",
+          "image": "wonderland/lotus-fairy.png",
+          "source": "original-atlas:wonderland",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            382,
+            388
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        },
+        {
+          "id": "wonderland-tortoise-general",
+          "name": "碧甲龟将 · 原创",
+          "kind": "原创风格角色",
+          "image": "wonderland/tortoise-general.png",
+          "source": "original-atlas:wonderland",
+          "provenance": "OmniVibe 原创 AI 辅助游戏风格演绎；内置 imagegen 生成透明九实体图集，按网格独立提取；不是官方游戏实物或官方皮肤。",
+          "sourcePixels": [
+            1254,
+            1254
+          ],
+          "nativeContentPixels": [
+            403,
+            392
+          ],
+          "processing": "Complete native silhouettes separated by alpha connectivity and atlas cell centroids, without resampling; transparent padding only."
+        }
+      ],
+      "artDirection": "九个独立可辨识实体；原创游戏风格演绎，非官方素材",
+      "generation": {
+        "tool": "built-in image_gen.imagegen",
+        "prompt": "Create ONE premium SPRITE ATLAS asset on genuinely transparent alpha background, exact 3 columns x 3 rows on square canvas. NINE distinct isolated individual entities in reading order, each fully contained and centered inside own equal cell. CRITICAL empty gutters: each entity maximum 65% cell width and 65% cell height, leaving minimum 17% totally transparent border on EACH side. Do not connect entities or let weapons/cloth cross cells. NO text, labels, logos, frames, square tiles, circles behind entities, environment, pedestals, floor shadows. Exquisite highly detailed hand-painted Chinese AAA game concept illustration; instantly distinguishable silhouettes at 56px, rich materials. Theme: Fantasy Westward Journey classic Chinese cute MMORPG, original chibi heroes and pets inspired by its cheerful folk-fantasy aesthetic, not official character replicas. Nine colorful polished fully visible full-body beings: 1 smiling teal-robed young Chinese sword knight with red headband and silver sword; 2 orange fox-eared girl in red/pink silk outfit holding a fan; 3 elegant blue-haired dragon prince with tiny antlers and turquoise spear; 4 purple butterfly-winged petite spirit girl with white hair and curved short blades; 5 strong orange tiger-headed martial warrior with large axe; 6 graceful mint-dress celestial maiden with floating pink ribbons; 7 fluffy white moon rabbit spirit holding a small golden pestle; 8 tiny cheerful lotus flower fairy riding one big green leaf; 9 green armored tortoise general holding a bronze hammer. Exquisite 3D-ish painterly toy-like character rendering, distinct costumes, faces and silhouettes, NO background, feet visible.",
+        "atlasSha256": "bb34aceb03fa31240c620c9c88ab8343b809ead7ac99bf3594912f316656d4b7",
+        "atlasNativePixels": [
+          1254,
+          1254
+        ]
+      }
+    }
+  ]
+}

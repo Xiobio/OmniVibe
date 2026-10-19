@@ -1,0 +1,126 @@
+{
+  "tool": "built-in image_gen.imagegen",
+  "packs": [
+    {
+      "skin": "InkJade",
+      "slug": "ink-jade",
+      "tool": "built-in image_gen.imagegen",
+      "prompt": "Create ONE production game UI sprite atlas asset for the OmniVibe theme 'Ink Jade Mechanism' (original Chinese ink-wash clockwork fantasy). Transparent background with real alpha, square 3072x3072 if possible. EXACT 3 columns x 3 rows aligned equal cells. Nine different single isolated heirloom artifacts, one centered object per cell in this reading order: 1 long jade ritual sword with black bronze hilt; 2 folding white crane feather fan with ink tips; 3 ornate bronze mechanical astrolabe shaped as interlocking open rings; 4 carved white jade flute with green silk tassel; 5 compact black wood crossbow with bronze gears; 6 antique gilt incense burner shaped like a mythical lion; 7 closed bamboo scroll bound with jade seal; 8 jade green jade lotus lantern; 9 large bronze key with dragon engraving. Rich premium realistic hand-painted game inventory illustration, refined metal/jade/wood surface details, strong distinctive silhouettes readable at 56 px. Single objects only, no characters, NO text, NO frames, NO square backplates, NO circles behind objects, NO environment, NO floor shadows. Plenty of fully transparent space (at least 8% of each cell) separating objects, every object entirely contained in its cell, axes align with 1/3 and 2/3 boundaries. Do not connect cells. Soft detailed rim light, absolutely no opaque background. Objects occupy 70-78% of cell, consistent scale and exquisite material detailing.",
+      "atlasSha256": "498d23f707afec98faa94f7c2ad6df66b5294ea93dead6741b3b1adc768ddd2e",
+      "atlasNativePixels": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "skin": "Midnight",
+      "slug": "midnight",
+      "tool": "built-in image_gen.imagegen",
+      "prompt": "ONE production sprite ATLAS asset, real transparent alpha, exact 3 by 3 equal-grid cells, square high resolution. Nine different isolated artifacts centered one per cell, with large 10% transparent gutters inside each cell. No text, no frames, no pedestals, no environment, no circles behind objects, no shadows, no unrelated effects. Each fully contained in its own cell, no overlap across cell boundaries. Exquisite painterly-realistic AAA inventory render, highly detailed materials, clear distinct silhouettes readable at 56px. Theme: original midnight celestial Chinese fantasy, deep indigo enamel, silver and luminous moonstone. Objects reading order: 1 silver crescent halberd, 2 celestial compass with lapis inlay, 3 star-map folding fan, 4 winged crane lantern, 5 blue crystal orb held by silver dragon talons, 6 polished dark zither with silver strings, 7 meteor-iron dagger with pale-blue tassel, 8 silver whale pendant, 9 ornate closed lunar scripture tome. All are unique physical heirlooms, not abstract geometric symbols. Restrained cool highlights.",
+      "atlasSha256": "04832cc714907b63cd1eb37ecef2525e2f572457d45b28757313e2d50372f73e",
+      "atlasNativePixels": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "skin": "Cinnabar",
+      "slug": "cinnabar",
+      "tool": "built-in image_gen.imagegen",
+      "prompt": "ONE production sprite ATLAS asset, real transparent alpha, exact 3 by 3 equal-grid cells, square high resolution. Nine different isolated artifacts centered one per cell, with large 10% transparent gutters inside each cell. No text, no frames, no pedestals, no environment, no circles behind objects, no shadows, no unrelated effects. Each fully contained in its own cell, no overlap across cell boundaries. Exquisite painterly-realistic AAA inventory render, highly detailed materials, clear distinct silhouettes readable at 56px. Theme: original crimson lacquer martial arts fantasy, cinnabar red, aged bronze and warm gold. Objects reading order: 1 dragon-engraved saber red silk grip, 2 war drum with vermilion lacquer and bronze tacks, 3 golden gourd flask red rope, 4 ornate phoenix mask, 5 bronze tiger command tally, 6 lacquered red imperial crossbow, 7 small ornamental bronze temple bell red tassel, 8 intricate fire-red lotus crown, 9 sealed cinnabar lacquer brush with carved dragon handle. Authentic varied forms, material craftsmanship, not recolors of same objects.",
+      "atlasSha256": "69aed6be398ca634844a3a66b1cbd88b4ea5223a52b18f86d76fa2c83c5f669a",
+      "atlasNativePixels": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "skin": "Hextech",
+      "slug": "hextech",
+      "tool": "built-in image_gen.imagegen",
+      "prompt": "Create ONE production game UI SPRITE ATLAS with genuine transparent alpha. Exact 3x3 equal grid on square canvas at highest resolution available. NINE different isolated single objects, one centered in each cell in reading order. IMPORTANT each object occupies 65-72% of its cell and every edge is separated from cell boundaries by generous transparent gutters (minimum 12% margin on each side). NO text, logos, frames, tiles, floor shadows, environment or background circles; no connecting cells. Exquisite rich hand-painted AAA inventory render, highly detailed surfaces and strong distinctive silhouettes recognizable at small UI size. Single collection unified by a game's aesthetic, each object distinct not recolors. Theme: League of Legends champion signature equipment, original visual reinterpretations, Hextech brass/teal and hand-painted fantasy weapons. 1 Jinx's shark-shaped rocket launcher, blue steel toothy muzzle and pink details; 2 Vi's giant single bronze mechanical gauntlet with glowing teal pistons; 3 Caitlyn's elegant long brass scoped rifle with blue hex crystal; 4 Jayce's oversized golden hextech hammer with bright blue core; 5 Ekko's futuristic asymmetrical time sword with green glass hourglass energy; 6 Ahri's luminous blue fox-spirit orb with NINE small wispy fox tails around it (one compact object); 7 Yasuo's narrow curved steel katana with blue wrapping and tassel; 8 Ashe's frosty ornate recurve bow formed from ice; 9 Thresh's hooked spectral green lantern with rugged chains. These are original fan-inspired props, no character portraits.",
+      "atlasSha256": "33a84e8a2079a7fbed70321ccadb88936b13b189b6accf692afd7c5452a9d708",
+      "atlasNativePixels": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "skin": "Tactical",
+      "slug": "tactical",
+      "tool": "built-in image_gen.imagegen",
+      "prompt": "Create ONE production game UI SPRITE ATLAS with genuine transparent alpha. Exact 3x3 equal grid on square canvas at highest resolution available. NINE different isolated single objects, one centered in each cell in reading order. IMPORTANT each object occupies 65-72% of its cell and every edge is separated from cell boundaries by generous transparent gutters (minimum 12% margin on each side). NO text, logos, frames, tiles, floor shadows, environment or background circles; no connecting cells. Exquisite rich hand-painted AAA inventory render, highly detailed surfaces and strong distinctive silhouettes recognizable at small UI size. Single collection unified by a game's aesthetic, each object distinct not recolors. Theme: Delta Force modern tactical loadout, nine distinct realistic military firearms/tools. Cool charcoal steel, olive polymer, worn tan surfaces and restrained green optics. 1 compact tan MCX assault rifle with holographic sight; 2 black long-barrel M4 carbine with vertical grip; 3 olive AWM bolt-action sniper rifle with long optic; 4 compact black MP5 submachine gun with curved magazine; 5 weathered wood-and-steel AK assault rifle; 6 black tactical combat shotgun with shell carrier; 7 bulky belt-fed light machine gun with box magazine; 8 matte black combat dagger with serrated spine; 9 folded reconnaissance quadcopter with round lens and olive chassis. Each gun photographed as complete full silhouette diagonal to fit cell, no cropping, independent high-grade realistic product illustration.",
+      "atlasSha256": "3acc59c63e5271c398ccf512e31dcf37ac9ee2c574a6d5bde78b0d0a0966e349",
+      "atlasNativePixels": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "skin": "Adventure",
+      "slug": "adventure",
+      "tool": "built-in image_gen.imagegen",
+      "prompt": "Create ONE production game UI SPRITE ATLAS with genuine transparent alpha. Exact 3x3 equal grid on square canvas at highest resolution available. NINE different isolated single objects, one centered in each cell in reading order. IMPORTANT each object occupies 65-72% of its cell and every edge is separated from cell boundaries by generous transparent gutters (minimum 12% margin on each side). NO text, logos, frames, tiles, floor shadows, environment or background circles; no connecting cells. Exquisite rich hand-painted AAA inventory render, highly detailed surfaces and strong distinctive silhouettes recognizable at small UI size. Single collection unified by a game's aesthetic, each object distinct not recolors. Theme: Dungeon and Fighter heroic side-scrolling RPG, original class signature equipment. Dynamic painterly ornate equipment, burnished gold, violet enchantments and iron leather. 1 Berserker's broad jagged crimson demon sword; 2 Swordmaster's elegant long violet katana; 3 female mage's carved wooden staff with vivid blue crystal; 4 male gunner's massive engraved silver revolver; 5 priest's golden holy cross reliquary; 6 female fighter's pair of spiked leather gauntlets as one compact pair; 7 thief's two curved daggers held crossed compactly; 8 archer's intricately curved emerald dragon bow; 9 lancer's silver dragon-wing spear. Each instantly distinct, premium RPG loot painting, no characters.",
+      "atlasSha256": "94029db4ed92b145b77498b04d5344b951e46920e759ed7476f778c33e2eaf97",
+      "atlasNativePixels": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "skin": "Relic",
+      "slug": "relic",
+      "tool": "built-in image_gen.imagegen",
+      "prompt": "ONE production sprite ATLAS asset, real transparent alpha, exact 3 by 3 equal-grid cells, square high resolution. Nine different isolated artifacts centered one per cell, with large 10% transparent gutters inside each cell. No text, no frames, no pedestals, no environment, no circles behind objects, no shadows, no unrelated effects. Each fully contained in its own cell, no overlap across cell boundaries. Exquisite painterly-realistic AAA inventory render, highly detailed materials, clear distinct silhouettes readable at 56px. Theme: Chinese dark mythological pilgrimage, inspired by the world of Black Myth Wukong, original artifacts not official replicas. Objects reading order: 1 battle-worn gold-banded iron staff, 2 red lacquer healing gourd with worn bronze chain, 3 golden cicada with jewel eyes, 4 wind-taming prayer pearl surrounded by THREE small jade beads (compact grouping), 5 bronze fireproof ritual bell, 6 ornate banana leaf fan carved wooden handle, 7 dark golden monkey-face half mask, 8 small bronze Buddhist pagoda relic with weathered roofs, 9 black iron ring crown with curling gold dragons. Dark oxidized stone/bronze, ancient gold etching, modest cinnabar cloth. Exquisite museum-quality artifact texture.",
+      "atlasSha256": "c63b57a376cc18a8a4912443787bb03db579037b177f35a6ec6e416565a133a2",
+      "atlasNativePixels": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "skin": "Starlight",
+      "slug": "starlight",
+      "tool": "built-in image_gen.imagegen",
+      "prompt": "Create ONE premium SPRITE ATLAS asset on genuinely transparent alpha background, exact 3 columns x 3 rows on square canvas. NINE distinct isolated individual entities in reading order, each fully contained and centered inside own equal cell. CRITICAL empty gutters: each entity maximum 65% cell width and 65% cell height, leaving minimum 17% totally transparent border on EACH side. Do not connect entities or let weapons/cloth cross cells. NO text, labels, logos, frames, square tiles, circles behind entities, environment, pedestals, floor shadows. Exquisite highly detailed hand-painted Chinese AAA game concept illustration; instantly distinguishable silhouettes at 56px, rich materials. Theme: Honor of Kings hero signature weapons, original stylish fan interpretations with luminous blue/gold jade fantasy art direction. 1 Sun Wukong's gold-banded red iron staff; 2 Hua Mulan's very broad elegant pink-red double-edged greatsword; 3 Sun Shangxiang's blue bronze mechanical hand cannon with large barrel; 4 Li Bai's slender turquoise lotus-engraved straight sword; 5 Wang Zhaojun's ice blue silver crystal staff; 6 Diaochan's ornate lilac butterfly folding fan; 7 Da Qiao's azure sea-tide lantern on curved gold frame; 8 Nezha's scarlet flame-tipped spear; 9 Guan Yu's large jade dragon crescent blade. Nine single physical props, not characters, all weapons diagonal to maximize silhouette.",
+      "atlasSha256": "4faf302d4df4dd0ebe1e0ec011344374aa43aa5ea8a0820ac5937d08c8475b78",
+      "atlasNativePixels": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "skin": "Formation",
+      "slug": "formation",
+      "tool": "built-in image_gen.imagegen",
+      "prompt": "Create ONE premium SPRITE ATLAS asset on genuinely transparent alpha background, exact 3 columns x 3 rows on square canvas. NINE distinct isolated individual entities in reading order, each fully contained and centered inside own equal cell. CRITICAL empty gutters: each entity maximum 65% cell width and 65% cell height, leaving minimum 17% totally transparent border on EACH side. Do not connect entities or let weapons/cloth cross cells. NO text, labels, logos, frames, square tiles, circles behind entities, environment, pedestals, floor shadows. Exquisite highly detailed hand-painted Chinese AAA game concept illustration; instantly distinguishable silhouettes at 56px, rich materials. Theme: Teamfight Tactics little legends companion aesthetic, nine ORIGINAL whimsical tiny chess spirit mascots (not claimed official skins). High-end stylized 3D-ish hand-painted fantasy creatures, round adorable forms, big expressive eyes. 1 brave blue feather-armored penguin knight holding a tiny gold sword; 2 translucent round water sprite with a leaf hat; 3 small purple crystalline baby dragon with wings; 4 long-eared emerald fox with bushy cream tail; 5 chubby white penguin wearing a huge gold crown; 6 tiny dark stone horned lion cub with glowing amber eyes; 7 sleepy lavender owl wearing a crescent wizard hat; 8 pink-capped mushroom woodland sprite with tiny feet; 9 fluffy ivory cloud ram with spiral golden horns. One whole cute full body creature per cell, nine very different silhouettes and colors, no bases.",
+      "atlasSha256": "ec68f6a001060abbbd911b84114b75d245dd79b99b14363c9e822a0970dc5193",
+      "atlasNativePixels": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "skin": "Astral",
+      "slug": "astral",
+      "tool": "built-in image_gen.imagegen",
+      "prompt": "Create ONE premium SPRITE ATLAS asset on genuinely transparent alpha background, exact 3 columns x 3 rows on square canvas. NINE distinct isolated individual entities in reading order, each fully contained and centered inside own equal cell. CRITICAL empty gutters: each entity maximum 65% cell width and 65% cell height, leaving minimum 17% totally transparent border on EACH side. Do not connect entities or let weapons/cloth cross cells. NO text, labels, logos, frames, square tiles, circles behind entities, environment, pedestals, floor shadows. Exquisite highly detailed hand-painted Chinese AAA game concept illustration; instantly distinguishable silhouettes at 56px, rich materials. Theme: Genshin Impact seven elements and travel artifacts, original stylized elegant cel-shaded fantasy prop interpretations, ivory/blue/gold craftsmanship. 1 Anemo green-winged bard lyre with delicate strings; 2 Geo black-and-gold long spear with faceted amber spearhead; 3 Electro violet elegant naginata with lightning-shaped blade and purple ribbon; 4 Dendro green lotus lamp with leafy brass enclosure; 5 Hydro silver cane with a blue waterdrop crystal ornament; 6 Pyro huge black-and-red fiery two-handed claymore; 7 Cryo ivory and ice-blue crystalline bow; 8 gilded star shaped explorer's compass on navy enamel; 9 glass bottle holding a small bright blue fairy spirit, white filigree cap. Make distinctly physical objects with crafted materials, not abstract element symbols.",
+      "atlasSha256": "198d554da5948a064287c425faafd97b05fa08d45ea8dff9712228fb87a2bd87",
+      "atlasNativePixels": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "skin": "Wonderland",
+      "slug": "wonderland",
+      "tool": "built-in image_gen.imagegen",
+      "prompt": "Create ONE premium SPRITE ATLAS asset on genuinely transparent alpha background, exact 3 columns x 3 rows on square canvas. NINE distinct isolated individual entities in reading order, each fully contained and centered inside own equal cell. CRITICAL empty gutters: each entity maximum 65% cell width and 65% cell height, leaving minimum 17% totally transparent border on EACH side. Do not connect entities or let weapons/cloth cross cells. NO text, labels, logos, frames, square tiles, circles behind entities, environment, pedestals, floor shadows. Exquisite highly detailed hand-painted Chinese AAA game concept illustration; instantly distinguishable silhouettes at 56px, rich materials. Theme: Fantasy Westward Journey classic Chinese cute MMORPG, original chibi heroes and pets inspired by its cheerful folk-fantasy aesthetic, not official character replicas. Nine colorful polished fully visible full-body beings: 1 smiling teal-robed young Chinese sword knight with red headband and silver sword; 2 orange fox-eared girl in red/pink silk outfit holding a fan; 3 elegant blue-haired dragon prince with tiny antlers and turquoise spear; 4 purple butterfly-winged petite spirit girl with white hair and curved short blades; 5 strong orange tiger-headed martial warrior with large axe; 6 graceful mint-dress celestial maiden with floating pink ribbons; 7 fluffy white moon rabbit spirit holding a small golden pestle; 8 tiny cheerful lotus flower fairy riding one big green leaf; 9 green armored tortoise general holding a bronze hammer. Exquisite 3D-ish painterly toy-like character rendering, distinct costumes, faces and silhouettes, NO background, feet visible.",
+      "atlasSha256": "bb34aceb03fa31240c620c9c88ab8343b809ead7ac99bf3594912f316656d4b7",
+      "atlasNativePixels": [
+        1254,
+        1254
+      ]
+    }
+  ]
+}

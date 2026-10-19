@@ -1,0 +1,2581 @@
+{
+  "packsReady": 13,
+  "packsExpected": 13,
+  "assets": 117,
+  "results": [
+    {
+      "skin": "InkJade",
+      "slug": "ink-jade",
+      "ready": true,
+      "items": [
+        {
+          "id": "ink-jade-jade-sword",
+          "path": "skins/loadouts/suites-v1/ink-jade/jade-sword.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "4d75a7bf2a0ee83b1731e35703f9321839b56e43b95344c67db3b0303d39f049",
+          "transparentFraction": 0.8539619445800781,
+          "visibleFraction": 0.14603805541992188,
+          "alphaBounds": [
+            70,
+            48,
+            442,
+            464
+          ],
+          "nativeContentPixels": [
+            372,
+            416
+          ]
+        },
+        {
+          "id": "ink-jade-crane-fan",
+          "path": "skins/loadouts/suites-v1/ink-jade/crane-fan.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "10a3ff4cad605f758abbafae1598cea40466eb4c84a2bfc5316141e2c7be3a42",
+          "transparentFraction": 0.6589279174804688,
+          "visibleFraction": 0.34107208251953125,
+          "alphaBounds": [
+            54,
+            57,
+            457,
+            454
+          ],
+          "nativeContentPixels": [
+            403,
+            397
+          ]
+        },
+        {
+          "id": "ink-jade-armillary",
+          "path": "skins/loadouts/suites-v1/ink-jade/armillary.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "3bf1591a03dab0b997d95431537658d2ff0437601c71e8d75e1716259b9898b0",
+          "transparentFraction": 0.6587715148925781,
+          "visibleFraction": 0.3412284851074219,
+          "alphaBounds": [
+            76,
+            56,
+            435,
+            455
+          ],
+          "nativeContentPixels": [
+            359,
+            399
+          ]
+        },
+        {
+          "id": "ink-jade-jade-flute",
+          "path": "skins/loadouts/suites-v1/ink-jade/jade-flute.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "c1138ed9e3cd651be684bd281a0dabd599fc9bcb047544d26ec191fccbfdd581",
+          "transparentFraction": 0.8339347839355469,
+          "visibleFraction": 0.16606521606445312,
+          "alphaBounds": [
+            67,
+            56,
+            444,
+            456
+          ],
+          "nativeContentPixels": [
+            377,
+            400
+          ]
+        },
+        {
+          "id": "ink-jade-clockwork-crossbow",
+          "path": "skins/loadouts/suites-v1/ink-jade/clockwork-crossbow.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "6409f5c84903981b89a622fb47c576158dc17fb51235b5c93c49edc23eee9136",
+          "transparentFraction": 0.7981491088867188,
+          "visibleFraction": 0.20185089111328125,
+          "alphaBounds": [
+            59,
+            108,
+            453,
+            404
+          ],
+          "nativeContentPixels": [
+            394,
+            296
+          ]
+        },
+        {
+          "id": "ink-jade-lion-censer",
+          "path": "skins/loadouts/suites-v1/ink-jade/lion-censer.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "c8b93be8b7d1a453fc68aa2c83bb4b3ed7b041848e8d39fcac98ddae771c873d",
+          "transparentFraction": 0.6526947021484375,
+          "visibleFraction": 0.3473052978515625,
+          "alphaBounds": [
+            73,
+            63,
+            438,
+            449
+          ],
+          "nativeContentPixels": [
+            365,
+            386
+          ]
+        },
+        {
+          "id": "ink-jade-bamboo-scroll",
+          "path": "skins/loadouts/suites-v1/ink-jade/bamboo-scroll.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "4bf48971271d531d28ba0bf73e10213679ce8ffaa10471dc98846af9df0dfb55",
+          "transparentFraction": 0.726959228515625,
+          "visibleFraction": 0.273040771484375,
+          "alphaBounds": [
+            65,
+            55,
+            447,
+            456
+          ],
+          "nativeContentPixels": [
+            382,
+            401
+          ]
+        },
+        {
+          "id": "ink-jade-lotus-lantern",
+          "path": "skins/loadouts/suites-v1/ink-jade/lotus-lantern.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "36c128f01c45d228d7334a981c3e95453b5acc590de5045b1934a3a7150bcb71",
+          "transparentFraction": 0.7771759033203125,
+          "visibleFraction": 0.2228240966796875,
+          "alphaBounds": [
+            98,
+            26,
+            413,
+            485
+          ],
+          "nativeContentPixels": [
+            315,
+            459
+          ]
+        },
+        {
+          "id": "ink-jade-dragon-key",
+          "path": "skins/loadouts/suites-v1/ink-jade/dragon-key.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "c12a8bf94a4ac19b30f754813efb39a6b8daf22db2c0f3f990437c3d38f70367",
+          "transparentFraction": 0.8265419006347656,
+          "visibleFraction": 0.17345809936523438,
+          "alphaBounds": [
+            79,
+            57,
+            433,
+            455
+          ],
+          "nativeContentPixels": [
+            354,
+            398
+          ]
+        }
+      ],
+      "contactSheet": "artifacts/suite-assets/contact-sheets/ink-jade.png"
+    },
+    {
+      "skin": "Midnight",
+      "slug": "midnight",
+      "ready": true,
+      "items": [
+        {
+          "id": "midnight-moon-halberd",
+          "path": "skins/loadouts/suites-v1/midnight/moon-halberd.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "506ddf4a16f24f9f9fbd6e54cf55cbeb5ae61de69b8d5444893da93f7dcb9210",
+          "transparentFraction": 0.8963279724121094,
+          "visibleFraction": 0.10367202758789062,
+          "alphaBounds": [
+            63,
+            58,
+            449,
+            454
+          ],
+          "nativeContentPixels": [
+            386,
+            396
+          ]
+        },
+        {
+          "id": "midnight-star-compass",
+          "path": "skins/loadouts/suites-v1/midnight/star-compass.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "251cdfd63e0ce9fdc1d06a81e7dc58ee726a290bfec9efd840861970a4b63cfd",
+          "transparentFraction": 0.7496299743652344,
+          "visibleFraction": 0.2503700256347656,
+          "alphaBounds": [
+            75,
+            50,
+            436,
+            461
+          ],
+          "nativeContentPixels": [
+            361,
+            411
+          ]
+        },
+        {
+          "id": "midnight-celestial-fan",
+          "path": "skins/loadouts/suites-v1/midnight/celestial-fan.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "ded2719823c25d1c2e58579069942bf885e568581f91e58a4726573e354dd564",
+          "transparentFraction": 0.7074813842773438,
+          "visibleFraction": 0.29251861572265625,
+          "alphaBounds": [
+            45,
+            72,
+            466,
+            439
+          ],
+          "nativeContentPixels": [
+            421,
+            367
+          ]
+        },
+        {
+          "id": "midnight-crane-lantern",
+          "path": "skins/loadouts/suites-v1/midnight/crane-lantern.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "c2d75e7555f408c84da459563bb2b5218c4bf7d7476a1602b40ac26764474561",
+          "transparentFraction": 0.7451438903808594,
+          "visibleFraction": 0.2548561096191406,
+          "alphaBounds": [
+            48,
+            48,
+            463,
+            464
+          ],
+          "nativeContentPixels": [
+            415,
+            416
+          ]
+        },
+        {
+          "id": "midnight-dragon-orb",
+          "path": "skins/loadouts/suites-v1/midnight/dragon-orb.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "8b27c9505ecd7dc602ed938600451aad3557543fce54c28f231e29b3110f5722",
+          "transparentFraction": 0.6954383850097656,
+          "visibleFraction": 0.3045616149902344,
+          "alphaBounds": [
+            87,
+            69,
+            424,
+            443
+          ],
+          "nativeContentPixels": [
+            337,
+            374
+          ]
+        },
+        {
+          "id": "midnight-night-zither",
+          "path": "skins/loadouts/suites-v1/midnight/night-zither.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "d6a7e1f79e44d7c7f22ae7f6c55d1f944af6fb1e2428f42763b7136f5805f2a4",
+          "transparentFraction": 0.7893905639648438,
+          "visibleFraction": 0.21060943603515625,
+          "alphaBounds": [
+            49,
+            77,
+            462,
+            434
+          ],
+          "nativeContentPixels": [
+            413,
+            357
+          ]
+        },
+        {
+          "id": "midnight-meteor-dagger",
+          "path": "skins/loadouts/suites-v1/midnight/meteor-dagger.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "12efe27ad0543d706f61e8f248606cddcaa9c16c07e99e074aa6343f8e5e9f24",
+          "transparentFraction": 0.8309440612792969,
+          "visibleFraction": 0.16905593872070312,
+          "alphaBounds": [
+            56,
+            50,
+            456,
+            462
+          ],
+          "nativeContentPixels": [
+            400,
+            412
+          ]
+        },
+        {
+          "id": "midnight-whale-pendant",
+          "path": "skins/loadouts/suites-v1/midnight/whale-pendant.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "ce09df8585d4d78800c9de918fcb95431f4678e1deccb6df969b413f52571982",
+          "transparentFraction": 0.8114051818847656,
+          "visibleFraction": 0.18859481811523438,
+          "alphaBounds": [
+            85,
+            68,
+            427,
+            443
+          ],
+          "nativeContentPixels": [
+            342,
+            375
+          ]
+        },
+        {
+          "id": "midnight-lunar-tome",
+          "path": "skins/loadouts/suites-v1/midnight/lunar-tome.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "508dc00d004b80e119b315381a37eab2e0dec4c4c19d19fdb51ae67869826d5c",
+          "transparentFraction": 0.6205902099609375,
+          "visibleFraction": 0.3794097900390625,
+          "alphaBounds": [
+            68,
+            67,
+            443,
+            444
+          ],
+          "nativeContentPixels": [
+            375,
+            377
+          ]
+        }
+      ],
+      "contactSheet": "artifacts/suite-assets/contact-sheets/midnight.png"
+    },
+    {
+      "skin": "Cinnabar",
+      "slug": "cinnabar",
+      "ready": true,
+      "items": [
+        {
+          "id": "cinnabar-dragon-saber",
+          "path": "skins/loadouts/suites-v1/cinnabar/dragon-saber.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "44fb77b4f5904fe08d93d3ba913e6337666117a57a0c6ff4392029be7bbd4173",
+          "transparentFraction": 0.8699493408203125,
+          "visibleFraction": 0.1300506591796875,
+          "alphaBounds": [
+            71,
+            57,
+            440,
+            454
+          ],
+          "nativeContentPixels": [
+            369,
+            397
+          ]
+        },
+        {
+          "id": "cinnabar-war-drum",
+          "path": "skins/loadouts/suites-v1/cinnabar/war-drum.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "b80e2500b6e2f5eaa41d351e5a70e1e447a1918e5669f86501325ae6c506aa4c",
+          "transparentFraction": 0.546173095703125,
+          "visibleFraction": 0.453826904296875,
+          "alphaBounds": [
+            57,
+            70,
+            455,
+            442
+          ],
+          "nativeContentPixels": [
+            398,
+            372
+          ]
+        },
+        {
+          "id": "cinnabar-gourd-flask",
+          "path": "skins/loadouts/suites-v1/cinnabar/gourd-flask.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "31fd8ed5f6cd53c978e37d04a837015daf802ee1cea8b5ea5edb5105d0093dc5",
+          "transparentFraction": 0.7317848205566406,
+          "visibleFraction": 0.2682151794433594,
+          "alphaBounds": [
+            117,
+            51,
+            395,
+            461
+          ],
+          "nativeContentPixels": [
+            278,
+            410
+          ]
+        },
+        {
+          "id": "cinnabar-phoenix-mask",
+          "path": "skins/loadouts/suites-v1/cinnabar/phoenix-mask.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "af5007d8ab73af104c964b58f16fef48c7d1d702825cf9af2abaf1ed2aee0c8b",
+          "transparentFraction": 0.7082633972167969,
+          "visibleFraction": 0.2917366027832031,
+          "alphaBounds": [
+            71,
+            61,
+            440,
+            451
+          ],
+          "nativeContentPixels": [
+            369,
+            390
+          ]
+        },
+        {
+          "id": "cinnabar-tiger-tally",
+          "path": "skins/loadouts/suites-v1/cinnabar/tiger-tally.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "a311443e0cb7d9fe76574398c2fb985cc5f7742022bcc07a72a20b5ac3e26b79",
+          "transparentFraction": 0.6513023376464844,
+          "visibleFraction": 0.3486976623535156,
+          "alphaBounds": [
+            78,
+            63,
+            434,
+            449
+          ],
+          "nativeContentPixels": [
+            356,
+            386
+          ]
+        },
+        {
+          "id": "cinnabar-lacquer-crossbow",
+          "path": "skins/loadouts/suites-v1/cinnabar/lacquer-crossbow.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "0e81d0d3d436dc0240c7cfe2438026de738488ff60eddbd796146239ce49b092",
+          "transparentFraction": 0.798736572265625,
+          "visibleFraction": 0.201263427734375,
+          "alphaBounds": [
+            53,
+            90,
+            458,
+            421
+          ],
+          "nativeContentPixels": [
+            405,
+            331
+          ]
+        },
+        {
+          "id": "cinnabar-temple-bell",
+          "path": "skins/loadouts/suites-v1/cinnabar/temple-bell.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "4e80015a8a4532fdcb6e40c8f8d2429a61e2a9e15938df91a3ef7c1344f4285c",
+          "transparentFraction": 0.77886962890625,
+          "visibleFraction": 0.22113037109375,
+          "alphaBounds": [
+            119,
+            51,
+            393,
+            460
+          ],
+          "nativeContentPixels": [
+            274,
+            409
+          ]
+        },
+        {
+          "id": "cinnabar-lotus-crown",
+          "path": "skins/loadouts/suites-v1/cinnabar/lotus-crown.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "9409073698d6aff4cc3a0709829ad83d6c149cd22697234cfbedfac50b2f19bd",
+          "transparentFraction": 0.7016563415527344,
+          "visibleFraction": 0.2983436584472656,
+          "alphaBounds": [
+            52,
+            54,
+            460,
+            458
+          ],
+          "nativeContentPixels": [
+            408,
+            404
+          ]
+        },
+        {
+          "id": "cinnabar-dragon-brush",
+          "path": "skins/loadouts/suites-v1/cinnabar/dragon-brush.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "f45b257b567c3506a93df4238465afe403c3d1a64363ee942536528dc62a3177",
+          "transparentFraction": 0.8407478332519531,
+          "visibleFraction": 0.15925216674804688,
+          "alphaBounds": [
+            89,
+            47,
+            422,
+            465
+          ],
+          "nativeContentPixels": [
+            333,
+            418
+          ]
+        }
+      ],
+      "contactSheet": "artifacts/suite-assets/contact-sheets/cinnabar.png"
+    },
+    {
+      "skin": "Hextech",
+      "slug": "hextech",
+      "ready": true,
+      "items": [
+        {
+          "id": "hextech-shark-launcher",
+          "path": "skins/loadouts/suites-v1/hextech/shark-launcher.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "02d5bc8ddf32a996c22bae74a9e9d6a2542edfc38bad145d43d2b02f92894a5c",
+          "transparentFraction": 0.7293319702148438,
+          "visibleFraction": 0.27066802978515625,
+          "alphaBounds": [
+            47,
+            106,
+            464,
+            406
+          ],
+          "nativeContentPixels": [
+            417,
+            300
+          ]
+        },
+        {
+          "id": "hextech-hex-gauntlet",
+          "path": "skins/loadouts/suites-v1/hextech/hex-gauntlet.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "dd20ffbfff6f944b20b6b11f05aba4621d334b21a3d53ecdaf0d58e2cc00de0d",
+          "transparentFraction": 0.7402877807617188,
+          "visibleFraction": 0.25971221923828125,
+          "alphaBounds": [
+            104,
+            86,
+            407,
+            426
+          ],
+          "nativeContentPixels": [
+            303,
+            340
+          ]
+        },
+        {
+          "id": "hextech-long-rifle",
+          "path": "skins/loadouts/suites-v1/hextech/long-rifle.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "52efe7ca252d90a703087e6aad615e47696ee0081ac0a1bc8048ba3cf4e244df",
+          "transparentFraction": 0.881744384765625,
+          "visibleFraction": 0.118255615234375,
+          "alphaBounds": [
+            56,
+            84,
+            456,
+            427
+          ],
+          "nativeContentPixels": [
+            400,
+            343
+          ]
+        },
+        {
+          "id": "hextech-hex-hammer",
+          "path": "skins/loadouts/suites-v1/hextech/hex-hammer.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "0576909d16b2d7fe1b85c3b92df4f55105386a709a1ce3138cae0da52220d319",
+          "transparentFraction": 0.7868003845214844,
+          "visibleFraction": 0.21319961547851562,
+          "alphaBounds": [
+            60,
+            52,
+            451,
+            460
+          ],
+          "nativeContentPixels": [
+            391,
+            408
+          ]
+        },
+        {
+          "id": "hextech-time-blade",
+          "path": "skins/loadouts/suites-v1/hextech/time-blade.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "9cc632686ad5997c47d80bc7a396c5d6322980a0b367f603ef9ca23318e4e551",
+          "transparentFraction": 0.842620849609375,
+          "visibleFraction": 0.157379150390625,
+          "alphaBounds": [
+            70,
+            66,
+            442,
+            446
+          ],
+          "nativeContentPixels": [
+            372,
+            380
+          ]
+        },
+        {
+          "id": "hextech-fox-orb",
+          "path": "skins/loadouts/suites-v1/hextech/fox-orb.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "08670d70f8e4ed7eacf16cefb014b83d6959c66676b8c6659016e3c54aac1575",
+          "transparentFraction": 0.5751838684082031,
+          "visibleFraction": 0.4248161315917969,
+          "alphaBounds": [
+            48,
+            57,
+            463,
+            454
+          ],
+          "nativeContentPixels": [
+            415,
+            397
+          ]
+        },
+        {
+          "id": "hextech-wind-katana",
+          "path": "skins/loadouts/suites-v1/hextech/wind-katana.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "7d8cddfad36373ab52ae7ddc35546dea3637860a267eafd40dda2895d4e7c565",
+          "transparentFraction": 0.8453712463378906,
+          "visibleFraction": 0.15462875366210938,
+          "alphaBounds": [
+            38,
+            73,
+            474,
+            438
+          ],
+          "nativeContentPixels": [
+            436,
+            365
+          ]
+        },
+        {
+          "id": "hextech-frost-bow",
+          "path": "skins/loadouts/suites-v1/hextech/frost-bow.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "ee128b0a6def63d30498a3d87477ea7fbb8d947ad32f193d851e060cc27f5684",
+          "transparentFraction": 0.8100395202636719,
+          "visibleFraction": 0.18996047973632812,
+          "alphaBounds": [
+            69,
+            46,
+            443,
+            465
+          ],
+          "nativeContentPixels": [
+            374,
+            419
+          ]
+        },
+        {
+          "id": "hextech-soul-lantern",
+          "path": "skins/loadouts/suites-v1/hextech/soul-lantern.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "22e9dc5e9227354bba1632a90d64ebf1b21d556a7953ef8b5ad9c0ccdf93a34d",
+          "transparentFraction": 0.6375198364257812,
+          "visibleFraction": 0.36248016357421875,
+          "alphaBounds": [
+            54,
+            50,
+            458,
+            461
+          ],
+          "nativeContentPixels": [
+            404,
+            411
+          ]
+        }
+      ],
+      "contactSheet": "artifacts/suite-assets/contact-sheets/hextech.png"
+    },
+    {
+      "skin": "Tactical",
+      "slug": "tactical",
+      "ready": true,
+      "items": [
+        {
+          "id": "tactical-mcx",
+          "path": "skins/loadouts/suites-v1/tactical/mcx.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "9ab1466d11f71acd9ddd6058847b4959e56d2aa75678974ce55739dd324b2dda",
+          "transparentFraction": 0.8221893310546875,
+          "visibleFraction": 0.1778106689453125,
+          "alphaBounds": [
+            48,
+            95,
+            464,
+            416
+          ],
+          "nativeContentPixels": [
+            416,
+            321
+          ]
+        },
+        {
+          "id": "tactical-m4",
+          "path": "skins/loadouts/suites-v1/tactical/m4.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "2b8b0de3bfd585e48fe80d2c4dfa257cd7348799538efb19e41e9fd0ed84a022",
+          "transparentFraction": 0.8454246520996094,
+          "visibleFraction": 0.15457534790039062,
+          "alphaBounds": [
+            40,
+            85,
+            471,
+            427
+          ],
+          "nativeContentPixels": [
+            431,
+            342
+          ]
+        },
+        {
+          "id": "tactical-awm",
+          "path": "skins/loadouts/suites-v1/tactical/awm.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "43b3e92425898dc284e7f2f0da4ee769fe157edb214c67b202fad44e6b34c7a6",
+          "transparentFraction": 0.8548774719238281,
+          "visibleFraction": 0.14512252807617188,
+          "alphaBounds": [
+            42,
+            71,
+            470,
+            440
+          ],
+          "nativeContentPixels": [
+            428,
+            369
+          ]
+        },
+        {
+          "id": "tactical-mp5",
+          "path": "skins/loadouts/suites-v1/tactical/mp5.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "71deefa83d65d8f1dcc69cc6d599635ad4fed1a2972d0c9a65753a00dc26e9d6",
+          "transparentFraction": 0.8256645202636719,
+          "visibleFraction": 0.17433547973632812,
+          "alphaBounds": [
+            48,
+            87,
+            463,
+            425
+          ],
+          "nativeContentPixels": [
+            415,
+            338
+          ]
+        },
+        {
+          "id": "tactical-ak",
+          "path": "skins/loadouts/suites-v1/tactical/ak.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "34ed0077ffca95140dfe4037697e42bb883c5734360ffec0da68e08972162f2d",
+          "transparentFraction": 0.8527946472167969,
+          "visibleFraction": 0.14720535278320312,
+          "alphaBounds": [
+            34,
+            83,
+            478,
+            428
+          ],
+          "nativeContentPixels": [
+            444,
+            345
+          ]
+        },
+        {
+          "id": "tactical-shotgun",
+          "path": "skins/loadouts/suites-v1/tactical/shotgun.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "6bffbdfc7b392f6ef91f0d6605d9c84631b390f1b3c5a31077f8455d59914ecb",
+          "transparentFraction": 0.8737335205078125,
+          "visibleFraction": 0.1262664794921875,
+          "alphaBounds": [
+            45,
+            77,
+            466,
+            434
+          ],
+          "nativeContentPixels": [
+            421,
+            357
+          ]
+        },
+        {
+          "id": "tactical-lmg",
+          "path": "skins/loadouts/suites-v1/tactical/lmg.png",
+          "pixels": [
+            533,
+            533
+          ],
+          "sha256": "3301ce9aa2c0655a713bdd0cd2bb9fe2f68d1a20611386412ef162bf7e4115f0",
+          "transparentFraction": 0.7794212377107174,
+          "visibleFraction": 0.22057876228928264,
+          "alphaBounds": [
+            12,
+            109,
+            521,
+            423
+          ],
+          "nativeContentPixels": [
+            509,
+            314
+          ]
+        },
+        {
+          "id": "tactical-combat-knife",
+          "path": "skins/loadouts/suites-v1/tactical/combat-knife.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "20ad5ee122e2863732d7995f9780729ec04c456d39ef977c827bdd6e42128be7",
+          "transparentFraction": 0.8967323303222656,
+          "visibleFraction": 0.10326766967773438,
+          "alphaBounds": [
+            85,
+            77,
+            427,
+            435
+          ],
+          "nativeContentPixels": [
+            342,
+            358
+          ]
+        },
+        {
+          "id": "tactical-recon-drone",
+          "path": "skins/loadouts/suites-v1/tactical/recon-drone.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "883a1fbb724ad0eed8fd8b9cd6d68b4a6b2d598d6ffe78d0236e7da268158ee6",
+          "transparentFraction": 0.7830009460449219,
+          "visibleFraction": 0.21699905395507812,
+          "alphaBounds": [
+            54,
+            108,
+            458,
+            404
+          ],
+          "nativeContentPixels": [
+            404,
+            296
+          ]
+        }
+      ],
+      "contactSheet": "artifacts/suite-assets/contact-sheets/tactical.png"
+    },
+    {
+      "skin": "Protocol",
+      "slug": "protocol",
+      "ready": true,
+      "items": [
+        {
+          "id": "protocol-jett",
+          "path": "skins/loadouts/suites-v1/protocol/jett.png",
+          "pixels": [
+            645,
+            1224
+          ],
+          "sha256": "69f985adfeca35b80fcb65fd467e1f33bc9272beac6b5e20170c11160e1b85ff",
+          "transparentFraction": 0.6375664994680043,
+          "visibleFraction": 0.36243350053199574,
+          "alphaBounds": [
+            12,
+            12,
+            633,
+            1212
+          ],
+          "nativeContentPixels": [
+            858,
+            1658
+          ]
+        },
+        {
+          "id": "protocol-sage",
+          "path": "skins/loadouts/suites-v1/protocol/sage.png",
+          "pixels": [
+            795,
+            1224
+          ],
+          "sha256": "97b4c44a7eeff56d80cd628a81336efabeadd9ad68b86a828d7f1b2a7f94103c",
+          "transparentFraction": 0.662046286019649,
+          "visibleFraction": 0.337953713980351,
+          "alphaBounds": [
+            12,
+            12,
+            783,
+            1212
+          ],
+          "nativeContentPixels": [
+            1049,
+            1633
+          ]
+        },
+        {
+          "id": "protocol-reyna",
+          "path": "skins/loadouts/suites-v1/protocol/reyna.png",
+          "pixels": [
+            672,
+            1224
+          ],
+          "sha256": "4b4b9d7eabb2fc2169b4c394c7c42a99383564210fc489d8ad0a470e06aa4c68",
+          "transparentFraction": 0.6934839908185496,
+          "visibleFraction": 0.3065160091814504,
+          "alphaBounds": [
+            12,
+            12,
+            660,
+            1212
+          ],
+          "nativeContentPixels": [
+            993,
+            1839
+          ]
+        },
+        {
+          "id": "protocol-raze",
+          "path": "skins/loadouts/suites-v1/protocol/raze.png",
+          "pixels": [
+            913,
+            1224
+          ],
+          "sha256": "724b63030cf44df0e24a4c2aab9a0bdcdcc113cc4eda895c03cadea923168665",
+          "transparentFraction": 0.7435401141106315,
+          "visibleFraction": 0.2564598858893685,
+          "alphaBounds": [
+            12,
+            12,
+            901,
+            1212
+          ],
+          "nativeContentPixels": [
+            1320,
+            1782
+          ]
+        },
+        {
+          "id": "protocol-cypher",
+          "path": "skins/loadouts/suites-v1/protocol/cypher.png",
+          "pixels": [
+            614,
+            1224
+          ],
+          "sha256": "4d46e36f8afe66aaba59354bfd0972498f22db5ffc43f2fb532d8bd8e71bfec7",
+          "transparentFraction": 0.5720723957335377,
+          "visibleFraction": 0.42792760426646226,
+          "alphaBounds": [
+            12,
+            12,
+            602,
+            1212
+          ],
+          "nativeContentPixels": [
+            813,
+            1654
+          ]
+        },
+        {
+          "id": "protocol-killjoy",
+          "path": "skins/loadouts/suites-v1/protocol/killjoy.png",
+          "pixels": [
+            813,
+            1224
+          ],
+          "sha256": "2457787b520fe1094c673db56f046bf90628c03828f6c4b3e3e08438739b6016",
+          "transparentFraction": 0.6437014125043211,
+          "visibleFraction": 0.3562985874956789,
+          "alphaBounds": [
+            12,
+            12,
+            801,
+            1212
+          ],
+          "nativeContentPixels": [
+            1138,
+            1730
+          ]
+        },
+        {
+          "id": "protocol-sova",
+          "path": "skins/loadouts/suites-v1/protocol/sova.png",
+          "pixels": [
+            938,
+            1224
+          ],
+          "sha256": "0cc517879d430b3aec9d7cf736a638154b225a22182f2a89a2efa3e9705ad617",
+          "transparentFraction": 0.6615495700767869,
+          "visibleFraction": 0.33845042992321306,
+          "alphaBounds": [
+            12,
+            12,
+            926,
+            1212
+          ],
+          "nativeContentPixels": [
+            1266,
+            1663
+          ]
+        },
+        {
+          "id": "protocol-omen",
+          "path": "skins/loadouts/suites-v1/protocol/omen.png",
+          "pixels": [
+            771,
+            1224
+          ],
+          "sha256": "60e51ab1d65f723ac3d6395bf6e815d062fa5dc025264b73cc44a80d74457533",
+          "transparentFraction": 0.5299723218297263,
+          "visibleFraction": 0.4700276781702737,
+          "alphaBounds": [
+            12,
+            12,
+            759,
+            1212
+          ],
+          "nativeContentPixels": [
+            1014,
+            1628
+          ]
+        },
+        {
+          "id": "protocol-viper",
+          "path": "skins/loadouts/suites-v1/protocol/viper.png",
+          "pixels": [
+            603,
+            1224
+          ],
+          "sha256": "0e897b93d3927c542226dae6def346d965c04e2f4167b59731bf5917fc4a586e",
+          "transparentFraction": 0.5012830726541584,
+          "visibleFraction": 0.4987169273458416,
+          "alphaBounds": [
+            12,
+            12,
+            591,
+            1212
+          ],
+          "nativeContentPixels": [
+            767,
+            1590
+          ]
+        }
+      ],
+      "contactSheet": "artifacts/suite-assets/contact-sheets/protocol.png"
+    },
+    {
+      "skin": "Adventure",
+      "slug": "adventure",
+      "ready": true,
+      "items": [
+        {
+          "id": "adventure-demon-sword",
+          "path": "skins/loadouts/suites-v1/adventure/demon-sword.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "5b3451295a7796e5410452975b4561ca4ce6d7725f18c8220893433a49ff2a97",
+          "transparentFraction": 0.7597274780273438,
+          "visibleFraction": 0.24027252197265625,
+          "alphaBounds": [
+            47,
+            60,
+            465,
+            451
+          ],
+          "nativeContentPixels": [
+            418,
+            391
+          ]
+        },
+        {
+          "id": "adventure-violet-katana",
+          "path": "skins/loadouts/suites-v1/adventure/violet-katana.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "3d42833711839c4c4b66ee2ba7e38fbc38e8e27f8e85d93a6d5e922979cc88d3",
+          "transparentFraction": 0.8244514465332031,
+          "visibleFraction": 0.17554855346679688,
+          "alphaBounds": [
+            47,
+            63,
+            464,
+            449
+          ],
+          "nativeContentPixels": [
+            417,
+            386
+          ]
+        },
+        {
+          "id": "adventure-crystal-staff",
+          "path": "skins/loadouts/suites-v1/adventure/crystal-staff.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "9f7a574c5054ff9415b303bc7fc6715438e9bd2aed92f6886e50ee945ae6f423",
+          "transparentFraction": 0.8260536193847656,
+          "visibleFraction": 0.17394638061523438,
+          "alphaBounds": [
+            71,
+            57,
+            441,
+            454
+          ],
+          "nativeContentPixels": [
+            370,
+            397
+          ]
+        },
+        {
+          "id": "adventure-silver-revolver",
+          "path": "skins/loadouts/suites-v1/adventure/silver-revolver.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "58345f591ade2a7911dc4e7ed51738af4cc738dc9d97a234d1b6969d1a57c473",
+          "transparentFraction": 0.78173828125,
+          "visibleFraction": 0.21826171875,
+          "alphaBounds": [
+            52,
+            70,
+            459,
+            441
+          ],
+          "nativeContentPixels": [
+            407,
+            371
+          ]
+        },
+        {
+          "id": "adventure-holy-cross",
+          "path": "skins/loadouts/suites-v1/adventure/holy-cross.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "8fdfd6e30e8791811fbf22460acc6e714521a649373661f684d35b759830d147",
+          "transparentFraction": 0.7518424987792969,
+          "visibleFraction": 0.24815750122070312,
+          "alphaBounds": [
+            86,
+            54,
+            425,
+            458
+          ],
+          "nativeContentPixels": [
+            339,
+            404
+          ]
+        },
+        {
+          "id": "adventure-iron-gauntlets",
+          "path": "skins/loadouts/suites-v1/adventure/iron-gauntlets.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "71d69f440d11bfdaaee4ec9d9d5ece789ed38c57e295c3232bbd5b503bf4f2ff",
+          "transparentFraction": 0.7011833190917969,
+          "visibleFraction": 0.2988166809082031,
+          "alphaBounds": [
+            68,
+            81,
+            443,
+            431
+          ],
+          "nativeContentPixels": [
+            375,
+            350
+          ]
+        },
+        {
+          "id": "adventure-twin-daggers",
+          "path": "skins/loadouts/suites-v1/adventure/twin-daggers.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "c01325d9f68fd9bfb02fefcdc3ae6a6d889f6eec882fc3cc98be75d1f1e8d44b",
+          "transparentFraction": 0.7771377563476562,
+          "visibleFraction": 0.22286224365234375,
+          "alphaBounds": [
+            60,
+            44,
+            451,
+            467
+          ],
+          "nativeContentPixels": [
+            391,
+            423
+          ]
+        },
+        {
+          "id": "adventure-emerald-bow",
+          "path": "skins/loadouts/suites-v1/adventure/emerald-bow.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "f949262d89fe7afcbfc60c5106c7889c44ed8439d8917772877c9a84cd17bd95",
+          "transparentFraction": 0.8109817504882812,
+          "visibleFraction": 0.18901824951171875,
+          "alphaBounds": [
+            70,
+            40,
+            442,
+            472
+          ],
+          "nativeContentPixels": [
+            372,
+            432
+          ]
+        },
+        {
+          "id": "adventure-dragon-spear",
+          "path": "skins/loadouts/suites-v1/adventure/dragon-spear.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "38b0f67a5839cc47b3506fc34d30d9928a785f067d79919d6a3a9af8dc4dc53d",
+          "transparentFraction": 0.8119163513183594,
+          "visibleFraction": 0.18808364868164062,
+          "alphaBounds": [
+            59,
+            40,
+            452,
+            472
+          ],
+          "nativeContentPixels": [
+            393,
+            432
+          ]
+        }
+      ],
+      "contactSheet": "artifacts/suite-assets/contact-sheets/adventure.png"
+    },
+    {
+      "skin": "Arsenal",
+      "slug": "arsenal",
+      "ready": true,
+      "items": [
+        {
+          "id": "katana",
+          "path": "skins/loadouts/suites-v1/arsenal/katana.png",
+          "pixels": [
+            707,
+            1048
+          ],
+          "sha256": "4e86aff996fdfb14983089637b56508137347274368ced17556c1518a1d892b9",
+          "transparentFraction": 0.3768544111772137,
+          "visibleFraction": 0.6231455888227864,
+          "alphaBounds": [
+            12,
+            12,
+            695,
+            1036
+          ],
+          "nativeContentPixels": [
+            1024,
+            1536
+          ]
+        },
+        {
+          "id": "greatsword",
+          "path": "skins/loadouts/suites-v1/arsenal/greatsword.png",
+          "pixels": [
+            707,
+            1048
+          ],
+          "sha256": "1dc5e5337afce312c9c635b873b25914b0785a84ba2fce944562c4c53bebbff9",
+          "transparentFraction": 0.4062442640120064,
+          "visibleFraction": 0.5937557359879936,
+          "alphaBounds": [
+            12,
+            12,
+            695,
+            1036
+          ],
+          "nativeContentPixels": [
+            1024,
+            1536
+          ]
+        },
+        {
+          "id": "longsword",
+          "path": "skins/loadouts/suites-v1/arsenal/longsword.png",
+          "pixels": [
+            707,
+            1048
+          ],
+          "sha256": "5537d15a9092eeb0d67dba23217f365ddbff6a74340adef7c2eef7de6a84afeb",
+          "transparentFraction": 0.35375929904877074,
+          "visibleFraction": 0.6462407009512292,
+          "alphaBounds": [
+            12,
+            12,
+            695,
+            1036
+          ],
+          "nativeContentPixels": [
+            1024,
+            1536
+          ]
+        },
+        {
+          "id": "spear",
+          "path": "skins/loadouts/suites-v1/arsenal/spear.png",
+          "pixels": [
+            707,
+            1048
+          ],
+          "sha256": "c228224dd3eb674387bb79e518745e9144da582916d152c15974fab34989c00b",
+          "transparentFraction": 0.34618374596456375,
+          "visibleFraction": 0.6538162540354362,
+          "alphaBounds": [
+            12,
+            12,
+            695,
+            1036
+          ],
+          "nativeContentPixels": [
+            1024,
+            1536
+          ]
+        },
+        {
+          "id": "dagger",
+          "path": "skins/loadouts/suites-v1/arsenal/dagger.png",
+          "pixels": [
+            707,
+            1048
+          ],
+          "sha256": "5844cddaecc7623dc09af82fd76d572b4b45daeca684c6301ba51d7e68ab1ad9",
+          "transparentFraction": 0.35550303939881445,
+          "visibleFraction": 0.6444969606011856,
+          "alphaBounds": [
+            12,
+            12,
+            695,
+            1036
+          ],
+          "nativeContentPixels": [
+            1024,
+            1536
+          ]
+        },
+        {
+          "id": "staff",
+          "path": "skins/loadouts/suites-v1/arsenal/staff.png",
+          "pixels": [
+            707,
+            1048
+          ],
+          "sha256": "ffc4b19b5a94f6863a8bd99d1865e035348de7d45521e2aaebd0050b3dcf42e4",
+          "transparentFraction": 0.407124232052431,
+          "visibleFraction": 0.592875767947569,
+          "alphaBounds": [
+            12,
+            12,
+            695,
+            1036
+          ],
+          "nativeContentPixels": [
+            1024,
+            1536
+          ]
+        },
+        {
+          "id": "bow",
+          "path": "skins/loadouts/suites-v1/arsenal/bow.png",
+          "pixels": [
+            707,
+            1048
+          ],
+          "sha256": "f0f748228cbfcb5842cf849d7dc3f3673f5c06f1e924e0c04b675e7f417c6ad8",
+          "transparentFraction": 0.33099889869030524,
+          "visibleFraction": 0.6690011013096948,
+          "alphaBounds": [
+            12,
+            12,
+            695,
+            1036
+          ],
+          "nativeContentPixels": [
+            1024,
+            1536
+          ]
+        },
+        {
+          "id": "dualblades",
+          "path": "skins/loadouts/suites-v1/arsenal/dualblades.png",
+          "pixels": [
+            714,
+            1048
+          ],
+          "sha256": "c305cd04927a5060615d489db8334a489db484c470104fb6995d65877166294b",
+          "transparentFraction": 0.48127017982765624,
+          "visibleFraction": 0.5187298201723438,
+          "alphaBounds": [
+            12,
+            12,
+            702,
+            1036
+          ],
+          "nativeContentPixels": [
+            1024,
+            1520
+          ]
+        },
+        {
+          "id": "halberds",
+          "path": "skins/loadouts/suites-v1/arsenal/halberds.png",
+          "pixels": [
+            707,
+            1048
+          ],
+          "sha256": "e55d9addd6c5ce3f885536e9eb4daf14e57c22a6eb6ba0b937be3e1dd3cbef16",
+          "transparentFraction": 0.3970180960298865,
+          "visibleFraction": 0.6029819039701134,
+          "alphaBounds": [
+            12,
+            12,
+            695,
+            1036
+          ],
+          "nativeContentPixels": [
+            1024,
+            1536
+          ]
+        }
+      ],
+      "contactSheet": "artifacts/suite-assets/contact-sheets/arsenal.png"
+    },
+    {
+      "skin": "Relic",
+      "slug": "relic",
+      "ready": true,
+      "items": [
+        {
+          "id": "relic-iron-staff",
+          "path": "skins/loadouts/suites-v1/relic/iron-staff.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "11e3f7c4d392a2d2c8bb94744cbee627249efc55c7fbdcfc7851ea792e59e42a",
+          "transparentFraction": 0.8958625793457031,
+          "visibleFraction": 0.10413742065429688,
+          "alphaBounds": [
+            46,
+            55,
+            466,
+            457
+          ],
+          "nativeContentPixels": [
+            420,
+            402
+          ]
+        },
+        {
+          "id": "relic-healing-gourd",
+          "path": "skins/loadouts/suites-v1/relic/healing-gourd.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "cb7fa2bcf5c6895bd9d56233aa151a49bf0b37aab062b1c8a1d328659d5dcf93",
+          "transparentFraction": 0.7099494934082031,
+          "visibleFraction": 0.2900505065917969,
+          "alphaBounds": [
+            99,
+            54,
+            413,
+            458
+          ],
+          "nativeContentPixels": [
+            314,
+            404
+          ]
+        },
+        {
+          "id": "relic-gold-cicada",
+          "path": "skins/loadouts/suites-v1/relic/gold-cicada.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "04043d3f7e5d1d75df6032dc6d7466642280176aaad19aab3efe4bc194bb4c85",
+          "transparentFraction": 0.7307929992675781,
+          "visibleFraction": 0.2692070007324219,
+          "alphaBounds": [
+            64,
+            76,
+            447,
+            436
+          ],
+          "nativeContentPixels": [
+            383,
+            360
+          ]
+        },
+        {
+          "id": "relic-wind-pearl",
+          "path": "skins/loadouts/suites-v1/relic/wind-pearl.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "691e101a1716df71e509578e5c379931547af79f46553b1b618a0299a903cad6",
+          "transparentFraction": 0.6997528076171875,
+          "visibleFraction": 0.3002471923828125,
+          "alphaBounds": [
+            83,
+            65,
+            429,
+            446
+          ],
+          "nativeContentPixels": [
+            346,
+            381
+          ]
+        },
+        {
+          "id": "relic-ritual-bell",
+          "path": "skins/loadouts/suites-v1/relic/ritual-bell.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "b244490aff517367924ba222f4b53b64af72ed6c0557d3b60530e65566707aa6",
+          "transparentFraction": 0.6576194763183594,
+          "visibleFraction": 0.3423805236816406,
+          "alphaBounds": [
+            93,
+            43,
+            419,
+            468
+          ],
+          "nativeContentPixels": [
+            326,
+            425
+          ]
+        },
+        {
+          "id": "relic-leaf-fan",
+          "path": "skins/loadouts/suites-v1/relic/leaf-fan.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "eb56adccd7d183b5440262a4f7594226a36568f4b2d9503d062c0ed18a08d0eb",
+          "transparentFraction": 0.6986846923828125,
+          "visibleFraction": 0.3013153076171875,
+          "alphaBounds": [
+            53,
+            49,
+            459,
+            463
+          ],
+          "nativeContentPixels": [
+            406,
+            414
+          ]
+        },
+        {
+          "id": "relic-monkey-mask",
+          "path": "skins/loadouts/suites-v1/relic/monkey-mask.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "2105b8207c1440194b02b341a7c126e92f04fe968222354f0610ba1e64965c7d",
+          "transparentFraction": 0.6292152404785156,
+          "visibleFraction": 0.3707847595214844,
+          "alphaBounds": [
+            60,
+            64,
+            452,
+            447
+          ],
+          "nativeContentPixels": [
+            392,
+            383
+          ]
+        },
+        {
+          "id": "relic-relic-pagoda",
+          "path": "skins/loadouts/suites-v1/relic/relic-pagoda.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "fd1f3884b850510e6c086c63cdb33877eaa1f7e34130c831c43ab5db8ccd8e62",
+          "transparentFraction": 0.7734336853027344,
+          "visibleFraction": 0.22656631469726562,
+          "alphaBounds": [
+            144,
+            53,
+            367,
+            458
+          ],
+          "nativeContentPixels": [
+            223,
+            405
+          ]
+        },
+        {
+          "id": "relic-dragon-circlet",
+          "path": "skins/loadouts/suites-v1/relic/dragon-circlet.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "1afac9c786b43e3945516aa246a9257445fe440193f48b144955bb4f2dd7a51e",
+          "transparentFraction": 0.7837181091308594,
+          "visibleFraction": 0.21628189086914062,
+          "alphaBounds": [
+            49,
+            143,
+            463,
+            369
+          ],
+          "nativeContentPixels": [
+            414,
+            226
+          ]
+        }
+      ],
+      "contactSheet": "artifacts/suite-assets/contact-sheets/relic.png"
+    },
+    {
+      "skin": "Starlight",
+      "slug": "starlight",
+      "ready": true,
+      "items": [
+        {
+          "id": "starlight-sun-staff",
+          "path": "skins/loadouts/suites-v1/starlight/sun-staff.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "0c9793027b3e05b3c34f0ddf05024f3fc62b652338ed55592441988b78ee0233",
+          "transparentFraction": 0.868377685546875,
+          "visibleFraction": 0.131622314453125,
+          "alphaBounds": [
+            63,
+            69,
+            449,
+            442
+          ],
+          "nativeContentPixels": [
+            386,
+            373
+          ]
+        },
+        {
+          "id": "starlight-mulan-swords",
+          "path": "skins/loadouts/suites-v1/starlight/mulan-swords.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "7b9c839206f26af2c88e26df784f068d7ac5d5172c7d850f58396c162ddc2e56",
+          "transparentFraction": 0.7842292785644531,
+          "visibleFraction": 0.21577072143554688,
+          "alphaBounds": [
+            65,
+            52,
+            446,
+            459
+          ],
+          "nativeContentPixels": [
+            381,
+            407
+          ]
+        },
+        {
+          "id": "starlight-sun-cannon",
+          "path": "skins/loadouts/suites-v1/starlight/sun-cannon.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "f3880cd895fd647758ade7c94c88c2f1e8b07b0741d70acafc50ea44ae5d2ba7",
+          "transparentFraction": 0.7774925231933594,
+          "visibleFraction": 0.22250747680664062,
+          "alphaBounds": [
+            62,
+            76,
+            449,
+            436
+          ],
+          "nativeContentPixels": [
+            387,
+            360
+          ]
+        },
+        {
+          "id": "starlight-lotus-sword",
+          "path": "skins/loadouts/suites-v1/starlight/lotus-sword.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "f273a438a4c6060e2da8afa121913b6650e67822b7da18ef068f7ce8daa367a0",
+          "transparentFraction": 0.8175315856933594,
+          "visibleFraction": 0.18246841430664062,
+          "alphaBounds": [
+            64,
+            53,
+            447,
+            458
+          ],
+          "nativeContentPixels": [
+            383,
+            405
+          ]
+        },
+        {
+          "id": "starlight-ice-staff",
+          "path": "skins/loadouts/suites-v1/starlight/ice-staff.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "8ffe9efd9fac360ac9c72767b3c21b928b0e475913248b696d4cc30fbda80087",
+          "transparentFraction": 0.8418235778808594,
+          "visibleFraction": 0.15817642211914062,
+          "alphaBounds": [
+            67,
+            55,
+            445,
+            457
+          ],
+          "nativeContentPixels": [
+            378,
+            402
+          ]
+        },
+        {
+          "id": "starlight-butterfly-fan",
+          "path": "skins/loadouts/suites-v1/starlight/butterfly-fan.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "88c37a83237f4736b787c0704a668249fc30006a46953ca48a977bb3084e772e",
+          "transparentFraction": 0.7117462158203125,
+          "visibleFraction": 0.2882537841796875,
+          "alphaBounds": [
+            62,
+            70,
+            449,
+            441
+          ],
+          "nativeContentPixels": [
+            387,
+            371
+          ]
+        },
+        {
+          "id": "starlight-jade-rings",
+          "path": "skins/loadouts/suites-v1/starlight/jade-rings.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "66ecff16918f1d54277e6bc0c0fe82a071df64e3066d7529e2e7e18dd35fef04",
+          "transparentFraction": 0.7384910583496094,
+          "visibleFraction": 0.2615089416503906,
+          "alphaBounds": [
+            70,
+            59,
+            441,
+            453
+          ],
+          "nativeContentPixels": [
+            371,
+            394
+          ]
+        },
+        {
+          "id": "starlight-flame-spear",
+          "path": "skins/loadouts/suites-v1/starlight/flame-spear.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "e90be611ef8726567125073c7fed55b9ed777a127ec8549a3e3da10d67a59230",
+          "transparentFraction": 0.8160858154296875,
+          "visibleFraction": 0.1839141845703125,
+          "alphaBounds": [
+            46,
+            47,
+            465,
+            464
+          ],
+          "nativeContentPixels": [
+            419,
+            417
+          ]
+        },
+        {
+          "id": "starlight-guan-blade",
+          "path": "skins/loadouts/suites-v1/starlight/guan-blade.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "aef77d7359e6ee48ea83a050f3556989cbd9d4195fc7c2cb5fc7cee0c196a02a",
+          "transparentFraction": 0.7502250671386719,
+          "visibleFraction": 0.24977493286132812,
+          "alphaBounds": [
+            55,
+            54,
+            457,
+            458
+          ],
+          "nativeContentPixels": [
+            402,
+            404
+          ]
+        }
+      ],
+      "contactSheet": "artifacts/suite-assets/contact-sheets/starlight.png"
+    },
+    {
+      "skin": "Formation",
+      "slug": "formation",
+      "ready": true,
+      "items": [
+        {
+          "id": "formation-feather-knight",
+          "path": "skins/loadouts/suites-v1/formation/feather-knight.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "d3b9d72da7d6c0e7938bb5e21c99cac10d27dbf5829e36f03bb6dff9b21163cc",
+          "transparentFraction": 0.6744651794433594,
+          "visibleFraction": 0.3255348205566406,
+          "alphaBounds": [
+            79,
+            59,
+            432,
+            453
+          ],
+          "nativeContentPixels": [
+            353,
+            394
+          ]
+        },
+        {
+          "id": "formation-river-sprite",
+          "path": "skins/loadouts/suites-v1/formation/river-sprite.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "2eb85c85c6b390ed915fc37e70e95d2313a1f89e17a0bbc0c0ea62538a77a721",
+          "transparentFraction": 0.7001953125,
+          "visibleFraction": 0.2998046875,
+          "alphaBounds": [
+            72,
+            75,
+            440,
+            436
+          ],
+          "nativeContentPixels": [
+            368,
+            361
+          ]
+        },
+        {
+          "id": "formation-tiny-dragon",
+          "path": "skins/loadouts/suites-v1/formation/tiny-dragon.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "2e6b97352a413c01ec9797c0aec70539339f484e5e0a8dd6e3c928d2ae86511a",
+          "transparentFraction": 0.6685943603515625,
+          "visibleFraction": 0.3314056396484375,
+          "alphaBounds": [
+            53,
+            60,
+            458,
+            451
+          ],
+          "nativeContentPixels": [
+            405,
+            391
+          ]
+        },
+        {
+          "id": "formation-forest-fox",
+          "path": "skins/loadouts/suites-v1/formation/forest-fox.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "86343519e8183951d48058dd6d6e2c0095f7628ea747b4efea7ed83c4f73a19d",
+          "transparentFraction": 0.6061553955078125,
+          "visibleFraction": 0.3938446044921875,
+          "alphaBounds": [
+            54,
+            46,
+            457,
+            465
+          ],
+          "nativeContentPixels": [
+            403,
+            419
+          ]
+        },
+        {
+          "id": "formation-gold-penguin",
+          "path": "skins/loadouts/suites-v1/formation/gold-penguin.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "b4ef8667049ea04c01117da64b5bbc44676e3a6f897b57af43bfac71363a4384",
+          "transparentFraction": 0.6206855773925781,
+          "visibleFraction": 0.3793144226074219,
+          "alphaBounds": [
+            62,
+            58,
+            449,
+            453
+          ],
+          "nativeContentPixels": [
+            387,
+            395
+          ]
+        },
+        {
+          "id": "formation-horned-cub",
+          "path": "skins/loadouts/suites-v1/formation/horned-cub.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "bf8017cef041203e8adea2915c37d1364570c66f63ea0883ccae7969e405a466",
+          "transparentFraction": 0.6472244262695312,
+          "visibleFraction": 0.35277557373046875,
+          "alphaBounds": [
+            76,
+            61,
+            436,
+            450
+          ],
+          "nativeContentPixels": [
+            360,
+            389
+          ]
+        },
+        {
+          "id": "formation-star-owl",
+          "path": "skins/loadouts/suites-v1/formation/star-owl.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "e55440d919a988a610410f1bec4056d7828416ffc9789fb81a558f31163ed8bf",
+          "transparentFraction": 0.6250534057617188,
+          "visibleFraction": 0.37494659423828125,
+          "alphaBounds": [
+            61,
+            58,
+            451,
+            454
+          ],
+          "nativeContentPixels": [
+            390,
+            396
+          ]
+        },
+        {
+          "id": "formation-mushroom-sprite",
+          "path": "skins/loadouts/suites-v1/formation/mushroom-sprite.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "a3e1926db340b4ae5fd5618303411a284efd29b475eaa695dd3083c6ff839175",
+          "transparentFraction": 0.63128662109375,
+          "visibleFraction": 0.36871337890625,
+          "alphaBounds": [
+            77,
+            61,
+            435,
+            451
+          ],
+          "nativeContentPixels": [
+            358,
+            390
+          ]
+        },
+        {
+          "id": "formation-cloud-ram",
+          "path": "skins/loadouts/suites-v1/formation/cloud-ram.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "4adb963d224bfacde5c5fa7b505b4d8d31781a5204d02a5c2556974412156205",
+          "transparentFraction": 0.5797500610351562,
+          "visibleFraction": 0.42024993896484375,
+          "alphaBounds": [
+            52,
+            69,
+            460,
+            442
+          ],
+          "nativeContentPixels": [
+            408,
+            373
+          ]
+        }
+      ],
+      "contactSheet": "artifacts/suite-assets/contact-sheets/formation.png"
+    },
+    {
+      "skin": "Astral",
+      "slug": "astral",
+      "ready": true,
+      "items": [
+        {
+          "id": "astral-anemo-lyre",
+          "path": "skins/loadouts/suites-v1/astral/anemo-lyre.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "be620472481418344b8ef30733462a3b98a30aab8beb41ed98fb6e21edb0be65",
+          "transparentFraction": 0.7510261535644531,
+          "visibleFraction": 0.24897384643554688,
+          "alphaBounds": [
+            71,
+            60,
+            440,
+            451
+          ],
+          "nativeContentPixels": [
+            369,
+            391
+          ]
+        },
+        {
+          "id": "astral-geo-spear",
+          "path": "skins/loadouts/suites-v1/astral/geo-spear.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "d7db244427defd2955aaee05afeb4d7d5cdf49d0eacca095c75fd9c41a4b90f7",
+          "transparentFraction": 0.9106559753417969,
+          "visibleFraction": 0.08934402465820312,
+          "alphaBounds": [
+            83,
+            56,
+            429,
+            456
+          ],
+          "nativeContentPixels": [
+            346,
+            400
+          ]
+        },
+        {
+          "id": "astral-electro-sword",
+          "path": "skins/loadouts/suites-v1/astral/electro-sword.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "f891cd784771371983f11d80e99e29c7fa9c1ab137f9da0b67cf880909dca171",
+          "transparentFraction": 0.9094314575195312,
+          "visibleFraction": 0.09056854248046875,
+          "alphaBounds": [
+            72,
+            55,
+            439,
+            456
+          ],
+          "nativeContentPixels": [
+            367,
+            401
+          ]
+        },
+        {
+          "id": "astral-dendro-lamp",
+          "path": "skins/loadouts/suites-v1/astral/dendro-lamp.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "6a6bf1074a7e6b75c690ccbc277f8b069278fa1571592b1c64cefd72be300cd5",
+          "transparentFraction": 0.8009567260742188,
+          "visibleFraction": 0.19904327392578125,
+          "alphaBounds": [
+            90,
+            64,
+            421,
+            447
+          ],
+          "nativeContentPixels": [
+            331,
+            383
+          ]
+        },
+        {
+          "id": "astral-hydro-cane",
+          "path": "skins/loadouts/suites-v1/astral/hydro-cane.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "551a073968611bd389a0ebd8f7d912e1293fa11b45e161c93df900eb97b251e2",
+          "transparentFraction": 0.8895683288574219,
+          "visibleFraction": 0.11043167114257812,
+          "alphaBounds": [
+            124,
+            53,
+            387,
+            459
+          ],
+          "nativeContentPixels": [
+            263,
+            406
+          ]
+        },
+        {
+          "id": "astral-pyro-claymore",
+          "path": "skins/loadouts/suites-v1/astral/pyro-claymore.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "f17fcd77a3657d4292ec2c2ec016f8f0edd4a841e13de6672f8525bd9532e0a7",
+          "transparentFraction": 0.8035621643066406,
+          "visibleFraction": 0.19643783569335938,
+          "alphaBounds": [
+            82,
+            44,
+            430,
+            467
+          ],
+          "nativeContentPixels": [
+            348,
+            423
+          ]
+        },
+        {
+          "id": "astral-cryo-bow",
+          "path": "skins/loadouts/suites-v1/astral/cryo-bow.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "a4603a25cc980461c782b7c00c9241dab5578f5141d6745386aad2886a9938cf",
+          "transparentFraction": 0.8461685180664062,
+          "visibleFraction": 0.15383148193359375,
+          "alphaBounds": [
+            58,
+            48,
+            453,
+            464
+          ],
+          "nativeContentPixels": [
+            395,
+            416
+          ]
+        },
+        {
+          "id": "astral-star-compass",
+          "path": "skins/loadouts/suites-v1/astral/star-compass.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "466c993cbeba7ad4eb6bfc455ad529f191c9ce50d219e8f31e4b81bae613526a",
+          "transparentFraction": 0.6791305541992188,
+          "visibleFraction": 0.32086944580078125,
+          "alphaBounds": [
+            77,
+            46,
+            435,
+            465
+          ],
+          "nativeContentPixels": [
+            358,
+            419
+          ]
+        },
+        {
+          "id": "astral-fairy-bottle",
+          "path": "skins/loadouts/suites-v1/astral/fairy-bottle.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "bb7ce3973332c25253aba33b03e207dbd8ee694c86c2124464ae9f8efe81fd98",
+          "transparentFraction": 0.7347488403320312,
+          "visibleFraction": 0.26525115966796875,
+          "alphaBounds": [
+            108,
+            46,
+            404,
+            465
+          ],
+          "nativeContentPixels": [
+            296,
+            419
+          ]
+        }
+      ],
+      "contactSheet": "artifacts/suite-assets/contact-sheets/astral.png"
+    },
+    {
+      "skin": "Wonderland",
+      "slug": "wonderland",
+      "ready": true,
+      "items": [
+        {
+          "id": "wonderland-sword-knight",
+          "path": "skins/loadouts/suites-v1/wonderland/sword-knight.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "f2c8afb0c84d828fb2c6f0bcfacd078348410b60e0eb03c91b4c046133cfafaf",
+          "transparentFraction": 0.7181320190429688,
+          "visibleFraction": 0.28186798095703125,
+          "alphaBounds": [
+            49,
+            46,
+            463,
+            466
+          ],
+          "nativeContentPixels": [
+            414,
+            420
+          ]
+        },
+        {
+          "id": "wonderland-fox-maiden",
+          "path": "skins/loadouts/suites-v1/wonderland/fox-maiden.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "bc8c22f4a5d745dcb696743f0b722295219b01341ab3509e6b04d7df2964492a",
+          "transparentFraction": 0.68927001953125,
+          "visibleFraction": 0.31072998046875,
+          "alphaBounds": [
+            73,
+            49,
+            439,
+            463
+          ],
+          "nativeContentPixels": [
+            366,
+            414
+          ]
+        },
+        {
+          "id": "wonderland-dragon-prince",
+          "path": "skins/loadouts/suites-v1/wonderland/dragon-prince.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "b128a3b85b49a31f3a82075f43c4136cad6bcfd702036d370b3ed94d0d1474a8",
+          "transparentFraction": 0.6730880737304688,
+          "visibleFraction": 0.32691192626953125,
+          "alphaBounds": [
+            84,
+            46,
+            427,
+            466
+          ],
+          "nativeContentPixels": [
+            343,
+            420
+          ]
+        },
+        {
+          "id": "wonderland-bone-sprite",
+          "path": "skins/loadouts/suites-v1/wonderland/bone-sprite.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "7fc6583ce0806c3d52fc4d126d9981f4bfb97ca7c4bb3b4a15090e81fbd8b77a",
+          "transparentFraction": 0.6026878356933594,
+          "visibleFraction": 0.3973121643066406,
+          "alphaBounds": [
+            50,
+            49,
+            461,
+            462
+          ],
+          "nativeContentPixels": [
+            411,
+            413
+          ]
+        },
+        {
+          "id": "wonderland-tiger-warrior",
+          "path": "skins/loadouts/suites-v1/wonderland/tiger-warrior.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "e0f46b1bc9917356bfaaebc400cfc7143d5905425fc52eeaf4e05fe10299ea78",
+          "transparentFraction": 0.5982513427734375,
+          "visibleFraction": 0.4017486572265625,
+          "alphaBounds": [
+            42,
+            55,
+            470,
+            457
+          ],
+          "nativeContentPixels": [
+            428,
+            402
+          ]
+        },
+        {
+          "id": "wonderland-dancing-fairy",
+          "path": "skins/loadouts/suites-v1/wonderland/dancing-fairy.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "8821af29e1dbf2060be66a7984776da2e2af3a0022d81083d7276a145b184475",
+          "transparentFraction": 0.6222877502441406,
+          "visibleFraction": 0.3777122497558594,
+          "alphaBounds": [
+            69,
+            48,
+            442,
+            464
+          ],
+          "nativeContentPixels": [
+            373,
+            416
+          ]
+        },
+        {
+          "id": "wonderland-rabbit-spirit",
+          "path": "skins/loadouts/suites-v1/wonderland/rabbit-spirit.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "f68af44b05861ac83070ab4efd9eeb90a6a4a0da64ddd3cd9595710e6d5165f1",
+          "transparentFraction": 0.6806602478027344,
+          "visibleFraction": 0.3193397521972656,
+          "alphaBounds": [
+            59,
+            63,
+            453,
+            448
+          ],
+          "nativeContentPixels": [
+            394,
+            385
+          ]
+        },
+        {
+          "id": "wonderland-lotus-fairy",
+          "path": "skins/loadouts/suites-v1/wonderland/lotus-fairy.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "040bf9c2aeb89d07d4d32b463a1f9608aef609bec356ef1656bedcaef0499e5a",
+          "transparentFraction": 0.6041374206542969,
+          "visibleFraction": 0.3958625793457031,
+          "alphaBounds": [
+            65,
+            62,
+            447,
+            450
+          ],
+          "nativeContentPixels": [
+            382,
+            388
+          ]
+        },
+        {
+          "id": "wonderland-tortoise-general",
+          "path": "skins/loadouts/suites-v1/wonderland/tortoise-general.png",
+          "pixels": [
+            512,
+            512
+          ],
+          "sha256": "79e7d585b344a87928d713bf4a116fd1e43b045a5dc33b2a64b7cf99149e265f",
+          "transparentFraction": 0.6215744018554688,
+          "visibleFraction": 0.37842559814453125,
+          "alphaBounds": [
+            54,
+            60,
+            457,
+            452
+          ],
+          "nativeContentPixels": [
+            403,
+            392
+          ]
+        }
+      ],
+      "contactSheet": "artifacts/suite-assets/contact-sheets/wonderland.png"
+    }
+  ],
+  "visualReview": {
+    "reviewedAll13ContactSheets": true,
+    "productionSizes": [
+      56,
+      110
+    ],
+    "revisions": [
+      "Replaced rigid grid slicing with whole-atlas alpha-connected silhouettes to remove neighbouring fragments and retain complete objects.",
+      "Corrected UTF-8 classic titles.",
+      "Separated labels and production-size samples in contact sheets."
+    ],
+    "gameArtNote": "11 original fan-style atlas packs; Protocol original game art with attribution; Arsenal existing imagegen character interpretations reused."
+  }
+}
