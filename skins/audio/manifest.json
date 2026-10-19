@@ -1,0 +1,3183 @@
+{
+  "version": 1,
+  "sample_rate": 44100,
+  "channels": 2,
+  "bits": 16,
+  "license": "CC0-1.0",
+  "provenance": "Original procedural Foley and instrument synthesis; no extracted game audio, no official voices.",
+  "generator": "tools/game-audio/generate.py",
+  "themes": {
+    "ink-jade": {
+      "name": "Jade mechanism",
+      "materials": "bamboo, jade bead and brushed silk",
+      "cues": {
+        "switch": {
+          "file": "ink-jade/switch.wav",
+          "sha256": "5f05c662cffc1e60baf7b048c262033e30076940ab0d5c1e8e44524cbd33e819",
+          "peak": 0.319977,
+          "rms": 0.044054,
+          "dc": 1.3e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.114746,
+          "seconds": 0.3
+        },
+        "capture": {
+          "file": "ink-jade/capture.wav",
+          "sha256": "471ba4c29e7e1e350201ecf2896b723d028c5d839a23a66e66b3e46885db3bb4",
+          "peak": 0.379974,
+          "rms": 0.05541,
+          "dc": 1e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.160339,
+          "seconds": 0.48
+        },
+        "remove": {
+          "file": "ink-jade/remove.wav",
+          "sha256": "258ac3838748963a902a0820eab9374b730d17815c9413ddc3006637f07f39ce",
+          "peak": 0.279999,
+          "rms": 0.031983,
+          "dc": 1e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.096954,
+          "seconds": 0.34
+        },
+        "expand": {
+          "file": "ink-jade/expand.wav",
+          "sha256": "b37ec203437f6c9592b34d96edc3294a4f8097979e54c5322ccc637561316aae",
+          "peak": 0.25,
+          "rms": 0.032214,
+          "dc": 0.0,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.104797,
+          "seconds": 0.34
+        },
+        "collapse": {
+          "file": "ink-jade/collapse.wav",
+          "sha256": "4d43bcc09c15436ee1d61bbc963843d16ad68303d9ab5947cdc3c91aa3928756",
+          "peak": 0.220001,
+          "rms": 0.029991,
+          "dc": 1.6e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.084137,
+          "seconds": 0.28
+        },
+        "inventoryopen": {
+          "file": "ink-jade/inventoryopen.wav",
+          "sha256": "9ea597dda374c2ff3ee9b35c288df9979b50725c99b662939214239fc59a815b",
+          "peak": 0.319977,
+          "rms": 0.034017,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.109131,
+          "seconds": 0.51
+        },
+        "inventoryclose": {
+          "file": "ink-jade/inventoryclose.wav",
+          "sha256": "d1669cda83c3451bccbd3aad9bff31ffd2b4d1f67cada69b60b449882ffedb0d",
+          "peak": 0.25,
+          "rms": 0.034047,
+          "dc": 7e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.0914,
+          "seconds": 0.33
+        },
+        "arrange": {
+          "file": "ink-jade/arrange.wav",
+          "sha256": "9807f4ff0cb6f0500bdfc6e2797896757573f1051eb0d2d67f5b41d434cf0e9f",
+          "peak": 0.359985,
+          "rms": 0.038335,
+          "dc": 9e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.13269,
+          "seconds": 0.56
+        },
+        "restore": {
+          "file": "ink-jade/restore.wav",
+          "sha256": "6cd43e9d7e5e61b5543d9f05a0f2bb87b1ce10aa52f3a26ee305728fcbd93bf3",
+          "peak": 0.299988,
+          "rms": 0.033344,
+          "dc": 1.6e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.10553,
+          "seconds": 0.45
+        },
+        "reorder": {
+          "file": "ink-jade/reorder.wav",
+          "sha256": "5491ccf301f11eaec680d41addf094689cc920360897c7b5ecdb564c1dfc7897",
+          "peak": 0.209991,
+          "rms": 0.03133,
+          "dc": 1e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.08078,
+          "seconds": 0.24
+        },
+        "waiting": {
+          "file": "ink-jade/waiting.wav",
+          "sha256": "44e4de9e550bd437d4b80f5129282666000d4404266685c5c71069f48ccfafbe",
+          "peak": 0.399994,
+          "rms": 0.045486,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.184998,
+          "seconds": 0.62
+        },
+        "ready": {
+          "file": "ink-jade/ready.wav",
+          "sha256": "2c228ef11903dfc0fa16fdb88fd36de4c9b3fe75e739793e40b70db70c4434e4",
+          "peak": 0.399994,
+          "rms": 0.047815,
+          "dc": 1e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.137268,
+          "seconds": 0.75
+        },
+        "error": {
+          "file": "ink-jade/error.wav",
+          "sha256": "99d1b6385a173a1cf726c889e36ca7809fd1f609549632ef53dc6df17b675f91",
+          "peak": 0.429993,
+          "rms": 0.049449,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.136932,
+          "seconds": 0.6
+        },
+        "detent": {
+          "file": "ink-jade/detent.wav",
+          "sha256": "cbb8b3716901fbcee77429c0c1bba610de4f457a40abdafd1a335f8c2a8b204c",
+          "peak": 0.139984,
+          "rms": 0.025166,
+          "dc": 1.2e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.050018,
+          "seconds": 0.052
+        }
+      }
+    },
+    "midnight": {
+      "name": "Midnight mountain",
+      "materials": "low glass, airy wind and distant bronze",
+      "cues": {
+        "switch": {
+          "file": "midnight/switch.wav",
+          "sha256": "d8c705da8c462ff08fd43ce047099967c5739ac1b5ac28196592e5f71b58faa1",
+          "peak": 0.319977,
+          "rms": 0.072274,
+          "dc": 7e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.046021,
+          "seconds": 0.3
+        },
+        "capture": {
+          "file": "midnight/capture.wav",
+          "sha256": "aaf257c9fc348a653b3751ff6b648d6a11cf7c9cd43630fab5efbc10c7cac419",
+          "peak": 0.379974,
+          "rms": 0.094458,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.052277,
+          "seconds": 0.48
+        },
+        "remove": {
+          "file": "midnight/remove.wav",
+          "sha256": "d5d97ecd1ee7782865a94adc003f72e1e2075d4684e4eb4536659b490f5db6e2",
+          "peak": 0.279999,
+          "rms": 0.062882,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.038177,
+          "seconds": 0.34
+        },
+        "expand": {
+          "file": "midnight/expand.wav",
+          "sha256": "9843c3fcd44d4cc195fa2be4fce96aa15f88dd86eb53052f435bf21ba8ed923c",
+          "peak": 0.25,
+          "rms": 0.051151,
+          "dc": 0.0,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.045837,
+          "seconds": 0.34
+        },
+        "collapse": {
+          "file": "midnight/collapse.wav",
+          "sha256": "bc09e66da96d2c202b5e5c4a974ba728ea8e258773ee17bef591f4c0a22519b5",
+          "peak": 0.220001,
+          "rms": 0.057791,
+          "dc": 1.6e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.039886,
+          "seconds": 0.28
+        },
+        "inventoryopen": {
+          "file": "midnight/inventoryopen.wav",
+          "sha256": "6ad4d4314b0436a1a5e6ed33fea35526f353872a5c7fc9bc98d6e4e8e1145aed",
+          "peak": 0.319977,
+          "rms": 0.058595,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.058136,
+          "seconds": 0.51
+        },
+        "inventoryclose": {
+          "file": "midnight/inventoryclose.wav",
+          "sha256": "0a69298e30ce5598aa60f2f9ac66c3419c0e7005e9a28c9b95bcb9d6fc7bcfc7",
+          "peak": 0.25,
+          "rms": 0.059181,
+          "dc": 1.4e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.04483,
+          "seconds": 0.33
+        },
+        "arrange": {
+          "file": "midnight/arrange.wav",
+          "sha256": "5200980edcca74e5ea6206765faf588318b1cd85d6f28e4a1130a37d2daf129b",
+          "peak": 0.359985,
+          "rms": 0.062185,
+          "dc": 8e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.046478,
+          "seconds": 0.56
+        },
+        "restore": {
+          "file": "midnight/restore.wav",
+          "sha256": "9a98d41b63821711be8b61de23c1d578ed41d7536d0e7b00a691e0906adb0a37",
+          "peak": 0.299988,
+          "rms": 0.061575,
+          "dc": 1e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.045776,
+          "seconds": 0.45
+        },
+        "reorder": {
+          "file": "midnight/reorder.wav",
+          "sha256": "9cc9842e1511904bff675b21d9e250683a94ac46b12b2d9b910e74b682592dfc",
+          "peak": 0.209991,
+          "rms": 0.05469,
+          "dc": 7e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.030975,
+          "seconds": 0.24
+        },
+        "waiting": {
+          "file": "midnight/waiting.wav",
+          "sha256": "fc8ac35f16b12dc23fbb2a332ebeda0f40d4ab53711408ef973a805922eb1283",
+          "peak": 0.399994,
+          "rms": 0.074437,
+          "dc": 1e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.069244,
+          "seconds": 0.62
+        },
+        "ready": {
+          "file": "midnight/ready.wav",
+          "sha256": "fa18e3384303c69573b3100998e0e35ad8ddcbe4f158b78724f16a372f85d686",
+          "peak": 0.399994,
+          "rms": 0.068601,
+          "dc": 1e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.055786,
+          "seconds": 0.75
+        },
+        "error": {
+          "file": "midnight/error.wav",
+          "sha256": "586cbe130acb9b3e321ca24f1590df7114427ddd3ed17c8d074279c9e1845976",
+          "peak": 0.429993,
+          "rms": 0.079991,
+          "dc": 8e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.060791,
+          "seconds": 0.6
+        },
+        "detent": {
+          "file": "midnight/detent.wav",
+          "sha256": "77308457c07bceac907fb73817d0c382306e51869a11e2d16b6e531039aa0715",
+          "peak": 0.139984,
+          "rms": 0.026466,
+          "dc": 1.3e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.04895,
+          "seconds": 0.052
+        }
+      }
+    },
+    "cinnabar": {
+      "name": "Cinnabar forge",
+      "materials": "dry wood, bronze latch and ember",
+      "cues": {
+        "switch": {
+          "file": "cinnabar/switch.wav",
+          "sha256": "e36811f7c6ea4c17d9f931a79e22560d581f7fb716baad5e2bd88bd1943380c9",
+          "peak": 0.319977,
+          "rms": 0.0532,
+          "dc": 1e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.091736,
+          "seconds": 0.3
+        },
+        "capture": {
+          "file": "cinnabar/capture.wav",
+          "sha256": "2c284489fa1ed471d79cac39b670570f8d2f60bdee8544684b2b51aa02445f97",
+          "peak": 0.379974,
+          "rms": 0.06384,
+          "dc": 1.2e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.099731,
+          "seconds": 0.48
+        },
+        "remove": {
+          "file": "cinnabar/remove.wav",
+          "sha256": "16543a46229c85db6c84ee26b7e640d022514ab5544798b4039a4a201558948f",
+          "peak": 0.279999,
+          "rms": 0.043847,
+          "dc": 4e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.067505,
+          "seconds": 0.34
+        },
+        "expand": {
+          "file": "cinnabar/expand.wav",
+          "sha256": "ddc5d854f63875d55bcf155f1228bee930ca8ea8d7da6ba3e86fc2944d063fc4",
+          "peak": 0.25,
+          "rms": 0.039923,
+          "dc": 1.6e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.055847,
+          "seconds": 0.34
+        },
+        "collapse": {
+          "file": "cinnabar/collapse.wav",
+          "sha256": "cc73bb5b33759feb304ffbc97ecb6f71979759a7c9b5c5e4342b966f38a0e309",
+          "peak": 0.220001,
+          "rms": 0.041913,
+          "dc": 2e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.058685,
+          "seconds": 0.28
+        },
+        "inventoryopen": {
+          "file": "cinnabar/inventoryopen.wav",
+          "sha256": "eb82176143003d43b7ad60b1dfbe780ceac1569c94fc41c574982588d5c6b02d",
+          "peak": 0.319977,
+          "rms": 0.044392,
+          "dc": 1.5e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.088074,
+          "seconds": 0.51
+        },
+        "inventoryclose": {
+          "file": "cinnabar/inventoryclose.wav",
+          "sha256": "c96aaf3f3e6abe114b82e3eb24231e68a88d3a915d749155ff955a2569c16407",
+          "peak": 0.25,
+          "rms": 0.044185,
+          "dc": 1e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.066925,
+          "seconds": 0.33
+        },
+        "arrange": {
+          "file": "cinnabar/arrange.wav",
+          "sha256": "cf9ad9ee692dd9d7495fa6365f39434c3a1e41aac524fe526b72297d5128cc69",
+          "peak": 0.359985,
+          "rms": 0.049769,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.09906,
+          "seconds": 0.56
+        },
+        "restore": {
+          "file": "cinnabar/restore.wav",
+          "sha256": "3c1fa94ff26ea8436ee804471476373283e69a2646e890889bd3e5cf67fb5ec6",
+          "peak": 0.299988,
+          "rms": 0.04684,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.110382,
+          "seconds": 0.45
+        },
+        "reorder": {
+          "file": "cinnabar/reorder.wav",
+          "sha256": "78125c48ebb1c358600737a39be7d7218265d9ba5822c78ae977c859046550b8",
+          "peak": 0.209991,
+          "rms": 0.041459,
+          "dc": 4e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.046173,
+          "seconds": 0.24
+        },
+        "waiting": {
+          "file": "cinnabar/waiting.wav",
+          "sha256": "be871e417255064cafc7ada07dc87ba7526957ad9625abf2c8dffb03a52e8723",
+          "peak": 0.399994,
+          "rms": 0.059218,
+          "dc": 2e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.117584,
+          "seconds": 0.62
+        },
+        "ready": {
+          "file": "cinnabar/ready.wav",
+          "sha256": "1df02b3e1dccc63ff33f215bc50f9830856420b97e3abec73a8e2ddf1e8ee7ec",
+          "peak": 0.399994,
+          "rms": 0.057089,
+          "dc": 0.0,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.107391,
+          "seconds": 0.75
+        },
+        "error": {
+          "file": "cinnabar/error.wav",
+          "sha256": "d4a61833b7c1455ffb62abc0e80c507c678bc886427df8072c2a913bdbcee91d",
+          "peak": 0.429993,
+          "rms": 0.064275,
+          "dc": 1e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.123291,
+          "seconds": 0.6
+        },
+        "detent": {
+          "file": "cinnabar/detent.wav",
+          "sha256": "ae7610a05d11d7e4d8859e0fe8f0882b17d5c09f7f0ee6f0975349e5dc5aeaa1",
+          "peak": 0.139984,
+          "rms": 0.031622,
+          "dc": 4e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.063019,
+          "seconds": 0.052
+        }
+      }
+    },
+    "hextech": {
+      "name": "Hex crystal engine",
+      "materials": "geared brass ratchet and resonant crystal charge",
+      "cues": {
+        "switch": {
+          "file": "hextech/switch.wav",
+          "sha256": "212fdf5660f19377168e06efccb6151526ea369c26571f3b61ed4a46ad1af780",
+          "peak": 0.319977,
+          "rms": 0.069129,
+          "dc": 2e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.091125,
+          "seconds": 0.3
+        },
+        "capture": {
+          "file": "hextech/capture.wav",
+          "sha256": "5c0cda1618ab6e170d85b59561d2a850b341451e7c2d76b0875b8e41456e590c",
+          "peak": 0.379974,
+          "rms": 0.08035,
+          "dc": 2.2e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.099854,
+          "seconds": 0.48
+        },
+        "remove": {
+          "file": "hextech/remove.wav",
+          "sha256": "666ffd6871cb87469acc6de6c1b837eb4174197dbf2d6bcd9920341b961088db",
+          "peak": 0.279999,
+          "rms": 0.053746,
+          "dc": 6e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.067444,
+          "seconds": 0.34
+        },
+        "expand": {
+          "file": "hextech/expand.wav",
+          "sha256": "a9bb6227d50ca8c6ebd9c38eacbe25e47dc34b880b6d717c83855296e15b09b6",
+          "peak": 0.25,
+          "rms": 0.044196,
+          "dc": 2e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.058472,
+          "seconds": 0.34
+        },
+        "collapse": {
+          "file": "hextech/collapse.wav",
+          "sha256": "73a00779896b76b8497ad5c95f88617625857cebef9535a8d94dabf5082073cd",
+          "peak": 0.220001,
+          "rms": 0.044562,
+          "dc": 1e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.05484,
+          "seconds": 0.28
+        },
+        "inventoryopen": {
+          "file": "hextech/inventoryopen.wav",
+          "sha256": "d43872a04c7b17ed388524baa351df10e9dbae4205ba7a9f1caf87fefbe41f7b",
+          "peak": 0.319977,
+          "rms": 0.052397,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.099243,
+          "seconds": 0.51
+        },
+        "inventoryclose": {
+          "file": "hextech/inventoryclose.wav",
+          "sha256": "94def9bbcd4ffe4a2b9bf15a663edb4a0dd47d2f2bf647efff3f2aec3f0cd680",
+          "peak": 0.25,
+          "rms": 0.045634,
+          "dc": 8e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.05426,
+          "seconds": 0.33
+        },
+        "arrange": {
+          "file": "hextech/arrange.wav",
+          "sha256": "cea4b6f75a508bbfcdca4a00b9149139d77b36443c544fb628819694a6d31847",
+          "peak": 0.359985,
+          "rms": 0.058115,
+          "dc": 9e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.089752,
+          "seconds": 0.56
+        },
+        "restore": {
+          "file": "hextech/restore.wav",
+          "sha256": "1d8d8f4546f1270b868c024e332962cfb9a7fdd4c86a23627058f3b43e915b31",
+          "peak": 0.299988,
+          "rms": 0.050923,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.072693,
+          "seconds": 0.45
+        },
+        "reorder": {
+          "file": "hextech/reorder.wav",
+          "sha256": "0c16435db457763f60bded9e02ae1b9f1feda424b792e79f64ea185bd0bcae0d",
+          "peak": 0.209991,
+          "rms": 0.05004,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.055359,
+          "seconds": 0.24
+        },
+        "waiting": {
+          "file": "hextech/waiting.wav",
+          "sha256": "49c0024ece87c5a2b361706c444542e56df9a6c9aeb6b7bb79e5c1f0edb03e10",
+          "peak": 0.399994,
+          "rms": 0.065056,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.104919,
+          "seconds": 0.62
+        },
+        "ready": {
+          "file": "hextech/ready.wav",
+          "sha256": "363973cb845799948c280c0fe97ec6a70b2afcf993fee3f695166faa52744dde",
+          "peak": 0.399994,
+          "rms": 0.059849,
+          "dc": 2e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.096252,
+          "seconds": 0.75
+        },
+        "error": {
+          "file": "hextech/error.wav",
+          "sha256": "33f0917a1526a47c33a82fe499b61a010acafeacf6a4b4ec22df5e4e3f5d67c3",
+          "peak": 0.429993,
+          "rms": 0.072103,
+          "dc": 2e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.121063,
+          "seconds": 0.6
+        },
+        "detent": {
+          "file": "hextech/detent.wav",
+          "sha256": "9f7c79cc3624aa295874444b467d09a082caba804e3ef6c41f2d928748ee07de",
+          "peak": 0.139984,
+          "rms": 0.032895,
+          "dc": 1e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.073334,
+          "seconds": 0.052
+        }
+      }
+    },
+    "tactical": {
+      "name": "Tactical equipment",
+      "materials": "receiver slide, spring latch and damp radio pulse",
+      "cues": {
+        "switch": {
+          "file": "tactical/switch.wav",
+          "sha256": "90eeda5ba8f55fdabad95d5f5af3ef04a1f04de346419c5838cec8f3af2be9bf",
+          "peak": 0.319977,
+          "rms": 0.036051,
+          "dc": 4.1e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.185089,
+          "seconds": 0.3
+        },
+        "capture": {
+          "file": "tactical/capture.wav",
+          "sha256": "61b50f2c6658612c4fb4d9aee8d91ba3a3318a083535558288b6ca11b5f19d1f",
+          "peak": 0.379974,
+          "rms": 0.049585,
+          "dc": 6e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.204041,
+          "seconds": 0.48
+        },
+        "remove": {
+          "file": "tactical/remove.wav",
+          "sha256": "e667c85b26233d182f7358fa1e649eabedee73824e027dac1cbdac6e148a93a2",
+          "peak": 0.279999,
+          "rms": 0.03465,
+          "dc": 8.3e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.152618,
+          "seconds": 0.34
+        },
+        "expand": {
+          "file": "tactical/expand.wav",
+          "sha256": "df8487d7e0e909627e2bca910ae01cdad29ad19c86cbcf199288f035b0dfaf76",
+          "peak": 0.25,
+          "rms": 0.029125,
+          "dc": 7.1e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.113708,
+          "seconds": 0.34
+        },
+        "collapse": {
+          "file": "tactical/collapse.wav",
+          "sha256": "8fea33352164d98f1a9ec736657efb83fa8e3f1d005995d227390749ff329c67",
+          "peak": 0.220001,
+          "rms": 0.027379,
+          "dc": 6e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.12085,
+          "seconds": 0.28
+        },
+        "inventoryopen": {
+          "file": "tactical/inventoryopen.wav",
+          "sha256": "0cd640ebd6811ff0ffc20dc1e539783a205c6235ad2dae212da1683604b145e2",
+          "peak": 0.319977,
+          "rms": 0.039154,
+          "dc": 4e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.167908,
+          "seconds": 0.51
+        },
+        "inventoryclose": {
+          "file": "tactical/inventoryclose.wav",
+          "sha256": "209b8ea8cf6a4b3eb17fca682a14599d406ed79f5e0f0d8b991ea26183449608",
+          "peak": 0.25,
+          "rms": 0.033382,
+          "dc": 0.0,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.121918,
+          "seconds": 0.33
+        },
+        "arrange": {
+          "file": "tactical/arrange.wav",
+          "sha256": "4b025b551cac28b521a09d5de1cdca0841b1eabee80504fc4d153dd98d692116",
+          "peak": 0.359985,
+          "rms": 0.032192,
+          "dc": 2e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.180695,
+          "seconds": 0.56
+        },
+        "restore": {
+          "file": "tactical/restore.wav",
+          "sha256": "043e64b0b8de374647011cde228135224aeb4f4d9df2ee2e1051a69514d00f88",
+          "peak": 0.299988,
+          "rms": 0.036468,
+          "dc": 2.4e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.195892,
+          "seconds": 0.45
+        },
+        "reorder": {
+          "file": "tactical/reorder.wav",
+          "sha256": "59f2dcda8f64271fc743e63c8641f83d437aadde7e496b593739505ad5755edb",
+          "peak": 0.209991,
+          "rms": 0.024762,
+          "dc": 0.0,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.086517,
+          "seconds": 0.24
+        },
+        "waiting": {
+          "file": "tactical/waiting.wav",
+          "sha256": "51d859a9035b799f8f46c4c7424b4c13fc5497a913ee95c0dbf5feb06ad57a7f",
+          "peak": 0.399994,
+          "rms": 0.055292,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.211395,
+          "seconds": 0.62
+        },
+        "ready": {
+          "file": "tactical/ready.wav",
+          "sha256": "5756fa35aa7d470d64515bf92da4ee9a64571ec7a18ec1b547b17ebb7b0f5b10",
+          "peak": 0.399994,
+          "rms": 0.058503,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.202087,
+          "seconds": 0.75
+        },
+        "error": {
+          "file": "tactical/error.wav",
+          "sha256": "cda06b6e6a67d749bb77050217a3ff3e81cb5c71dcca1fc367e1c4cf0eb58ecc",
+          "peak": 0.429993,
+          "rms": 0.06085,
+          "dc": 2e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.297668,
+          "seconds": 0.6
+        },
+        "detent": {
+          "file": "tactical/detent.wav",
+          "sha256": "742b25ee0b790067ea462b5ec4570de9d8cc1d68a88d12f1921317c5b1a07b78",
+          "peak": 0.139984,
+          "rms": 0.027422,
+          "dc": 3.3e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.050781,
+          "seconds": 0.052
+        }
+      }
+    },
+    "protocol": {
+      "name": "Protocol interface",
+      "materials": "digital packet, filtered glitch and clean relay",
+      "cues": {
+        "switch": {
+          "file": "protocol/switch.wav",
+          "sha256": "f68722d2b22ee80e5f6239ab47475b632711f00d372f7bfe049b249421d17c21",
+          "peak": 0.319977,
+          "rms": 0.046638,
+          "dc": 9.7e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.058746,
+          "seconds": 0.3
+        },
+        "capture": {
+          "file": "protocol/capture.wav",
+          "sha256": "a44aa9097d1a3f8ed3cbfd2e4f2d79a4cfe1e7266c0ab795d393cb6b0318e780",
+          "peak": 0.379974,
+          "rms": 0.058383,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.077209,
+          "seconds": 0.48
+        },
+        "remove": {
+          "file": "protocol/remove.wav",
+          "sha256": "33ff00f0d2b48930a355ea4c201cd3fb4a3fb5f3885d16b2d40efa9daea27cb8",
+          "peak": 0.279999,
+          "rms": 0.038305,
+          "dc": 9.6e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.042694,
+          "seconds": 0.34
+        },
+        "expand": {
+          "file": "protocol/expand.wav",
+          "sha256": "b2a9e2077af87161e0c47393fc5be8b8b0003eee2b443fe05bc0e3942a3dbe21",
+          "peak": 0.25,
+          "rms": 0.031568,
+          "dc": 5.7e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.058136,
+          "seconds": 0.34
+        },
+        "collapse": {
+          "file": "protocol/collapse.wav",
+          "sha256": "0e114a2ed4bd7e86613caf3a2252a00098743a4c878801e3284a48347b8f5f1e",
+          "peak": 0.220001,
+          "rms": 0.032093,
+          "dc": 1.3e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.032898,
+          "seconds": 0.28
+        },
+        "inventoryopen": {
+          "file": "protocol/inventoryopen.wav",
+          "sha256": "207a0eacb61b8517f20b07f5c0560cdd9ea1dbbc123edac915cba8e1fa52ecde",
+          "peak": 0.319977,
+          "rms": 0.042436,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.074249,
+          "seconds": 0.51
+        },
+        "inventoryclose": {
+          "file": "protocol/inventoryclose.wav",
+          "sha256": "59c1c493819e0d58d4de1c665f128dc23e397d5d8e8d60ce423d638f32e6d2a0",
+          "peak": 0.25,
+          "rms": 0.035484,
+          "dc": 0.0,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.040192,
+          "seconds": 0.33
+        },
+        "arrange": {
+          "file": "protocol/arrange.wav",
+          "sha256": "6c5d676d6288db1356dc457f073d510b8a776620702a2560ce5af87560ffd661",
+          "peak": 0.359985,
+          "rms": 0.043914,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.066284,
+          "seconds": 0.56
+        },
+        "restore": {
+          "file": "protocol/restore.wav",
+          "sha256": "ff76904ad11dd30bf557a27ba388105cda046671003df161766f039b3442716e",
+          "peak": 0.299988,
+          "rms": 0.038153,
+          "dc": 3.6e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.043549,
+          "seconds": 0.45
+        },
+        "reorder": {
+          "file": "protocol/reorder.wav",
+          "sha256": "0ca6e4716922a939016633162051d941cd940a0820f9e21159783393caab0bc6",
+          "peak": 0.209991,
+          "rms": 0.035396,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.038483,
+          "seconds": 0.24
+        },
+        "waiting": {
+          "file": "protocol/waiting.wav",
+          "sha256": "c91e46c7bdad3148dce8c7a2ed1a4deae8ff784aac74d86807d799ed5be932be",
+          "peak": 0.399994,
+          "rms": 0.056531,
+          "dc": 6e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.073517,
+          "seconds": 0.62
+        },
+        "ready": {
+          "file": "protocol/ready.wav",
+          "sha256": "98327a89580065693bf9827446cac27a980ec141af0d29b3f0f06877bf3c16ea",
+          "peak": 0.399994,
+          "rms": 0.056099,
+          "dc": 7e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.073608,
+          "seconds": 0.75
+        },
+        "error": {
+          "file": "protocol/error.wav",
+          "sha256": "29976c11ccbe82c4106f340cb7dfdc26b586234eaacf9bd81573e9144f033799",
+          "peak": 0.429993,
+          "rms": 0.061609,
+          "dc": 1.2e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.079468,
+          "seconds": 0.6
+        },
+        "detent": {
+          "file": "protocol/detent.wav",
+          "sha256": "6a34f03ad354a10ad3ffd7c8dbcc4e90f9887e618ba190c422c4887ab7ae8cfc",
+          "peak": 0.139984,
+          "rms": 0.028384,
+          "dc": 1.2e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.075165,
+          "seconds": 0.052
+        }
+      }
+    },
+    "adventure": {
+      "name": "Adventure equipment",
+      "materials": "leather rustle, forged clasp and inventory coin",
+      "cues": {
+        "switch": {
+          "file": "adventure/switch.wav",
+          "sha256": "69ba73dd9ded0e1e8314fb0bc468eab4ebb42d2256f791f99a669f66f7f65191",
+          "peak": 0.319977,
+          "rms": 0.051652,
+          "dc": 7e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.106232,
+          "seconds": 0.3
+        },
+        "capture": {
+          "file": "adventure/capture.wav",
+          "sha256": "2709908230dc35465e33e1d89bfbc7b1b449893ef1eb41100d5449687ce905de",
+          "peak": 0.379974,
+          "rms": 0.053913,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.102692,
+          "seconds": 0.48
+        },
+        "remove": {
+          "file": "adventure/remove.wav",
+          "sha256": "6718127edc9b468e3aa81de4174563e5cd2909742e3e87959a0357397c4d86ae",
+          "peak": 0.279999,
+          "rms": 0.042678,
+          "dc": 4e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.10733,
+          "seconds": 0.34
+        },
+        "expand": {
+          "file": "adventure/expand.wav",
+          "sha256": "9d8e45592dd56557e70ff0c8bfa9529add4c10d79e10a2f92a158ee9e08e5425",
+          "peak": 0.25,
+          "rms": 0.039801,
+          "dc": 2e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.069397,
+          "seconds": 0.34
+        },
+        "collapse": {
+          "file": "adventure/collapse.wav",
+          "sha256": "0c789263d599434ca2cc49fdaae174ff4f9023eaff78e0730cafcccbc41626ce",
+          "peak": 0.220001,
+          "rms": 0.037226,
+          "dc": 4e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.076721,
+          "seconds": 0.28
+        },
+        "inventoryopen": {
+          "file": "adventure/inventoryopen.wav",
+          "sha256": "1d9ef45c5671f8feefe5861354e4ee7789061f34412b4138839b0f29ca533f32",
+          "peak": 0.319977,
+          "rms": 0.043672,
+          "dc": 1e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.122589,
+          "seconds": 0.51
+        },
+        "inventoryclose": {
+          "file": "adventure/inventoryclose.wav",
+          "sha256": "8760d3f6c5cd565a1b85be18774bcfc8ac30e11969b12cfc7dce7540b47a2981",
+          "peak": 0.25,
+          "rms": 0.037369,
+          "dc": 2e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.099823,
+          "seconds": 0.33
+        },
+        "arrange": {
+          "file": "adventure/arrange.wav",
+          "sha256": "50a2fcce86b8b32e76f4959698d262005ca818787c29d9ff7063d49a573920a9",
+          "peak": 0.359985,
+          "rms": 0.046357,
+          "dc": 1.1e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.17627,
+          "seconds": 0.56
+        },
+        "restore": {
+          "file": "adventure/restore.wav",
+          "sha256": "47e55a1b081372f8628026b99d06a898fbca680baec2cfe2a8590af3551fea21",
+          "peak": 0.299988,
+          "rms": 0.043557,
+          "dc": 1.8e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.09726,
+          "seconds": 0.45
+        },
+        "reorder": {
+          "file": "adventure/reorder.wav",
+          "sha256": "92c376b11d326ee1381ab6a2a70a32e7be9dd3faff6fe6aa82e1268401dc9692",
+          "peak": 0.209991,
+          "rms": 0.039657,
+          "dc": 7e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.069519,
+          "seconds": 0.24
+        },
+        "waiting": {
+          "file": "adventure/waiting.wav",
+          "sha256": "09bdc447108e682a03dbcb041ea7ee9d4e88c620f60473cd7b5b3421c5282147",
+          "peak": 0.399994,
+          "rms": 0.052682,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.135071,
+          "seconds": 0.62
+        },
+        "ready": {
+          "file": "adventure/ready.wav",
+          "sha256": "dc1643b556b6b7eae5b1383cd9718358114e39b50deb25a4d0d666dc1217ac81",
+          "peak": 0.399994,
+          "rms": 0.05994,
+          "dc": 4e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.133606,
+          "seconds": 0.75
+        },
+        "error": {
+          "file": "adventure/error.wav",
+          "sha256": "675e7d6c20485f73810c658324a904cc007f0d4300b5c42656f31d4d0ba173e6",
+          "peak": 0.429993,
+          "rms": 0.059781,
+          "dc": 1e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.158173,
+          "seconds": 0.6
+        },
+        "detent": {
+          "file": "adventure/detent.wav",
+          "sha256": "0742e15291e5b776d9943e64903ade1e0da63b5f4fdf25754f0e7955476555cc",
+          "peak": 0.139984,
+          "rms": 0.03158,
+          "dc": 1.7e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.047028,
+          "seconds": 0.052
+        }
+      }
+    },
+    "arsenal": {
+      "name": "Naraka-inspired arsenal",
+      "materials": "drawn blade, displaced air and jade scabbard latch",
+      "cues": {
+        "switch": {
+          "file": "arsenal/switch.wav",
+          "sha256": "584dad1ace7e951df9b4b5046325607efa64bddc466d3f54a4f914fa46f3d9c7",
+          "peak": 0.319977,
+          "rms": 0.055948,
+          "dc": 9e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.261475,
+          "seconds": 0.3
+        },
+        "capture": {
+          "file": "arsenal/capture.wav",
+          "sha256": "5b656b0d3c7d1bb18c62e63f1a4b9df6771970e6aa970fbb8c87f3849495f9c1",
+          "peak": 0.379974,
+          "rms": 0.059374,
+          "dc": 4e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.32608,
+          "seconds": 0.48
+        },
+        "remove": {
+          "file": "arsenal/remove.wav",
+          "sha256": "12c2b26b3ed023968e9d2ffca936ac8d194f9561e9835fa3d9e760f278197749",
+          "peak": 0.279999,
+          "rms": 0.042905,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.228455,
+          "seconds": 0.34
+        },
+        "expand": {
+          "file": "arsenal/expand.wav",
+          "sha256": "dde94df8d4cd96c7df31abfdbd6c77b777ad766e3667917689d97b84d247ff6c",
+          "peak": 0.25,
+          "rms": 0.033558,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.171295,
+          "seconds": 0.34
+        },
+        "collapse": {
+          "file": "arsenal/collapse.wav",
+          "sha256": "afb10277f78148c24528712f555aa7d6b61498e74d98180cc90fb6e686d43733",
+          "peak": 0.220001,
+          "rms": 0.034316,
+          "dc": 8e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.163361,
+          "seconds": 0.28
+        },
+        "inventoryopen": {
+          "file": "arsenal/inventoryopen.wav",
+          "sha256": "ffe2d085500be6ece3b4c1d778d7eb28c7670c6c087cb3331c1b9d7332d070cc",
+          "peak": 0.319977,
+          "rms": 0.040054,
+          "dc": 1.4e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.295471,
+          "seconds": 0.51
+        },
+        "inventoryclose": {
+          "file": "arsenal/inventoryclose.wav",
+          "sha256": "ac4180854443e7926a27135a9db4fd57b8b3ad866cc97a051e6e0a7a8d205e25",
+          "peak": 0.25,
+          "rms": 0.039673,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.17865,
+          "seconds": 0.33
+        },
+        "arrange": {
+          "file": "arsenal/arrange.wav",
+          "sha256": "a5748e579c199daaa605808f27434f28ab475fa9fed830a7df4137e40047aa24",
+          "peak": 0.359985,
+          "rms": 0.050687,
+          "dc": 8e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.334015,
+          "seconds": 0.56
+        },
+        "restore": {
+          "file": "arsenal/restore.wav",
+          "sha256": "ffb1db695bfc935d25b34a0f1db1a37e8bc5f1dc1238a230a73cdb7176f17e9c",
+          "peak": 0.299988,
+          "rms": 0.041724,
+          "dc": 1.2e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.233734,
+          "seconds": 0.45
+        },
+        "reorder": {
+          "file": "arsenal/reorder.wav",
+          "sha256": "5759c1d272123645590d241cd6d1c6e57c90436ff7373f7c4e7f4975bffa732a",
+          "peak": 0.209991,
+          "rms": 0.037091,
+          "dc": 4e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.178802,
+          "seconds": 0.24
+        },
+        "waiting": {
+          "file": "arsenal/waiting.wav",
+          "sha256": "f5423a41fc691b3d95ff8547f15c521c93d93ce2c67f015fbabc4b92900a9370",
+          "peak": 0.399994,
+          "rms": 0.070764,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.384857,
+          "seconds": 0.62
+        },
+        "ready": {
+          "file": "arsenal/ready.wav",
+          "sha256": "82b108a9a090f94fcb8c2a5ec8c8aa663f3725ac1b68b76e141182117d814eee",
+          "peak": 0.399994,
+          "rms": 0.068012,
+          "dc": 1e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.378387,
+          "seconds": 0.75
+        },
+        "error": {
+          "file": "arsenal/error.wav",
+          "sha256": "28306727f1e3ed372901551cd5843f9dd58fb5861aea88de3004c1048b8fbbc3",
+          "peak": 0.429993,
+          "rms": 0.07411,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.381256,
+          "seconds": 0.6
+        },
+        "detent": {
+          "file": "arsenal/detent.wav",
+          "sha256": "f30508c620b75a804c6b1934c7e41d849764e8244b6baadc6f16afd021fac0fa",
+          "peak": 0.139984,
+          "rms": 0.021369,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.067902,
+          "seconds": 0.052
+        }
+      }
+    },
+    "relic": {
+      "name": "Wukong-inspired relic",
+      "materials": "stone resonance, woodblock and low ritual bronze",
+      "cues": {
+        "switch": {
+          "file": "relic/switch.wav",
+          "sha256": "61f0eae41ba4d428cb4c0b5824771349507e63e94f1635e6ed0b714423e362cd",
+          "peak": 0.319977,
+          "rms": 0.079615,
+          "dc": 9e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.027344,
+          "seconds": 0.3
+        },
+        "capture": {
+          "file": "relic/capture.wav",
+          "sha256": "851057d20f7299d2e9d67b5e38b2478928570008748c177d0a809b0839eeec9a",
+          "peak": 0.379974,
+          "rms": 0.090379,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.032959,
+          "seconds": 0.48
+        },
+        "remove": {
+          "file": "relic/remove.wav",
+          "sha256": "1d3e9b95adbfb469f801c788827f1d65e3438e6d0413b6c688d23a7c0c22037a",
+          "peak": 0.279999,
+          "rms": 0.061529,
+          "dc": 1.5e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.020813,
+          "seconds": 0.34
+        },
+        "expand": {
+          "file": "relic/expand.wav",
+          "sha256": "e4daa2ee0e76bb93a7038eb3f8318dc65dcfbb61bf4fbf53f40638cf949441ca",
+          "peak": 0.25,
+          "rms": 0.061109,
+          "dc": 1.6e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.029785,
+          "seconds": 0.34
+        },
+        "collapse": {
+          "file": "relic/collapse.wav",
+          "sha256": "f919d49730244eba80cb71c7445c56be5c4cc713a905f4f00d9bce88dba003da",
+          "peak": 0.220001,
+          "rms": 0.058902,
+          "dc": 8e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.017853,
+          "seconds": 0.28
+        },
+        "inventoryopen": {
+          "file": "relic/inventoryopen.wav",
+          "sha256": "aa0b26d5edc32da95c0adeac22e5dddfcc99a491f7eb99699bf95dcab5b41f30",
+          "peak": 0.319977,
+          "rms": 0.0615,
+          "dc": 2e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.042603,
+          "seconds": 0.51
+        },
+        "inventoryclose": {
+          "file": "relic/inventoryclose.wav",
+          "sha256": "c3c83909da726fdb8888441ea86de5c465727afaa95e21f6b416265419e4e0dc",
+          "peak": 0.25,
+          "rms": 0.061478,
+          "dc": 7e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.024658,
+          "seconds": 0.33
+        },
+        "arrange": {
+          "file": "relic/arrange.wav",
+          "sha256": "26940221b72ece4cb63652ccec92a4f042836aa7e2d4e2563cd423e5dd10ad60",
+          "peak": 0.359985,
+          "rms": 0.068273,
+          "dc": 8e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.03186,
+          "seconds": 0.56
+        },
+        "restore": {
+          "file": "relic/restore.wav",
+          "sha256": "2c31ee0f7bead833b51afeb83c7d340656782c2df5e3d21beecef34878b5bd8a",
+          "peak": 0.299988,
+          "rms": 0.061457,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.026337,
+          "seconds": 0.45
+        },
+        "reorder": {
+          "file": "relic/reorder.wav",
+          "sha256": "504f23a70e9ce4f394e276c7922ab8d9e6db8d9270b1f10c416402e5513bc633",
+          "peak": 0.209991,
+          "rms": 0.059209,
+          "dc": 1.2e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.018768,
+          "seconds": 0.24
+        },
+        "waiting": {
+          "file": "relic/waiting.wav",
+          "sha256": "e42837fd9fbd61cf0f9005e13965849bea5eeb63afcab26dca92464ff07b29f8",
+          "peak": 0.399994,
+          "rms": 0.068438,
+          "dc": 4e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.031433,
+          "seconds": 0.62
+        },
+        "ready": {
+          "file": "relic/ready.wav",
+          "sha256": "55665e2ddeceef2fc796a12e5df52a8a3f0d9ea49c34fa4bfce771e059e516ff",
+          "peak": 0.399994,
+          "rms": 0.069766,
+          "dc": 1e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.032867,
+          "seconds": 0.75
+        },
+        "error": {
+          "file": "relic/error.wav",
+          "sha256": "3414e8f4e7b5c120d5ac0d61d9c20cd7290d39dd9616a90a48e4f809f8d148cb",
+          "peak": 0.429993,
+          "rms": 0.0777,
+          "dc": 0.0,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.038544,
+          "seconds": 0.6
+        },
+        "detent": {
+          "file": "relic/detent.wav",
+          "sha256": "0e6b3f70ff09822dad878cb26f7e470d09a13f770597ddf62cc3ce3f7d6d2204",
+          "peak": 0.139984,
+          "rms": 0.026752,
+          "dc": 2.7e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.050781,
+          "seconds": 0.052
+        }
+      }
+    },
+    "starlight": {
+      "name": "Royal skill light",
+      "materials": "golden ability burst and bright pentatonic glissando",
+      "cues": {
+        "switch": {
+          "file": "starlight/switch.wav",
+          "sha256": "e4b438093d8405186d05d904e56bf80ae806fb12756f8ac0e92cbfdb1955f0e4",
+          "peak": 0.319977,
+          "rms": 0.058328,
+          "dc": 1.5e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.076599,
+          "seconds": 0.3
+        },
+        "capture": {
+          "file": "starlight/capture.wav",
+          "sha256": "2e8e963d8c5e7433330d4a5ee331e330f752546478b77810efaca740648008f4",
+          "peak": 0.379974,
+          "rms": 0.07315,
+          "dc": 1.2e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.077393,
+          "seconds": 0.48
+        },
+        "remove": {
+          "file": "starlight/remove.wav",
+          "sha256": "0bdb9b0f82e2cea568eaaa40d0f67a52bbbee45fe5686f4a67e591fc19018a1f",
+          "peak": 0.279999,
+          "rms": 0.053613,
+          "dc": 1e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.050232,
+          "seconds": 0.34
+        },
+        "expand": {
+          "file": "starlight/expand.wav",
+          "sha256": "c46d60d4f86469d0978c53a7cc8290dd33ca7d0874a3883c45e11c7a22c2d7ac",
+          "peak": 0.25,
+          "rms": 0.03988,
+          "dc": 1.2e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.051605,
+          "seconds": 0.34
+        },
+        "collapse": {
+          "file": "starlight/collapse.wav",
+          "sha256": "79d81a1c51c7cbbd9afc4783eca5a8d7571bcaa20bf79bc56116b5521391b0d3",
+          "peak": 0.220001,
+          "rms": 0.042986,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.040588,
+          "seconds": 0.28
+        },
+        "inventoryopen": {
+          "file": "starlight/inventoryopen.wav",
+          "sha256": "b5352eed314ec348abee6535be6fdd73b74f5a735785b1fcdcb9537083aaadf8",
+          "peak": 0.319977,
+          "rms": 0.044583,
+          "dc": 2e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.07608,
+          "seconds": 0.51
+        },
+        "inventoryclose": {
+          "file": "starlight/inventoryclose.wav",
+          "sha256": "114987d8f793fe6f7cab2a0a8db8488974342ba17734aa8339fdffd598b37a92",
+          "peak": 0.25,
+          "rms": 0.047698,
+          "dc": 7e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.052948,
+          "seconds": 0.33
+        },
+        "arrange": {
+          "file": "starlight/arrange.wav",
+          "sha256": "0477a9a4660ec5e1cb9dd1a9db5925adedc6186d6a76e5de77f2bfb354e51aa3",
+          "peak": 0.359985,
+          "rms": 0.05014,
+          "dc": 1.3e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.088196,
+          "seconds": 0.56
+        },
+        "restore": {
+          "file": "starlight/restore.wav",
+          "sha256": "17c11225c349dcad3dd27b21b49fde08072d1bbc4c9e2eb2842101bcb1088c1c",
+          "peak": 0.299988,
+          "rms": 0.052466,
+          "dc": 7e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.088898,
+          "seconds": 0.45
+        },
+        "reorder": {
+          "file": "starlight/reorder.wav",
+          "sha256": "d01aad6a5713286a53e5719bbc769517386cae1ddb506e2139a7ed080eece44d",
+          "peak": 0.209991,
+          "rms": 0.043298,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.048462,
+          "seconds": 0.24
+        },
+        "waiting": {
+          "file": "starlight/waiting.wav",
+          "sha256": "d8f188dfbe135ba43ddce1d3210da736ce91df2a96b92620e3099c7bb5b6290e",
+          "peak": 0.399994,
+          "rms": 0.058081,
+          "dc": 6e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.089783,
+          "seconds": 0.62
+        },
+        "ready": {
+          "file": "starlight/ready.wav",
+          "sha256": "8cbbbc5e4562b33d5b5788a51b42e28556c87e5a5fefcbbc0436f6cae165fc2f",
+          "peak": 0.399994,
+          "rms": 0.055578,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.082001,
+          "seconds": 0.75
+        },
+        "error": {
+          "file": "starlight/error.wav",
+          "sha256": "68da2bc6fe26e6518c2368def3e535ee28df7fc1255ca69f7ea759f473d7c595",
+          "peak": 0.429993,
+          "rms": 0.064364,
+          "dc": 2e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.089905,
+          "seconds": 0.6
+        },
+        "detent": {
+          "file": "starlight/detent.wav",
+          "sha256": "cc2f47b8f6e67f5b7d88c9667b6f07d5264bc9d55e0136262cbb1772956d3781",
+          "peak": 0.139984,
+          "rms": 0.028719,
+          "dc": 3.1e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.064575,
+          "seconds": 0.052
+        }
+      }
+    },
+    "formation": {
+      "name": "Formation board",
+      "materials": "wooden token landing and magical promotion arpeggio",
+      "cues": {
+        "switch": {
+          "file": "formation/switch.wav",
+          "sha256": "3df633e2a39d683ae6a0944a09bee98962f34213bda885fa42238259779207d5",
+          "peak": 0.319977,
+          "rms": 0.041694,
+          "dc": 1.59e-06,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.051117,
+          "seconds": 0.3
+        },
+        "capture": {
+          "file": "formation/capture.wav",
+          "sha256": "4a90d48777c60c0d0dcf1b7ffec87ace2e2d5ee2dcb8f5074a014143f9eba1b9",
+          "peak": 0.379974,
+          "rms": 0.055552,
+          "dc": 6e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.080627,
+          "seconds": 0.48
+        },
+        "remove": {
+          "file": "formation/remove.wav",
+          "sha256": "848f26a948e6b5e070387ddcccbef1ebf8fe728bc8c0c5e2e1ba616ee63465dd",
+          "peak": 0.279999,
+          "rms": 0.041649,
+          "dc": 0.0,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.043152,
+          "seconds": 0.34
+        },
+        "expand": {
+          "file": "formation/expand.wav",
+          "sha256": "ce69f4e1a51470177439655ed65f26daf1404989b2078ca05e69d07c54f57952",
+          "peak": 0.25,
+          "rms": 0.033787,
+          "dc": 1.1e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.046173,
+          "seconds": 0.34
+        },
+        "collapse": {
+          "file": "formation/collapse.wav",
+          "sha256": "3cfb0773f777092a2c5c03d6c7964b0a4ca02c274d8fdf4069a90eb01dac8504",
+          "peak": 0.220001,
+          "rms": 0.040856,
+          "dc": 2e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.048889,
+          "seconds": 0.28
+        },
+        "inventoryopen": {
+          "file": "formation/inventoryopen.wav",
+          "sha256": "2ec6739ac41cdd94a2ce71716d45073a9e8c4840e825e3a9510c031780630a9e",
+          "peak": 0.319977,
+          "rms": 0.035842,
+          "dc": 4e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.056274,
+          "seconds": 0.51
+        },
+        "inventoryclose": {
+          "file": "formation/inventoryclose.wav",
+          "sha256": "442d60750a419d04fd812182eccc70791cf2b6b36f813176377ec0dd7536008c",
+          "peak": 0.25,
+          "rms": 0.041792,
+          "dc": 8e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.048187,
+          "seconds": 0.33
+        },
+        "arrange": {
+          "file": "formation/arrange.wav",
+          "sha256": "31ebb8ebcd518f20844fb69db9ce6cf73dc55c5db3576a9ccc7810cd8e80b80b",
+          "peak": 0.359985,
+          "rms": 0.04313,
+          "dc": 1e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.062225,
+          "seconds": 0.56
+        },
+        "restore": {
+          "file": "formation/restore.wav",
+          "sha256": "5fbd469a6f12b92ce204cba1a87a659d4286ce040b73aa902059ee68e17a906e",
+          "peak": 0.299988,
+          "rms": 0.04655,
+          "dc": 9e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.049957,
+          "seconds": 0.45
+        },
+        "reorder": {
+          "file": "formation/reorder.wav",
+          "sha256": "511d3887d31922e4ac5c314345a9eee0bd06045acd24ad31571155f0880f929b",
+          "peak": 0.209991,
+          "rms": 0.036276,
+          "dc": 9e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.031403,
+          "seconds": 0.24
+        },
+        "waiting": {
+          "file": "formation/waiting.wav",
+          "sha256": "06ebcc386590da00498d014221d70c06d6744354738f56acbadbc10e3d214f97",
+          "peak": 0.399994,
+          "rms": 0.068393,
+          "dc": 1e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.072388,
+          "seconds": 0.62
+        },
+        "ready": {
+          "file": "formation/ready.wav",
+          "sha256": "e0d65b80ad95ab2b5ebf6f292a16b5d1bc301755a37573b0f7849f662c1f3134",
+          "peak": 0.399994,
+          "rms": 0.063323,
+          "dc": 2e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.062164,
+          "seconds": 0.75
+        },
+        "error": {
+          "file": "formation/error.wav",
+          "sha256": "71ac863992c0a140e743a2bb46f82c4503944fa0f8476c475cba737fd0140cf3",
+          "peak": 0.429993,
+          "rms": 0.056504,
+          "dc": 1e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.063873,
+          "seconds": 0.6
+        },
+        "detent": {
+          "file": "formation/detent.wav",
+          "sha256": "4a917fd1614c46126d343a0e4193b168cb28ff41446d9517a7c1b66e4dbaa221",
+          "peak": 0.139984,
+          "rms": 0.029315,
+          "dc": 1.7e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.040741,
+          "seconds": 0.052
+        }
+      }
+    },
+    "astral": {
+      "name": "Astral journey",
+      "materials": "celestial glass, harp pluck and stardust",
+      "cues": {
+        "switch": {
+          "file": "astral/switch.wav",
+          "sha256": "c0f887fdf88f9e5172fa1ddfc51df9ca0fca5fbc71ff039dc16d25c1289ec505",
+          "peak": 0.319977,
+          "rms": 0.066562,
+          "dc": 1.7e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.145172,
+          "seconds": 0.3
+        },
+        "capture": {
+          "file": "astral/capture.wav",
+          "sha256": "080333e73627a3d6a377670654647c693c9b4c3b39029c4b51fd3d4f89a43f04",
+          "peak": 0.379974,
+          "rms": 0.076605,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.150543,
+          "seconds": 0.48
+        },
+        "remove": {
+          "file": "astral/remove.wav",
+          "sha256": "184b64b0d32e6c1fad77e1bd35b638ca390f8787798e546ebce1c30f6ee1e848",
+          "peak": 0.279999,
+          "rms": 0.057132,
+          "dc": 6e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.128357,
+          "seconds": 0.34
+        },
+        "expand": {
+          "file": "astral/expand.wav",
+          "sha256": "4958908f16b28e52bcd20e487158d8ae95ba5979a9cdb260a57e6ca92d2ec798",
+          "peak": 0.25,
+          "rms": 0.051789,
+          "dc": 2e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.110443,
+          "seconds": 0.34
+        },
+        "collapse": {
+          "file": "astral/collapse.wav",
+          "sha256": "435e0aeabab2e9d4ff2192cdf1cbe22a038773fe658bed2f5ddec0637306e975",
+          "peak": 0.220001,
+          "rms": 0.046378,
+          "dc": 1.6e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.09079,
+          "seconds": 0.28
+        },
+        "inventoryopen": {
+          "file": "astral/inventoryopen.wav",
+          "sha256": "cea0a0e756c6965c202a10a238c6b7862d758dc99cf59937e9a3631359731ae2",
+          "peak": 0.319977,
+          "rms": 0.058196,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.164062,
+          "seconds": 0.51
+        },
+        "inventoryclose": {
+          "file": "astral/inventoryclose.wav",
+          "sha256": "dd46e4d3323833067e2a713a08b6a63f39ffbbb009cf5865da570017c949ef22",
+          "peak": 0.25,
+          "rms": 0.053587,
+          "dc": 1.6e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.08786,
+          "seconds": 0.33
+        },
+        "arrange": {
+          "file": "astral/arrange.wav",
+          "sha256": "8795bc1406824cd574b62ed4873f9e5e25e9d2b1128b45904c408406cd744f9e",
+          "peak": 0.359985,
+          "rms": 0.060849,
+          "dc": 6e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.167145,
+          "seconds": 0.56
+        },
+        "restore": {
+          "file": "astral/restore.wav",
+          "sha256": "03f13e60e7bf685509420b52b0cee456b761bda5c535e7c4e17f5e4bcf08a3f2",
+          "peak": 0.299988,
+          "rms": 0.053649,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.112427,
+          "seconds": 0.45
+        },
+        "reorder": {
+          "file": "astral/reorder.wav",
+          "sha256": "2de5d454358ef2bd21a7c358e991a43ca6d6e64d80ac3b144509ab3610be41d5",
+          "peak": 0.209991,
+          "rms": 0.053582,
+          "dc": 7e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.097137,
+          "seconds": 0.24
+        },
+        "waiting": {
+          "file": "astral/waiting.wav",
+          "sha256": "579e31f44f49c8fe3a3d3f39ad11eebf4f2a670699abe77014b4c1c8c011150d",
+          "peak": 0.399994,
+          "rms": 0.066852,
+          "dc": 1e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.181396,
+          "seconds": 0.62
+        },
+        "ready": {
+          "file": "astral/ready.wav",
+          "sha256": "142fc7e59990a66da628d063cd3b9f9bc87864380ab0a27bf818359249024196",
+          "peak": 0.399994,
+          "rms": 0.062074,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.176971,
+          "seconds": 0.75
+        },
+        "error": {
+          "file": "astral/error.wav",
+          "sha256": "a7a3560d14bbc25e124f804f8b939f4854b4192cb3066a11d747e7c0f0baafb6",
+          "peak": 0.429993,
+          "rms": 0.075108,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.183289,
+          "seconds": 0.6
+        },
+        "detent": {
+          "file": "astral/detent.wav",
+          "sha256": "a834766f927fb4ed2a6fe91ce95b61cd3ad0725784dffc19cc32c928f76dff43",
+          "peak": 0.139984,
+          "rms": 0.025649,
+          "dc": 1.3e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.08728,
+          "seconds": 0.052
+        }
+      }
+    },
+    "wonderland": {
+      "name": "Porcelain dream",
+      "materials": "bamboo flute breath, porcelain chime and painted wood",
+      "cues": {
+        "switch": {
+          "file": "wonderland/switch.wav",
+          "sha256": "5c40802fabcceac28b1a91805703dc2bac9b0a59a73def2eb810e67fb9f7a917",
+          "peak": 0.319977,
+          "rms": 0.057469,
+          "dc": 1e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.081421,
+          "seconds": 0.3
+        },
+        "capture": {
+          "file": "wonderland/capture.wav",
+          "sha256": "14da59453c43b46045705f39f1f1dbe7cc1cd0e5684a33c7131f172819b1697e",
+          "peak": 0.379974,
+          "rms": 0.07603,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.123444,
+          "seconds": 0.48
+        },
+        "remove": {
+          "file": "wonderland/remove.wav",
+          "sha256": "02fc945122b8e7d8044c35c6ad8db0cafcf9bbbca754a244f4aea04126a197e9",
+          "peak": 0.279999,
+          "rms": 0.045761,
+          "dc": 1.5e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.069946,
+          "seconds": 0.34
+        },
+        "expand": {
+          "file": "wonderland/expand.wav",
+          "sha256": "5034350dd16941e9fb64e885921d859e9688cd28ae334a3a8d6f14f0f78f9671",
+          "peak": 0.25,
+          "rms": 0.041171,
+          "dc": 1.6e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.077362,
+          "seconds": 0.34
+        },
+        "collapse": {
+          "file": "wonderland/collapse.wav",
+          "sha256": "16ceacd32bc0c15634fd90d86db6742cbb9ece6eb29d90d1d955cf25a0808e12",
+          "peak": 0.220001,
+          "rms": 0.042499,
+          "dc": 2e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.059052,
+          "seconds": 0.28
+        },
+        "inventoryopen": {
+          "file": "wonderland/inventoryopen.wav",
+          "sha256": "78f3f6e3f4c65ba47664661bc07914c7779408accf458d525e1bb3a0fa17a042",
+          "peak": 0.319977,
+          "rms": 0.04565,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.085205,
+          "seconds": 0.51
+        },
+        "inventoryclose": {
+          "file": "wonderland/inventoryclose.wav",
+          "sha256": "dd5cf53dc94315c5fdf89b127d6d8b4b406407cba361a7c07987a105dbcdffd6",
+          "peak": 0.25,
+          "rms": 0.044971,
+          "dc": 8e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.06546,
+          "seconds": 0.33
+        },
+        "arrange": {
+          "file": "wonderland/arrange.wav",
+          "sha256": "8fd133c9b1032eb6b3f562db2bdf6d703b3b216217a26eab22542fa620e0eb75",
+          "peak": 0.359985,
+          "rms": 0.050258,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.091339,
+          "seconds": 0.56
+        },
+        "restore": {
+          "file": "wonderland/restore.wav",
+          "sha256": "8d52507c7a55995ba8c3496fd8a1217b74933f8c57b53132f11924dc05f4a9ce",
+          "peak": 0.299988,
+          "rms": 0.043903,
+          "dc": 1e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.072113,
+          "seconds": 0.45
+        },
+        "reorder": {
+          "file": "wonderland/reorder.wav",
+          "sha256": "afaad66a796418a87712a163e31699fd9e7c7e3ac34437761020b4a456e6da29",
+          "peak": 0.209991,
+          "rms": 0.042133,
+          "dc": 2.2e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.054474,
+          "seconds": 0.24
+        },
+        "waiting": {
+          "file": "wonderland/waiting.wav",
+          "sha256": "11990c87746d1fa9f1edcad055c0c5caf89442c419841d7a14363bc6dbecf20c",
+          "peak": 0.399994,
+          "rms": 0.059192,
+          "dc": 2e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.105255,
+          "seconds": 0.62
+        },
+        "ready": {
+          "file": "wonderland/ready.wav",
+          "sha256": "a2adbda4dce91fd8c1d8d2e1cdd4c340f61b6c13dee21fd56fcad79035dd7aa7",
+          "peak": 0.399994,
+          "rms": 0.054276,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.097504,
+          "seconds": 0.75
+        },
+        "error": {
+          "file": "wonderland/error.wav",
+          "sha256": "b00de0c670e51b02c3f70a5b846939d462d29a26be1d7f1a0b872e6b8e13e5bb",
+          "peak": 0.429993,
+          "rms": 0.065297,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.109863,
+          "seconds": 0.6
+        },
+        "detent": {
+          "file": "wonderland/detent.wav",
+          "sha256": "1b4ea7db26d31b9de962c1167d7d8311a752d697004db1c0e94068a905d09c8e",
+          "peak": 0.139984,
+          "rms": 0.02634,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.062744,
+          "seconds": 0.052
+        }
+      }
+    }
+  }
+}

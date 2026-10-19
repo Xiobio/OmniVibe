@@ -1,0 +1,12 @@
+CC0 1.0 Universal — Public Domain Dedication
+
+The original procedurally synthesized WAV assets in this directory are dedicated
+to the public domain under CC0 1.0 Universal by the OmniVibe contributors.
+
+https://creativecommons.org/publicdomain/zero/1.0/legalcode
+
+No game audio, official character performance, commercial sample pack, voice
+clone, recording, or copyrighted musical composition was used in these assets.
+Theme references describe visual and sonic inspiration, not endorsement or an
+official soundtrack. The license covers only these original WAV files, not game
+names, trademarks, existing visual assets, or user-provided override recordings.
