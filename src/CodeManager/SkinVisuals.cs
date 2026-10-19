@@ -99,7 +99,7 @@ public sealed class SkinBackdrop : FrameworkElement
     private readonly SkinDefinition _skin = SkinCatalog.Current;
     private static readonly Dictionary<string, BitmapSource?> ArtworkCache = new();
     public bool Translucent { get; set; }
-    public SkinBackdrop() { IsHitTestVisible = false; ClipToBounds = true; }
+    public SkinBackdrop() { IsHitTestVisible = false; ClipToBounds = true; NativeSkinArt.Warm(_skin); }
     protected override void OnRender(DrawingContext dc)
     {
         double w = ActualWidth, h = ActualHeight; if (w < 1 || h < 1) return;
@@ -119,6 +119,7 @@ public sealed class SkinBackdrop : FrameworkElement
             clearCenter.GradientStops.Add(new GradientStop(dark, 0)); dark.A = 220; clearCenter.GradientStops.Add(new GradientStop(dark, .55)); dark.A = 30; clearCenter.GradientStops.Add(new GradientStop(dark, 1));
             dc.DrawRectangle(clearCenter, null, area);
         }
+        if (!Translucent && NativeSkinArt.Frame(dc, s, new Rect(4, 4, Math.Max(1, w - 8), Math.Max(1, h - 8)), Math.Min(w, h) < 440 ? 22 : 38)) return;
         var pen = new Pen(WuxiaTheme.Brush(s.Border), 1); var accent = new Pen(WuxiaTheme.Brush(s.Accent), 1.5);
         dc.PushOpacity(.66);
         switch (s.Family)

@@ -18,6 +18,11 @@ public sealed class SkinTaskCard : Grid
     private readonly TextBlock _state, _name, _metadata, _badge, _placeholder, _previewHint;
     private readonly Border _badgeFrame;
     private Border? _unitBanner;
+    private readonly Button _remove;
+    public event Action? RemoveRequested;
+    private Image? _weaponImage;
+    private readonly Image _previewEntity;
+    private readonly StackPanel _previewMessage;
     private readonly SkinCardOrnament _ornament;
     private readonly Brush _cardSurface;
     private readonly ScaleTransform _scale = new(1, 1);
@@ -43,6 +48,12 @@ public sealed class SkinTaskCard : Grid
         var top = new Grid(); top.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); top.ColumnDefinitions.Add(new ColumnDefinition()); top.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
         var number = NumberPlaque(slot.Number, _skin, 28);
         top.Children.Add(number);
+        {
+            var emblem = new StackPanel { Orientation = Orientation.Horizontal };
+            top.Children.Remove(number); emblem.Children.Add(number);
+            _weaponImage = new Image { Source = EquipmentCatalog.Image(slot, _skin.Id), Width = 27, Height = 28, Stretch = Stretch.Uniform, Margin = new Thickness(7, 0, 1, 0), ToolTip = EquipmentCatalog.Name(slot, _skin.Id) };
+            emblem.Children.Add(_weaponImage); top.Children.Add(emblem);
+        }
         var stateGroup = new StackPanel { VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(9, 0, 4, 0) };
         if (_skin.Family is "tactical" or "protocol") stateGroup.Children.Add(new TextBlock { Text = _skin.Family == "tactical" ? "DEVICE // " + slot.Number.ToString("00") : "AGENT / " + slot.Number.ToString("00"), FontSize = 8, Foreground = WuxiaTheme.Brush(_skin.Muted) });
         _state = new TextBlock { FontFamily = WuxiaTheme.BodyFont, FontSize = 11, TextTrimming = TextTrimming.CharacterEllipsis, FontWeight = FontWeights.SemiBold };
@@ -50,19 +61,53 @@ public sealed class SkinTaskCard : Grid
         _badge = new TextBlock { FontSize = 8.5, FontWeight = FontWeights.Bold, TextAlignment = TextAlignment.Center };
         _badgeFrame = new Border { Padding = new Thickness(5, 3, 5, 3), CornerRadius = new CornerRadius(Math.Min(8, _skin.CornerRadius)), Child = _badge, VerticalAlignment = VerticalAlignment.Center };
         Grid.SetColumn(_badgeFrame, 2); top.Children.Add(_badgeFrame); body.Children.Add(top);
+        top.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+        _remove = new Button { Width = 22, Height = 22, MinWidth = 0, MinHeight = 0, Padding = new Thickness(0), Margin = new Thickness(5, 0, 0, 0), ToolTip = "移出管理，保留终端窗口", Foreground = WuxiaTheme.Brush(_skin.CardText), VerticalAlignment = VerticalAlignment.Center };
+        _remove.Template = (ControlTemplate)System.Windows.Markup.XamlReader.Parse("""
+<ControlTemplate xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:CodeManager;assembly=CodeManager" TargetType="Button">
+  <Grid Background="Transparent">
+    <Border x:Name="Wash" Background="{TemplateBinding Foreground}" CornerRadius="11" Opacity="0"/>
+    <Path x:Name="Mark" Data="M 8,8 L 14,14 M 14,8 L 8,14" Stroke="{TemplateBinding Foreground}" StrokeThickness="1.1" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.28"/>
+  </Grid>
+  <ControlTemplate.Triggers>
+    <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType={x:Type local:SkinTaskCard}}}" Value="True">
+      <Setter TargetName="Mark" Property="Opacity" Value="0.65"/>
+    </DataTrigger>
+    <Trigger Property="IsMouseOver" Value="True">
+      <Setter TargetName="Mark" Property="Opacity" Value="1"/>
+      <Setter TargetName="Wash" Property="Opacity" Value="0.10"/>
+    </Trigger>
+    <Trigger Property="IsKeyboardFocused" Value="True">
+      <Setter TargetName="Mark" Property="Opacity" Value="1"/>
+      <Setter TargetName="Wash" Property="Opacity" Value="0.14"/>
+    </Trigger>
+    <Trigger Property="IsPressed" Value="True">
+      <Setter TargetName="Wash" Property="Opacity" Value="0.20"/>
+    </Trigger>
+  </ControlTemplate.Triggers>
+</ControlTemplate>
+""");
+        Grid.SetColumn(_remove, 3); top.Children.Add(_remove);
+        _remove.Click += (_, e) => { e.Handled = true; RemoveRequested?.Invoke(); };
 
         var preview = new Border { Background = WuxiaTheme.Brush(_skin.Background), BorderBrush = WuxiaTheme.Brush(_skin.Border), BorderThickness = new Thickness(.5), Margin = new Thickness(0, 9, 0, 8), ClipToBounds = true, CornerRadius = new CornerRadius(Math.Min(_skin.CornerRadius, 6)) };
         var placeholder = new Grid { ClipToBounds = true };
+        placeholder.Children.Add(new NativeCardScene(_skin));
         if (SkinCatalog.DecorationsEnabled) placeholder.Children.Add(new SkinGlyph(animate) { Width = 90, Height = 90, Opacity = .22, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center });
-        var message = new StackPanel { HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(8) };
-        _placeholder = new TextBlock { FontSize = 21, FontFamily = _skin.TitleFont, TextAlignment = TextAlignment.Center, Foreground = WuxiaTheme.Brush(_skin.Accent) };
+        _previewEntity = new Image { Stretch = Stretch.Uniform, Opacity = .72, IsHitTestVisible = false };
+        // An overlay must not contribute a desired height inside the short-screen ScrollViewer.
+        // Deriving a normal Grid child's height from its parent's actual height creates layout feedback.
+        var entityLayer = new Canvas { IsHitTestVisible = false, ClipToBounds = true };
+        entityLayer.Children.Add(_previewEntity); placeholder.Children.Add(entityLayer);
+        var message = _previewMessage = new StackPanel { HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(8) };
+        _placeholder = new TextBlock { FontSize = 17, FontFamily = WuxiaTheme.BodyFont, FontWeight = FontWeights.SemiBold, TextAlignment = TextAlignment.Center, Foreground = WuxiaTheme.Brush(_skin.Accent) };
         _previewHint = new TextBlock { FontSize = 10, TextAlignment = TextAlignment.Center, Margin = new Thickness(0, 5, 0, 0), Foreground = WuxiaTheme.Brush(_skin.Muted) };
         message.Children.Add(_placeholder); message.Children.Add(_previewHint); placeholder.Children.Add(message); preview.Child = placeholder;
         PreviewRegion = preview; Grid.SetRow(preview, 1); body.Children.Add(preview);
         preview.SizeChanged += (_, e) =>
         {
-            _placeholder.MaxWidth = Math.Max(40, e.NewSize.Width - 16); _previewHint.MaxWidth = Math.Max(40, e.NewSize.Width - 16);
-            _placeholder.FontSize = e.NewSize.Height < 60 ? 14 : e.NewSize.Width < 180 ? 16 : 21;
+            UpdatePreviewEntity(e.NewSize.Width, e.NewSize.Height);
+            _placeholder.FontSize = e.NewSize.Height < 60 ? 12 : e.NewSize.Width < 180 ? 14 : 17;
             _previewHint.Visibility = e.NewSize.Height < 75 ? Visibility.Collapsed : Visibility.Visible;
         };
         var foot = new StackPanel();
@@ -78,6 +123,7 @@ public sealed class SkinTaskCard : Grid
             rail.Children.Add(new TextBlock { Text = slot.Number.ToString("00"), FontFamily = _skin.TitleFont, FontSize = 27, FontWeight = FontWeights.Bold, Foreground = WuxiaTheme.Brush(_skin.Accent) });
             rail.Children.Add(new Border { Height = 3, Margin = new Thickness(0, 7, 0, 7), Background = WuxiaTheme.Brush(_skin.Accent) });
             rail.Children.Add(new TextBlock { Text = "OPS", FontSize = 8, FontWeight = FontWeights.Bold, Foreground = WuxiaTheme.Brush(_skin.Muted) });
+            if (_weaponImage != null) { ((Panel)_weaponImage.Parent).Children.Remove(_weaponImage); _weaponImage.Margin = new Thickness(0, 5, 0, 0); rail.Children.Add(_weaponImage); }
             actionRail.Children.Add(rail); _frame.Child = null; Grid.SetColumn(body, 1); actionRail.Children.Add(body); _frame.Child = actionRail;
         }
         if (_skin.Family == "formation")
@@ -130,6 +176,7 @@ public sealed class SkinTaskCard : Grid
             _frame.Margin = tight && ink ? new Thickness(4, 3, 4, 3) : normalFrameMargin;
             preview.Margin = tight ? new Thickness(0, 4, 0, 4) : dense ? new Thickness(0, 6, 0, 6) : normalPreviewMargin;
             number.Height = tight ? 22 : 28;
+            if (_weaponImage != null) _weaponImage.Height = tight ? 22 : 28;
             _name.FontSize = tight ? 11 : dense ? 12 : normalNameSize; _metadata.FontSize = dense ? 9 : 10;
             _metadata.Visibility = tight ? Visibility.Collapsed : Visibility.Visible;
             _metadata.Margin = new Thickness(0, dense ? 2 : 4, 0, 0);
@@ -164,6 +211,10 @@ public sealed class SkinTaskCard : Grid
     }
     public void Update(bool selected)
     {
+        _remove.Visibility = _slot.Occupied ? Visibility.Visible : Visibility.Collapsed;
+        _previewEntity.Source = _slot.Occupied ? EquipmentCatalog.Image(_slot, _skin.Id) : null;
+        UpdatePreviewEntity(PreviewRegion.ActualWidth, PreviewRegion.ActualHeight);
+        if (_weaponImage != null) { _weaponImage.Source = EquipmentCatalog.Image(_slot, _skin.Id); _weaponImage.ToolTip = EquipmentCatalog.Name(_slot, _skin.Id); _weaponImage.Visibility = _slot.Occupied ? Visibility.Visible : Visibility.Collapsed; ToolTip = EquipmentCatalog.Detail(_slot); }
         string statusColor = SkinUi.StateColor(_slot, _skin);
         var status = WuxiaTheme.Brush(statusColor);
         _state.Text = SkinUi.StateSymbol(_slot) + "  " + (_slot.Occupied ? _slot.StateLabel : "空槽位 · 等待接入");
@@ -181,7 +232,7 @@ public sealed class SkinTaskCard : Grid
         _placeholder.Text = !_slot.Occupied ? "+" : !_slot.Connected ? "⌁ 连接已断开" : _slot.State switch { AgentState.Waiting => "! 等待你处理", AgentState.Ready => "✓ 本轮已回复", AgentState.Error => "× 发生错误", AgentState.Running => "▷ 正在执行", _ => "○ 状态未知" };
         _placeholder.Foreground = status;
         _previewHint.Text = !_slot.Occupied ? "点击添加 · 保留固定编号" : !_slot.Connected ? "点击重新连接窗口" : "实时窗口预览";
-        _ornament.StateColor = statusColor; _ornament.Selected = selected; _ornament.InvalidateVisual();
+        _ornament.StateColor = statusColor; _ornament.Selected = selected; _ornament.IsEmpty = !_slot.Occupied; _ornament.InvalidateVisual();
         var key = _slot.State + ":" + _slot.Connected + ":" + _slot.Occupied;
         if (key == _lastState) return;
         _lastState = key;
@@ -205,8 +256,19 @@ public sealed class SkinTaskCard : Grid
         _scale.BeginAnimation(ScaleTransform.ScaleXProperty, null); _scale.BeginAnimation(ScaleTransform.ScaleYProperty, null);
         _translation.BeginAnimation(TranslateTransform.XProperty, null); _translation.BeginAnimation(TranslateTransform.YProperty, null);
     }
+    private void UpdatePreviewEntity(double width, double height)
+    {
+        bool visible = _slot.Occupied && height >= 80 && width >= 180;
+        _previewEntity.Visibility = visible ? Visibility.Visible : Visibility.Collapsed;
+        _previewEntity.Width = Math.Max(1, width * .35); _previewEntity.Height = Math.Max(1, height - 8);
+        Canvas.SetLeft(_previewEntity, Math.Max(0, width * .65 - 4)); Canvas.SetTop(_previewEntity, 4);
+        _previewMessage.HorizontalAlignment = visible ? HorizontalAlignment.Left : HorizontalAlignment.Center;
+        double messageWidth = Math.Max(40, width * (visible ? .6 : 1) - 16);
+        _placeholder.MaxWidth = messageWidth; _previewHint.MaxWidth = messageWidth;
+    }
     internal static FrameworkElement NumberPlaque(int n, SkinDefinition skin, double size)
     {
+        if (NativeSkinArt.Available(skin)) return new NativeNumberPlaque(n, skin) { Width = size + 6, Height = size + 6, VerticalAlignment = VerticalAlignment.Center };
         double radius = skin.Family switch { "fantasy" or "mechanical" => size / 2, "formation" or "wonderland" => 9, _ => 1 };
         var border = new Border { Width = size + (skin.Family == "tactical" ? 8 : 0), Height = size, BorderBrush = WuxiaTheme.Brush(skin.Accent), Background = WuxiaTheme.Brush(skin.Background), BorderThickness = new Thickness(1), CornerRadius = new CornerRadius(radius) };
         border.Child = new TextBlock { Text = skin.SlotNumber(n), FontFamily = skin.TitleFont, FontSize = size * .51, FontWeight = FontWeights.SemiBold, Foreground = WuxiaTheme.Brush(skin.Accent), HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
@@ -229,11 +291,20 @@ internal sealed class SkinCardOrnament : FrameworkElement
     private readonly bool _compact;
     public string StateColor { get; set; }
     public bool Selected { get; set; }
-    public SkinCardOrnament(SkinDefinition skin, bool compact) { _skin = skin; _compact = compact; StateColor = skin.Accent; IsHitTestVisible = false; }
+    public bool IsEmpty { get; set; }
+    public SkinCardOrnament(SkinDefinition skin, bool compact) { _skin = skin; _compact = compact; StateColor = skin.Accent; IsHitTestVisible = false; NativeSkinArt.Warm(skin); }
     protected override void OnRender(DrawingContext dc)
     {
         double w = ActualWidth, h = ActualHeight; if (w < 20 || h < 20) return;
         var accent = WuxiaTheme.Brush(Selected ? _skin.Accent : StateColor); var edge = new Pen(WuxiaTheme.Brush(_skin.Border), 1); var line = new Pen(accent, 1.4);
+        if (SkinCatalog.DecorationsEnabled && NativeSkinArt.Available(_skin))
+        {
+            if (IsEmpty) dc.PushOpacity(.38);
+            NativeSkinArt.Frame(dc, _skin, new Rect(0, 0, w, h), h < 135 ? 12 : h < 205 ? 20 : 26);
+            if (IsEmpty) dc.Pop();
+            if (!IsEmpty) dc.DrawRoundedRectangle(accent, null, new Rect(2, 16, 2, Math.Max(1, h - 32)), 1, 1);
+            return;
+        }
         // A persistent status rail remains when decorative content is disabled.
         dc.DrawRoundedRectangle(accent, null, new Rect(1, 12, 3, Math.Max(1, h - 24)), 1, 1);
         if (!SkinCatalog.DecorationsEnabled || (!_compact && h < 135)) return;
@@ -271,58 +342,5 @@ internal sealed class SkinCardOrnament : FrameworkElement
                 foreach (double x in new[] { 7d, w - 7 }) foreach (double y in new[] { 7d, h - 7 }) dc.DrawEllipse(WuxiaTheme.Brush(_skin.Background), line, new Point(x, y), 3, 3);
                 dc.DrawLine(edge, new Point(15, 4), new Point(w - 15, 4)); break;
         }
-    }
-}
-
-/// <summary>Dock text is rebuilt on theme changes, and unsubscribes whenever recycled.</summary>
-public sealed class SkinDockContent : ContentControl
-{
-    private Slot? _slot;
-    private readonly SkinDefinition _skin;
-    private readonly TextBlock _name, _detail, _activity;
-    private readonly SkinCardOrnament _ornament;
-    private readonly Grid _root;
-    private Border? _tagMarker;
-    public SkinDockContent()
-    {
-        _skin = SkinCatalog.Current; IsHitTestVisible = false;
-        _root = new Grid(); _root.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); _root.ColumnDefinitions.Add(new ColumnDefinition());
-        _ornament = new SkinCardOrnament(_skin, compact: true) { Margin = new Thickness(-7, -6, -6, -6) }; Grid.SetColumnSpan(_ornament, 2); _root.Children.Add(_ornament);
-        var text = new StackPanel { Margin = new Thickness(8, 0, 2, 0), VerticalAlignment = VerticalAlignment.Center };
-        _name = new TextBlock { FontSize = 12, FontWeight = FontWeights.SemiBold, Foreground = WuxiaTheme.Brush(_skin.Text), TextTrimming = TextTrimming.CharacterEllipsis };
-        _detail = new TextBlock { FontSize = 10, Margin = new Thickness(0, 4, 0, 0), TextTrimming = TextTrimming.CharacterEllipsis };
-        _activity = new TextBlock { FontSize = 9, Margin = new Thickness(0, 3, 0, 0), Foreground = WuxiaTheme.Brush(_skin.Accent), TextTrimming = TextTrimming.CharacterEllipsis };
-        text.Children.Add(_name); text.Children.Add(_detail); text.Children.Add(_activity); Grid.SetColumn(text, 1); _root.Children.Add(text); Content = _root;
-        Loaded += (_, _) => Attach(); Unloaded += (_, _) => Detach(); DataContextChanged += (_, _) => { if (IsLoaded) Attach(); };
-    }
-    private void Attach()
-    {
-        Detach(); _slot = DataContext as Slot; if (_slot == null) return;
-        // The host retains its original drag/click events; only its geometry changes.
-        DependencyObject? parent = VisualTreeHelper.GetParent(this);
-        while (parent != null && parent is not Border) parent = VisualTreeHelper.GetParent(parent);
-        if (parent is Border frame) frame.CornerRadius = new CornerRadius(_skin.CornerRadius);
-        var numberHost = new Grid { Width = _skin.Family == "tactical" ? 33 : 26 };
-        numberHost.Children.Add(SkinTaskCard.NumberPlaque(_slot.Number, _skin, 25));
-        _tagMarker = new Border { Height = 2, Width = 17, VerticalAlignment = VerticalAlignment.Bottom, Margin = new Thickness(0, 0, 0, -3), CornerRadius = new CornerRadius(1) };
-        numberHost.Children.Add(_tagMarker); _root.Children.Add(numberHost); _slot.PropertyChanged += Changed; Update();
-    }
-    private void Detach() { if (_slot != null) _slot.PropertyChanged -= Changed; _slot = null; _tagMarker = null; if (_root.Children.Count > 2) _root.Children.RemoveAt(_root.Children.Count - 1); }
-    private void Changed(object? sender, PropertyChangedEventArgs e) => Update();
-    private void Update()
-    {
-        if (_slot == null) return;
-        _name.Text = _slot.DisplayName;
-        if (_tagMarker != null)
-        {
-            try { _tagMarker.Background = WuxiaTheme.Brush(string.IsNullOrWhiteSpace(_slot.TagColor) ? _skin.Muted : _slot.TagColor); }
-            catch (Exception ex) when (ex is FormatException or NotSupportedException) { _tagMarker.Background = WuxiaTheme.Brush(_skin.Muted); }
-            _tagMarker.Visibility = _slot.Occupied ? Visibility.Visible : Visibility.Collapsed;
-        }
-        _detail.Text = SkinUi.StateSymbol(_slot) + " " + _slot.StateLabel;
-        _detail.Foreground = WuxiaTheme.Brush(SkinUi.StateColor(_slot, _skin));
-        _activity.Text = (_slot.IsSelected ? "◆ 已选择  " : _slot.IsActive ? "● 当前窗口  " : "") + (_slot.Unread ? "✉ 未读" : "");
-        _activity.Visibility = _activity.Text == "" ? Visibility.Collapsed : Visibility.Visible;
-        _ornament.StateColor = SkinUi.StateColor(_slot, _skin); _ornament.Selected = _slot.IsSelected; _ornament.InvalidateVisual();
     }
 }

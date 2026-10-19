@@ -1,10 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Media;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -16,30 +12,18 @@ namespace CodeManager;
 /// <summary>Optional feedback follows the palette and never delays task activation.</summary>
 public static class InkEffects
 {
-    private static long _lastSound;
-    private static int _soundPlaying;
     private static readonly List<VisualLease> Visuals = new();
     public static int ActiveVisualCount => Visuals.Count;
+    public static void Detent(bool enabled)
+    {
+        GameAudio.Play(WuxiaTheme.CurrentSkin, AudioCue.Detent, enabled, immersive: true);
+    }
     public static void Sound(bool enabled, bool capture = false)
     {
-        if (!enabled) return;
-        long now = Stopwatch.GetTimestamp();
-        if (Stopwatch.GetElapsedTime(Interlocked.Read(ref _lastSound), now).TotalMilliseconds < 130 || Interlocked.CompareExchange(ref _soundPlaying, 1, 0) != 0) return;
-        Interlocked.Exchange(ref _lastSound, now);
-        Skin skin = WuxiaTheme.CurrentSkin;
-        _ = Task.Run(() =>
-        {
-            try
-            {
-                using var stream = new MemoryStream(CreateSound(skin, capture), false);
-                using var player = new SoundPlayer(stream); player.PlaySync();
-            }
-            catch (Exception) { /* Optional audio cannot affect task actions. */ }
-            finally { Volatile.Write(ref _soundPlaying, 0); }
-        });
+        GameAudio.Play(WuxiaTheme.CurrentSkin, capture ? AudioCue.Capture : AudioCue.Switch, enabled);
     }
 
-    /// <summary>Original deterministic PCM synthesis without copyrighted samples.</summary>
+    /// <summary>Legacy deterministic PCM export for the original validation harness. Runtime playback uses GameAudio.</summary>
     public static byte[] CreateSound(Skin skin, bool capture = false)
     {
         const int rate = 22050;

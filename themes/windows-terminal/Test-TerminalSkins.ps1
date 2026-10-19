@@ -1,4 +1,4 @@
-param([string]$OutputRoot = '', [switch]$RequireArtwork)
+param([string]$OutputRoot = '', [switch]$RequireArtwork, [string]$Skin = '')
 $ErrorActionPreference = 'Stop'
 $repoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../..'))
 if (-not $OutputRoot) { $OutputRoot = Join-Path $repoRoot 'artifacts/terminal-skin-tests' }
@@ -7,9 +7,13 @@ $OutputRoot = [IO.Path]::GetFullPath($OutputRoot)
 $testRoot = Join-Path $OutputRoot ([guid]::NewGuid().ToString('N'))
 $testScripts = Join-Path $testRoot 'repo/themes/windows-terminal'
 [IO.Directory]::CreateDirectory($testScripts) | Out-Null
-foreach ($name in @('Apply-Skin.ps1','Jsonc.cs','ShaderCompiler.cs','skins.json')) { Copy-Item -LiteralPath (Join-Path $PSScriptRoot $name) -Destination $testScripts }
+foreach ($name in @('Apply-Skin.ps1','TerminalChrome.ps1','classic-palettes.json','Jsonc.cs','ShaderCompiler.cs','FrameLayout.cs','skins.json')) { Copy-Item -LiteralPath (Join-Path $PSScriptRoot $name) -Destination $testScripts }
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'shaders') -Destination $testScripts -Recurse
+[IO.Directory]::CreateDirectory((Join-Path $testScripts 'assets')) | Out-Null
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'assets/refined-v1') -Destination (Join-Path $testScripts 'assets') -Recurse
 $manifest = [IO.File]::ReadAllText((Join-Path $PSScriptRoot 'skins.json')) | ConvertFrom-Json
+$testedEntries = @($manifest.skins | Where-Object { -not $Skin -or $_.slug -eq $Skin })
+if ($testedEntries.Count -eq 0) { throw "Unknown test skin: $Skin" }
 $fixtureImages = @()
 foreach ($entry in $manifest.skins) {
     $source = Join-Path $repoRoot $entry.artwork
@@ -53,7 +57,7 @@ function Invoke-Rejected([string[]]$Arguments) {
 }
 $originalObject = Read-Json $fixture
 $reports = @()
-foreach ($entry in $manifest.skins) {
+foreach ($entry in $testedEntries) {
     [IO.File]::WriteAllText($settingsPath,$fixture,$utf8)
     $result = Invoke-Apply @('-Skin',$entry.slug)
     $actual = Read-Json ([IO.File]::ReadAllText($settingsPath))
@@ -68,8 +72,15 @@ foreach ($entry in $manifest.skins) {
     Assert ([IO.File]::ReadAllText($result.BackupPath) -ceq $fixture) 'Backup was not byte-for-byte.'
     Assert (Test-Path -LiteralPath $actual.profiles.defaults.backgroundImage) 'Installed illustration is missing.'
     Assert ($actual.profiles.defaults.backgroundImage.StartsWith($assets,[StringComparison]::OrdinalIgnoreCase)) 'Illustration references repository or cache.'
-    Assert (Test-Path -LiteralPath $actual.profiles.defaults.'experimental.pixelShaderPath') 'Installed shader is missing.'
-    Assert ($result.ShaderCompiledBytes -gt 0) 'Effect was not compiled.'
+    Assert ($null -eq $actual.profiles.defaults.'experimental.pixelShaderPath') 'A post-text shader was enabled.'
+    Assert ($result.RenderingMode -ceq 'background-gif' -and $result.AnimationFrames -eq 96) 'C background animation was not applied.'
+    Assert ($actual.profiles.defaults.backgroundImageOpacity -eq 1 -and $actual.profiles.defaults.backgroundImageStretchMode -ceq 'fill') 'Precomposited C layout was not preserved.'
+    $null = Invoke-Apply @('-Skin',$entry.slug,'-DisableEffects')
+    $static = Read-Json ([IO.File]::ReadAllText($settingsPath))
+    Assert ($static.profiles.defaults.backgroundImage -match '\.png$') 'Animation-off did not select the static C asset.'
+    $null = Invoke-Apply @('-Skin',$entry.slug,'-DisableArtwork')
+    $frameOnly = Read-Json ([IO.File]::ReadAllText($settingsPath))
+    Assert ($frameOnly.profiles.defaults.backgroundImage -match 'frame-only.*\.gif$') 'Artwork-off removed the independently enabled border animation.'
     $null = Invoke-Apply @('-Skin',$entry.slug,'-DisableEffects','-DisableArtwork','-AllProfiles')
     $disabled = Read-Json ([IO.File]::ReadAllText($settingsPath))
     Assert ($null -eq $disabled.profiles.defaults.'experimental.pixelShaderPath') 'Effects were not disabled.'
@@ -82,7 +93,7 @@ foreach ($entry in $manifest.skins) {
     Assert (@($disabled.schemes | Where-Object { $_.name -eq $entry.scheme.name }).Count -eq 1) 'Duplicate scheme created.'
     $null = Invoke-Apply @('-RestoreFrom',$result.BackupPath)
     Assert ([IO.File]::ReadAllText($settingsPath) -ceq $fixture) 'Restore did not preserve original JSONC.'
-    $reports += @{slug=$entry.slug; applied=$true; jsoncAccepted=$true; commandsAndShortcutsPreserved=$true; originalFontPreserved=$true; allProfilesVerified=$true; effectsDisableVerified=$true; backupRestoreByteExact=$true; shaderCompiledBytes=$result.ShaderCompiledBytes; testIllustrationFixture=($fixtureImages -contains $entry.slug)}
+    $reports += @{slug=$entry.slug; applied=$true; jsoncAccepted=$true; commandsAndShortcutsPreserved=$true; originalFontPreserved=$true; allProfilesVerified=$true; effectsDisableVerified=$true; artworkOffAnimationPreserved=$true; backgroundGifFrames=$result.AnimationFrames; frameLayout='C'; postTextShaderEnabled=$false; backupRestoreByteExact=$true; testIllustrationFixture=($fixtureImages -contains $entry.slug)}
 }
 $negativeCases = 0
 foreach ($bad in @('{"profiles": /* unterminated','{"profiles": [}', '[1,2,3]', '{"profiles": [],}', '{"profiles":{"defaults":[]}}', '{"x":[1,,]}', '{"x":[,]}')) {

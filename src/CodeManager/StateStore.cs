@@ -28,11 +28,17 @@ public sealed class StateStore
                 throw new InvalidDataException("Invalid task slots");
             result.Layout ??= new();
             result.Preferences ??= new();
+            result.Preferences.HideDockOnArrange = false;
+            result.RecentTasks ??= new();
+            result.RecentTasks = result.RecentTasks.Where(r => r?.Task?.Window != null && !string.IsNullOrWhiteSpace(r.Task.Id) && !result.Slots.Any(s => s.Id == r.Task.Id))
+                .DistinctBy(r => r.Task.Id).OrderByDescending(r => r.ClosedAt).Take(30).ToList();
+            foreach (var recent in result.RecentTasks) { recent.Task.Number = Math.Clamp(recent.Task.Number, 1, 9); recent.Task.Recovery = null; EquipmentCatalog.EnsureDefaults(new[] { recent.Task }); }
             if (!Enum.IsDefined(result.Preferences.TaskModifiers)) result.Preferences.TaskModifiers = ShortcutModifiers.Alt;
             if (!Enum.IsDefined(result.Preferences.MouseModifiers)) result.Preferences.MouseModifiers = ShortcutModifiers.Alt;
             if (!Enum.IsDefined(result.Preferences.Arrangement)) result.Preferences.Arrangement = ArrangementMode.Balanced;
             if (!Enum.IsDefined(result.Preferences.Skin)) result.Preferences.Skin = Skin.InkJade;
-            result.Preferences.DockWidth = double.IsFinite(result.Preferences.DockWidth) ? Math.Clamp(result.Preferences.DockWidth, 210, 520) : 250;
+            result.Preferences.SoundVolume = double.IsFinite(result.Preferences.SoundVolume) ? Math.Clamp(result.Preferences.SoundVolume, 0, 1) : .45;
+            result.Preferences.DockWidth = double.IsFinite(result.Preferences.DockWidth) ? Math.Clamp(result.Preferences.DockWidth, 210, 620) : 460;
             result.Preferences.DockHeight = double.IsFinite(result.Preferences.DockHeight) ? Math.Clamp(result.Preferences.DockHeight, 0, 1800) : 0;
             result.Preferences.LayoutGap = Math.Clamp(result.Preferences.LayoutGap, 0, 32);
             if (!InputService.TryParseGesture(result.Preferences.ArrangeGesture, out _, out _)) result.Preferences.ArrangeGesture = "Alt+Oem3";
@@ -47,6 +53,7 @@ public sealed class StateStore
                 if (!System.Text.RegularExpressions.Regex.IsMatch(slot.TagColor ?? "", "^#[0-9A-Fa-f]{6}$")) slot.TagColor = "#7EB5C8";
             }
             result.Slots = result.Slots.OrderBy(s => s.Number).ToList();
+            EquipmentCatalog.EnsureDefaults(result.Slots);
             return result;
         }
         catch (Exception ex) when (ex is IOException or JsonException or InvalidDataException or ArgumentException)

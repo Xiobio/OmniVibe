@@ -3,6 +3,7 @@ $ErrorActionPreference = 'Stop'
 $repoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../..'))
 $catalog = [IO.File]::ReadAllText((Join-Path $repoRoot 'skins/catalog.json')) | ConvertFrom-Json
 $utf8 = New-Object Text.UTF8Encoding($false)
+. (Join-Path $PSScriptRoot 'TerminalChrome.ps1')
 function RGB([string]$Hex) {
     return ,@([Convert]::ToInt32($Hex.Substring(1,2),16),[Convert]::ToInt32($Hex.Substring(3,2),16),[Convert]::ToInt32($Hex.Substring(5,2),16))
 }
@@ -65,6 +66,7 @@ foreach ($skin in $catalog) {
         tab = @{ background = $skin.surface; unfocusedBackground = $skin.background; showCloseButton = 'hover' }
         tabRow = @{ background = $skin.background; unfocusedBackground = $skin.background }
     }
+    $theme = Get-OmniVibeTerminalChrome ([pscustomobject]$theme) $skin.background $skin.accent $skin.surface
     $design = [IO.File]::ReadAllText((Join-Path $PSScriptRoot ('shaders/designs/' + $skin.slug + '.hlsl')))
     $shader = $template.Replace('__SLUG__',$skin.slug).Replace('__DESIGN__',$design).Replace('__ACCENT__',(HlslColor $skin.accent)).Replace('__SECONDARY__',(HlslColor $skin.secondary))
     $relativeShader = 'shaders/' + $skin.slug + '.hlsl'
@@ -82,7 +84,7 @@ foreach ($skin in $catalog) {
         } finally { $image.Dispose() }
     }
     $ratios = @($seeds.Keys | ForEach-Object { WorstContrast $scheme[$_] $skin.background $opacity })
-    $entries += [ordered]@{ slug=$skin.slug; name=$skin.name; scheme=$scheme; theme=$theme; artwork=$skin.artwork; shader=$relativeShader; imageOpacity=$opacity; decorationWidthDip=24; padding='36, 32, 36, 32' }
+    $entries += [ordered]@{ slug=$skin.slug; name=$skin.name; scheme=$scheme; theme=$theme; chromePalette=@{background=$skin.background; accent=$skin.accent; surface=$skin.surface}; artwork=$skin.artwork; shader=$relativeShader; imageOpacity=$opacity; decorationWidthDip=24; padding='36, 32, 36, 32' }
     $results += [ordered]@{
         slug=$skin.slug; name=$skin.name; ansiColors=16
         minimumAnsiContrast=[Math]::Round(($ratios | Measure-Object -Minimum).Minimum,3)

@@ -1,7 +1,7 @@
 [
   {
     "slug": "hextech",
-    "name": "海克斯枢纽",
+    "name": "英雄联盟 · 海克斯枢纽",
     "subtitle": "黄铜齿环 · 棱晶能量",
     "dockTitle": "棱晶接入枢纽",
     "overviewTitle": "海克斯控制中枢",
@@ -24,11 +24,12 @@
     "id": "Hextech",
     "cornerRadius": 3.0,
     "titleFont": "Georgia, Microsoft YaHei UI, Segoe UI",
-    "artwork": "skins/hextech/illustration.png"
+    "artwork": "skins/hextech/illustration.png",
+    "terminalArtwork": "skins/hextech/terminal-scene-v2.png"
   },
   {
     "slug": "tactical",
-    "name": "战术终端",
+    "name": "三角洲行动 · 战术终端",
     "subtitle": "炭黑合金 · 坐标标尺",
     "dockTitle": "设备接入终端",
     "overviewTitle": "战术监控矩阵",
@@ -51,11 +52,12 @@
     "id": "Tactical",
     "cornerRadius": 0.0,
     "titleFont": "Bahnschrift, Microsoft YaHei UI, Segoe UI",
-    "artwork": "skins/tactical/illustration.png"
+    "artwork": "skins/tactical/illustration.png",
+    "terminalArtwork": "skins/tactical/terminal-scene-v2.png"
   },
   {
     "slug": "protocol",
-    "name": "行动协议",
+    "name": "无畏契约 · 行动协议",
     "subtitle": "几何切角 · 高对比指令",
     "dockTitle": "行动接入面板",
     "overviewTitle": "并行行动协议",
@@ -78,11 +80,12 @@
     "id": "Protocol",
     "cornerRadius": 0.0,
     "titleFont": "Bahnschrift, Microsoft YaHei UI, Segoe UI",
-    "artwork": "skins/protocol/illustration.png"
+    "artwork": "skins/protocol/illustration.png",
+    "terminalArtwork": "skins/protocol/terminal-scene-v2.png"
   },
   {
     "slug": "adventure",
-    "name": "冒险装备栏",
+    "name": "地下城与勇士 · 冒险装备栏",
     "subtitle": "锻钢浮雕 · 皮革装具",
     "dockTitle": "冒险装备栏",
     "overviewTitle": "远征背包与任务",
@@ -105,11 +108,12 @@
     "id": "Adventure",
     "cornerRadius": 5.0,
     "titleFont": "Georgia, Microsoft YaHei UI, Segoe UI",
-    "artwork": "skins/adventure/illustration.png"
+    "artwork": "skins/adventure/illustration.png",
+    "terminalArtwork": "skins/adventure/terminal-scene-v2.png"
   },
   {
     "slug": "arsenal",
-    "name": "无间兵器匣",
+    "name": "永劫无间 · 无间兵器匣",
     "subtitle": "玄铁兵装 · 赤铜符印",
     "dockTitle": "无间兵器匣",
     "overviewTitle": "兵器收纳阵列",
@@ -132,11 +136,12 @@
     "id": "Arsenal",
     "cornerRadius": 1.0,
     "titleFont": "KaiTi, STKaiti, FangSong, SimSun",
-    "artwork": "skins/arsenal/illustration.png"
+    "artwork": "skins/arsenal/illustration.png",
+    "terminalArtwork": "skins/arsenal/terminal-scene-v2.png"
   },
   {
     "slug": "relic",
-    "name": "灵蕴法宝匣",
+    "name": "黑神话：悟空 · 灵蕴法宝匣",
     "subtitle": "玄岩石龛 · 錾金灵蕴",
     "dockTitle": "灵蕴法宝匣",
     "overviewTitle": "灵蕴器物图录",
@@ -159,11 +164,12 @@
     "id": "Relic",
     "cornerRadius": 10.0,
     "titleFont": "KaiTi, STKaiti, FangSong, SimSun",
-    "artwork": "skins/relic/illustration.png"
+    "artwork": "skins/relic/illustration.png",
+    "terminalArtwork": "skins/relic/terminal-scene-v2.png"
   },
   {
     "slug": "starlight",
-    "name": "星曜指挥台",
+    "name": "王者荣耀 · 星曜指挥台",
     "subtitle": "蓝金星冠 · 玉石辉光",
     "dockTitle": "星曜指挥台",
     "overviewTitle": "星曜协同战阵",
@@ -186,11 +192,12 @@
     "id": "Starlight",
     "cornerRadius": 11.0,
     "titleFont": "Georgia, Microsoft YaHei UI, Segoe UI",
-    "artwork": "skins/starlight/illustration.png"
+    "artwork": "skins/starlight/illustration.png",
+    "terminalArtwork": "skins/starlight/terminal-scene-v2.png"
   },
   {
     "slug": "formation",
-    "name": "Agent 备战席",
+    "name": "金铲铲之战 · Agent 备战席",
     "subtitle": "蓝紫棋局 · 金色羁绊",
     "dockTitle": "Agent 备战席",
     "overviewTitle": "Agent 阵容与项目",
@@ -213,11 +220,12 @@
     "id": "Formation",
     "cornerRadius": 16.0,
     "titleFont": "Bahnschrift, Microsoft YaHei UI, Segoe UI",
-    "artwork": "skins/formation/illustration.png"
+    "artwork": "skins/formation/illustration.png",
+    "terminalArtwork": "skins/formation/terminal-scene-v2.png"
   },
   {
     "slug": "astral",
-    "name": "星旅背包",
+    "name": "原神 · 星旅背包",
     "subtitle": "深蓝星图 · 香槟细线",
     "dockTitle": "星旅道具袋",
     "overviewTitle": "星旅任务图鉴",
@@ -240,11 +248,12 @@
     "id": "Astral",
     "cornerRadius": 8.0,
     "titleFont": "Georgia, Microsoft YaHei UI, Segoe UI",
-    "artwork": "skins/astral/illustration.png"
+    "artwork": "skins/astral/illustration.png",
+    "terminalArtwork": "skins/astral/terminal-scene-v2.png"
   },
   {
     "slug": "wonderland",
-    "name": "三界百宝袋",
+    "name": "梦幻西游 · 三界百宝袋",
     "subtitle": "青瓷彩绘 · 云纹绣金",
     "dockTitle": "三界百宝袋",
     "overviewTitle": "三界百宝图鉴",
@@ -267,6 +276,7 @@
     "id": "Wonderland",
     "cornerRadius": 18.0,
     "titleFont": "KaiTi, STKaiti, FangSong, SimSun",
-    "artwork": "skins/wonderland/illustration.png"
+    "artwork": "skins/wonderland/illustration.png",
+    "terminalArtwork": "skins/wonderland/terminal-scene-v2.png"
   }
 ]

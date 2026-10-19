@@ -1,0 +1,137 @@
+{
+  "themes": [
+    {
+      "slug": "hextech",
+      "name": "英雄联盟 · 海克斯枢纽",
+      "frame": "skins\\native-v2\\hextech\\frame.png",
+      "core": "skins\\native-v2\\hextech\\core.png",
+      "coreSha256": "09f58b882343f526446e202393d0ea967d638a394b098c749560baafaedd26d3",
+      "transparentCentreRadius": 62,
+      "transparentExteriorRadius": 125,
+      "originalArtworkChanged": false
+    },
+    {
+      "slug": "tactical",
+      "name": "三角洲行动 · 战术终端",
+      "frame": "skins\\native-v2\\tactical\\frame.png",
+      "core": "skins\\native-v2\\tactical\\core.png",
+      "coreSha256": "8b0e78f6f85d0d2f8f03d351b03455bc278072b6effa4417e823bfd2c5b0728a",
+      "transparentCentreRadius": 62,
+      "transparentExteriorRadius": 125,
+      "originalArtworkChanged": false
+    },
+    {
+      "slug": "protocol",
+      "name": "无畏契约 · 行动协议",
+      "frame": "skins\\native-v2\\protocol\\frame.png",
+      "core": "skins\\native-v2\\protocol\\core.png",
+      "coreSha256": "94f1de479445653988f93bfa3892e8aae6f75934c489663d7d1255a5ac166fd0",
+      "transparentCentreRadius": 62,
+      "transparentExteriorRadius": 125,
+      "originalArtworkChanged": false
+    },
+    {
+      "slug": "adventure",
+      "name": "地下城与勇士 · 冒险装备栏",
+      "frame": "skins\\native-v2\\adventure\\frame.png",
+      "core": "skins\\native-v2\\adventure\\core.png",
+      "coreSha256": "bb5c8cb81222509da85c337de6316433a38435bf660d8668d58042162cb5a411",
+      "transparentCentreRadius": 62,
+      "transparentExteriorRadius": 125,
+      "originalArtworkChanged": false
+    },
+    {
+      "slug": "arsenal",
+      "name": "永劫无间 · 无间兵器匣",
+      "frame": "skins\\native-v2\\arsenal\\frame.png",
+      "core": "skins\\native-v2\\arsenal\\core.png",
+      "coreSha256": "4ff8a6d02cb356f3cb87dd68404a79cc0a2140248d9f03e01d8bcddfefc191d1",
+      "transparentCentreRadius": 62,
+      "transparentExteriorRadius": 125,
+      "originalArtworkChanged": false
+    },
+    {
+      "slug": "relic",
+      "name": "黑神话：悟空 · 灵蕴法宝匣",
+      "frame": "skins\\native-v2\\relic\\frame.png",
+      "core": "skins\\native-v2\\relic\\core.png",
+      "coreSha256": "72545a58fc6c3b198e63ebd08e80b3e758c1ef02088007482bd054d1b9290865",
+      "transparentCentreRadius": 62,
+      "transparentExteriorRadius": 125,
+      "originalArtworkChanged": false
+    },
+    {
+      "slug": "starlight",
+      "name": "王者荣耀 · 星曜指挥台",
+      "frame": "skins\\native-v2\\starlight\\frame.png",
+      "core": "skins\\native-v2\\starlight\\core.png",
+      "coreSha256": "3d5c173d5d868bd5cd225e08c657292212dd6dde131b8a834b936cb71e1fe747",
+      "transparentCentreRadius": 62,
+      "transparentExteriorRadius": 125,
+      "originalArtworkChanged": false
+    },
+    {
+      "slug": "formation",
+      "name": "金铲铲之战 · Agent 备战席",
+      "frame": "skins\\native-v2\\formation\\frame.png",
+      "core": "skins\\native-v2\\formation\\core.png",
+      "coreSha256": "a4b0b68d764229ba53d87c07a4129a8219680e1498c6a03e3782dfbbdb8b9c0c",
+      "transparentCentreRadius": 62,
+      "transparentExteriorRadius": 125,
+      "originalArtworkChanged": false
+    },
+    {
+      "slug": "astral",
+      "name": "原神 · 星旅背包",
+      "frame": "skins\\native-v2\\astral\\frame.png",
+      "core": "skins\\native-v2\\astral\\core.png",
+      "coreSha256": "4e019dd2ea316ce09b104afc09e80c3e1807b9528628fe2b1c32bccb3b91a154",
+      "transparentCentreRadius": 62,
+      "transparentExteriorRadius": 125,
+      "originalArtworkChanged": false
+    },
+    {
+      "slug": "wonderland",
+      "name": "梦幻西游 · 三界百宝袋",
+      "frame": "skins\\native-v2\\wonderland\\frame.png",
+      "core": "skins\\native-v2\\wonderland\\core.png",
+      "coreSha256": "aafe30ea172f8ddaece2fe9014ef75a61081b86d9496bc493e3eed7e4bb2eb63",
+      "transparentCentreRadius": 62,
+      "transparentExteriorRadius": 125,
+      "originalArtworkChanged": false
+    },
+    {
+      "slug": "ink-jade",
+      "name": "墨玉机关",
+      "frame": "skins\\native-v2\\ink-jade\\frame.png",
+      "core": "skins\\native-v2\\ink-jade\\core.png",
+      "coreSha256": "228a39a4932e2b6c6f6714149a88b5d0644a8672776270d657badfc7a441a4ca",
+      "transparentCentreRadius": 62,
+      "transparentExteriorRadius": 125,
+      "originalArtworkChanged": false
+    },
+    {
+      "slug": "midnight",
+      "name": "玄夜青金",
+      "frame": "skins\\native-v2\\midnight\\frame.png",
+      "core": "skins\\native-v2\\midnight\\core.png",
+      "coreSha256": "03956583749067e77cc7f4009032703e8ec64fb6d0ab31de7703020efb5f589f",
+      "transparentCentreRadius": 62,
+      "transparentExteriorRadius": 125,
+      "originalArtworkChanged": false
+    },
+    {
+      "slug": "cinnabar",
+      "name": "朱砂藏锋",
+      "frame": "skins\\native-v2\\cinnabar\\frame.png",
+      "core": "skins\\native-v2\\cinnabar\\core.png",
+      "coreSha256": "5f0dc07877adaa75d657a67411b93d37c20d135305cf3e24c9604434a1334025",
+      "transparentCentreRadius": 62,
+      "transparentExteriorRadius": 125,
+      "originalArtworkChanged": false
+    }
+  ],
+  "source": "tools/terminal_frame_materials.py + tools/build-native-skin-art.py",
+  "nativeFrameNineSliceSourceCorner": 96,
+  "packaged": false
+}

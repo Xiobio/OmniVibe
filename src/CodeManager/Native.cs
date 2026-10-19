@@ -50,6 +50,7 @@ public static class Native
     [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr hwnd, out uint processId);
     [DllImport("user32.dll")] public static extern bool GetCursorPos(out Point point);
     [DllImport("user32.dll")] public static extern bool GetWindowRect(IntPtr hwnd, out Rect rect);
+    [DllImport("user32.dll")] internal static extern IntPtr WindowFromPoint(Point point);
     [DllImport("user32.dll")] public static extern bool GetWindowPlacement(IntPtr hwnd, ref Placement placement);
     [DllImport("user32.dll")] public static extern bool SetWindowPlacement(IntPtr hwnd, ref Placement placement);
     [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr hwnd, int command);
@@ -247,6 +248,20 @@ public static class Native
         DwmSetWindowAttribute(hwnd, 20, ref dark, sizeof(int));
         DwmSetWindowAttribute(hwnd, 33, ref rounded, sizeof(int));
     }
+    internal static void RemoveOverlayFrame(Window window)
+    {
+        var hwnd = new WindowInteropHelper(window).Handle;
+        // Layered tool windows must not inherit the normal windows' non-client frame.
+        SetWindowLongPtr(hwnd, -16, new IntPtr(GetWindowLongPtr(hwnd, -16).ToInt64() & ~0x00C40000L));
+        SetWindowLongPtr(hwnd, -20, new IntPtr(GetWindowLongPtr(hwnd, -20).ToInt64() & ~0x00020300L));
+        int disabled = 1, none = unchecked((int)0xFFFFFFFE);
+        DwmSetWindowAttribute(hwnd, 2, ref disabled, sizeof(int)); // Non-client rendering disabled.
+        DwmSetWindowAttribute(hwnd, 33, ref disabled, sizeof(int)); // Do not round the invisible host rectangle.
+        DwmSetWindowAttribute(hwnd, 34, ref none, sizeof(int)); // No system border colour.
+        DwmSetWindowAttribute(hwnd, 38, ref disabled, sizeof(int)); // No system backdrop.
+        SetWindowPos(hwnd, IntPtr.Zero, 0, 0, 0, 0, 0x0037);
+    }
+    internal static bool HasOverlayFrame(IntPtr hwnd) => (GetWindowLongPtr(hwnd, -16).ToInt64() & 0x00C40000L) != 0 || (GetWindowLongPtr(hwnd, -20).ToInt64() & 0x00020300L) != 0;
     public static IntPtr Thumbnail(IntPtr destination, IntPtr source, Rect destinationRect, byte opacity = 255)
     {
         if (DwmRegisterThumbnail(destination, source, out IntPtr thumb) != 0) return IntPtr.Zero;

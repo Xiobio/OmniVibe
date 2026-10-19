@@ -27,11 +27,14 @@ public sealed class InputService : IDisposable
     public event Action<IntPtr, bool>? Drag;
     public Func<bool>? IsSelecting, CanHandleMouse;
     public Func<bool>? IsInventoryOpen;
+    public Func<bool>? IsDockMenuOpen;
+    public event Action<Native.Point>? PointerDown;
     public List<string> Warnings { get; } = new();
     public string ToggleShortcut { get; private set; } = "Ctrl+Alt+空格";
     internal int[] RegisteredTasks => _registered.Where(n => n < 10).OrderBy(n => n).ToArray();
     internal bool TabRegistered => _registered.Contains(11);
     internal bool ArrangeRegistered => _registered.Contains(12);
+    internal bool RadialRegistered => _registered.Contains(13);
     public InputService(Dispatcher dispatcher)
     {
         _dispatcher = dispatcher;
@@ -50,11 +53,17 @@ public sealed class InputService : IDisposable
     public void Configure(Preferences preferences, IEnumerable<int> connectedNumbers, bool suspended)
     {
         int[] numbers = suspended ? Array.Empty<int>() : connectedNumbers.Distinct().OrderBy(n => n).ToArray();
-        string signature = preferences.TaskModifiers + ":" + preferences.MouseModifiers + ":" + preferences.ToggleGesture + ":" + preferences.ArrangeGesture + ":" + preferences.InventoryGesture + ":" + preferences.TabTogglesInventory + ":" + suspended + ":" + string.Join(",", numbers);
+        string signature = preferences.TaskModifiers + ":" + preferences.MouseModifiers + ":" + preferences.ToggleGesture + ":" + preferences.ArrangeGesture + ":" + preferences.InventoryGesture + ":" + preferences.RadialGesture + ":" + preferences.TabTogglesInventory + ":" + suspended + ":" + string.Join(",", numbers);
         if (signature == _signature) return;
         _signature = signature; _mouseModifiers = preferences.MouseModifiers;
         foreach (int number in _registered.Where(n => n < 10).ToList()) { Native.UnregisterHotKey(_source.Handle, number); _registered.Remove(number); }
         Warnings.Clear(); Warnings.AddRange(_hookWarnings);
+        if (_registered.Remove(13)) Native.UnregisterHotKey(_source.Handle, 13);
+        if (!suspended)
+        {
+            if (TryParseGesture(preferences.RadialGesture, out uint rm, out uint rk) && Native.RegisterHotKey(_source.Handle, 13, 0x4000 | rm, rk)) _registered.Add(13);
+            else Warnings.Add("轮盘快捷键不可用，请更改组合键或点击侧栏轮盘入口");
+        }
         if (_registered.Remove(12)) Native.UnregisterHotKey(_source.Handle, 12);
         if (!suspended && numbers.Length > 0)
         {
@@ -89,6 +98,12 @@ public sealed class InputService : IDisposable
         }
         catch (Exception ex) when (ex is NotSupportedException or ArgumentException or FormatException) { return false; }
     }
+    internal static bool GestureDown(string gesture)
+    {
+        return TryParseGesture(gesture, out uint mods, out uint key) && Native.Down((int)key)
+            && ((mods & 1) == 0 || Native.Down(0x12)) && ((mods & 2) == 0 || Native.Down(0x11))
+            && ((mods & 4) == 0 || Native.Down(0x10)) && ((mods & 8) == 0 || Native.Down(0x5B) || Native.Down(0x5C));
+    }
     private void RegisterToggle(string setting)
     {
         if (_registered.Remove(10)) Native.UnregisterHotKey(_source.Handle, 10);
@@ -114,6 +129,11 @@ public sealed class InputService : IDisposable
         if (code >= 0)
         {
             int msg = message.ToInt32();
+            if (msg is 0x201 or 0x204 && IsDockMenuOpen?.Invoke() == true)
+            {
+                var point = Marshal.PtrToStructure<Native.MouseData>(data).Point;
+                _dispatcher.BeginInvoke(() => PointerDown?.Invoke(point), DispatcherPriority.Input);
+            }
             int delta = msg == 0x20A ? unchecked((short)(Marshal.PtrToStructure<Native.MouseData>(data).Data >> 16)) : 0;
             if (delta != 0 && IsInventoryOpen?.Invoke() == true && !Native.Down(0x12) && !Native.Down(0x11) && !Native.Down(0x10) && !Native.Down(0x5B) && !Native.Down(0x5C))
             {

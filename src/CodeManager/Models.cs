@@ -21,11 +21,13 @@ public sealed class Preferences
     public string ToggleGesture { get; set; } = "Ctrl+Alt+Space";
     public string ArrangeGesture { get; set; } = "Alt+Oem3";
     public string InventoryGesture { get; set; } = "Tab";
+    public string RadialGesture { get; set; } = "Alt+Q";
     public ArrangementMode Arrangement { get; set; }
     public int LayoutGap { get; set; }
-    public bool HideDockOnArrange { get; set; } = true;
+    public bool HideDockOnArrange { get; set; }
     public Skin Skin { get; set; }
-    public double DockWidth { get; set; } = 250;
+    public double DockWidth { get; set; } = 360;
+    public Native.Point? RingCentre { get; set; }
     public double DockHeight { get; set; }
     public bool FreeDockPosition { get; set; }
     public Native.Point DockPosition { get; set; }
@@ -35,6 +37,9 @@ public sealed class Preferences
     public bool Animate { get; set; } = true;
     public bool DecorationsEnabled { get; set; } = true;
     public bool SoundEffects { get; set; } = true;
+    public double SoundVolume { get; set; } = .45;
+    public bool ImmersiveAudio { get; set; } = true;
+    public bool SoundNotifications { get; set; } = true;
     public bool ShowRecoveryOnStartup { get; set; } = true;
     public bool AutoReconnectExisting { get; set; } = true;
     public bool AutoRestoreOnStartup { get; set; }
@@ -58,6 +63,10 @@ public sealed class Slot : INotifyPropertyChanged
 {
     public int Number { get; set; }
     public string Id { get; set; } = Guid.NewGuid().ToString("N");
+    public string EquipmentId { get; set; } = "";
+    public string EquipmentImage { get; set; } = "";
+    public string EquipmentName { get; set; } = "";
+    public Dictionary<string, string> EquipmentSelections { get; set; } = new();
     private string _name = "";
     public string Name { get => _name; set { _name = value; Changed(); Changed(nameof(DisplayName)); } }
     public WindowIdentity? Window { get; set; }
@@ -114,7 +123,7 @@ public sealed class Slot : INotifyPropertyChanged
     [JsonIgnore] public string ProjectLabel => string.IsNullOrWhiteSpace(ProjectDirectory) ? "" : System.IO.Path.GetFileName(ProjectDirectory.TrimEnd('\\', '/'));
     [JsonIgnore] public string Inscription => SkinCatalog.Current.SlotNumber(Number);
     [JsonIgnore] public string WuxiaStateLabel => !Occupied ? "空阵眼" : !Connected ? "已断开 · 待重连" : State switch { AgentState.Running => "运转中", AgentState.Waiting => "候君决断", AgentState.Ready => "本轮已回复", AgentState.Error => "阵法崩坏 · 发生错误", _ => "状态未知" };
-    [JsonIgnore] public string Tooltip => DisplayName + "\n" + (Window?.Title ?? "空槽位") + (ProjectDirectory == "" ? "" : "\n" + ProjectDirectory) + "\n" + (IntegrationConnected ? "已连接 " + AgentProvider + " 状态事件" : "未连接自动状态") + (Message == "" ? "" : "\n" + Message);
+    [JsonIgnore] public string Tooltip => DisplayName + "\n" + (Window?.Title ?? "空槽位") + (ProjectDirectory == "" ? "" : "\n" + ProjectDirectory) + "\n" + StateLabel + "\n" + (IntegrationConnected ? "已连接 " + AgentProvider + " 状态事件" : "未连接自动状态") + (Message == "" ? "" : "\n" + Message);
     [JsonIgnore] public string RecoveryLabel => Recovery != null ? "正在打开并重连…" : Connected ? "窗口已连接" : RecoveryError != "" ? RecoveryError : RecoveryLaunch.Validation(this) is string error ? error : "可以恢复 · " + (LaunchMode == LaunchMode.Terminal ? "项目终端" : LaunchMode == LaunchMode.Claude ? "Claude Code" : "Codex") + (ResumeConversation && LaunchMode != LaunchMode.Terminal ? " · 原会话" : "");
     [JsonIgnore] public string RecoveryDetails => (ProjectDirectory == "" ? "项目目录未记录" : ProjectDirectory) + (LastSeenAt.HasValue ? "\n上次在线 " + LastSeenAt.Value.ToLocalTime().ToString("MM-dd HH:mm") : "") + (Notes == "" ? "" : "\n备忘：" + Notes) + (Message == "" ? "" : "\n上次状态：" + Message);
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -139,13 +148,20 @@ public sealed class LayoutEntry
 public sealed class AppState
 {
     public int SchemaVersion { get; set; } = 1;
-    public List<Slot> Slots { get; set; } = Enumerable.Range(1, 9).Select(n => new Slot { Number = n }).ToList();
+    public List<Slot> Slots { get; set; } = Enumerable.Range(1, 9).Select(n => new Slot { Number = n, EquipmentId = EquipmentCatalog.Default(n).Id }).ToList();
+    public List<ClosedTaskRecord> RecentTasks { get; set; } = new();
     public bool AutoHide { get; set; }
     public bool MinimizeOnCapture { get; set; } = true;
     public List<LayoutEntry> Layout { get; set; } = new();
     public bool? DockVisibleBeforeLayout { get; set; }
     public PopupEntry? Popup { get; set; }
     public Preferences Preferences { get; set; } = new();
+}
+
+public sealed class ClosedTaskRecord
+{
+    public Slot Task { get; set; } = new();
+    public DateTimeOffset ClosedAt { get; set; } = DateTimeOffset.UtcNow;
 }
 
 public sealed class PopupEntry

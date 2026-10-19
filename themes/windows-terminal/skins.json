@@ -4,9 +4,9 @@
     "skins":  [
                   {
                       "slug":  "hextech",
-                      "name":  "海克斯枢纽",
+                      "name":  "英雄联盟 · 海克斯枢纽",
                       "scheme":  {
-                                     "name":  "OmniVibe / 海克斯枢纽",
+                                     "name":  "OmniVibe / 英雄联盟 · 海克斯枢纽",
                                      "background":  "#091A27",
                                      "foreground":  "#F1E8D2",
                                      "cursorColor":  "#E6BE75",
@@ -29,20 +29,28 @@
                                      "brightWhite":  "#F1E8D2"
                                  },
                       "theme":  {
-                                    "name":  "OmniVibe / 海克斯枢纽",
+                                    "name":  "OmniVibe / 英雄联盟 · 海克斯枢纽",
                                     "window":  {
-                                                   "applicationTheme":  "dark"
+                                                   "applicationTheme":  "dark",
+                                                   "frame":  "#837452",
+                                                   "unfocusedFrame":  "#353B37",
+                                                   "experimental.rainbowFrame":  false
                                                },
                                     "tab":  {
-                                                "background":  "#102B3B",
-                                                "unfocusedBackground":  "#091A27",
-                                                "showCloseButton":  "hover"
+                                                "showCloseButton":  "hover",
+                                                "background":  "#091A27",
+                                                "unfocusedBackground":  "#152834"
                                             },
                                     "tabRow":  {
-                                                   "background":  "#091A27",
-                                                   "unfocusedBackground":  "#091A27"
+                                                   "background":  "#152834",
+                                                   "unfocusedBackground":  "#10222E"
                                                }
                                 },
+                      "chromePalette":  {
+                                            "surface":  "#102B3B",
+                                            "background":  "#091A27",
+                                            "accent":  "#E6BE75"
+                                        },
                       "artwork":  "skins/hextech/illustration.png",
                       "shader":  "shaders/hextech.hlsl",
                       "imageOpacity":  0.12,
@@ -51,9 +59,9 @@
                   },
                   {
                       "slug":  "tactical",
-                      "name":  "战术终端",
+                      "name":  "三角洲行动 · 战术终端",
                       "scheme":  {
-                                     "name":  "OmniVibe / 战术终端",
+                                     "name":  "OmniVibe / 三角洲行动 · 战术终端",
                                      "background":  "#101714",
                                      "foreground":  "#E9EFE7",
                                      "cursorColor":  "#D9BA6C",
@@ -76,20 +84,28 @@
                                      "brightWhite":  "#E9EFE7"
                                  },
                       "theme":  {
-                                    "name":  "OmniVibe / 战术终端",
+                                    "name":  "OmniVibe / 三角洲行动 · 战术终端",
                                     "window":  {
-                                                   "applicationTheme":  "dark"
+                                                   "applicationTheme":  "dark",
+                                                   "frame":  "#7F7144",
+                                                   "unfocusedFrame":  "#383826",
+                                                   "experimental.rainbowFrame":  false
                                                },
                                     "tab":  {
-                                                "background":  "#1A2520",
-                                                "unfocusedBackground":  "#101714",
-                                                "showCloseButton":  "hover"
+                                                "showCloseButton":  "hover",
+                                                "background":  "#101714",
+                                                "unfocusedBackground":  "#1D241E"
                                             },
                                     "tabRow":  {
-                                                   "background":  "#101714",
-                                                   "unfocusedBackground":  "#101714"
+                                                   "background":  "#1D241E",
+                                                   "unfocusedBackground":  "#171E1A"
                                                }
                                 },
+                      "chromePalette":  {
+                                            "surface":  "#1A2520",
+                                            "background":  "#101714",
+                                            "accent":  "#D9BA6C"
+                                        },
                       "artwork":  "skins/tactical/illustration.png",
                       "shader":  "shaders/tactical.hlsl",
                       "imageOpacity":  0.12,
@@ -98,9 +114,9 @@
                   },
                   {
                       "slug":  "protocol",
-                      "name":  "行动协议",
+                      "name":  "无畏契约 · 行动协议",
                       "scheme":  {
-                                     "name":  "OmniVibe / 行动协议",
+                                     "name":  "OmniVibe / 无畏契约 · 行动协议",
                                      "background":  "#151D26",
                                      "foreground":  "#F4EEE3",
                                      "cursorColor":  "#FF8C8E",
@@ -123,20 +139,28 @@
                                      "brightWhite":  "#F4EEE3"
                                  },
                       "theme":  {
-                                    "name":  "OmniVibe / 行动协议",
+                                    "name":  "OmniVibe / 无畏契约 · 行动协议",
                                     "window":  {
-                                                   "applicationTheme":  "dark"
+                                                   "applicationTheme":  "dark",
+                                                   "frame":  "#965A5F",
+                                                   "unfocusedFrame":  "#44333B",
+                                                   "experimental.rainbowFrame":  false
                                                },
                                     "tab":  {
-                                                "background":  "#25313E",
-                                                "unfocusedBackground":  "#151D26",
-                                                "showCloseButton":  "hover"
+                                                "showCloseButton":  "hover",
+                                                "background":  "#151D26",
+                                                "unfocusedBackground":  "#262C36"
                                             },
                                     "tabRow":  {
-                                                   "background":  "#151D26",
-                                                   "unfocusedBackground":  "#151D26"
+                                                   "background":  "#262C36",
+                                                   "unfocusedBackground":  "#1E252F"
                                                }
                                 },
+                      "chromePalette":  {
+                                            "surface":  "#25313E",
+                                            "background":  "#151D26",
+                                            "accent":  "#FF8C8E"
+                                        },
                       "artwork":  "skins/protocol/illustration.png",
                       "shader":  "shaders/protocol.hlsl",
                       "imageOpacity":  0.12,
@@ -145,9 +169,9 @@
                   },
                   {
                       "slug":  "adventure",
-                      "name":  "冒险装备栏",
+                      "name":  "地下城与勇士 · 冒险装备栏",
                       "scheme":  {
-                                     "name":  "OmniVibe / 冒险装备栏",
+                                     "name":  "OmniVibe / 地下城与勇士 · 冒险装备栏",
                                      "background":  "#211A17",
                                      "foreground":  "#F0E0C1",
                                      "cursorColor":  "#EAC480",
@@ -170,20 +194,28 @@
                                      "brightWhite":  "#F0E0C1"
                                  },
                       "theme":  {
-                                    "name":  "OmniVibe / 冒险装备栏",
+                                    "name":  "OmniVibe / 地下城与勇士 · 冒险装备栏",
                                     "window":  {
-                                                   "applicationTheme":  "dark"
+                                                   "applicationTheme":  "dark",
+                                                   "frame":  "#907851",
+                                                   "unfocusedFrame":  "#493C2C",
+                                                   "experimental.rainbowFrame":  false
                                                },
                                     "tab":  {
-                                                "background":  "#342820",
-                                                "unfocusedBackground":  "#211A17",
-                                                "showCloseButton":  "hover"
+                                                "showCloseButton":  "hover",
+                                                "background":  "#211A17",
+                                                "unfocusedBackground":  "#322820"
                                             },
                                     "tabRow":  {
-                                                   "background":  "#211A17",
-                                                   "unfocusedBackground":  "#211A17"
+                                                   "background":  "#322820",
+                                                   "unfocusedBackground":  "#2A221C"
                                                }
                                 },
+                      "chromePalette":  {
+                                            "surface":  "#342820",
+                                            "background":  "#211A17",
+                                            "accent":  "#EAC480"
+                                        },
                       "artwork":  "skins/adventure/illustration.png",
                       "shader":  "shaders/adventure.hlsl",
                       "imageOpacity":  0.12,
@@ -192,9 +224,9 @@
                   },
                   {
                       "slug":  "arsenal",
-                      "name":  "无间兵器匣",
+                      "name":  "永劫无间 · 无间兵器匣",
                       "scheme":  {
-                                     "name":  "OmniVibe / 无间兵器匣",
+                                     "name":  "OmniVibe / 永劫无间 · 无间兵器匣",
                                      "background":  "#191719",
                                      "foreground":  "#EFDFCA",
                                      "cursorColor":  "#E1AD79",
@@ -217,20 +249,28 @@
                                      "brightWhite":  "#EFDFCA"
                                  },
                       "theme":  {
-                                    "name":  "OmniVibe / 无间兵器匣",
+                                    "name":  "OmniVibe / 永劫无间 · 无间兵器匣",
                                     "window":  {
-                                                   "applicationTheme":  "dark"
+                                                   "applicationTheme":  "dark",
+                                                   "frame":  "#876A4E",
+                                                   "unfocusedFrame":  "#41352C",
+                                                   "experimental.rainbowFrame":  false
                                                },
                                     "tab":  {
-                                                "background":  "#2D2528",
-                                                "unfocusedBackground":  "#191719",
-                                                "showCloseButton":  "hover"
+                                                "showCloseButton":  "hover",
+                                                "background":  "#191719",
+                                                "unfocusedBackground":  "#2B2424"
                                             },
                                     "tabRow":  {
-                                                   "background":  "#191719",
-                                                   "unfocusedBackground":  "#191719"
+                                                   "background":  "#2B2424",
+                                                   "unfocusedBackground":  "#231E1F"
                                                }
                                 },
+                      "chromePalette":  {
+                                            "surface":  "#2D2528",
+                                            "background":  "#191719",
+                                            "accent":  "#E1AD79"
+                                        },
                       "artwork":  "skins/arsenal/illustration.png",
                       "shader":  "shaders/arsenal.hlsl",
                       "imageOpacity":  0.12,
@@ -239,9 +279,9 @@
                   },
                   {
                       "slug":  "relic",
-                      "name":  "灵蕴法宝匣",
+                      "name":  "黑神话：悟空 · 灵蕴法宝匣",
                       "scheme":  {
-                                     "name":  "OmniVibe / 灵蕴法宝匣",
+                                     "name":  "OmniVibe / 黑神话：悟空 · 灵蕴法宝匣",
                                      "background":  "#1A1B19",
                                      "foreground":  "#E8DDC3",
                                      "cursorColor":  "#D6B674",
@@ -264,20 +304,28 @@
                                      "brightWhite":  "#E8DDC3"
                                  },
                       "theme":  {
-                                    "name":  "OmniVibe / 灵蕴法宝匣",
+                                    "name":  "OmniVibe / 黑神话：悟空 · 灵蕴法宝匣",
                                     "window":  {
-                                                   "applicationTheme":  "dark"
+                                                   "applicationTheme":  "dark",
+                                                   "frame":  "#81704B",
+                                                   "unfocusedFrame":  "#403A2B",
+                                                   "experimental.rainbowFrame":  false
                                                },
                                     "tab":  {
-                                                "background":  "#2C2C27",
-                                                "unfocusedBackground":  "#1A1B19",
-                                                "showCloseButton":  "hover"
+                                                "showCloseButton":  "hover",
+                                                "background":  "#1A1B19",
+                                                "unfocusedBackground":  "#2A2924"
                                             },
                                     "tabRow":  {
-                                                   "background":  "#1A1B19",
-                                                   "unfocusedBackground":  "#1A1B19"
+                                                   "background":  "#2A2924",
+                                                   "unfocusedBackground":  "#23231F"
                                                }
                                 },
+                      "chromePalette":  {
+                                            "surface":  "#2C2C27",
+                                            "background":  "#1A1B19",
+                                            "accent":  "#D6B674"
+                                        },
                       "artwork":  "skins/relic/illustration.png",
                       "shader":  "shaders/relic.hlsl",
                       "imageOpacity":  0.12,
@@ -286,9 +334,9 @@
                   },
                   {
                       "slug":  "starlight",
-                      "name":  "星曜指挥台",
+                      "name":  "王者荣耀 · 星曜指挥台",
                       "scheme":  {
-                                     "name":  "OmniVibe / 星曜指挥台",
+                                     "name":  "OmniVibe / 王者荣耀 · 星曜指挥台",
                                      "background":  "#112238",
                                      "foreground":  "#F1E7D3",
                                      "cursorColor":  "#ECD097",
@@ -311,20 +359,28 @@
                                      "brightWhite":  "#F1E7D3"
                                  },
                       "theme":  {
-                                    "name":  "OmniVibe / 星曜指挥台",
+                                    "name":  "OmniVibe / 王者荣耀 · 星曜指挥台",
                                     "window":  {
-                                                   "applicationTheme":  "dark"
+                                                   "applicationTheme":  "dark",
+                                                   "frame":  "#89826C",
+                                                   "unfocusedFrame":  "#3D454B",
+                                                   "experimental.rainbowFrame":  false
                                                },
                                     "tab":  {
-                                                "background":  "#1C3550",
-                                                "unfocusedBackground":  "#112238",
-                                                "showCloseButton":  "hover"
+                                                "showCloseButton":  "hover",
+                                                "background":  "#112238",
+                                                "unfocusedBackground":  "#1E3248"
                                             },
                                     "tabRow":  {
-                                                   "background":  "#112238",
-                                                   "unfocusedBackground":  "#112238"
+                                                   "background":  "#1E3248",
+                                                   "unfocusedBackground":  "#182B41"
                                                }
                                 },
+                      "chromePalette":  {
+                                            "surface":  "#1C3550",
+                                            "background":  "#112238",
+                                            "accent":  "#ECD097"
+                                        },
                       "artwork":  "skins/starlight/illustration.png",
                       "shader":  "shaders/starlight.hlsl",
                       "imageOpacity":  0.12,
@@ -333,9 +389,9 @@
                   },
                   {
                       "slug":  "formation",
-                      "name":  "Agent 备战席",
+                      "name":  "金铲铲之战 · Agent 备战席",
                       "scheme":  {
-                                     "name":  "OmniVibe / Agent 备战席",
+                                     "name":  "OmniVibe / 金铲铲之战 · Agent 备战席",
                                      "background":  "#1D1A35",
                                      "foreground":  "#F2E8D9",
                                      "cursorColor":  "#F0CE88",
@@ -358,20 +414,28 @@
                                      "brightWhite":  "#F2E8D9"
                                  },
                       "theme":  {
-                                    "name":  "OmniVibe / Agent 备战席",
+                                    "name":  "OmniVibe / 金铲铲之战 · Agent 备战席",
                                     "window":  {
-                                                   "applicationTheme":  "dark"
+                                                   "applicationTheme":  "dark",
+                                                   "frame":  "#917D63",
+                                                   "unfocusedFrame":  "#473E46",
+                                                   "experimental.rainbowFrame":  false
                                                },
                                     "tab":  {
-                                                "background":  "#2B2848",
-                                                "unfocusedBackground":  "#1D1A35",
-                                                "showCloseButton":  "hover"
+                                                "showCloseButton":  "hover",
+                                                "background":  "#1D1A35",
+                                                "unfocusedBackground":  "#2C2842"
                                             },
                                     "tabRow":  {
-                                                   "background":  "#1D1A35",
-                                                   "unfocusedBackground":  "#1D1A35"
+                                                   "background":  "#2C2842",
+                                                   "unfocusedBackground":  "#25223C"
                                                }
                                 },
+                      "chromePalette":  {
+                                            "surface":  "#2B2848",
+                                            "background":  "#1D1A35",
+                                            "accent":  "#F0CE88"
+                                        },
                       "artwork":  "skins/formation/illustration.png",
                       "shader":  "shaders/formation.hlsl",
                       "imageOpacity":  0.12,
@@ -380,9 +444,9 @@
                   },
                   {
                       "slug":  "astral",
-                      "name":  "星旅背包",
+                      "name":  "原神 · 星旅背包",
                       "scheme":  {
-                                     "name":  "OmniVibe / 星旅背包",
+                                     "name":  "OmniVibe / 原神 · 星旅背包",
                                      "background":  "#172A41",
                                      "foreground":  "#F1EBDD",
                                      "cursorColor":  "#EAD6AE",
@@ -405,20 +469,28 @@
                                      "brightWhite":  "#F1EBDD"
                                  },
                       "theme":  {
-                                    "name":  "OmniVibe / 星旅背包",
+                                    "name":  "OmniVibe / 原神 · 星旅背包",
                                     "window":  {
-                                                   "applicationTheme":  "dark"
+                                                   "applicationTheme":  "dark",
+                                                   "frame":  "#8B897D",
+                                                   "unfocusedFrame":  "#414C57",
+                                                   "experimental.rainbowFrame":  false
                                                },
                                     "tab":  {
-                                                "background":  "#223B54",
-                                                "unfocusedBackground":  "#172A41",
-                                                "showCloseButton":  "hover"
+                                                "showCloseButton":  "hover",
+                                                "background":  "#172A41",
+                                                "unfocusedBackground":  "#24394E"
                                             },
                                     "tabRow":  {
-                                                   "background":  "#172A41",
-                                                   "unfocusedBackground":  "#172A41"
+                                                   "background":  "#24394E",
+                                                   "unfocusedBackground":  "#1E3248"
                                                }
                                 },
+                      "chromePalette":  {
+                                            "surface":  "#223B54",
+                                            "background":  "#172A41",
+                                            "accent":  "#EAD6AE"
+                                        },
                       "artwork":  "skins/astral/illustration.png",
                       "shader":  "shaders/astral.hlsl",
                       "imageOpacity":  0.12,
@@ -427,9 +499,9 @@
                   },
                   {
                       "slug":  "wonderland",
-                      "name":  "三界百宝袋",
+                      "name":  "梦幻西游 · 三界百宝袋",
                       "scheme":  {
-                                     "name":  "OmniVibe / 三界百宝袋",
+                                     "name":  "OmniVibe / 梦幻西游 · 三界百宝袋",
                                      "background":  "#EFF8F6",
                                      "foreground":  "#183C48",
                                      "cursorColor":  "#7A5718",
@@ -452,20 +524,28 @@
                                      "brightWhite":  "#183C48"
                                  },
                       "theme":  {
-                                    "name":  "OmniVibe / 三界百宝袋",
+                                    "name":  "OmniVibe / 梦幻西游 · 三界百宝袋",
                                     "window":  {
-                                                   "applicationTheme":  "light"
+                                                   "applicationTheme":  "light",
+                                                   "frame":  "#B0A17C",
+                                                   "unfocusedFrame":  "#D8D8CA",
+                                                   "experimental.rainbowFrame":  false
                                                },
                                     "tab":  {
-                                                "background":  "#E1F0EA",
-                                                "unfocusedBackground":  "#EFF8F6",
-                                                "showCloseButton":  "hover"
+                                                "showCloseButton":  "hover",
+                                                "background":  "#EFF8F6",
+                                                "unfocusedBackground":  "#E3EFE7"
                                             },
                                     "tabRow":  {
-                                                   "background":  "#EFF8F6",
-                                                   "unfocusedBackground":  "#EFF8F6"
+                                                   "background":  "#E3EFE7",
+                                                   "unfocusedBackground":  "#E8F3EE"
                                                }
                                 },
+                      "chromePalette":  {
+                                            "surface":  "#E1F0EA",
+                                            "background":  "#EFF8F6",
+                                            "accent":  "#7C5918"
+                                        },
                       "artwork":  "skins/wonderland/illustration.png",
                       "shader":  "shaders/wonderland.hlsl",
                       "imageOpacity":  0.12,

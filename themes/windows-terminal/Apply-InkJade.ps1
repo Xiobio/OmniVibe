@@ -1,44 +1,94 @@
-param(
+﻿param(
     [string]$SettingsPath = (Join-Path $env:LOCALAPPDATA 'Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json'),
     [string]$RestoreFrom = '',
     [ValidateSet('Minimal', 'Ornate')][string]$Style = 'Minimal',
-    [switch]$DisableEffects
+    [switch]$DisableEffects,
+    [switch]$BackgroundOnly,
+    [switch]$ChromeOnly,
+    [string]$AssetRoot = ''
 )
 $ErrorActionPreference = 'Stop'
+[Console]::OutputEncoding = New-Object Text.UTF8Encoding($false)
+if ($BackgroundOnly -and ($Style -ne 'Ornate' -or $RestoreFrom)) { throw '-BackgroundOnly requires -Style Ornate and cannot be used with -RestoreFrom.' }
+if ($ChromeOnly -and ($BackgroundOnly -or $RestoreFrom -or $DisableEffects)) { throw '-ChromeOnly cannot be combined with background, effect or restore options.' }
 if (-not ('OmniVibeJsonc' -as [type])) { Add-Type -Path (Join-Path $PSScriptRoot 'Jsonc.cs') }
-$assetRoot = Join-Path $env:LOCALAPPDATA $(if ($Style -eq 'Ornate') { 'OmniVibe/TerminalTheme/InkJadeOrnate' } else { 'OmniVibe/TerminalTheme/InkJade' })
-$backupRoot = Join-Path $env:LOCALAPPDATA 'OmniVibe/TerminalTheme/Backups'
+. (Join-Path $PSScriptRoot 'TerminalChrome.ps1')
+if (-not $AssetRoot) { $AssetRoot = Join-Path $env:LOCALAPPDATA $(if ($Style -eq 'Ornate') { 'OmniVibe/TerminalTheme/InkJadeOrnate' } else { 'OmniVibe/TerminalTheme/InkJade' }) }
+$backupRoot = Join-Path (Split-Path -Parent $AssetRoot) 'Backups'
 if (-not (Test-Path -LiteralPath $SettingsPath -PathType Leaf)) { throw 'Windows Terminal settings.json was not found.' }
+$SettingsPath = (Resolve-Path -LiteralPath $SettingsPath).Path
+$originalBytes = [IO.File]::ReadAllBytes($SettingsPath)
 $original = [IO.File]::ReadAllText($SettingsPath)
 $settings = [OmniVibeJsonc]::Normalize($original) | ConvertFrom-Json
-[IO.Directory]::CreateDirectory($backupRoot) | Out-Null
-$backup = Join-Path $backupRoot ('settings-' + (Get-Date -Format 'yyyyMMdd-HHmmss-fff') + '-' + [guid]::NewGuid().ToString('N').Substring(0, 6) + '.json')
-[IO.File]::Copy($SettingsPath, $backup, $false)
+if ($settings -isnot [pscustomobject]) { throw 'Terminal settings must be a JSON object.' }
 $utf8 = New-Object Text.UTF8Encoding($false)
+function Set-Property($Object, [string]$Name, $Value) { $Object | Add-Member -MemberType NoteProperty -Name $Name -Value $Value -Force }
+function Write-Settings([byte[]]$Bytes) {
+    $expected = [Convert]::ToBase64String($originalBytes)
+    if ([Convert]::ToBase64String([IO.File]::ReadAllBytes($SettingsPath)) -cne $expected) { throw 'Terminal settings changed during this operation; nothing was overwritten.' }
+    [IO.Directory]::CreateDirectory($backupRoot) | Out-Null
+    $backup = Join-Path $backupRoot ('settings-' + (Get-Date -Format 'yyyyMMdd-HHmmss-fff') + '-' + [guid]::NewGuid().ToString('N').Substring(0, 8) + '.json')
+    [IO.File]::Copy($SettingsPath, $backup, $false)
+    $temporary = Join-Path (Split-Path -Parent $SettingsPath) ('.omnivibe-' + [guid]::NewGuid().ToString('N') + '.tmp')
+    try {
+        [IO.File]::WriteAllBytes($temporary, $Bytes)
+        if ([Convert]::ToBase64String([IO.File]::ReadAllBytes($SettingsPath)) -cne $expected) { throw 'Terminal settings changed during this operation; nothing was overwritten.' }
+        [IO.File]::Replace($temporary, $SettingsPath, [NullString]::Value)
+    } finally { if ([IO.File]::Exists($temporary)) { [IO.File]::Delete($temporary) } }
+    return $backup
+}
 if ($RestoreFrom -ne '') {
-    $restored = [IO.File]::ReadAllText((Resolve-Path -LiteralPath $RestoreFrom).Path)
-    $null = [OmniVibeJsonc]::Normalize($restored) | ConvertFrom-Json
-    if ([IO.File]::ReadAllText($SettingsPath) -cne $original) { throw 'Terminal settings changed during this operation; no settings were overwritten.' }
-    [IO.File]::WriteAllText($SettingsPath, $restored, $utf8)
+    $restorePath = (Resolve-Path -LiteralPath $RestoreFrom).Path
+    $restored = [OmniVibeJsonc]::Normalize([IO.File]::ReadAllText($restorePath)) | ConvertFrom-Json
+    if ($restored -isnot [pscustomobject]) { throw 'The restore file must contain a JSON object.' }
+    $backup = Write-Settings ([IO.File]::ReadAllBytes($restorePath))
     [pscustomobject]@{ Restored = $true; SettingsPath = $SettingsPath; BackupPath = $backup } | ConvertTo-Json -Compress
     return
 }
+if ($null -ne $settings.profiles -and $settings.profiles -isnot [pscustomobject]) { throw 'profiles must be an object; legacy array profiles are not modified.' }
+if ($null -ne $settings.profiles.defaults -and $settings.profiles.defaults -isnot [pscustomobject]) { throw 'profiles.defaults must be an object.' }
+if ($null -ne $settings.profiles.list -and $settings.profiles.list -isnot [array]) { throw 'profiles.list must be an array.' }
+foreach ($target in @($settings.profiles.defaults) + @($settings.profiles.list)) {
+    if ($null -eq $target) { continue }
+    if ($target -isnot [pscustomobject]) { throw 'Every profile must be an object.' }
+    if ($null -ne $target.unfocusedAppearance -and $target.unfocusedAppearance -isnot [pscustomobject]) { throw 'unfocusedAppearance must be an object.' }
+}
 
-# Procedural artwork follows OmniVibe's existing ink scenery; no external images.
-[IO.Directory]::CreateDirectory($assetRoot) | Out-Null
+if ($ChromeOnly) {
+    $themeName = if ($Style -eq 'Ornate') { 'OmniVibe Ink Jade Ornate' } else { 'OmniVibe Ink Jade' }
+    $native = @($settings.themes | Where-Object { $_.name -eq $themeName }) | Select-Object -First 1
+    if ($null -eq $native) { $native = [pscustomobject]@{ name=$themeName; window=[pscustomobject]@{applicationTheme='dark'}; tab=[pscustomobject]@{showCloseButton='hover'} } }
+    $native = Get-OmniVibeTerminalChrome $native '#0D1612' '#D6B674' '#2A4035'
+    Set-Property $settings 'themes' (@($settings.themes | Where-Object { $_.name -ne $themeName }) + @($native))
+    Set-Property $settings 'theme' $themeName
+    $backup = Write-Settings ($utf8.GetBytes(($settings | ConvertTo-Json -Depth 100)))
+    [pscustomobject]@{ Theme=$themeName; ChromeOnly=$true; NativeChromeApplied=$true; RenderingMode='native-chrome-only'; BackupPath=$backup; SettingsPath=$SettingsPath } | ConvertTo-Json -Compress
+    return
+}
+# Ornate animation is a background Image underneath the text, never a post-text shader.
+[IO.Directory]::CreateDirectory($AssetRoot) | Out-Null
+$animationFrames = 1
 if ($Style -eq 'Ornate') {
-    $backgroundPath = Join-Path $assetRoot 'ink-jade-ornate-v2.png'
-    Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'assets/ink-jade-ornate-v2.png') -Destination $backgroundPath -Force
-    $shaderPath = Join-Path $assetRoot 'ornate-frame-v2.hlsl'
-    $shaderSource = Join-Path $PSScriptRoot 'ornate-frame-v2.hlsl'
-    if (-not $DisableEffects) {
-        if (-not ('OmniVibeShaderCompiler' -as [type])) { Add-Type -Path (Join-Path $PSScriptRoot 'ShaderCompiler.cs') }
-        $compiledShaderBytes = [OmniVibeShaderCompiler]::Validate([IO.File]::ReadAllText($shaderSource))
-        Copy-Item -LiteralPath $shaderSource -Destination $shaderPath -Force
+    $assetName = if ($DisableEffects) { 'ink-jade-ornate-v2.png' } else { 'ink-jade-background-v5.gif' }
+    $source = Join-Path $PSScriptRoot ('assets/' + $assetName)
+    if (-not (Test-Path -LiteralPath $source -PathType Leaf)) { throw "Background asset is missing: $source" }
+    Add-Type -AssemblyName System.Drawing
+    $image = [Drawing.Image]::FromFile($source)
+    try {
+        if ($image.Width -lt 1024 -or $image.Height -lt 512) { throw 'Background asset resolution is too small.' }
+        if (-not $DisableEffects) {
+            $animationFrames = $image.GetFrameCount([Drawing.Imaging.FrameDimension]::Time)
+            if ($animationFrames -lt 2) { throw 'Animated background has no animation frames.' }
+        }
+    } finally { $image.Dispose() }
+    $backgroundPath = Join-Path $AssetRoot $assetName
+    $alreadyInstalled = (Test-Path -LiteralPath $backgroundPath -PathType Leaf) -and ((Get-FileHash -LiteralPath $source).Hash -eq (Get-FileHash -LiteralPath $backgroundPath).Hash)
+    if (-not $alreadyInstalled -and [IO.Path]::GetFullPath($source) -ne [IO.Path]::GetFullPath($backgroundPath)) {
+        Copy-Item -LiteralPath $source -Destination $backgroundPath -Force
     }
 } else {
 Add-Type -AssemblyName System.Drawing
-$backgroundPath = Join-Path $assetRoot 'ink-jade-mountains.png'
+$backgroundPath = Join-Path $AssetRoot 'ink-jade-mountains.png'
 $bitmap = New-Object Drawing.Bitmap(2560, 1600)
 $graphics = [Drawing.Graphics]::FromImage($bitmap)
 $graphics.SmoothingMode = [Drawing.Drawing2D.SmoothingMode]::AntiAlias
@@ -79,7 +129,7 @@ try {
 } finally { $graphics.Dispose(); $bitmap.Dispose() }
 }
 
-function Set-Property($Object, [string]$Name, $Value) { $Object | Add-Member -MemberType NoteProperty -Name $Name -Value $Value -Force }
+if (-not $BackgroundOnly) {
 $scheme = Get-Content -Raw -Encoding UTF8 -LiteralPath (Join-Path $PSScriptRoot 'OmniVibe-InkJade.json') | ConvertFrom-Json
 Set-Property $settings 'schemes' (@($settings.schemes | Where-Object { $_.name -ne $scheme.name }) + @($scheme))
 if ($null -eq $settings.profiles) { Set-Property $settings 'profiles' ([pscustomobject]@{}) }
@@ -103,8 +153,8 @@ if ($Style -eq 'Ornate') {
     Set-Property $defaults 'backgroundImageOpacity' 0.5
     Set-Property $defaults 'backgroundImageStretchMode' 'fill'
     Set-Property $defaults 'opacity' 98
-    if (-not $DisableEffects) { Set-Property $defaults 'experimental.pixelShaderPath' $shaderPath }
-    else { $defaults.PSObject.Properties.Remove('experimental.pixelShaderPath') }
+    $defaults.PSObject.Properties.Remove('experimental.pixelShaderPath')
+    Set-Property $defaults 'experimental.retroTerminalEffect' $false
 } else { $defaults.PSObject.Properties.Remove('experimental.pixelShaderPath') }
 $theme = [pscustomobject]@{
     name = 'OmniVibe Ink Jade'
@@ -113,10 +163,45 @@ $theme = [pscustomobject]@{
     tabRow = [pscustomobject]@{ background = '#0D1612'; unfocusedBackground = '#0D1612' }
 }
 if ($Style -eq 'Ornate') { $theme.name = 'OmniVibe Ink Jade Ornate' }
+$theme = Get-OmniVibeTerminalChrome $theme '#0D1612' '#D6B674' '#2A4035'
 Set-Property $settings 'themes' (@($settings.themes | Where-Object { $_.name -ne $theme.name }) + @($theme))
 Set-Property $settings 'theme' $theme.name
+
+} else {
+    if ($null -eq $settings.profiles.defaults) { throw '-BackgroundOnly requires an existing default profile.' }
+    $defaults = $settings.profiles.defaults
+    Set-Property $defaults 'backgroundImage' $backgroundPath
+    if ($null -eq $defaults.backgroundImageOpacity) { Set-Property $defaults 'backgroundImageOpacity' 0.5 }
+    if ($null -eq $defaults.backgroundImageStretchMode) { Set-Property $defaults 'backgroundImageStretchMode' 'fill' }
+    $defaults.PSObject.Properties.Remove('experimental.pixelShaderPath')
+    Set-Property $defaults 'experimental.retroTerminalEffect' $false
+}
+# Explicit old images/shaders on profiles and unfocused appearances otherwise
+# override the migrated defaults. Preserve all unrelated per-profile styling.
+$targets = @($settings.profiles.defaults) + @($settings.profiles.list)
+foreach ($target in $targets) {
+    if ($null -eq $target) { continue }
+    $appearances = @($target)
+    if ($null -ne $target.unfocusedAppearance) { $appearances += $target.unfocusedAppearance }
+    foreach ($appearance in $appearances) {
+        if ($Style -eq 'Ornate') {
+            if ([string]$appearance.backgroundImage -match 'ink-jade-(ornate-v2\.png|background-v\d+\.gif)$') {
+                Set-Property $appearance 'backgroundImage' $backgroundPath
+            }
+            if ([string]$appearance.'experimental.pixelShaderPath' -match 'ornate-frame-v2\.hlsl$') {
+                $appearance.PSObject.Properties.Remove('experimental.pixelShaderPath')
+                Set-Property $appearance 'experimental.retroTerminalEffect' $false
+            }
+        }
+    }
+}
 $updated = $settings | ConvertTo-Json -Depth 100
 $null = $updated | ConvertFrom-Json
-if ([IO.File]::ReadAllText($SettingsPath) -cne $original) { throw 'Terminal settings changed during this operation; no settings were overwritten.' }
-[IO.File]::WriteAllText($SettingsPath, $updated, $utf8)
-[pscustomobject]@{ Theme = $theme.name; Style = $Style; SettingsPath = $SettingsPath; BackupPath = $backup; BackgroundPath = $backgroundPath; EffectsEnabled = ($Style -eq 'Ornate' -and -not $DisableEffects); ShaderCompiledBytes = $compiledShaderBytes } | ConvertTo-Json -Compress
+$backup = Write-Settings ($utf8.GetBytes($updated))
+[pscustomobject]@{
+    Theme = $settings.theme; Style = $Style; SettingsPath = $SettingsPath; BackupPath = $backup
+    BackgroundPath = $backgroundPath; BackgroundOnly = [bool]$BackgroundOnly
+    RenderingMode = $(if ($Style -eq 'Ornate' -and -not $DisableEffects) { 'background-gif' } else { 'background-png' })
+    EffectsEnabled = ($Style -eq 'Ornate' -and -not $DisableEffects)
+    AnimationFrames = $animationFrames; ShaderEnabled = $false; ShaderCompiledBytes = 0
+} | ConvertTo-Json -Compress

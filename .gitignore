@@ -3,6 +3,8 @@
 artifacts/
 .vs/
 *.user
+__pycache__/
+*.pyc
 
 # Local credentials, runtime data and diagnostics
 .env
@@ -14,3 +16,7 @@ artifacts/
 tasks.json
 tasks.json.*
 bridge-errors.log
+
+# Python build and review caches
+__pycache__/
+*.py[cod]

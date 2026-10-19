@@ -1,0 +1,18 @@
+{
+    "passed":  true,
+    "isolatedSettingsOnly":  true,
+    "backgroundGif":  true,
+    "framesDecodedByWindows":  200,
+    "nativeCenterStatic":  true,
+    "nativeEdgeAnimation":  true,
+    "defaultShaderRemoved":  true,
+    "explicitAndUnfocusedOverridesMigrated":  true,
+    "profileCommandsAndSettingsPreserved":  true,
+    "unrelatedProfilePreserved":  true,
+    "fontPaddingAndAppearancePreserved":  true,
+    "repeatApplyPassed":  true,
+    "staticPngFallbackPassed":  true,
+    "originalPngPreserved":  true,
+    "backupRestoreByteExactIncludingBom":  true,
+    "invalidModeRejectedWithoutSettingsChange":  true
+}

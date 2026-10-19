@@ -28,6 +28,7 @@ public sealed class InventoryWindow : Window
     public int? SelectedNumber { get; private set; }
     internal int ThumbnailCount => _thumbnails.Count;
     public event Action<int>? Choose;
+    public event Action<int>? Remove;
     public event Action? Dismiss;
 
     public InventoryWindow(IReadOnlyList<Slot> slots, Native.Rect area, double scale, int? selected, bool animate, bool duringDrag = false, bool presentationPreview = false)
@@ -54,12 +55,13 @@ public sealed class InventoryWindow : Window
         title.Children.Add(new TextBlock { Text = skin.OverviewTitle, FontSize = scrollingLayout ? 24 : Height < 700 ? 27 : skin.Family == "ink" ? 39 : 33, FontFamily = skin.TitleFont, FontWeight = FontWeights.SemiBold, Foreground = WuxiaTheme.Brush(skin.Text), Margin = new Thickness(0, scrollingLayout ? 3 : 5, 0, scrollingLayout ? 2 : 5) });
         if (!scrollingLayout) title.Children.Add(new TextBlock { Text = "滚轮 / 方向键浏览     ·     Enter 进入     ·     数字直达", FontSize = 10, Foreground = WuxiaTheme.Brush(skin.Muted) });
         header.Children.Add(title);
-        var close = new Button { Content = "关闭 ×", ToolTip = "Tab / Esc 关闭", VerticalAlignment = VerticalAlignment.Top, Padding = new Thickness(10, 7, 10, 7), Margin = new Thickness(8, 0, 0, 0) };
+        var close = new Button { Content = "×", ToolTip = "Tab / Esc 关闭", FontSize = 23, Width = 36, Height = 36, Background = Brushes.Transparent, BorderThickness = new Thickness(0), VerticalAlignment = VerticalAlignment.Top, Padding = new Thickness(0), Margin = new Thickness(8, 0, 0, 0) };
         close.Click += (_, _) => Dismiss?.Invoke(); Grid.SetColumn(close, 1); header.Children.Add(close); root.Children.Add(header);
         var grid = new UniformGrid { Columns = 3, Rows = 3, Margin = new Thickness(-7, 0, -7, 0) };
         foreach (var slot in _slots)
         {
             var card = new SkinTaskCard(slot, animate); _cards[slot.Number] = card;
+            card.RemoveRequested += () => Remove?.Invoke(slot.Number);
             if (!presentationPreview) card.MouseEnter += (_, _) => { _wheel.Reset(); SelectedNumber = slot.Number; RefreshSelection(); };
             card.MouseLeftButtonUp += (_, e) => { Choose?.Invoke(slot.Number); e.Handled = true; };
             grid.Children.Add(card);

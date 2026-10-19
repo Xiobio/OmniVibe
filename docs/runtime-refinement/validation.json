@@ -1,0 +1,85 @@
+{
+  "updated_at": "2026-10-19T11:52:39.088998+00:00",
+  "passed": true,
+  "groups": {
+    "core": {
+      "passed": 39,
+      "total": 39
+    },
+    "loadout": {
+      "passed": 12,
+      "total": 12
+    },
+    "settings": {
+      "passed": 6,
+      "total": 6
+    },
+    "audio": {
+      "passed": 8,
+      "total": 8
+    },
+    "experience": {
+      "passed": 10,
+      "total": 10
+    }
+  },
+  "total_passed": 75,
+  "themes": 13,
+  "entities": 117,
+  "audio_cues": 182,
+  "native_gallery_images": 52,
+  "image_comparison_same_legacy_nine_inputs": {
+    "before": {
+      "entries": 9,
+      "estimated_pixel_bytes": 56623104,
+      "longest_decoded_edge": 1536
+    },
+    "after": {
+      "entries": 9,
+      "estimated_pixel_bytes": 6285312,
+      "longest_decoded_edge": 512
+    }
+  },
+  "final_all_theme_cache": {
+    "entries": 49,
+    "estimated_pixel_bytes": 50012160,
+    "longest_decoded_edge": 512
+  },
+  "drawing_before": {
+    "metric": "UI thread drawing-recording time; excludes OS composition, window activation and screenshot encoding",
+    "samples": 180,
+    "median_ms": 0.1125,
+    "p95_ms": 0.3031,
+    "max_ms": 0.8873,
+    "mean_allocated_bytes": 58391.28888888889
+  },
+  "drawing_after": {
+    "metric": "UI thread drawing-recording time; excludes OS composition, window activation and screenshot encoding",
+    "samples": 180,
+    "median_ms": 0.0849,
+    "p95_ms": 0.1928,
+    "max_ms": 0.4476,
+    "mean_allocated_bytes": 14643.155555555555
+  },
+  "bounded_event_persistence": {
+    "events": 192,
+    "batches": 8,
+    "atomicWrites": 8,
+    "medianMs": 11.4602,
+    "maximumMs": 13.5013,
+    "includesJsonReadAndEventDeletion": true
+  },
+  "clean_source_build": {
+    "tree": "08f339d04595bf7644b0951899ef1925be048b7b",
+    "root": "D:/tools/OmniVibe/artifacts/suite-rollout/staged-check-08f339d0",
+    "build_passed": true,
+    "used_untracked_brand_files": false
+  },
+  "packaged": false,
+  "notes": [
+    "Pixel surface bytes are estimates, not whole-process RAM.",
+    "Drawing recording time excludes OS composition and native window activation.",
+    "Original game-style sound design; no bundled official character voices.",
+    "Use settings to audition every operation or import a custom PCM WAV."
+  ]
+}

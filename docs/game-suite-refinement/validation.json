@@ -1,0 +1,254 @@
+{
+  "updated_at": "2026-10-19T11:48:22.936466+00:00",
+  "passed": true,
+  "theme_count": 13,
+  "entity_count": 117,
+  "native_png_count": 52,
+  "build": {
+    "configuration": "Debug",
+    "warnings": 0,
+    "errors": 0
+  },
+  "checks": {
+    "loadout": {
+      "passed": 12,
+      "total": 12,
+      "evidence": "artifacts/suite-visual/final/loadout/report.json",
+      "results": [
+        {
+          "Name": "Nine distinct HD transparent character cutouts match their provenance manifest",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Legacy migration and restart preserve task identity and chosen weapon",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Picker is an isolated draft, supports per-slot choices and fixed short-window actions",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Custom import survives original removal; missing, corrupt and unsafe files fall back",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Resting 116-DIP core is contained and weapon identity ignores task titles",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Reordering a task preserves the remembered current entity after focus leaves managed terminals",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "All nine deployed weapons retain fixed hit positions at 320, 360 and 480 DIP",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Empty slots visibly offer direct add targets without moving existing task positions",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Every theme has nine distinct readable entities with explicit provenance",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Theme loadouts remain independent and equipment assignment copies value semantics",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "All theme entities render with fixed targets and no task initials, with decorations on or off",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Loadout validation preserves live window bindings, appearance and preferences",
+          "Passed": true,
+          "Detail": "OK"
+        }
+      ]
+    },
+    "skins": {
+      "passed": 21,
+      "total": 21,
+      "evidence": "artifacts/suite-visual/final/skin-report.json",
+      "results": [
+        {
+          "Name": "Motion: repeated commands preserve transitions and reversal renders intermediate frames",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Motion: warm text layouts ignore task renames while changing equipment updates the rendered identity",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Overlay: desktop gaps are alpha-zero and native clicks pass to the window underneath",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Compact host: native bounds shrink to the ring, deployment preserves the screen anchor",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Equipment gesture: dead zone, connected-only release and boundary hysteresis preserve task data",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Equipment core: hover opens without focus, desktop gaps retain it, leaving retracts with reentry grace",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Radial inventory: fixed sectors, centre cancel, outer cancel and scaled hit testing",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Radial inventory: confirm only connected slots; no focus steal, reordering or retained window",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Radial inventory: release after a quick chord cancels once and stops its timer",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Dock wheel: nine permanent sectors replace the list across skins without changing bindings",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Dock equipment: switch cue never takes focus and releases itself after feedback",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Skins: all 13 palettes meet body, panel, card and status text contrast >= 4.5",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Skins: terminal/native JSON palette contract matches every new skin",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Skins: switching and rendering each task state preserves task IDs, launch, session and window snapshots",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Skins: family glyphs are distinct and decorations-off renders a clean interactive background",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Dock wheel: resize preserves nine hit targets and centre capture resolves to an empty slot",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Skins: 13 settings choices use stable enum tags; cancel and save preserve preference boundaries",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Skins: nine-card overview remains readable at 780x650 and 200-percent display scaling",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Skins: themed settings scroll viewer retains vertical and horizontal scrolling",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Skins: short work areas scroll all nine tasks and suppress clipped native thumbnails",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Skins: themed slider retains native commands; menu and combo popups honor animation off/on",
+          "Passed": true,
+          "Detail": "OK"
+        }
+      ]
+    },
+    "settings": {
+      "passed": 6,
+      "total": 6,
+      "evidence": "artifacts/suite-visual/final/settings-validation/report.json",
+      "results": [
+        {
+          "name": "13 stable choices and five independent preview views",
+          "passed": true
+        },
+        {
+          "name": "Full settings, gallery and five grouped pages render",
+          "passed": true
+        },
+        {
+          "name": "Animation changes actual frames and stops when hidden or unloaded",
+          "passed": true
+        },
+        {
+          "name": "Save commits the draft while caller preferences remain unchanged",
+          "passed": true
+        },
+        {
+          "name": "Narrow/short layouts keep footer actions inside the window",
+          "passed": true
+        },
+        {
+          "name": "Preview and validation never write live Terminal settings",
+          "passed": true
+        }
+      ]
+    },
+    "gallery": {
+      "pngs_validated": 52,
+      "javascript_syntax": "node --check passed",
+      "http_status": 200
+    }
+  },
+  "visual_review": {
+    "contact_sheets_reviewed": 13,
+    "native_decks_reviewed": 13,
+    "native_overviews_reviewed": 13,
+    "atlas_cross_cell_fragments": "detected, corrected, and re-reviewed",
+    "short_screen_layout": "Canvas overlay no longer contributes a desired size",
+    "trace_debug_writes_removed": true
+  },
+  "performance": {
+    "image_runtime_edge_px": 512,
+    "image_lru_items": 72,
+    "cache_pixel_budget_mib": 48,
+    "original_assets_unchanged": true,
+    "wheel_drawing": {
+      "metric": "UI thread drawing-recording time; excludes OS composition, window activation and screenshot encoding",
+      "samples": 180,
+      "median_ms": 0.0849,
+      "p95_ms": 0.1928,
+      "max_ms": 0.4476,
+      "mean_allocated_bytes": 14643.155555555555
+    }
+  },
+  "packaged": false,
+  "live_terminal_settings_changed": false,
+  "live_window_bindings_changed": false
+}

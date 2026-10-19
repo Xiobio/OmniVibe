@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -100,6 +100,7 @@ public static class SelfTests
             Check(input.RegisteredTasks.Length == 0, "Pause left task keys registered");
             Check(!input.TabRegistered, "Pause left Tab registered");
             Check(!input.ArrangeRegistered, "Pause left Alt+backquote registered");
+            Check(!input.RadialRegistered, "Pause left radial chord registered");
             input.Configure(new(), Array.Empty<int>(), false);
             Check(input.RegisteredTasks.Length == 0, "Disconnect left task keys registered");
             Check(!input.ArrangeRegistered, "Disconnected inventory left Alt+backquote registered");
@@ -262,7 +263,12 @@ public static class SelfTests
                 var prompt = HookBridge.Parse("claude", task.Id, "{\"hook_event_name\":\"UserPromptSubmit\",\"session_id\":\"current-session\",\"prompt\":\"不应替换手工名称\"}", now.AddSeconds(3))!;
                 Check(manager.ApplyStatusEvent(task, prompt) && task.Name == "登录修复", "Hook replaced a custom task name");
                 string id = manager.State.Slots[0].Id;
+                new EquipmentAssignment("bow", "", "").Apply(manager.State.Slots[0]);
+                manager.State.Slots[0].EquipmentSelections[Skin.Hextech.ToString()] = EquipmentCatalog.ForSkin(Skin.Hextech)[2].Id;
+                var movedEquipment = EquipmentAssignment.From(manager.State.Slots[0]);
+                var emptyEquipment = EquipmentAssignment.From(manager.State.Slots[8]);
                 manager.MoveSlot(manager.State.Slots[0], manager.State.Slots[8]);
+                Check(EquipmentAssignment.From(manager.State.Slots[8]) == movedEquipment && EquipmentAssignment.From(manager.State.Slots[0]) == emptyEquipment, "Moving a task lost its weapon assignment or the empty slot preset");
                 Check(!manager.State.Slots[0].Occupied && manager.State.Slots[8].Id == id && manager.State.Slots[8].Name == "登录修复" && manager.State.Slots[3].Number == 4, "Move changed unrelated fixed slot");
                 int windowsBeforeInventory = Application.Current.Windows.Count;
                 manager.Hotkey(11); Pump();
@@ -280,13 +286,76 @@ public static class SelfTests
                 manager.ParkAll();
                 manager.ToggleInventory(); Pump(); manager.ToggleInventory(); Pump();
                 Check(manager.Inventory == null && manager.State.Layout.Count == 0, "Second Tab did not dismiss inventory");
-                manager.Dock.Hide(); manager.Wheel(-120); Pump();
+                var priorFocus = Native.GetForegroundWindow();
+                manager.OpenRadial(); Pump();
+                Check(manager.Radial != null && manager.Inventory == null && Native.GetForegroundWindow() == priorFocus, "Wheel did not open without taking focus");
+                Check(Native.IsIconic(new(firstIdentity.Handle)) && Native.IsIconic(new(secondIdentity.Handle)), "Wheel moved tasks before confirmation");
+                manager.Radial!.Surface.Select(4); manager.Radial.Complete(true); Pump();
+                Check(manager.Radial == null && Native.GetForegroundWindow().ToInt64() == secondIdentity.Handle, "Wheel did not equip its confirmed task");
+                manager.ParkAll();
+                manager.OpenRadial(); Pump(); manager.Radial!.Surface.Select(1); manager.Radial.Complete(true); Pump();
+                Check(manager.Radial == null && Native.IsIconic(new(firstIdentity.Handle)) && Native.IsIconic(new(secondIdentity.Handle)), "Empty wheel sector woke a task");
+                manager.OpenRadial(); Pump(); manager.TogglePause(); Pump();
+                Check(manager.Radial == null, "Pause left the wheel open"); manager.TogglePause();
+                var equipment = (DockWeaponWheel)manager.Dock.FindName("WeaponWheel");
+                manager.Dock.UpdateLayout();
+                IntPtr hoverFocus = Native.GetForegroundWindow();
+                manager.Dock.HandleWheelPointerMove(equipment.Centre);
+                Check(equipment.IsDeployed && !manager.Dock.IsManipulating && Native.GetForegroundWindow() == hoverFocus && Native.IsIconic(new(firstIdentity.Handle)) && Native.IsIconic(new(secondIdentity.Handle)), "Hover activated a task or stole terminal focus");
+                var management = manager.Dock.BuildManagementMenu();
+                var commands = management.Items.OfType<System.Windows.Controls.MenuItem>().ToList();
+                Check(commands.Count == 5, "Main menu is no longer compact");
+                foreach (string command in new[] { "\u6dfb\u52a0\u7a97\u53e3", "\u4efb\u52a1\u603b\u89c8", "\u6392\u5217\u7a97\u53e3", "\u8bbe\u7f6e\u4e0e\u76ae\u80a4", "\u66f4\u591a" })
+                    Check(commands.Any(i => i.Header?.ToString() == command), "Quick command missing from menu: " + command);
+                commands.Last().Items.OfType<System.Windows.Controls.MenuItem>().Single(i => i.Header?.ToString() == "\u79fb\u52a8\u5706\u73af").RaiseEvent(new RoutedEventArgs(System.Windows.Controls.MenuItem.ClickEvent));
+                manager.Dock.HandleWheelPointerMove(equipment.Centre);
+                Check(!equipment.IsDeployed && equipment.Cursor == System.Windows.Input.Cursors.SizeAll, "Move command did not reserve the next core drag");
+                manager.Dock.CancelManipulation();
+                Check(equipment.Cursor == System.Windows.Input.Cursors.Hand, "Cancel did not restore the core cursor");
+                IntPtr dragFocus = Native.GetForegroundWindow();
+                Native.GetWindowRect(new WindowInteropHelper(manager.Dock).Handle, out var beforeDrag);
+                manager.Dock.BeginCorePress(equipment.Centre);
+                Check(manager.Dock.IsManipulating && manager.Dock.IsMouseCaptureWithin && !equipment.Aiming, "Core press did not capture without selecting a task");
+                manager.Dock.PromoteCoreDrag();
+                Check(!equipment.IsDeployed && equipment.Cursor == System.Windows.Input.Cursors.SizeAll, "Hold did not promote to moving the ring");
+                manager.Dock.EndCorePress(); Pump();
+                manager.ChangeDockBounds(-48, 24, false); manager.CommitDockMove();
+                Native.GetWindowRect(new WindowInteropHelper(manager.Dock).Handle, out var movedDock);
+                Check(movedDock.Left != beforeDrag.Left || movedDock.Top != beforeDrag.Top, "Drag did not move the native overlay");
+                var savedDock = manager.Store.Load().Preferences;
+                Check(savedDock.FreeDockPosition && savedDock.DockPosition.X == movedDock.Left && savedDock.DockPosition.Y == movedDock.Top, "Release did not persist the moved ring");
+                Check(!manager.Dock.IsManipulating && !manager.Dock.IsMouseCaptureWithin && equipment.Cursor == System.Windows.Input.Cursors.Hand && !equipment.IsDeployed, "Release retained drag capture or reopened tasks");
+                Check(Native.GetForegroundWindow() == dragFocus && Native.IsIconic(new(firstIdentity.Handle)) && Native.IsIconic(new(secondIdentity.Handle)), "Moving the ring activated a task or stole focus");
+                manager.Dock.HandleWheelPointerMove(equipment.Centre + new Vector(600, 0));
+                manager.Dock.HandleWheelPointerMove(equipment.Centre);
+                manager.Dock.HandlePointerButton(System.Windows.Input.MouseButton.Right, true, equipment.Centre);
+                manager.Dock.HandlePointerButton(System.Windows.Input.MouseButton.Right, false, equipment.Centre); Pump();
+                var openedMenu = equipment.ContextMenu;
+                Check(manager.Dock.MenuOpen && openedMenu?.IsOpen == true && openedMenu.ActualHeight > 20, "Right-click management menu did not render a popup");
+                manager.Dock.CheckRetraction(equipment.Centre + new Vector(900, 0), DateTime.UtcNow.AddSeconds(2));
+                Check(openedMenu!.IsOpen, "Retraction dismissed an open menu");
+                var closeButton = openedMenu.Template.FindName("CloseMenuButton", openedMenu) as System.Windows.Controls.Button;
+                Check(closeButton != null, "Compact menu has no explicit close button");
+                closeButton!.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Button.ClickEvent));
+                Check(!manager.Dock.MenuOpen && !openedMenu.IsOpen, "Close button did not dismiss immediately");
+                manager.Dock.OpenWheelMenu(); Pump();
+                manager.Dock.DismissMenuOutside(new Native.Point(-30000, -30000)); Pump();
+                Check(!manager.Dock.MenuOpen, "Closing the menu retained the open-menu guard");
+                manager.Dock.HandlePointerButton(System.Windows.Input.MouseButton.Left, true, equipment.Centre);
+                manager.Dock.HandlePointerButton(System.Windows.Input.MouseButton.Left, false, equipment.Centre);
+                Check(!equipment.IsDeployed, "Dismissal click immediately reopened the task deck");
+                manager.Dock.SetEquipmentDeployment(true, false);
+                manager.Dock.HandlePointerButton(System.Windows.Input.MouseButton.Right, true, equipment.SlotPoint(4));
+                manager.Dock.HandlePointerButton(System.Windows.Input.MouseButton.Right, false, equipment.SlotPoint(4)); Pump();
+                Check(equipment.ContextMenu?.IsOpen == true && equipment.ContextMenu.Items.OfType<System.Windows.Controls.MenuItem>().Any(i => i.Header?.ToString() == "\u66f4\u591a\u4efb\u52a1\u64cd\u4f5c"), "Slot context menu did not retain global management commands");
+                equipment.ContextMenu!.IsOpen = false; Pump();
+                manager.ToggleVisibility(); manager.Wheel(-120); Pump();
                 Check(!manager.Dock.IsVisible && manager.State.Layout.Count == 0 && (!Native.IsIconic(new(firstIdentity.Handle)) || !Native.IsIconic(new(secondIdentity.Handle))), "Alt wheel showed intermediate UI or failed to activate immediately");
                 manager.ParkAll();
-                manager.Dock.Show();
+                manager.ToggleVisibility();
                 manager.Hotkey(0); Pump();
                 Check(manager.State.Layout.Count == 2 && !Native.IsIconic(new(firstIdentity.Handle)) && !Native.IsIconic(new(secondIdentity.Handle)), "Overview did not expand fixtures");
-                Check(!manager.Dock.IsVisible && manager.State.DockVisibleBeforeLayout == true, "Sidebar was not hidden for full-work-area layout");
+                Check(manager.Dock.IsVisible && manager.State.DockVisibleBeforeLayout == true, "Arrangement hid the persistent dock entrance");
                 var firstTile = Native.PlacementOf(new(firstIdentity.Handle))!.Value;
                 var secondTile = Native.PlacementOf(new(secondIdentity.Handle))!.Value;
                 manager.Hotkey(9); Pump();
@@ -294,7 +363,7 @@ public static class SelfTests
                 Check(manager.State.Layout.Count == 2 && manager.State.Popup?.Window.Handle == firstIdentity.Handle && expanded.Left == manager.WorkArea.Left && expanded.Top == manager.WorkArea.Top && expanded.Right == manager.WorkArea.Right && expanded.Bottom == manager.WorkArea.Bottom, "Number after arrangement failed to expand the task or discarded the layout");
                 Check(WindowLayout.Same(secondTile, Native.PlacementOf(new(secondIdentity.Handle))!.Value), "Popup changed another tiled window");
                 manager.Hotkey(9); Pump();
-                Check(manager.State.Popup == null && manager.State.Layout.Count == 2 && WindowLayout.Same(firstTile, Native.PlacementOf(new(firstIdentity.Handle))!.Value) && !manager.Dock.IsVisible, "Repeated number did not restore the original tile");
+                Check(manager.State.Popup == null && manager.State.Layout.Count == 2 && WindowLayout.Same(firstTile, Native.PlacementOf(new(firstIdentity.Handle))!.Value) && manager.Dock.IsVisible, "Repeated number did not restore the original tile or hid the dock");
                 manager.Hotkey(9); manager.Hotkey(4); Pump();
                 Check(manager.State.Popup?.Window.Handle == secondIdentity.Handle && WindowLayout.Same(firstTile, Native.PlacementOf(new(firstIdentity.Handle))!.Value), "Switching numbers left the previous task expanded");
                 manager.Hotkey(4); Pump();
@@ -314,7 +383,7 @@ public static class SelfTests
                 manager.Hotkey(9); Pump();
                 Check(WindowLayout.Same(visibleBefore, Native.PlacementOf(new(firstIdentity.Handle))!.Value), "Visible window did not return to its pre-popup placement");
                 manager.ParkAll();
-                manager.Dock.Hide(); manager.Hotkey(0); manager.Hotkey(0); Pump();
+                manager.ToggleVisibility(); manager.Hotkey(0); manager.Hotkey(0); Pump();
                 Check(!manager.Dock.IsVisible, "Layout restore showed an originally hidden sidebar");
                 manager.TogglePause(); manager.TogglePause();
                 manager.Bind(manager.State.Slots[8], firstIdentity); Pump();
@@ -322,6 +391,7 @@ public static class SelfTests
                 manager.Hotkey(9);
                 var movedTask = manager.State.Slots[8]; string stableId = movedTask.Id;
                 manager.ReorderSlot(movedTask, manager.State.Slots[3]); Pump();
+                Check(EquipmentAssignment.From(movedTask) == movedEquipment && manager.Store.Load().Slots.Single(s => s.Id == movedTask.Id).EquipmentId == "bow", "Reorder or reconnect changed the chosen weapon");
                 Check(movedTask.Number == 4 && manager.State.Slots[3] == movedTask && manager.State.Slots.Select(s => s.Number).SequenceEqual(Enumerable.Range(1, 9)), "Reordering lost sequential slot numbers");
                 Check(manager.State.Popup?.SlotId == stableId && manager.State.Slots.Select(s => s.Id).Distinct().Count() == 9, "Reorder lost popup identity or duplicated task IDs");
                 var reorderedStatus = new StatusEvent { TaskId = stableId, State = AgentState.Waiting, At = now.AddMinutes(1) };
@@ -346,6 +416,67 @@ public static class SelfTests
                 if (manager != null) { manager.Dispose(); manager.Dock.Close(); }
                 first.Close(); second.Close();
                 if (Directory.Exists(directory)) Directory.Delete(directory, true);
+            }
+        });
+        Test("Interaction: persistent entrance, immediate hints, direct removal and closed-task history", () =>
+        {
+            string directory = Path.Combine(Path.GetTempPath(), "OmniVibe-interaction-" + Guid.NewGuid().ToString("N"));
+            var first = new Window { Title = "Interaction fixture A", Width = 420, Height = 260, ShowActivated = false };
+            var second = new Window { Title = "Interaction fixture B", Width = 420, Height = 260, ShowActivated = false };
+            Manager? manager = null; int starts = 0;
+            try {
+                first.Show(); second.Show(); Pump();
+                var firstIdentity = Native.Identify(new WindowInteropHelper(first).Handle, true)!;
+                var secondIdentity = Native.Identify(new WindowInteropHelper(second).Handle, true)!;
+                var store = new StateStore(directory); var initial = new AppState();
+                initial.Preferences.Skin = Skin.Arsenal; initial.Preferences.Animate = false; initial.Preferences.SoundEffects = false;
+                initial.Preferences.HideDockOnArrange = true; initial.Preferences.ShowRecoveryOnStartup = false; store.Save(initial);
+                manager = new Manager(store, startRecovery: _ => starts++);
+                manager.Bind(manager.State.Slots[0], firstIdentity); manager.Bind(manager.State.Slots[1], secondIdentity);
+                var slot = manager.State.Slots[1]; slot.Name = "Keep recovery metadata"; slot.ProjectDirectory = directory; slot.Notes = "Resume this work"; slot.LaunchMode = LaunchMode.Terminal; slot.EquipmentId = "bow";
+                string closedId = slot.Id;
+                var wheel = (DockWeaponWheel)manager.Dock.FindName("WeaponWheel");
+                manager.ToggleOverview(); Check(manager.Dock.IsVisible && Native.IsTopmost(new WindowInteropHelper(manager.Dock).Handle), "Arrangement hid or covered the entrance");
+                manager.ToggleOverview(); Check(manager.Dock.IsVisible, "Layout restoration hid the entrance");
+                manager.Dock.SetEquipmentDeployment(true, false); manager.Dock.UpdateLayout();
+                var focus = Native.GetForegroundWindow(); var watch = Stopwatch.StartNew();
+                manager.Dock.HandleWheelPointerMove(wheel.SlotPoint(1)); watch.Stop();
+                Check(manager.Dock.HoverHintVisible && manager.Dock.HoverHintNumber == 1 && watch.ElapsedMilliseconds < 250, "Task hint waited for a dwell timer");
+                Check(Native.GetForegroundWindow() == focus, "Immediate hint took terminal focus");
+                manager.Dock.HandleWheelPointerMove(wheel.SlotPoint(2)); Check(manager.Dock.HoverHintNumber == 2, "Moving to another task retained a stale hint");
+                Check(wheel.HitSlot(wheel.SlotPoint(3)) == manager.State.Slots[2], "Empty plus target requires a right click or external drag");
+                bool pickerOpened = false;
+                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, () => {
+                    var picker = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.Title == "绑定窗口到槽位 3");
+                    if (picker != null) { pickerOpened = true; picker.DialogResult = false; }
+                });
+                manager.Dock.HandlePointerButton(System.Windows.Input.MouseButton.Left, true, wheel.SlotPoint(3));
+                manager.Dock.HandlePointerButton(System.Windows.Input.MouseButton.Left, false, wheel.SlotPoint(3));
+                Check(pickerOpened && !manager.State.Slots[2].Occupied, "Left clicking plus did not open the picker, or cancelling changed the slot");
+                manager.Dock.SetEquipmentDeployment(true, false);
+                manager.Dock.HandleWheelPointerMove(wheel.SlotPoint(1));
+                var removePoint = wheel.RemovePoint(manager.State.Slots[0]); Check(wheel.HitRemove(removePoint) == manager.State.Slots[0], "Hover removal has no direct hit target");
+                manager.Dock.HandlePointerButton(System.Windows.Input.MouseButton.Left, true, removePoint);
+                manager.Dock.HandlePointerButton(System.Windows.Input.MouseButton.Left, false, removePoint);
+                Check(!manager.State.Slots[0].Occupied && Native.Matches(firstIdentity) && !Native.IsIconic(new(firstIdentity.Handle)), "Removal closed or stranded the actual terminal");
+                manager.Dock.ClosePreview(); second.Close();
+                manager.ArchiveClosedWindows();
+                Check(!slot.Occupied && manager.State.RecentTasks.Count == 1, "Closed window left a zombie task in the live deck");
+                var saved = store.Load().RecentTasks.Single().Task;
+                Check(saved.Id == closedId && saved.Notes == "Resume this work" && saved.EquipmentId == "bow" && saved.ProjectDirectory == directory, "Closed-task history lost recovery data");
+                manager.RestoreTask(manager.State.RecentTasks[0].Task);
+                Check(starts == 1 && manager.State.RecentTasks.Count == 0 && manager.State.Slots.Any(s => s.Id == closedId && s.Recovery != null), "History could not reclaim a free slot under the original identity");
+                var startupMissing = manager.State.Slots[2]; string startupId = startupMissing.Id;
+                startupMissing.Window = new() { Handle = 0, Title = "Startup missing fixture", ProcessName = "WindowsTerminal" };
+                manager.StartupRecovery();
+                Check(!startupMissing.Occupied && store.Load().RecentTasks.Any(r => r.Task.Id == startupId), "An already-closed startup window remained a zombie slot or lost its history");
+                manager.Dock.Hide(); manager.EnsureDockVisible(); Check(manager.Dock.IsVisible, "Unexpected visibility loss was not repaired");
+                manager.ToggleVisibility(); manager.EnsureDockVisible(); Check(!manager.Dock.IsVisible, "Visibility repair overrode explicit hide");
+                manager.ToggleVisibility(); Check(manager.Dock.IsVisible, "Explicit show did not restore the entrance");
+                manager.Dispose(); manager.Dock.Close(); manager = null;
+            } finally {
+                if (manager != null) { manager.Dispose(); manager.Dock.Close(); }
+                first.Close(); second.Close(); if (Directory.Exists(directory)) Directory.Delete(directory, true);
             }
         });
         Test("Hook transport: PowerShell observer emits Unicode event without agent instructions", () =>

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,6 +28,286 @@ public static class SkinTests
         Skin original = WuxiaTheme.CurrentSkin; bool decorations = SkinCatalog.DecorationsEnabled;
         try
         {
+            Test("Motion: repeated commands preserve transitions and reversal renders intermediate frames", () =>
+            {
+                SkinCatalog.DecorationsEnabled = true;
+                var wheel = new DockWeaponWheel();
+                wheel.SetSlots(Enumerable.Range(1, 9).Select(n => new Slot { Number = n }));
+                var host = new Window { Width = 460, Height = 450, Content = wheel, Left = -8000, Top = -8000, ShowActivated = false, ShowInTaskbar = false };
+                void Advance(int milliseconds)
+                {
+                    var frame = new DispatcherFrame();
+                    var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(milliseconds) };
+                    timer.Tick += (_, _) => { timer.Stop(); frame.Continue = false; };
+                    timer.Start(); Dispatcher.PushFrame(frame);
+                }
+                try
+                {
+                    host.Show(); host.UpdateLayout(); Advance(30);
+                    wheel.Deploy(true, true); int transitions = wheel.DeploymentTransitions;
+                    for (int i = 0; i < 12; i++) wheel.Deploy(true, true);
+                    Check(wheel.DeploymentTransitions == transitions, "Repeated input restarted opening");
+                    wheel.BeginAim(true); Check(wheel.DeploymentTransitions == transitions && wheel.Aiming, "Selection restarted deployment");
+                    Advance(70);
+                    var closing = new List<double>();
+                    EventHandler collect = (_, _) => closing.Add(wheel.Deployment);
+                    CompositionTarget.Rendering += collect;
+                    try
+                    {
+                        wheel.Deploy(false, true); transitions = wheel.DeploymentTransitions;
+                        wheel.Deploy(false, true); Check(wheel.DeploymentTransitions == transitions, "Repeated cancel restarted retraction");
+                        Advance(180);
+                    }
+                    finally { CompositionTarget.Rendering -= collect; }
+                    Check(closing.Any(v => v > .01 && v < .99), "Retraction skipped intermediate rendered frames");
+                    wheel.Deploy(false, false); Check(wheel.Deployment == 0, "Animation-off did not settle immediately");
+                }
+                finally { host.Close(); }
+            });
+            Test("Motion: warm text layouts ignore task renames while changing equipment updates the rendered identity", () =>
+            {
+                var wheel = new DockWeaponWheel();
+                var slots = Enumerable.Range(1, 9).Select(n => new Slot { Number = n, Id = "cache-" + n, Name = "Task " + n, Window = new() { Title = "fixture" }, Connected = true, IsActive = n == 1 }).ToList();
+                wheel.SetSlots(slots); wheel.Deploy(true, false);
+                wheel.Measure(new Size(460, 450)); wheel.Arrange(new Rect(0, 0, 460, 450));
+                void Frame(int i)
+                {
+                    wheel.Flow = i * .03; wheel.Deployment = .65 + i * .001;
+                    wheel.UpdateLayout(); var bitmap = new RenderTargetBitmap(460, 450, 96, 96, PixelFormats.Pbgra32); bitmap.Render(wheel);
+                }
+                Frame(0); int warm = wheel.TextBuilds;
+                for (int i = 1; i < 15; i++) Frame(i);
+                Check(wheel.TextBuilds == warm, "Geometry animation repeatedly laid out unchanged text");
+                slots[0].Name = "Renamed project"; wheel.InvalidateVisual(); Frame(16);
+                Check(wheel.TextBuilds == warm, "Task rename rebuilt unrelated equipment labels");
+                byte[] Pixels() { var bitmap = new RenderTargetBitmap(460, 450, 96, 96, PixelFormats.Pbgra32); bitmap.Render(wheel); var bytes = new byte[460*450*4]; bitmap.CopyPixels(bytes, 460*4, 0); return bytes; }
+                var before = Pixels(); var taskId = slots[0].Id; var taskWindow = slots[0].Window;
+                slots[0].EquipmentSelections[SkinCatalog.Current.Id.ToString()] = EquipmentCatalog.ForSkin(SkinCatalog.Current.Id)[1].Id;
+                slots[0].Refresh(); wheel.InvalidateVisual(); wheel.UpdateLayout();
+                Check(!before.SequenceEqual(Pixels()), "Changing equipment did not update its visual identity");
+                Check(slots[0].Id == taskId && ReferenceEquals(slots[0].Window, taskWindow) && slots[0].Name == "Renamed project", "Equipment change altered task identity or window binding");
+            });
+            Test("Overlay: desktop gaps are alpha-zero and native clicks pass to the window underneath", () =>
+            {
+                WuxiaTheme.Apply(Skin.Hextech);
+                var screen = Native.ScreenAtCursor();
+                double left = screen.Work.Left / screen.Scale + 24, top = screen.Work.Top / screen.Scale + 24;
+                var behind = new Window { Width = 560, Height = 620, Left = left, Top = top, Background = Brushes.DarkSlateGray, Topmost = true, ShowActivated = false, ShowInTaskbar = false };
+                var dock = new DockWindow { Width = 460, Height = 530, Left = left + 12, Top = top + 12, Topmost = true, ShowActivated = false };
+                dock.SetSlots(Enumerable.Range(1, 9).Select(n => new Slot { Number = n }));
+                try
+                {
+                    IntPtr focus = Native.GetForegroundWindow();
+                    behind.Show(); dock.Show(); dock.UpdateLayout();
+                    Dispatcher.CurrentDispatcher.Invoke(() => { }, DispatcherPriority.ApplicationIdle);
+                    var wheel = (DockWeaponWheel)dock.FindName("WeaponWheel");
+                    var hwnd = new WindowInteropHelper(dock).Handle;
+                    Check(!Native.HasOverlayFrame(hwnd), "Overlay retained a system frame");
+                    var shot = new RenderTargetBitmap(460, 530, 96, 96, PixelFormats.Pbgra32); shot.Render(dock);
+                    var pixels = new byte[460 * 530 * 4]; shot.CopyPixels(pixels, 460 * 4, 0);
+                    Point gap = wheel.TranslatePoint(new Point(wheel.Centre.X + 80, wheel.Centre.Y), dock);
+                    Point oldLabel = wheel.TranslatePoint(wheel.Centre + new Vector(0, 90), dock);
+                    foreach (var p in new[] { new Point(1, 1), new Point(458, 528), gap, oldLabel })
+                        Check(pixels[((int)p.Y * 460 + (int)p.X) * 4 + 3] == 0, "An invisible host or broad shadow painted desktop space");
+                    Point screenGap = dock.PointToScreen(gap);
+                    Check(Native.WindowFromPoint(new Native.Point((int)screenGap.X, (int)screenGap.Y)) == new WindowInteropHelper(behind).Handle, "Empty overlay space intercepted the underlying application");
+                    Point screenCore = wheel.PointToScreen(wheel.Centre);
+                    Check(Native.WindowFromPoint(new Native.Point((int)screenCore.X, (int)screenCore.Y)) == hwnd, "Removing the frame broke the visible core hit target");
+                    Check(Native.GetForegroundWindow() == focus, "Frame cleanup stole keyboard focus");
+                }
+                finally { dock.Close(); behind.Close(); }
+            });
+            Test("Compact host: native bounds shrink to the ring, deployment preserves the screen anchor", () =>
+            {
+                var screen = Native.ScreenAtCursor();
+                var dock = new DockWindow { ShowActivated = false, Topmost = false };
+                dock.SetSlots(Enumerable.Range(1, 9).Select(n => new Slot { Number = n }));
+                try
+                {
+                    IntPtr focus = Native.GetForegroundWindow();
+                    dock.Show(); dock.PlaceCompactHost(new Native.Point(screen.Work.Left + 300, screen.Work.Top + 300), screen.Scale, 360);
+                    var wheel = (DockWeaponWheel)dock.FindName("WeaponWheel");
+                    Point anchor = dock.CoreScreen; var hwnd = new WindowInteropHelper(dock).Handle;
+                    Native.GetWindowRect(hwnd, out var idle);
+                    Check(Math.Abs(idle.Right - idle.Left - DockWindow.CompactExtent * screen.Scale) <= 1 && idle.Right - idle.Left == idle.Bottom - idle.Top, "Idle retained the expanded native rectangle");
+                    dock.SetEquipmentDeployment(true, false); Native.GetWindowRect(hwnd, out var expanded);
+                    Check(Math.Abs(expanded.Right - expanded.Left - 360 * screen.Scale) <= 1, "Hover did not allocate the task viewport");
+                    Check((dock.CoreScreen - anchor).Length <= 1, "Expanding moved the core on screen");
+                    foreach (var slot in wheel.Slots) Check(wheel.HitSlot(wheel.SlotPoint(slot.Number)) == slot, "Compact deck lost a fixed task target");
+                    dock.SetEquipmentDeployment(false, false); Native.GetWindowRect(hwnd, out var closed);
+                    Check(closed.Right - closed.Left == idle.Right - idle.Left && (dock.CoreScreen - anchor).Length <= 1, "Retraction did not release the task viewport");
+                    Check(Native.GetForegroundWindow() == focus, "Resizing the overlay stole focus");
+                }
+                finally { dock.Close(); }
+            });
+            Test("Equipment gesture: dead zone, connected-only release and boundary hysteresis preserve task data", () =>
+            {
+                var slots = Enumerable.Range(1, 9).Select(n => new Slot { Number = n, Id = "identity-" + n, Name = "Fixture " + n, Window = n <= 3 ? new() { Title = "fixture" } : null, Connected = n <= 2, IsActive = n == 1 }).ToList();
+                var wheel = new DockWeaponWheel(); wheel.SetSlots(slots);
+                wheel.Measure(new Size(460, 448)); wheel.Arrange(new Rect(0, 0, 460, 448));
+                string before = JsonSerializer.Serialize(slots, StateStore.Json);
+                Check(!wheel.IsDeployed && wheel.HitSlot(wheel.SlotPoint(1)) == null, "Idle core exposed invisible hit targets");
+                foreach (int n in new[] { 2, 3, 9 })
+                {
+                    wheel.BeginAim(false); wheel.AimAt(wheel.SlotPoint(n));
+                    Check(wheel.EndAim(true) == (n == 2 ? 2 : null), "Gesture accepted an empty or disconnected slot");
+                }
+                wheel.BeginAim(false); wheel.AimAt(wheel.SlotPoint(2)); wheel.AimAt(wheel.Centre);
+                Check(wheel.EndAim(true) == null, "Returning to the core did not cancel");
+                wheel.BeginAim(false); wheel.AimAt(wheel.SlotPoint(2));
+                Point AtAngle(double a) => new(wheel.Centre.X + Math.Sin(a * Math.PI / 180) * 155, wheel.Centre.Y - Math.Cos(a * Math.PI / 180) * 155);
+                wheel.AimAt(AtAngle(61)); Check(wheel.AimCandidate == 2, "Boundary tremor changed the task");
+                wheel.AimAt(AtAngle(65)); Check(wheel.AimCandidate == null, "Hysteresis swallowed an intentional direction change");
+                wheel.EndAim(false); wheel.Deploy(false, false);
+                Check(before == JsonSerializer.Serialize(slots, StateStore.Json), "Aim changed bindings, numbering or unread state");
+                Check(slots.Select(TaskEmblem.Seed).Distinct().Count() == 9, "Task identities collided");
+            });
+            Test("Equipment core: hover opens without focus, desktop gaps retain it, leaving retracts with reentry grace", () =>
+            {
+                var dock = new DockWindow { Left = -8000, Top = -8000, ShowActivated = false, Topmost = false, Width = 460, Height = 530 };
+                dock.SetSlots(Enumerable.Range(1, 9).Select(n => new Slot { Number = n }));
+                try
+                {
+                    dock.Show(); dock.UpdateLayout(); var wheel = (DockWeaponWheel)dock.FindName("WeaponWheel");
+                    Point anchor = wheel.PointToScreen(wheel.Centre); IntPtr focus = Native.GetForegroundWindow();
+                    dock.HandleWheelPointerMove(wheel.SlotPoint(1));
+                    Check(!wheel.IsDeployed, "Invisible peripheral target triggered deployment");
+                    dock.HandleWheelPointerMove(wheel.Centre);
+                    Check(wheel.IsDeployed && !dock.IsManipulating && !dock.IsMouseCaptureWithin, "Hover did not open without requiring a press or capture");
+                    int transitions = wheel.DeploymentTransitions;
+                    for (int i = 0; i < 10; i++) dock.HandleWheelPointerMove(wheel.Centre);
+                    Check(wheel.DeploymentTransitions == transitions, "Repeated hover restarted opening");
+                    var now = DateTime.UtcNow; var outside = wheel.Centre + new Vector(600, 0);
+                    dock.CheckRetraction(wheel.Centre + new Vector(100, 0), now);
+                    dock.CheckRetraction(wheel.Centre + new Vector(100, 0), now.AddSeconds(2));
+                    Check(wheel.IsDeployed, "Crossing a transparent desktop gap closed the task targets");
+                    dock.CheckRetraction(outside, now); dock.CheckRetraction(outside, now.AddMilliseconds(120));
+                    Check(wheel.IsDeployed, "Leaving retracted without a grace period");
+                    dock.CheckRetraction(wheel.SlotPoint(1), now.AddMilliseconds(130));
+                    dock.CheckRetraction(outside, now.AddMilliseconds(200)); dock.CheckRetraction(outside, now.AddMilliseconds(320));
+                    Check(wheel.IsDeployed, "Reentering did not reset the retraction deadline");
+                    dock.CheckRetraction(outside, now.AddMilliseconds(650));
+                    Check(!wheel.IsDeployed && wheel.Deployment == 0, "Leaving did not return to the idle ring");
+                    dock.BeginCorePress(wheel.Centre, capture: false); dock.EndCorePress();
+                    Check(wheel.IsDeployed && !dock.IsManipulating, "Quick click did not keep tasks accessible");
+                    dock.BeginCorePress(wheel.Centre, capture: false); dock.EndCorePress();
+                    Check(wheel.IsDeployed, "Clicking the already hovered core unexpectedly hid the tasks");
+                    dock.BeginCorePress(wheel.Centre, capture: false); dock.CancelManipulation();
+                    Check(!dock.IsManipulating && !wheel.IsDeployed && !wheel.Aiming, "Escape/cancel retained a gesture");
+                    Check(wheel.PointToScreen(wheel.Centre) == anchor && Native.GetForegroundWindow() == focus, "Deploy changed the core anchor or keyboard focus");
+                }
+                finally { dock.Close(); }
+            });
+            Test("Radial inventory: fixed sectors, centre cancel, outer cancel and scaled hit testing", () =>
+            {
+                foreach (double scale in new[] { .5, 1, 1.5, 2 })
+                {
+                    var centre = new Point(330, 370);
+                    for (int number = 1; number <= 9; number++)
+                    {
+                        double angle = (number - 1) * 40 * Math.PI / 180;
+                        Check(RadialSelection.Hit(new Point(centre.X + Math.Sin(angle) * 190 * scale, centre.Y - Math.Cos(angle) * 190 * scale), centre, scale) == number, "Sector or DPI mapping changed: " + number);
+                    }
+                    Check(RadialSelection.Hit(centre, centre, scale) == null, "Centre did not cancel");
+                    Check(RadialSelection.Hit(new Point(centre.X, centre.Y - 100 * scale), centre, scale) == null, "Dead zone selected a task");
+                    Check(RadialSelection.Hit(new Point(centre.X, centre.Y - 280 * scale), centre, scale) == null, "Beyond rim selected a task");
+                }
+            });
+            Test("Radial inventory: confirm only connected slots; no focus steal, reordering or retained window", () =>
+            {
+                var slots = Enumerable.Range(1, 9).Select(n => new Slot { Number = n, Name = "轮盘 fixture " + n, Window = n <= 3 ? new() { Title = "fixture" } : null, Connected = n <= 2 }).ToList();
+                string before = JsonSerializer.Serialize(slots, StateStore.Json);
+                IntPtr focus = Native.GetForegroundWindow(); int windows = Application.Current.Windows.Count;
+                foreach (int? number in new int?[] { null, 1, 3, 9 })
+                {
+                    var wheel = new RadialInventoryWindow(slots, new Native.Rect(0, 0, 940, 760), 1, false, "Alt+Q", preview: true) { Left = -8000, Top = -8000 };
+                    int? result = -1;
+                    try
+                    {
+                        wheel.Finish += chosen => { result = chosen; wheel.Close(); };
+                        wheel.Show(); wheel.UpdateLayout();
+                        Check(Native.GetForegroundWindow() == focus, "Wheel stole terminal focus");
+                        wheel.Surface.Select(number); wheel.Complete(true);
+                        Check(result == (number == 1 ? 1 : null), "Empty, disconnected or centre target was accepted");
+                        Check(Application.Current.Windows.Count == windows, "Wheel retained a native window");
+                    }
+                    finally { if (wheel.IsVisible) wheel.Close(); }
+                }
+                Check(before == JsonSerializer.Serialize(slots, StateStore.Json), "Wheel mutated slot bindings");
+            });
+            Test("Radial inventory: release after a quick chord cancels once and stops its timer", () =>
+            {
+                var slots = Enumerable.Range(1, 9).Select(n => new Slot { Number = n }).ToList();
+                var wheel = new RadialInventoryWindow(slots, new Native.Rect(0, 0, 940, 760), 1, false, "Alt+Q", () => false) { Left = -8000, Top = -8000, Topmost = false };
+                int callbacks = 0;
+                try
+                {
+                    wheel.Finish += chosen => { callbacks++; Check(chosen == null, "Quick tap selected a task"); wheel.Close(); };
+                    wheel.Show();
+                    var deadline = DateTime.UtcNow.AddSeconds(1);
+                    while (wheel.IsVisible && DateTime.UtcNow < deadline) { Dispatcher.CurrentDispatcher.Invoke(() => { }, DispatcherPriority.ApplicationIdle); System.Threading.Thread.Sleep(20); }
+                    Check(callbacks == 1 && !wheel.IsVisible, "Release was missed or emitted twice");
+                }
+                finally { if (wheel.IsVisible) wheel.Close(); }
+            });
+            Test("Dock wheel: nine permanent sectors replace the list across skins without changing bindings", () =>
+            {
+                foreach (var skin in SkinCatalog.All)
+                {
+                    WuxiaTheme.Apply(skin.Id);
+                    var slots = Enumerable.Range(1, 9).Select(n => new Slot { Number = n, Name = "Equipment fixture " + n, Window = n <= 2 ? new() { Title = "fixture", ProcessName = "pwsh" } : null, Connected = n <= 2, IsActive = n == 2 }).ToList();
+                    string before = JsonSerializer.Serialize(slots, StateStore.Json);
+                    var dock = new DockWindow { Width = 460, Height = 530, Left = -8000, Top = -8000, Topmost = false, ShowActivated = false };
+                    try
+                    {
+                        dock.SetSlots(slots); dock.SetPreviewLabel(); dock.SetEquipmentDeployment(true, false); dock.Show(); dock.UpdateLayout();
+                        Dispatcher.CurrentDispatcher.Invoke(() => { }, DispatcherPriority.ApplicationIdle);
+                        var wheel = (DockWeaponWheel)dock.FindName("WeaponWheel");
+                        Check(wheel.Slots.Select(s => s.Number).SequenceEqual(Enumerable.Range(1, 9)), skin.Slug + ": nine sectors changed order");
+                        Check(dock.FindName("SlotsList") == null && dock.FindName("QuickSlots") == null, "Old task list still exists");
+                        Check(dock.FindName("DockHeader") == null && dock.FindName("DockActions") == null && dock.FindName("HintHost") == null && dock.FindName("ResizeGrip") == null, "Toolbar chrome returned to the ring");
+                        Check(wheel.FocusedSlot == slots[1], skin.Slug + ": centre did not follow active task");
+                        foreach (var slot in slots)
+                        {
+                            Point target = wheel.PointToScreen(wheel.SlotPoint(slot.Number));
+                            var expected = slot;
+                            Check(dock.HitSlot(new Native.Point((int)target.X, (int)target.Y)) == expected, skin.Slug + ": native hit testing missed a task or intercepted a hidden empty sector " + slot.Number);
+                            Check(wheel.HitSlot(wheel.SlotPoint(slot.Number), duringCapture: true) == slot, skin.Slug + ": capture target missing at " + slot.Number);
+                        }
+                        wheel.Hover(slots[4]); Check(wheel.FocusedSlot == slots[1], "Empty hover replaced the current task context");
+                        wheel.Hover(slots[0]); Check(wheel.FocusedSlot == slots[0], "Occupied hover did not expose task identity");
+                        wheel.Hover(null); slots[1].IsActive = false; slots[0].IsActive = true; slots[0].Refresh(); slots[1].Refresh();
+                        Check(wheel.FocusedSlot == slots[0], "Centre did not follow switched task");
+                        Check(before == JsonSerializer.Serialize(slots, StateStore.Json), "Wheel rendering changed saved bindings");
+                        Point anchor = wheel.PointToScreen(wheel.Centre);
+                        dock.SetCollapsed(true); dock.UpdateLayout(); Check(!wheel.IsDeployed && wheel.Deployment == 0, "Auto-hide did not return to the equipment core");
+                        var shot = new RenderTargetBitmap(460, 530, 96, 96, PixelFormats.Pbgra32); shot.Render(dock);
+                        var pixels = new byte[460 * 530 * 4]; shot.CopyPixels(pixels, 460 * 4, 0);
+                        Point centre = wheel.TranslatePoint(wheel.Centre, dock);
+                        for (int y = 0; y < 530; y++) for (int x = 0; x < 460; x++)
+                            if (Math.Abs(x-centre.X) > 58 || Math.Abs(y-centre.Y) > 58)
+                                Check(pixels[(y * 460 + x) * 4 + 3] == 0, skin.Slug + ": idle painted beyond its resting host");
+                        Check(wheel.PointToScreen(wheel.Centre) == anchor, "Core moved during retraction");
+                        dock.SetCollapsed(false); Check(wheel.Slots.Count == 9, "Expanding lost a sector");
+                    }
+                    finally { dock.Close(); }
+                }
+            });
+            Test("Dock equipment: switch cue never takes focus and releases itself after feedback", () =>
+            {
+                IntPtr foreground = Native.GetForegroundWindow();
+                int before = Application.Current.Windows.Count;
+                var cue = new EquipmentSwitchCue(new Slot { Number = 2, Name = "Switch fixture", Window = new() { Title = "fixture" }, Connected = true, IsActive = true }, -8000, -8000);
+                try
+                {
+                    cue.Show(); cue.UpdateLayout();
+                    Check(Native.GetForegroundWindow() == foreground, "Equip cue stole input focus");
+                    var deadline = DateTime.UtcNow.AddSeconds(2);
+                    while (cue.IsVisible && DateTime.UtcNow < deadline) { Dispatcher.CurrentDispatcher.Invoke(() => { }, DispatcherPriority.ApplicationIdle); System.Threading.Thread.Sleep(20); }
+                    Check(!cue.IsVisible && Application.Current.Windows.Count == before, "Equip cue retained a window after expiry");
+                }
+                finally { if (cue.IsVisible) cue.Close(); }
+            });
             Test("Skins: all 13 palettes meet body, panel, card and status text contrast >= 4.5", () =>
             {
                 Check((int)Skin.InkJade == 0 && (int)Skin.Midnight == 1 && (int)Skin.Cinnabar == 2, "Legacy persisted enum values changed");
@@ -100,21 +380,27 @@ public static class SkinTests
                     for (int i = 0; i < pixels.Length; i += 4) Check(pixels[i] == bg.B && pixels[i + 1] == bg.G && pixels[i + 2] == bg.R && pixels[i + 3] == 255, s.Slug + ": decorations-off altered the plain background");
                 }
             });
-            Test("Skins: narrow task dock keeps its themed five-pixel scrollbar after content rendering", () =>
+            Test("Dock wheel: resize preserves nine hit targets and centre capture resolves to an empty slot", () =>
             {
-                WuxiaTheme.Apply(Skin.Protocol);
-                var dock = new DockWindow { Width = 210, Height = 460 };
-                try
+                WuxiaTheme.Apply(Skin.Hextech);
+                var slots = Enumerable.Range(1, 9).Select(n => new Slot { Number = n, Window = n <= 2 ? new() { Title = "fixture" } : null, Connected = n <= 2 }).ToList();
+                foreach (var size in new[] { new Size(440, 500), new Size(460, 530), new Size(620, 680) })
                 {
-                    dock.SetSlots(Enumerable.Range(1, 9).Select(n => new Slot { Number = n, Window = new() { Title = "fixture" }, Connected = true }).ToList());
-                    var content = (FrameworkElement)dock.Content; content.Measure(new Size(210, 460)); content.Arrange(new Rect(0, 0, 210, 460)); content.UpdateLayout();
-                    var scroll = (ScrollViewer)dock.FindName("SlotsScroll"); scroll.ApplyTemplate(); scroll.UpdateLayout();
-                    var bar = (ScrollBar?)scroll.Template.FindName("PART_VerticalScrollBar", scroll);
-                    Check(bar != null && bar.Style == dock.Resources["DockScrollbar"], "Dock scrollbar did not retain the explicit theme style");
-                    Check(bar!.Width == 5 && bar.ActualWidth <= 6, "Dock scrollbar exceeded five DIP: " + bar.ActualWidth);
-                    Check(bar.Template != null, "Dock scrollbar lost its theme template");
+                    var dock = new DockWindow { Width = size.Width, Height = size.Height };
+                    try
+                    {
+                        dock.SetSlots(slots); dock.SetEquipmentDeployment(true, false);
+                        var content = (FrameworkElement)dock.Content; content.Measure(size); content.Arrange(new Rect(new Point(), size)); content.UpdateLayout();
+                        var wheel = (DockWeaponWheel)dock.FindName("WeaponWheel");
+                        Check(wheel.ActualWidth > 0 && wheel.Radius >= 100, "Wheel was crushed by layout");
+                        foreach (Slot slot in slots) Check(wheel.HitSlot(wheel.SlotPoint(slot.Number)) == slot, "Resize lost slot " + slot.Number);
+                        Check(wheel.HitSlot(wheel.Centre) == null, "Centre activated an arbitrary task");
+                        Check(wheel.HitSlot(wheel.Centre, duringCapture: true) == slots[2], "Centre capture did not use first empty slot");
+                        Check(wheel.HitSlot(new Point(0, 0)) == null, "Transparent corner became a task target");
+                        slots[2].IsDropTarget = true; slots[2].Refresh(); Check(wheel.FocusedSlot == slots[2], "Drop target was not shown in centre"); slots[2].IsDropTarget = false;
+                    }
+                    finally { dock.Close(); }
                 }
-                finally { dock.Close(); }
             });
             Test("Skins: 13 settings choices use stable enum tags; cancel and save preserve preference boundaries", () =>
             {
@@ -264,5 +550,12 @@ public static class SkinTests
         if (node is not DependencyObject current) yield break;
         yield return current;
         foreach (object child in LogicalTreeHelper.GetChildren(current)) foreach (var item in Descendants(child)) yield return item;
+    }
+    private static IEnumerable<DependencyObject> VisualDescendants(DependencyObject node)
+    {
+        yield return node;
+        if (node is not Visual) yield break;
+        for (int i = 0; i < VisualTreeHelper.GetChildrenCount(node); i++)
+            foreach (var child in VisualDescendants(VisualTreeHelper.GetChild(node, i))) yield return child;
     }
 }

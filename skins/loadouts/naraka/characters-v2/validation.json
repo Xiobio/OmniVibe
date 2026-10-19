@@ -1,0 +1,92 @@
+[
+  {
+    "key": "nhy",
+    "image": "skins\\loadouts\\naraka\\characters-v2\\nhy.png",
+    "width": 1024,
+    "height": 1536,
+    "alpha_min": 0,
+    "transparent_fraction": 0.3362,
+    "opaque_fraction": 0.5974,
+    "sha256": "fa9d022bd6ebaffc13a9f19e3a1598c50e4f23451a889f45f0c31e5d26d12b06"
+  },
+  {
+    "key": "ydj",
+    "image": "skins\\loadouts\\naraka\\characters-v2\\ydj.png",
+    "width": 1024,
+    "height": 1536,
+    "alpha_min": 0,
+    "transparent_fraction": 0.3686,
+    "opaque_fraction": 0.5885,
+    "sha256": "d2801bded1a00e7a82cf5becc020741686baba605082c3f7783bac4086933cc6"
+  },
+  {
+    "key": "gqh",
+    "image": "skins\\loadouts\\naraka\\characters-v2\\gqh.png",
+    "width": 1024,
+    "height": 1536,
+    "alpha_min": 0,
+    "transparent_fraction": 0.3133,
+    "opaque_fraction": 0.5931,
+    "sha256": "73caf17762cbf2280bf1386a9935bf2e899eb65eea83a126ab7f94b21088f4ce"
+  },
+  {
+    "key": "ys",
+    "image": "skins\\loadouts\\naraka\\characters-v2\\ys.png",
+    "width": 1024,
+    "height": 1536,
+    "alpha_min": 0,
+    "transparent_fraction": 0.3057,
+    "opaque_fraction": 0.6462,
+    "sha256": "902cfb392aa678a3bbc3cfe7d388a8dc92f650df4bf5b172dda039e91a1a5ae7"
+  },
+  {
+    "key": "csn",
+    "image": "skins\\loadouts\\naraka\\characters-v2\\csn.png",
+    "width": 1024,
+    "height": 1536,
+    "alpha_min": 0,
+    "transparent_fraction": 0.3591,
+    "opaque_fraction": 0.5692,
+    "sha256": "1f5a2fd85fb402fbb408d76332cecc6e3a971f631a13354c162fb7a22fcbe818"
+  },
+  {
+    "key": "wc",
+    "image": "skins\\loadouts\\naraka\\characters-v2\\wc.png",
+    "width": 1024,
+    "height": 1536,
+    "alpha_min": 0,
+    "transparent_fraction": 0.3137,
+    "opaque_fraction": 0.6429,
+    "sha256": "238c1a46c581d8c81bc480646275fa25ff93b6100e1d5205e53a4f371dafd816"
+  },
+  {
+    "key": "jyy",
+    "image": "skins\\loadouts\\naraka\\characters-v2\\jyy.png",
+    "width": 1024,
+    "height": 1536,
+    "alpha_min": 0,
+    "transparent_fraction": 0.4539,
+    "opaque_fraction": 0.4785,
+    "sha256": "c40917ba40f359d5b34d6326d39aea5a51aab46f176201c93012192cf188bcee"
+  },
+  {
+    "key": "tymht",
+    "image": "skins\\loadouts\\naraka\\characters-v2\\tymht.png",
+    "width": 1024,
+    "height": 1536,
+    "alpha_min": 0,
+    "transparent_fraction": 0.3703,
+    "opaque_fraction": 0.593,
+    "sha256": "dd049f114fc8b2511fc8f70b28cc1367a59baeccbfb10a08e7a24cac46a90271"
+  },
+  {
+    "key": "yzp",
+    "image": "skins\\loadouts\\naraka\\characters-v2\\yzp.png",
+    "width": 1024,
+    "height": 1536,
+    "alpha_min": 0,
+    "transparent_fraction": 0.288,
+    "opaque_fraction": 0.637,
+    "sha256": "6c9d2e7b45fd5f33a3b104abe71d5d6e85acfe7a5a0101cb2d6e627f9d612736"
+  }
+]

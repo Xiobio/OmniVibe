@@ -1,64 +1,7 @@
-﻿<Window x:Class="CodeManager.DockWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:CodeManager" Title="CodeManager · AI 任务武器栏" Width="252" Height="748" WindowStyle="None" ResizeMode="NoResize" Background="{x:Static local:WuxiaTheme.Wood}" Foreground="{DynamicResource SkinTextBrush}" Topmost="True" ShowInTaskbar="False" ShowActivated="False" UseLayoutRounding="True" SnapsToDevicePixels="True">
-  <Window.Resources>
-    <BooleanToVisibilityConverter x:Key="BoolVisibility"/>
-    <Style x:Key="DockScrollbar" TargetType="ScrollBar">
-      <Setter Property="Width" Value="5"/><Setter Property="Background" Value="Transparent"/><Setter Property="OverridesDefaultStyle" Value="True"/>
-      <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ScrollBar">
-        <Track x:Name="PART_Track" Orientation="Vertical" IsDirectionReversed="True">
-          <Track.DecreaseRepeatButton><RepeatButton Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="False"/></Track.DecreaseRepeatButton>
-          <Track.Thumb><Thumb OverridesDefaultStyle="True"><Thumb.Template><ControlTemplate TargetType="Thumb"><Border Background="{DynamicResource SkinBorderBrush}" CornerRadius="2" Margin="1"/></ControlTemplate></Thumb.Template></Thumb></Track.Thumb>
-          <Track.IncreaseRepeatButton><RepeatButton Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="False"/></Track.IncreaseRepeatButton>
-        </Track>
-      </ControlTemplate></Setter.Value></Setter>
-    </Style>
-  </Window.Resources>
-  <Border x:Name="DockFrame" Background="{x:Static local:WuxiaTheme.Wood}" BorderBrush="#8D7449" BorderThickness="1" Padding="12" CornerRadius="2">
-    <Grid>
-      <Border x:Name="DockSceneryHost" IsHitTestVisible="False" Opacity="0.32"><local:SkinBackdrop/></Border>
-      <Grid x:Name="FullView">
-        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
-        <Grid Margin="0,2,0,14">
-          <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
-          <SystemThumb:Thumb xmlns:SystemThumb="clr-namespace:System.Windows.Controls.Primitives;assembly=PresentationFramework" Grid.ColumnSpan="2" DragStarted="DockBoundsStart" DragDelta="DockMove" DragCompleted="DockBoundsDone" Cursor="SizeAll" ToolTip="拖动移动侧栏"><SystemThumb:Thumb.Template><ControlTemplate><Border Background="Transparent"/></ControlTemplate></SystemThumb:Thumb.Template></SystemThumb:Thumb>
-          <Border x:Name="DockEmblemFrame" IsHitTestVisible="False" Background="{DynamicResource SkinElevatedBrush}" BorderBrush="{DynamicResource SkinBorderBrush}" BorderThickness="1" CornerRadius="2" Width="28" Height="32"><TextBlock x:Name="DockEmblem" Text="匣" FontSize="18" Foreground="{DynamicResource SkinAccentBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/></Border>
-          <StackPanel Grid.Column="1" IsHitTestVisible="False" Margin="7,0,0,0" VerticalAlignment="Center"><TextBlock x:Name="DockTitle" Text="OmniVibe" FontSize="15" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/><TextBlock x:Name="Subtitle" Text="任务有序 · 切换自如" Foreground="{DynamicResource SkinMutedBrush}" FontSize="9" TextTrimming="CharacterEllipsis" Margin="0,3,0,0"/></StackPanel>
-          <Button Grid.Column="2" Content="+" Padding="6,3" Background="Transparent" Click="AllSlotsClick" ToolTip="展开 / 收起完整槽位"/>
-          <Button Grid.Column="3" Content="···" Padding="5,3" Background="Transparent" Click="MenuClick" ToolTip="设置、暂停与退出"/>
-        </Grid>
-        <Grid Grid.Row="1" Margin="0,0,0,11">
-          <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
-          <TextBlock x:Name="Summary" Text="把任务放在顺手的位置" FontSize="11" Foreground="{DynamicResource SkinMutedBrush}"/>
-          <TextBlock Grid.Column="1" x:Name="CountLabel" Text="0 / 9" FontSize="10" Foreground="{DynamicResource SkinMutedBrush}"/>
-        </Grid>
-        <ScrollViewer x:Name="SlotsScroll" Grid.Row="2" OverridesDefaultStyle="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" PanningMode="VerticalOnly">
-          <ScrollViewer.Template><ControlTemplate TargetType="ScrollViewer"><Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="0,0,3,0"/><ScrollBar x:Name="PART_VerticalScrollBar" Grid.Column="1" Style="{StaticResource DockScrollbar}" Orientation="Vertical" Minimum="0" Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}" Value="{Binding VerticalOffset, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/></Grid></ControlTemplate></ScrollViewer.Template>
-          <ItemsControl x:Name="SlotsList">
-            <ItemsControl.ItemTemplate><DataTemplate>
-              <Border Background="{Binding SurfaceColor}" BorderBrush="{Binding OutlineColor}" BorderThickness="1" CornerRadius="1" Margin="0,0,0,6" Padding="8,7" MinHeight="51" Cursor="Hand" Visibility="{Binding IsDisplayed, Converter={StaticResource BoolVisibility}}" MouseLeftButtonUp="SlotClick" MouseRightButtonUp="SlotMenu" MouseEnter="SlotEnter" MouseLeave="SlotLeave" ToolTip="{Binding Tooltip}">
-                <Grid>
-                  <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
-                  <local:SkinDockContent/>
-                  <Button Grid.Column="1" Content="×" Padding="3,0" FontSize="14" VerticalAlignment="Top" Margin="3,-2,-2,0" Background="Transparent" Click="RemoveClick" ToolTip="移出列表，保留终端窗口" Visibility="{Binding Occupied, Converter={StaticResource BoolVisibility}}"/>
-                </Grid>
-              </Border>
-            </DataTemplate></ItemsControl.ItemTemplate>
-          </ItemsControl>
-        </ScrollViewer>
-        <StackPanel Grid.Row="3" Margin="0,6,0,0">
-          <Button Click="OverviewClick" Padding="10,9" Background="{DynamicResource SkinElevatedBrush}" HorizontalContentAlignment="Stretch"><Grid><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><TextBlock x:Name="OverviewLabel" Text="全部排列" FontSize="11" Foreground="{DynamicResource SkinTextBrush}"/><TextBlock Grid.Column="1" x:Name="OverviewShortcut" Text="Alt + 反引号" Foreground="{DynamicResource SkinAccentBrush}" FontSize="9"/></Grid></Button>
-          <TextBlock x:Name="Hint" Text="拖动标题栏到槽位，松手收纳" Foreground="{DynamicResource SkinMutedBrush}" FontSize="10" TextWrapping="Wrap" Margin="1,10,0,0" MinHeight="27"/>
-          <TextBlock x:Name="ShortcutHint" Text="Alt 1–9 直达 · Alt 滚轮选择" Foreground="{DynamicResource SkinMutedBrush}" FontSize="9" TextTrimming="CharacterEllipsis" Margin="1,3,0,1"/>
-        </StackPanel>
-      </Grid>
-      <Grid x:Name="MiniView" Visibility="Collapsed" Margin="-7,-3,-7,-3">
-        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
-        <TextBlock x:Name="MiniEmblem" Text="匣" Foreground="{DynamicResource SkinAccentBrush}" FontSize="21" HorizontalAlignment="Center" Margin="0,0,0,9"/>
-        <ItemsControl Grid.Row="1" x:Name="MiniSlots"><ItemsControl.ItemTemplate><DataTemplate>
-          <Border Background="{Binding SurfaceColor}" BorderBrush="{Binding OutlineColor}" BorderThickness="1" CornerRadius="1" Height="27" Margin="0,0,0,5" Visibility="{Binding IsDisplayed, Converter={StaticResource BoolVisibility}}" MouseLeftButtonUp="SlotClick" MouseRightButtonUp="SlotMenu" Cursor="Hand" ToolTip="{Binding Tooltip}"><Grid><TextBlock Text="{Binding Inscription}" FontFamily="{DynamicResource SkinTitleFont}" Foreground="{Binding NumberColor}" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center"/><Ellipse Width="4" Height="4" Fill="{Binding StateColor}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,3,3,0" Visibility="{Binding Occupied, Converter={StaticResource BoolVisibility}}"/></Grid></Border>
-        </DataTemplate></ItemsControl.ItemTemplate></ItemsControl>
-        <Button Grid.Row="2" Content="↗" Padding="0,5" Background="Transparent" Click="ExpandClick" ToolTip="展开任务栏"/>
-      </Grid>
-      <SystemThumb:Thumb xmlns:SystemThumb="clr-namespace:System.Windows.Controls.Primitives;assembly=PresentationFramework" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="18" Height="18" Margin="0,0,-11,-11" Cursor="SizeNWSE" DragStarted="DockBoundsStart" DragDelta="DockResize" DragCompleted="DockBoundsDone" ToolTip="拖动调整侧栏大小"><SystemThumb:Thumb.Template><ControlTemplate><Border Background="Transparent"><TextBlock Text="◢" Foreground="{DynamicResource SkinAccentBrush}" FontSize="14"/></Border></ControlTemplate></SystemThumb:Thumb.Template></SystemThumb:Thumb>
-    </Grid>
-  </Border>
+﻿<Window x:Class="CodeManager.DockWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:CodeManager" Title="OmniVibe" Width="460" Height="530" WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Background="Transparent" Foreground="{DynamicResource SkinTextBrush}" Topmost="True" ShowInTaskbar="False" ShowActivated="False" UseLayoutRounding="True" SnapsToDevicePixels="True">
+  <Window.Template><ControlTemplate TargetType="Window"><ContentPresenter/></ControlTemplate></Window.Template>
+  <!-- Preserve the equipment anchor and transparent deployment space, without a toolbar or frame. -->
+  <Grid><Canvas x:Name="EquipmentViewport" ClipToBounds="True" HorizontalAlignment="Left" VerticalAlignment="Top">
+    <local:DockWeaponWheel x:Name="WeaponWheel" MouseEnter="WheelHover" MouseMove="WheelHover" MouseLeave="SlotLeave" Cursor="Hand"/>
+  </Canvas></Grid>
 </Window>
