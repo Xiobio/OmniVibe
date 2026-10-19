@@ -39,6 +39,9 @@ internal static class Program
                 string sanitized = GameAudio.OverrideDirectory(Skin.Hextech, "../../outside\\audio.wav");
                 Require(sanitized.StartsWith(GameAudio.OverrideDirectory(Skin.Hextech) + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase), "Unsafe identity path");
                 Require(!Path.GetFileName(sanitized).Contains('.'), "Unsafe identity filename");
+                string huge = Path.Combine(output, "oversized.wav");
+                using (var file = File.Create(huge)) file.SetLength(1_200_001);
+                Require(!GameAudio.ValidateWave(huge, out _), "Oversized audio was accepted"); File.Delete(huge);
             });
             Test("User item import, precedence, safe invalid fallback and reset", () =>
             {
@@ -81,6 +84,19 @@ internal static class Program
                 GameAudio.Preview(Skin.Astral, AudioCue.Switch, .001, true);
                 Until(() => GameAudio.Diagnostics.OutputOpen, "Idle probe did not open output");
                 Until(() => GameAudio.Diagnostics.ActiveVoices == 0 && !GameAudio.Diagnostics.OutputOpen, "Idle device was retained", 2000);
+            });
+            Test("Unsaved file audition and built-in audition do not import or change overrides", () =>
+            {
+                string draft = Path.Combine(output, "unsaved-draft.wav"); File.Copy(source, draft, true);
+                string builtin = GameAudio.GetPath(Skin.Arsenal, AudioCue.Ready, identity);
+                GameAudio.PreviewFile(Skin.Arsenal, AudioCue.Ready, draft, .001, true);
+                Until(() => GameAudio.Diagnostics.ActiveVoices > 0, "Unsaved file preview did not start");
+                Require(GameAudio.GetPath(Skin.Arsenal, AudioCue.Ready, identity) == builtin, "Draft audition wrote an override");
+                GameAudio.Stop(); Until(() => !GameAudio.Diagnostics.OutputOpen, "Draft audition did not stop", 80);
+                GameAudio.PreviewBuiltIn(Skin.Arsenal, AudioCue.Ready, .001, true);
+                Until(() => GameAudio.Diagnostics.ActiveVoices > 0, "Built-in preview did not start");
+                GameAudio.Stop(); Until(() => !GameAudio.Diagnostics.OutputOpen, "Built-in audition did not stop", 80);
+                File.Delete(draft);
             });
             Test("Shutdown releases native audio output", () =>
             {

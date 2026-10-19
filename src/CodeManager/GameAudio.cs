@@ -19,7 +19,7 @@ public enum AudioCue { Switch, Capture, Remove, Expand, Collapse, InventoryOpen,
 /// </summary>
 public static class GameAudio
 {
-    private const int Rate = 44100, Frames = 256, MaxVoices = 4;
+    private const int Rate = 44100, Frames = 256, MaxVoices = 4, MaxWaveBytes = 1_200_000;
     private static readonly object Gate = new();
     private static readonly AutoResetEvent Wake = new(false);
     private static readonly List<Request> Pending = new();
@@ -63,6 +63,18 @@ public static class GameAudio
         if (SafeVolume(volume) > 0) Submit(skin, cue, true, volume, immersive, identity);
     }
 
+    /// <summary>Audition a settings draft without importing it or changing any saved override.</summary>
+    public static void PreviewFile(Skin skin, AudioCue cue, string path, double volume = .45, bool immersive = true)
+    {
+        if (SafeVolume(volume) > 0) Submit(skin, cue, true, volume, immersive, null, path);
+    }
+
+    /// <summary>Audition the distributed cue when a settings draft is marked 'restore default'.</summary>
+    public static void PreviewBuiltIn(Skin skin, AudioCue cue, double volume = .45, bool immersive = true)
+    {
+        if (SafeVolume(volume) > 0) Submit(skin, cue, true, volume, immersive, null, BuiltInPath(skin, cue));
+    }
+
     /// <summary>Cancels pending requests synchronously; wakes the worker to reset and close native output (normally under 20 ms, validated under 80 ms).</summary>
     public static void Stop()
     {
@@ -100,15 +112,15 @@ public static class GameAudio
     public static byte[] ReadCue(Skin skin, AudioCue cue, string? identity = null)
     {
         string path = GetPath(skin, cue, identity);
-        try { byte[] bytes = File.ReadAllBytes(path); _ = Decode(bytes); return bytes; }
+        try { byte[] bytes = ReadFile(path); _ = Decode(bytes); return bytes; }
         catch (Exception) when (!string.Equals(path, BuiltInPath(skin, cue), StringComparison.OrdinalIgnoreCase))
-        { return File.ReadAllBytes(BuiltInPath(skin, cue)); }
+        { return ReadFile(BuiltInPath(skin, cue)); }
     }
 
     /// <summary>Copy a user-provided PCM16 WAV (mono/stereo, 16–96 kHz, at most 3 s). Never edits the source.</summary>
     public static string ImportOverride(Skin skin, AudioCue cue, string sourcePath, string? identity = null)
     {
-        byte[] bytes = File.ReadAllBytes(sourcePath); _ = Decode(bytes);
+        byte[] bytes = ReadFile(sourcePath); _ = Decode(bytes);
         string folder = OverrideDirectory(skin, identity); Directory.CreateDirectory(folder);
         string target = Path.Combine(folder, cue.ToString().ToLowerInvariant() + ".wav");
         string temporary = target + ".tmp"; File.WriteAllBytes(temporary, bytes); File.Move(temporary, target, true);
@@ -118,7 +130,7 @@ public static class GameAudio
 
     public static bool ValidateWave(string path, out string error)
     {
-        try { _ = Decode(File.ReadAllBytes(path)); error = ""; return true; }
+        try { _ = Decode(ReadFile(path)); error = ""; return true; }
         catch (Exception exception) { error = exception.Message; return false; }
     }
 
@@ -140,14 +152,14 @@ public static class GameAudio
     private static double SafeVolume(double volume) => double.IsFinite(volume) ? Math.Clamp(volume, 0, 1) : .45;
     private static bool QuietCue(AudioCue cue) => cue is AudioCue.Switch or AudioCue.Capture or AudioCue.Remove or AudioCue.Waiting or AudioCue.Ready or AudioCue.Error;
     private static int Priority(AudioCue cue) => cue is AudioCue.Waiting or AudioCue.Ready or AudioCue.Error ? 3 : cue == AudioCue.Detent ? 0 : 1;
-    private sealed record Request(Skin Skin, AudioCue Cue, bool Preview, double Volume, bool Immersive, string? Identity, int Generation, long Submitted);
+    private sealed record Request(Skin Skin, AudioCue Cue, bool Preview, double Volume, bool Immersive, string? Identity, int Generation, long Submitted, string? SourcePath);
     private sealed record Sample(float[] Data, DateTime Changed, long Length);
     private sealed class Voice
     {
         public required float[] Data; public int Position, Limit; public double Volume; public bool Preview; public int Priority;
     }
 
-    private static void Submit(Skin skin, AudioCue cue, bool preview, double volume, bool immersive, string? identity)
+    private static void Submit(Skin skin, AudioCue cue, bool preview, double volume, bool immersive, string? identity, string? sourcePath = null)
     {
         lock (Gate)
         {
@@ -161,7 +173,7 @@ public static class GameAudio
             // notification replaces the same item, leaving at most two priorities.
             Pending.RemoveAll(r => preview ? r.Preview : !r.Preview && (Priority(r.Cue) <= Priority(cue) || (Priority(cue) == 3 && Priority(r.Cue) == 3 && r.Identity == identity)));
             if (Pending.Count >= 4) Pending.RemoveAt(0);
-            Pending.Add(new(skin, cue, preview, SafeVolume(volume), immersive, identity, _generation, now));
+            Pending.Add(new(skin, cue, preview, SafeVolume(volume), immersive, identity, _generation, now, sourcePath));
             if (_thread == null)
             {
                 _thread = new Thread(Worker) { IsBackground = true, Name = "OmniVibe themed audio" };
@@ -173,23 +185,31 @@ public static class GameAudio
 
     private static Sample Load(Request request)
     {
-        string path = GetPath(request.Skin, request.Cue, request.Identity);
+        string path = request.SourcePath ?? GetPath(request.Skin, request.Cue, request.Identity);
         Sample? sample;
         var file = new FileInfo(path);
         lock (Gate) if (Cache.TryGetValue(path, out sample) && sample.Changed == file.LastWriteTimeUtc && sample.Length == file.Length) return sample;
         float[] data;
-        try { data = Decode(File.ReadAllBytes(path)); }
-        catch (Exception) when (!string.Equals(path, BuiltInPath(request.Skin, request.Cue), StringComparison.OrdinalIgnoreCase))
-        { path = BuiltInPath(request.Skin, request.Cue); file = new FileInfo(path); data = Decode(File.ReadAllBytes(path)); }
+        try { data = Decode(ReadFile(path)); }
+        catch (Exception) when (request.SourcePath == null && !string.Equals(path, BuiltInPath(request.Skin, request.Cue), StringComparison.OrdinalIgnoreCase))
+        { path = BuiltInPath(request.Skin, request.Cue); file = new FileInfo(path); data = Decode(ReadFile(path)); }
         sample = new(data, file.LastWriteTimeUtc, file.Length);
         lock (Gate) { if (Cache.Count > 100) Cache.Clear(); Cache[path] = sample; }
         return sample;
     }
 
+    private static byte[] ReadFile(string path)
+    {
+        // Check through the same open handle used for reading, before allocation.
+        using var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete);
+        if (stream.Length is < 44 or > MaxWaveBytes) throw new InvalidDataException("WAV must be PCM16 mono/stereo, at most 3 seconds / 1.2 MB.");
+        var bytes = new byte[(int)stream.Length]; stream.ReadExactly(bytes); return bytes;
+    }
+
     /// <summary>Strict RIFF chunk bounds, PCM16 only, linear resampling, click-safe edges.</summary>
     private static float[] Decode(byte[] bytes)
     {
-        if (bytes.Length < 44 || bytes.Length > 1_200_000) throw new InvalidDataException("WAV must be PCM16 mono/stereo, at most 3 seconds.");
+        if (bytes.Length < 44 || bytes.Length > MaxWaveBytes) throw new InvalidDataException("WAV must be PCM16 mono/stereo, at most 3 seconds.");
         using var reader = new BinaryReader(new MemoryStream(bytes), Encoding.ASCII);
         if (new string(reader.ReadChars(4)) != "RIFF") throw new InvalidDataException("Expected RIFF WAV.");
         _ = reader.ReadUInt32(); if (new string(reader.ReadChars(4)) != "WAVE") throw new InvalidDataException("Expected WAVE.");
