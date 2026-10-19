@@ -11,6 +11,9 @@ OUT = ROOT / 'skins' / 'audio'
 RATE = 44100
 CUES = ['switch', 'capture', 'remove', 'expand', 'collapse', 'inventoryopen', 'inventoryclose',
         'arrange', 'restore', 'reorder', 'waiting', 'ready', 'error', 'detent']
+TARGET_RMS = dict(switch=.050, capture=.060, remove=.046, expand=.034, collapse=.028,
+                  inventoryopen=.044, inventoryclose=.035, arrange=.040, restore=.043,
+                  reorder=.030, waiting=.055, ready=.056, error=.055, detent=.019)
 THEMES = {
     'ink-jade': ('Jade mechanism', 'bamboo, jade bead and brushed silk', 0),
     'midnight': ('Midnight mountain', 'low glass, airy wind and distant bronze', 1),
@@ -58,7 +61,7 @@ class Designer:
         for delay, gain in [(0.027,.1),(.057,.065),(.091,.035)]:
             n=int(delay*RATE)
             self.x[n:] += dry[:-n, ::-1] * gain
-    def finish(self, peak):
+    def finish(self, peak, target_rms):
         self.echo()
         self.x -= np.mean(self.x, axis=0)
         n = len(self.x)
@@ -70,6 +73,12 @@ class Designer:
         window[-edge:]=np.linspace(1,0,edge)**1.4
         self.x-=window[:,None]*(self.x.sum(axis=0)/window.sum())
         self.x *= peak / max(np.max(np.abs(self.x)), 1e-8)
+        # Match each operation across themes; peak normalization alone made a
+        # sustained bowl ~7 dB louder than a transient receiver at the same peak.
+        # Keep transient contrast and leave a strict headroom ceiling.
+        desired=target_rms/max(float(np.sqrt(np.mean(self.x*self.x))),1e-8)
+        ceiling=min(.44,peak*1.45)/max(float(np.max(np.abs(self.x))),1e-8)
+        self.x*=min(desired,ceiling)
         return np.round(self.x*32767).astype('<i2')
 
 def motif(d, theme, cue, at=0, intensity=1):
@@ -197,7 +206,7 @@ def design(theme, cue, index):
         elif cue=='reorder': d.add(d.tone(180+index*17,.055,50),.065,.1)
         peak={'switch':.32,'capture':.38,'remove':.28,'expand':.25,'collapse':.22,
               'inventoryopen':.32,'inventoryclose':.25,'arrange':.36,'restore':.30,'reorder':.21}[cue]
-    return d.finish(peak)
+    return d.finish(peak,TARGET_RMS[cue])
 
 def metrics(pcm):
     x=pcm.astype(float)/32768
@@ -211,7 +220,7 @@ def main():
     argparse.ArgumentParser().add_argument('--validate',action='store_true')
     manifest=dict(version=1,sample_rate=RATE,channels=2,bits=16,
         license='CC0-1.0',provenance='Original procedural Foley and instrument synthesis; no extracted game audio, no official voices.',
-        generator='tools/game-audio/generate.py',themes={})
+        generator='tools/game-audio/generate.py',rms_targets=TARGET_RMS,themes={})
     hashes=set(); results=[]
     for slug,(name,materials,index) in THEMES.items():
         folder=OUT/slug;folder.mkdir(parents=True,exist_ok=True)
@@ -230,7 +239,9 @@ def main():
     OUT.mkdir(exist_ok=True)
     (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf-8')
     report=ROOT/'artifacts'/'game-audio';report.mkdir(parents=True,exist_ok=True)
-    (report/'waveform-validation.json').write_text(json.dumps(dict(passed=True,files=len(results),unique_hashes=len(hashes),results=results),indent=2)+'\n')
+    level_spreads={cue:round(20*math.log10(max(r['rms'] for r in results if r['cue']==cue)/min(r['rms'] for r in results if r['cue']==cue)),4) for cue in CUES}
+    assert max(level_spreads.values())<1.0,level_spreads
+    (report/'waveform-validation.json').write_text(json.dumps(dict(passed=True,files=len(results),unique_hashes=len(hashes),rms_spread_db=level_spreads,results=results),indent=2)+'\n')
     # Audition playlist: switch/capture/ready per theme separated by actual silence.
     montage=[]
     for slug,(_,_,index) in THEMES.items():

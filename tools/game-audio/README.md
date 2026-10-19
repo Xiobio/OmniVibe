@@ -11,8 +11,10 @@ glissando, wooden chess token, celestial harp/glass, and porcelain/flute breath.
 Operation arrangements distinguish a draw, latch, release, four-corner array,
 backpack reveal, soft hover, and three semantic notification contours.
 
-Peak levels are 0.14–0.43 before the user's volume; the generated files have
+Peak levels stay below 0.44 before the user's volume; the generated files have
 zero endpoints, near-zero DC, no clipping, and short, shaped attacks/releases.
+Each semantic operation is RMS-matched across all themes (validated spread below
+1 dB) so changing a material family does not unexpectedly double playback level.
 They deliberately have no music loop, spoken official line or copied game sample.
 
 Production playback lives in `src/CodeManager/GameAudio.cs`. It uses a bounded
@@ -43,6 +45,9 @@ to 44.1 kHz and shapes the edges. Corrupt/missing custom data falls back safely.
 Official character lines are not bundled. Users may import recordings they have
 permission to use. A per-item voice override can therefore accompany a character
 without confusing the framework's functional task ID with its visual identity.
+`PreviewFile` auditions an unsaved draft through the same mixer without importing;
+`PreviewBuiltIn` explicitly auditions the distributed default without overrides.
+Read size is checked on the same file handle before allocating PCM input memory.
 
 Validation: `dotnet run --project tools/game-audio-validation -c Debug -- artifacts/game-audio`.
 This compiles the production engine against a minimal skin-contract fixture so

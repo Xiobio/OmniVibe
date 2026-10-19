@@ -1,0 +1,62 @@
+{
+  "passed": true,
+  "files": 182,
+  "unique_hashes": 182,
+  "rms_spread_db": {
+    "switch": 0.0748,
+    "capture": 0.3824,
+    "remove": 0.0002,
+    "expand": 0.0,
+    "collapse": 0.0,
+    "inventoryopen": 0.0,
+    "inventoryclose": 0.0,
+    "arrange": 0.143,
+    "restore": 0.0,
+    "reorder": 0.0,
+    "waiting": 0.8216,
+    "ready": 0.5442,
+    "error": 0.7241,
+    "detent": 0.0005
+  },
+  "largest_cross_theme_rms_spread_db": 0.8216,
+  "engine_suites": 8,
+  "native_output_exercised": true,
+  "source_reports": [
+    "artifacts/game-audio/waveform-validation.json",
+    "artifacts/game-audio/engine-validation.json"
+  ],
+  "engine_tests": [
+    {
+      "name": "All 182 PCM files decode and have independent hashes",
+      "passed": true
+    },
+    {
+      "name": "Strict malformed RIFF rejection and safe identity paths",
+      "passed": true
+    },
+    {
+      "name": "User item import, precedence, safe invalid fallback and reset",
+      "passed": true
+    },
+    {
+      "name": "Native output opens; calls are nonblocking and bounded; stop cancels voices",
+      "passed": true
+    },
+    {
+      "name": "Quiet mode suppresses hover; disabled master remains silent; explicit audition works",
+      "passed": true
+    },
+    {
+      "name": "Natural completion releases idle native device",
+      "passed": true
+    },
+    {
+      "name": "Unsaved file audition and built-in audition do not import or change overrides",
+      "passed": true
+    },
+    {
+      "name": "Shutdown releases native audio output",
+      "passed": true
+    }
+  ]
+}

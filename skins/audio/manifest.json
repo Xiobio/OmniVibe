@@ -6,6 +6,22 @@
   "license": "CC0-1.0",
   "provenance": "Original procedural Foley and instrument synthesis; no extracted game audio, no official voices.",
   "generator": "tools/game-audio/generate.py",
+  "rms_targets": {
+    "switch": 0.05,
+    "capture": 0.06,
+    "remove": 0.046,
+    "expand": 0.034,
+    "collapse": 0.028,
+    "inventoryopen": 0.044,
+    "inventoryclose": 0.035,
+    "arrange": 0.04,
+    "restore": 0.043,
+    "reorder": 0.03,
+    "waiting": 0.055,
+    "ready": 0.056,
+    "error": 0.055,
+    "detent": 0.019
+  },
   "themes": {
     "ink-jade": {
       "name": "Jade mechanism",
@@ -13,128 +29,9 @@
       "cues": {
         "switch": {
           "file": "ink-jade/switch.wav",
-          "sha256": "5f05c662cffc1e60baf7b048c262033e30076940ab0d5c1e8e44524cbd33e819",
-          "peak": 0.319977,
-          "rms": 0.044054,
-          "dc": 1.3e-07,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.114746,
-          "seconds": 0.3
-        },
-        "capture": {
-          "file": "ink-jade/capture.wav",
-          "sha256": "471ba4c29e7e1e350201ecf2896b723d028c5d839a23a66e66b3e46885db3bb4",
-          "peak": 0.379974,
-          "rms": 0.05541,
-          "dc": 1e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.160339,
-          "seconds": 0.48
-        },
-        "remove": {
-          "file": "ink-jade/remove.wav",
-          "sha256": "258ac3838748963a902a0820eab9374b730d17815c9413ddc3006637f07f39ce",
-          "peak": 0.279999,
-          "rms": 0.031983,
-          "dc": 1e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.096954,
-          "seconds": 0.34
-        },
-        "expand": {
-          "file": "ink-jade/expand.wav",
-          "sha256": "b37ec203437f6c9592b34d96edc3294a4f8097979e54c5322ccc637561316aae",
-          "peak": 0.25,
-          "rms": 0.032214,
-          "dc": 0.0,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.104797,
-          "seconds": 0.34
-        },
-        "collapse": {
-          "file": "ink-jade/collapse.wav",
-          "sha256": "4d43bcc09c15436ee1d61bbc963843d16ad68303d9ab5947cdc3c91aa3928756",
-          "peak": 0.220001,
-          "rms": 0.029991,
-          "dc": 1.6e-07,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.084137,
-          "seconds": 0.28
-        },
-        "inventoryopen": {
-          "file": "ink-jade/inventoryopen.wav",
-          "sha256": "9ea597dda374c2ff3ee9b35c288df9979b50725c99b662939214239fc59a815b",
-          "peak": 0.319977,
-          "rms": 0.034017,
-          "dc": 3e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.109131,
-          "seconds": 0.51
-        },
-        "inventoryclose": {
-          "file": "ink-jade/inventoryclose.wav",
-          "sha256": "d1669cda83c3451bccbd3aad9bff31ffd2b4d1f67cada69b60b449882ffedb0d",
-          "peak": 0.25,
-          "rms": 0.034047,
-          "dc": 7e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.0914,
-          "seconds": 0.33
-        },
-        "arrange": {
-          "file": "ink-jade/arrange.wav",
-          "sha256": "9807f4ff0cb6f0500bdfc6e2797896757573f1051eb0d2d67f5b41d434cf0e9f",
-          "peak": 0.359985,
-          "rms": 0.038335,
+          "sha256": "3c941b31f27eae86d9021cacb8b33b3cae5ee55796ea567df6d7879fd0ab8856",
+          "peak": 0.363159,
+          "rms": 0.049999,
           "dc": 9e-08,
           "first_frame": [
             0,
@@ -144,15 +41,134 @@
             0,
             0
           ],
-          "max_step": 0.13269,
+          "max_step": 0.130219,
+          "seconds": 0.3
+        },
+        "capture": {
+          "file": "ink-jade/capture.wav",
+          "sha256": "d10f016db1b9f4d59476b320ae22976a0cae744a7d01dab820a950a4aff9ef81",
+          "peak": 0.411469,
+          "rms": 0.059998,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.173615,
+          "seconds": 0.48
+        },
+        "remove": {
+          "file": "ink-jade/remove.wav",
+          "sha256": "66844cc7118bc16dab0923390daf0e147a0624c958f40185c20789270627b2c4",
+          "peak": 0.402679,
+          "rms": 0.045999,
+          "dc": 4e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.139435,
+          "seconds": 0.34
+        },
+        "expand": {
+          "file": "ink-jade/expand.wav",
+          "sha256": "5917093a18a5003f2ee7771fea4a6ba4ee2953a2f98349e322b14c9f80d1abdc",
+          "peak": 0.263855,
+          "rms": 0.033999,
+          "dc": 4e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.110626,
+          "seconds": 0.34
+        },
+        "collapse": {
+          "file": "ink-jade/collapse.wav",
+          "sha256": "d13ef03b62ed54920f66e7937438fc1092f527acf036462a0158547f004e26f2",
+          "peak": 0.205383,
+          "rms": 0.027999,
+          "dc": 2.1e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.078522,
+          "seconds": 0.28
+        },
+        "inventoryopen": {
+          "file": "ink-jade/inventoryopen.wav",
+          "sha256": "ca1515191c385eb2a1e8c9f6ade92e2838c5dcd0e0b861f8b3000be2bbe2a321",
+          "peak": 0.413879,
+          "rms": 0.043999,
+          "dc": 6e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.141174,
+          "seconds": 0.51
+        },
+        "inventoryclose": {
+          "file": "ink-jade/inventoryclose.wav",
+          "sha256": "38631d3d04ba3efec8f1fda89bcd8c6cebe8e725fc60a288dfba95ed27d0b461",
+          "peak": 0.256989,
+          "rms": 0.034999,
+          "dc": 7e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.093933,
+          "seconds": 0.33
+        },
+        "arrange": {
+          "file": "ink-jade/arrange.wav",
+          "sha256": "990e1f3eae50dfef1c865f0fbf16cbbc62f58d7dff9487039dd5894421c27e4c",
+          "peak": 0.37561,
+          "rms": 0.039999,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.138458,
           "seconds": 0.56
         },
         "restore": {
           "file": "ink-jade/restore.wav",
-          "sha256": "6cd43e9d7e5e61b5543d9f05a0f2bb87b1ce10aa52f3a26ee305728fcbd93bf3",
-          "peak": 0.299988,
-          "rms": 0.033344,
-          "dc": 1.6e-07,
+          "sha256": "c5375ebad4653a09e6cabc0287bb66e6837a1757d53704b5e26472d86da0c3e9",
+          "peak": 0.386841,
+          "rms": 0.042999,
+          "dc": 3.8e-07,
           "first_frame": [
             0,
             0
@@ -161,15 +177,15 @@
             0,
             0
           ],
-          "max_step": 0.10553,
+          "max_step": 0.136047,
           "seconds": 0.45
         },
         "reorder": {
           "file": "ink-jade/reorder.wav",
-          "sha256": "5491ccf301f11eaec680d41addf094689cc920360897c7b5ecdb564c1dfc7897",
-          "peak": 0.209991,
-          "rms": 0.03133,
-          "dc": 1e-07,
+          "sha256": "fa541772d10f5139b8854c766810a369dd47028db63beea22a273279859ddbaf",
+          "peak": 0.20108,
+          "rms": 0.029999,
+          "dc": 9e-08,
           "first_frame": [
             0,
             0
@@ -178,15 +194,15 @@
             0,
             0
           ],
-          "max_step": 0.08078,
+          "max_step": 0.077362,
           "seconds": 0.24
         },
         "waiting": {
           "file": "ink-jade/waiting.wav",
-          "sha256": "44e4de9e550bd437d4b80f5129282666000d4404266685c5c71069f48ccfafbe",
-          "peak": 0.399994,
-          "rms": 0.045486,
-          "dc": 3e-08,
+          "sha256": "bc8c87a819479d32ea1078fdb1733b1a20aa02e2f8ccf158a0bb0e8412c85f80",
+          "peak": 0.439972,
+          "rms": 0.050034,
+          "dc": 9e-08,
           "first_frame": [
             0,
             0
@@ -195,14 +211,31 @@
             0,
             0
           ],
-          "max_step": 0.184998,
+          "max_step": 0.203522,
           "seconds": 0.62
         },
         "ready": {
           "file": "ink-jade/ready.wav",
-          "sha256": "2c228ef11903dfc0fa16fdb88fd36de4c9b3fe75e739793e40b70db70c4434e4",
-          "peak": 0.399994,
-          "rms": 0.047815,
+          "sha256": "8704a1057d23970100c0c3af150e8d6e662a03b650270d63862338d39908255c",
+          "peak": 0.439972,
+          "rms": 0.052597,
+          "dc": 9e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.151001,
+          "seconds": 0.75
+        },
+        "error": {
+          "file": "ink-jade/error.wav",
+          "sha256": "2eec9699fd1668e8a914be096078b2ba7c5c8080c2c3fced8d9b2f1b9e44e99e",
+          "peak": 0.439972,
+          "rms": 0.050599,
           "dc": 1e-08,
           "first_frame": [
             0,
@@ -212,32 +245,15 @@
             0,
             0
           ],
-          "max_step": 0.137268,
-          "seconds": 0.75
-        },
-        "error": {
-          "file": "ink-jade/error.wav",
-          "sha256": "99d1b6385a173a1cf726c889e36ca7809fd1f609549632ef53dc6df17b675f91",
-          "peak": 0.429993,
-          "rms": 0.049449,
-          "dc": 3e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.136932,
+          "max_step": 0.140137,
           "seconds": 0.6
         },
         "detent": {
           "file": "ink-jade/detent.wav",
-          "sha256": "cbb8b3716901fbcee77429c0c1bba610de4f457a40abdafd1a335f8c2a8b204c",
-          "peak": 0.139984,
-          "rms": 0.025166,
-          "dc": 1.2e-07,
+          "sha256": "de2a0a3e07614c4932f98a3c9b3d4f433a83743a1bde4cda2492fef84ca7065d",
+          "peak": 0.105682,
+          "rms": 0.018999,
+          "dc": 8e-08,
           "first_frame": [
             0,
             0
@@ -246,7 +262,7 @@
             0,
             0
           ],
-          "max_step": 0.050018,
+          "max_step": 0.03775,
           "seconds": 0.052
         }
       }
@@ -257,9 +273,43 @@
       "cues": {
         "switch": {
           "file": "midnight/switch.wav",
-          "sha256": "d8c705da8c462ff08fd43ce047099967c5739ac1b5ac28196592e5f71b58faa1",
-          "peak": 0.319977,
-          "rms": 0.072274,
+          "sha256": "99a14dc6f8d7c0942b16741bb8a8c8bd4c89f3d50fe067962951668dd034a314",
+          "peak": 0.221375,
+          "rms": 0.049999,
+          "dc": 6e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.03183,
+          "seconds": 0.3
+        },
+        "capture": {
+          "file": "midnight/capture.wav",
+          "sha256": "04da0f704bca72ed0254448e0f33305d1d415ca921e47da621aa1eb681372e9c",
+          "peak": 0.241364,
+          "rms": 0.059998,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.033203,
+          "seconds": 0.48
+        },
+        "remove": {
+          "file": "midnight/remove.wav",
+          "sha256": "3b00d99db67a3afc0f7863f8e9e578defa1cf74802ded16a29e27669137155fd",
+          "peak": 0.204803,
+          "rms": 0.045998,
           "dc": 7e-08,
           "first_frame": [
             0,
@@ -269,49 +319,15 @@
             0,
             0
           ],
-          "max_step": 0.046021,
-          "seconds": 0.3
-        },
-        "capture": {
-          "file": "midnight/capture.wav",
-          "sha256": "aaf257c9fc348a653b3751ff6b648d6a11cf7c9cd43630fab5efbc10c7cac419",
-          "peak": 0.379974,
-          "rms": 0.094458,
-          "dc": 3e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.052277,
-          "seconds": 0.48
-        },
-        "remove": {
-          "file": "midnight/remove.wav",
-          "sha256": "d5d97ecd1ee7782865a94adc003f72e1e2075d4684e4eb4536659b490f5db6e2",
-          "peak": 0.279999,
-          "rms": 0.062882,
-          "dc": 3e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.038177,
+          "max_step": 0.027924,
           "seconds": 0.34
         },
         "expand": {
           "file": "midnight/expand.wav",
-          "sha256": "9843c3fcd44d4cc195fa2be4fce96aa15f88dd86eb53052f435bf21ba8ed923c",
-          "peak": 0.25,
-          "rms": 0.051151,
-          "dc": 0.0,
+          "sha256": "9dd8611fd8ca870b6e497d7375ba2c6fb8496e15d9a800f8979b0d23cada0683",
+          "peak": 0.166168,
+          "rms": 0.033999,
+          "dc": 1e-08,
           "first_frame": [
             0,
             0
@@ -320,14 +336,31 @@
             0,
             0
           ],
-          "max_step": 0.045837,
+          "max_step": 0.030487,
           "seconds": 0.34
         },
         "collapse": {
           "file": "midnight/collapse.wav",
-          "sha256": "bc09e66da96d2c202b5e5c4a974ba728ea8e258773ee17bef591f4c0a22519b5",
-          "peak": 0.220001,
-          "rms": 0.057791,
+          "sha256": "1541bbf5809a17f25ade92e052e78f921b762834f18a728b4af9c7d969b1f361",
+          "peak": 0.106598,
+          "rms": 0.027999,
+          "dc": 1.7e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.019318,
+          "seconds": 0.28
+        },
+        "inventoryopen": {
+          "file": "midnight/inventoryopen.wav",
+          "sha256": "2780b0c0896c24522996458dbf6931537ddacae22bfd378eafd2754a570b6f00",
+          "peak": 0.240265,
+          "rms": 0.043999,
           "dc": 1.6e-07,
           "first_frame": [
             0,
@@ -337,14 +370,99 @@
             0,
             0
           ],
-          "max_step": 0.039886,
-          "seconds": 0.28
+          "max_step": 0.04364,
+          "seconds": 0.51
         },
-        "inventoryopen": {
-          "file": "midnight/inventoryopen.wav",
-          "sha256": "6ad4d4314b0436a1a5e6ed33fea35526f353872a5c7fc9bc98d6e4e8e1145aed",
-          "peak": 0.319977,
-          "rms": 0.058595,
+        "inventoryclose": {
+          "file": "midnight/inventoryclose.wav",
+          "sha256": "dae77d6a480ed1c39ec53a45c17ed674e9694904c53ea60def71eb03582d9765",
+          "peak": 0.147827,
+          "rms": 0.034999,
+          "dc": 0.0,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.026489,
+          "seconds": 0.33
+        },
+        "arrange": {
+          "file": "midnight/arrange.wav",
+          "sha256": "5099c2f785c0f3280c72f1f3282a3c3a2b5af94f1f604fd2f689837a334a75c0",
+          "peak": 0.231567,
+          "rms": 0.039999,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.029877,
+          "seconds": 0.56
+        },
+        "restore": {
+          "file": "midnight/restore.wav",
+          "sha256": "30d2dc1980c2cc00180e854de73373d2c36c8d1c24f21b062f0d76eb24e68baa",
+          "peak": 0.209473,
+          "rms": 0.042999,
+          "dc": 1e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.031982,
+          "seconds": 0.45
+        },
+        "reorder": {
+          "file": "midnight/reorder.wav",
+          "sha256": "85defd6786b8437df1ee206b99ded4553b9fe5c59a1ddbd9f6fe085ac3bb1f74",
+          "peak": 0.115173,
+          "rms": 0.029999,
+          "dc": 6e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.016968,
+          "seconds": 0.24
+        },
+        "waiting": {
+          "file": "midnight/waiting.wav",
+          "sha256": "76f757cdd8d352a6fd785fea5ed362c10efe8142d9ff55d0818225fe4e19e09d",
+          "peak": 0.295532,
+          "rms": 0.054998,
+          "dc": 4e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.051178,
+          "seconds": 0.62
+        },
+        "ready": {
+          "file": "midnight/ready.wav",
+          "sha256": "e23975df64c7fdd7abcd9b54ef6975a9ab3cc9fd3e023f7e8032ea60b4a25b5d",
+          "peak": 0.326508,
+          "rms": 0.055998,
           "dc": 3e-08,
           "first_frame": [
             0,
@@ -354,117 +472,15 @@
             0,
             0
           ],
-          "max_step": 0.058136,
-          "seconds": 0.51
-        },
-        "inventoryclose": {
-          "file": "midnight/inventoryclose.wav",
-          "sha256": "0a69298e30ce5598aa60f2f9ac66c3419c0e7005e9a28c9b95bcb9d6fc7bcfc7",
-          "peak": 0.25,
-          "rms": 0.059181,
-          "dc": 1.4e-07,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.04483,
-          "seconds": 0.33
-        },
-        "arrange": {
-          "file": "midnight/arrange.wav",
-          "sha256": "5200980edcca74e5ea6206765faf588318b1cd85d6f28e4a1130a37d2daf129b",
-          "peak": 0.359985,
-          "rms": 0.062185,
-          "dc": 8e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.046478,
-          "seconds": 0.56
-        },
-        "restore": {
-          "file": "midnight/restore.wav",
-          "sha256": "9a98d41b63821711be8b61de23c1d578ed41d7536d0e7b00a691e0906adb0a37",
-          "peak": 0.299988,
-          "rms": 0.061575,
-          "dc": 1e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.045776,
-          "seconds": 0.45
-        },
-        "reorder": {
-          "file": "midnight/reorder.wav",
-          "sha256": "9cc9842e1511904bff675b21d9e250683a94ac46b12b2d9b910e74b682592dfc",
-          "peak": 0.209991,
-          "rms": 0.05469,
-          "dc": 7e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.030975,
-          "seconds": 0.24
-        },
-        "waiting": {
-          "file": "midnight/waiting.wav",
-          "sha256": "fc8ac35f16b12dc23fbb2a332ebeda0f40d4ab53711408ef973a805922eb1283",
-          "peak": 0.399994,
-          "rms": 0.074437,
-          "dc": 1e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.069244,
-          "seconds": 0.62
-        },
-        "ready": {
-          "file": "midnight/ready.wav",
-          "sha256": "fa18e3384303c69573b3100998e0e35ad8ddcbe4f158b78724f16a372f85d686",
-          "peak": 0.399994,
-          "rms": 0.068601,
-          "dc": 1e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.055786,
+          "max_step": 0.045563,
           "seconds": 0.75
         },
         "error": {
           "file": "midnight/error.wav",
-          "sha256": "586cbe130acb9b3e321ca24f1590df7114427ddd3ed17c8d074279c9e1845976",
-          "peak": 0.429993,
-          "rms": 0.079991,
-          "dc": 8e-08,
+          "sha256": "25bfc74773153dae97a0a0157d01ed6830a2ac5ad1960ce542098d57780d002e",
+          "peak": 0.295654,
+          "rms": 0.054998,
+          "dc": 1.2e-07,
           "first_frame": [
             0,
             0
@@ -473,15 +489,15 @@
             0,
             0
           ],
-          "max_step": 0.060791,
+          "max_step": 0.041779,
           "seconds": 0.6
         },
         "detent": {
           "file": "midnight/detent.wav",
-          "sha256": "77308457c07bceac907fb73817d0c382306e51869a11e2d16b6e531039aa0715",
-          "peak": 0.139984,
-          "rms": 0.026466,
-          "dc": 1.3e-07,
+          "sha256": "a94bf953b66930482e02d9488d34adf04d37bb7a2a092fba67734901a1377cc5",
+          "peak": 0.100494,
+          "rms": 0.019,
+          "dc": 1.1e-07,
           "first_frame": [
             0,
             0
@@ -490,7 +506,7 @@
             0,
             0
           ],
-          "max_step": 0.04895,
+          "max_step": 0.035156,
           "seconds": 0.052
         }
       }
@@ -501,9 +517,60 @@
       "cues": {
         "switch": {
           "file": "cinnabar/switch.wav",
-          "sha256": "e36811f7c6ea4c17d9f931a79e22560d581f7fb716baad5e2bd88bd1943380c9",
-          "peak": 0.319977,
-          "rms": 0.0532,
+          "sha256": "a9c2c5f01f5447d8ef96ecc6fdd0c4664bb0e076ff77241e26f46efaf11100bd",
+          "peak": 0.30072,
+          "rms": 0.049999,
+          "dc": 4e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.086243,
+          "seconds": 0.3
+        },
+        "capture": {
+          "file": "cinnabar/capture.wav",
+          "sha256": "d553cdc03bfe86fb7a8454ec94e05d4f890b622050931a05655c92e83e0652ea",
+          "peak": 0.357117,
+          "rms": 0.059998,
+          "dc": 9e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.09375,
+          "seconds": 0.48
+        },
+        "remove": {
+          "file": "cinnabar/remove.wav",
+          "sha256": "9367b1262f01064d45ce3feeb31e43d579eb490ec10cc3109355119f3d27a304",
+          "peak": 0.293732,
+          "rms": 0.045999,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.070801,
+          "seconds": 0.34
+        },
+        "expand": {
+          "file": "cinnabar/expand.wav",
+          "sha256": "61aee9f5206b2b84a6f77953f80dba4328e61dadb9c6b0c999fb6819869d4d51",
+          "peak": 0.212891,
+          "rms": 0.033999,
           "dc": 1e-08,
           "first_frame": [
             0,
@@ -513,14 +580,99 @@
             0,
             0
           ],
-          "max_step": 0.091736,
-          "seconds": 0.3
+          "max_step": 0.047577,
+          "seconds": 0.34
         },
-        "capture": {
-          "file": "cinnabar/capture.wav",
-          "sha256": "2c284489fa1ed471d79cac39b670570f8d2f60bdee8544684b2b51aa02445f97",
-          "peak": 0.379974,
-          "rms": 0.06384,
+        "collapse": {
+          "file": "cinnabar/collapse.wav",
+          "sha256": "bad12a3cf510a54d987fc0d4c071a5d64dbcba97058b033665809eda3df65e59",
+          "peak": 0.146973,
+          "rms": 0.027999,
+          "dc": 4e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.039215,
+          "seconds": 0.28
+        },
+        "inventoryopen": {
+          "file": "cinnabar/inventoryopen.wav",
+          "sha256": "6bff58fcf1b045b693a3ca4e527d84d4e9850f821a105839804ed7b31be9005e",
+          "peak": 0.317169,
+          "rms": 0.043999,
+          "dc": 1e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.087311,
+          "seconds": 0.51
+        },
+        "inventoryclose": {
+          "file": "cinnabar/inventoryclose.wav",
+          "sha256": "a807cb4d906dce38c02918ead74d12bfced6457e25e7c4ae40e8ef5eff75ebae",
+          "peak": 0.198029,
+          "rms": 0.034999,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.05304,
+          "seconds": 0.33
+        },
+        "arrange": {
+          "file": "cinnabar/arrange.wav",
+          "sha256": "ee6629f519b24eadee780f889a63828399e8df8be040ad511e87ee99d2a77dd2",
+          "peak": 0.289307,
+          "rms": 0.039999,
+          "dc": 8e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.07959,
+          "seconds": 0.56
+        },
+        "restore": {
+          "file": "cinnabar/restore.wav",
+          "sha256": "384ad3a3e9b592046dfb11939e7129b2488ca50347cde8e4f3064b0e5b7b91f4",
+          "peak": 0.275391,
+          "rms": 0.042999,
+          "dc": 2.8e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.101349,
+          "seconds": 0.45
+        },
+        "reorder": {
+          "file": "cinnabar/reorder.wav",
+          "sha256": "c0a7cebb3ff66d994fafbd3473926d0ce19d05159d42ba2694f611614588d15c",
+          "peak": 0.151947,
+          "rms": 0.029999,
           "dc": 1.2e-07,
           "first_frame": [
             0,
@@ -530,150 +682,31 @@
             0,
             0
           ],
-          "max_step": 0.099731,
-          "seconds": 0.48
-        },
-        "remove": {
-          "file": "cinnabar/remove.wav",
-          "sha256": "16543a46229c85db6c84ee26b7e640d022514ab5544798b4039a4a201558948f",
-          "peak": 0.279999,
-          "rms": 0.043847,
-          "dc": 4e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.067505,
-          "seconds": 0.34
-        },
-        "expand": {
-          "file": "cinnabar/expand.wav",
-          "sha256": "ddc5d854f63875d55bcf155f1228bee930ca8ea8d7da6ba3e86fc2944d063fc4",
-          "peak": 0.25,
-          "rms": 0.039923,
-          "dc": 1.6e-07,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.055847,
-          "seconds": 0.34
-        },
-        "collapse": {
-          "file": "cinnabar/collapse.wav",
-          "sha256": "cc73bb5b33759feb304ffbc97ecb6f71979759a7c9b5c5e4342b966f38a0e309",
-          "peak": 0.220001,
-          "rms": 0.041913,
-          "dc": 2e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.058685,
-          "seconds": 0.28
-        },
-        "inventoryopen": {
-          "file": "cinnabar/inventoryopen.wav",
-          "sha256": "eb82176143003d43b7ad60b1dfbe780ceac1569c94fc41c574982588d5c6b02d",
-          "peak": 0.319977,
-          "rms": 0.044392,
-          "dc": 1.5e-07,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.088074,
-          "seconds": 0.51
-        },
-        "inventoryclose": {
-          "file": "cinnabar/inventoryclose.wav",
-          "sha256": "c96aaf3f3e6abe114b82e3eb24231e68a88d3a915d749155ff955a2569c16407",
-          "peak": 0.25,
-          "rms": 0.044185,
-          "dc": 1e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.066925,
-          "seconds": 0.33
-        },
-        "arrange": {
-          "file": "cinnabar/arrange.wav",
-          "sha256": "cf9ad9ee692dd9d7495fa6365f39434c3a1e41aac524fe526b72297d5128cc69",
-          "peak": 0.359985,
-          "rms": 0.049769,
-          "dc": 3e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.09906,
-          "seconds": 0.56
-        },
-        "restore": {
-          "file": "cinnabar/restore.wav",
-          "sha256": "3c1fa94ff26ea8436ee804471476373283e69a2646e890889bd3e5cf67fb5ec6",
-          "peak": 0.299988,
-          "rms": 0.04684,
-          "dc": 3e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.110382,
-          "seconds": 0.45
-        },
-        "reorder": {
-          "file": "cinnabar/reorder.wav",
-          "sha256": "78125c48ebb1c358600737a39be7d7218265d9ba5822c78ae977c859046550b8",
-          "peak": 0.209991,
-          "rms": 0.041459,
-          "dc": 4e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.046173,
+          "max_step": 0.033417,
           "seconds": 0.24
         },
         "waiting": {
           "file": "cinnabar/waiting.wav",
-          "sha256": "be871e417255064cafc7ada07dc87ba7526957ad9625abf2c8dffb03a52e8723",
-          "peak": 0.399994,
-          "rms": 0.059218,
+          "sha256": "ca2ff0d35e4e10698ff809c193282ad74a9ddb5c23005a71c354afcde67ab3d0",
+          "peak": 0.37149,
+          "rms": 0.054998,
+          "dc": 9e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.109192,
+          "seconds": 0.62
+        },
+        "ready": {
+          "file": "cinnabar/ready.wav",
+          "sha256": "6cb51d2e57f8161cd19fe0cbd8c9abdfc5d2f9c83afb93ab69729b2e2d8c5085",
+          "peak": 0.392334,
+          "rms": 0.055998,
           "dc": 2e-08,
           "first_frame": [
             0,
@@ -683,32 +716,15 @@
             0,
             0
           ],
-          "max_step": 0.117584,
-          "seconds": 0.62
-        },
-        "ready": {
-          "file": "cinnabar/ready.wav",
-          "sha256": "1df02b3e1dccc63ff33f215bc50f9830856420b97e3abec73a8e2ddf1e8ee7ec",
-          "peak": 0.399994,
-          "rms": 0.057089,
-          "dc": 0.0,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.107391,
+          "max_step": 0.105347,
           "seconds": 0.75
         },
         "error": {
           "file": "cinnabar/error.wav",
-          "sha256": "d4a61833b7c1455ffb62abc0e80c507c678bc886427df8072c2a913bdbcee91d",
-          "peak": 0.429993,
-          "rms": 0.064275,
-          "dc": 1e-08,
+          "sha256": "664da02d89cb6b026c36609bd0dff7266dac45931497c7d84417e4336e055acb",
+          "peak": 0.36792,
+          "rms": 0.054998,
+          "dc": 4e-08,
           "first_frame": [
             0,
             0
@@ -717,15 +733,15 @@
             0,
             0
           ],
-          "max_step": 0.123291,
+          "max_step": 0.10553,
           "seconds": 0.6
         },
         "detent": {
           "file": "cinnabar/detent.wav",
-          "sha256": "ae7610a05d11d7e4d8859e0fe8f0882b17d5c09f7f0ee6f0975349e5dc5aeaa1",
-          "peak": 0.139984,
-          "rms": 0.031622,
-          "dc": 4e-07,
+          "sha256": "f0d3123e4fcd2bec38dc938f76251948e214955cd436c1bfef5cfd105faf9008",
+          "peak": 0.084106,
+          "rms": 0.018999,
+          "dc": 4e-08,
           "first_frame": [
             0,
             0
@@ -734,7 +750,7 @@
             0,
             0
           ],
-          "max_step": 0.063019,
+          "max_step": 0.037872,
           "seconds": 0.052
         }
       }
@@ -745,10 +761,10 @@
       "cues": {
         "switch": {
           "file": "hextech/switch.wav",
-          "sha256": "212fdf5660f19377168e06efccb6151526ea369c26571f3b61ed4a46ad1af780",
-          "peak": 0.319977,
-          "rms": 0.069129,
-          "dc": 2e-08,
+          "sha256": "f687f48b0f47b69af707f7e2a95822d188b5802e2001b2c89526ad66a89455d7",
+          "peak": 0.231445,
+          "rms": 0.049999,
+          "dc": 1.4e-07,
           "first_frame": [
             0,
             0
@@ -757,99 +773,14 @@
             0,
             0
           ],
-          "max_step": 0.091125,
+          "max_step": 0.065918,
           "seconds": 0.3
         },
         "capture": {
           "file": "hextech/capture.wav",
-          "sha256": "5c0cda1618ab6e170d85b59561d2a850b341451e7c2d76b0875b8e41456e590c",
-          "peak": 0.379974,
-          "rms": 0.08035,
-          "dc": 2.2e-07,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.099854,
-          "seconds": 0.48
-        },
-        "remove": {
-          "file": "hextech/remove.wav",
-          "sha256": "666ffd6871cb87469acc6de6c1b837eb4174197dbf2d6bcd9920341b961088db",
-          "peak": 0.279999,
-          "rms": 0.053746,
-          "dc": 6e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.067444,
-          "seconds": 0.34
-        },
-        "expand": {
-          "file": "hextech/expand.wav",
-          "sha256": "a9bb6227d50ca8c6ebd9c38eacbe25e47dc34b880b6d717c83855296e15b09b6",
-          "peak": 0.25,
-          "rms": 0.044196,
-          "dc": 2e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.058472,
-          "seconds": 0.34
-        },
-        "collapse": {
-          "file": "hextech/collapse.wav",
-          "sha256": "73a00779896b76b8497ad5c95f88617625857cebef9535a8d94dabf5082073cd",
-          "peak": 0.220001,
-          "rms": 0.044562,
-          "dc": 1e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.05484,
-          "seconds": 0.28
-        },
-        "inventoryopen": {
-          "file": "hextech/inventoryopen.wav",
-          "sha256": "d43872a04c7b17ed388524baa351df10e9dbae4205ba7a9f1caf87fefbe41f7b",
-          "peak": 0.319977,
-          "rms": 0.052397,
-          "dc": 3e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.099243,
-          "seconds": 0.51
-        },
-        "inventoryclose": {
-          "file": "hextech/inventoryclose.wav",
-          "sha256": "94def9bbcd4ffe4a2b9bf15a663edb4a0dd47d2f2bf647efff3f2aec3f0cd680",
-          "peak": 0.25,
-          "rms": 0.045634,
+          "sha256": "6e02c035d2029f0b95944e89a312472d1c4a58bd078631abede9aab4ec8318b5",
+          "peak": 0.283752,
+          "rms": 0.059998,
           "dc": 8e-08,
           "first_frame": [
             0,
@@ -859,15 +790,100 @@
             0,
             0
           ],
-          "max_step": 0.05426,
+          "max_step": 0.074554,
+          "seconds": 0.48
+        },
+        "remove": {
+          "file": "hextech/remove.wav",
+          "sha256": "e06b14f5860d208aea37d6f568fdb3a18b29b941dc228c4be6db19230028495e",
+          "peak": 0.239624,
+          "rms": 0.045999,
+          "dc": 4e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.057739,
+          "seconds": 0.34
+        },
+        "expand": {
+          "file": "hextech/expand.wav",
+          "sha256": "4508a4e43e36c20bc53d54594a929c896566744e0b78aafa5d9cc5ab7de5034e",
+          "peak": 0.192322,
+          "rms": 0.033999,
+          "dc": 7e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.044983,
+          "seconds": 0.34
+        },
+        "collapse": {
+          "file": "hextech/collapse.wav",
+          "sha256": "e6518e77e5e4271f6fe402f00794721e7796d3b61d45e14460f2437c0e9ec9e2",
+          "peak": 0.138214,
+          "rms": 0.027999,
+          "dc": 4e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.034485,
+          "seconds": 0.28
+        },
+        "inventoryopen": {
+          "file": "hextech/inventoryopen.wav",
+          "sha256": "6eb0e192fae05017c89b952300ae32eb8189fc12da56f8d9eef9788e808a0c1a",
+          "peak": 0.268707,
+          "rms": 0.043999,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.083344,
+          "seconds": 0.51
+        },
+        "inventoryclose": {
+          "file": "hextech/inventoryclose.wav",
+          "sha256": "7064276877d74efeda89be73d38cb6bc086b7d4b50c8a569f5b2b11674dcc46d",
+          "peak": 0.191742,
+          "rms": 0.034999,
+          "dc": 6e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.041626,
           "seconds": 0.33
         },
         "arrange": {
           "file": "hextech/arrange.wav",
-          "sha256": "cea4b6f75a508bbfcdca4a00b9149139d77b36443c544fb628819694a6d31847",
-          "peak": 0.359985,
-          "rms": 0.058115,
-          "dc": 9e-08,
+          "sha256": "ba794095025e42f4e394f668a43ba6d02a8fe92c87446bbcb2b7e0e1a11899f2",
+          "peak": 0.247772,
+          "rms": 0.039999,
+          "dc": 4e-08,
           "first_frame": [
             0,
             0
@@ -876,99 +892,14 @@
             0,
             0
           ],
-          "max_step": 0.089752,
+          "max_step": 0.061768,
           "seconds": 0.56
         },
         "restore": {
           "file": "hextech/restore.wav",
-          "sha256": "1d8d8f4546f1270b868c024e332962cfb9a7fdd4c86a23627058f3b43e915b31",
-          "peak": 0.299988,
-          "rms": 0.050923,
-          "dc": 5e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.072693,
-          "seconds": 0.45
-        },
-        "reorder": {
-          "file": "hextech/reorder.wav",
-          "sha256": "0c16435db457763f60bded9e02ae1b9f1feda424b792e79f64ea185bd0bcae0d",
-          "peak": 0.209991,
-          "rms": 0.05004,
-          "dc": 3e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.055359,
-          "seconds": 0.24
-        },
-        "waiting": {
-          "file": "hextech/waiting.wav",
-          "sha256": "49c0024ece87c5a2b361706c444542e56df9a6c9aeb6b7bb79e5c1f0edb03e10",
-          "peak": 0.399994,
-          "rms": 0.065056,
-          "dc": 3e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.104919,
-          "seconds": 0.62
-        },
-        "ready": {
-          "file": "hextech/ready.wav",
-          "sha256": "363973cb845799948c280c0fe97ec6a70b2afcf993fee3f695166faa52744dde",
-          "peak": 0.399994,
-          "rms": 0.059849,
-          "dc": 2e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.096252,
-          "seconds": 0.75
-        },
-        "error": {
-          "file": "hextech/error.wav",
-          "sha256": "33f0917a1526a47c33a82fe499b61a010acafeacf6a4b4ec22df5e4e3f5d67c3",
-          "peak": 0.429993,
-          "rms": 0.072103,
-          "dc": 2e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.121063,
-          "seconds": 0.6
-        },
-        "detent": {
-          "file": "hextech/detent.wav",
-          "sha256": "9f7c79cc3624aa295874444b467d09a082caba804e3ef6c41f2d928748ee07de",
-          "peak": 0.139984,
-          "rms": 0.032895,
+          "sha256": "4e46419e8b939a767395bd2b02c9fc73d646d56d4d2545ecf460ee89df56e890",
+          "peak": 0.253296,
+          "rms": 0.042999,
           "dc": 1e-08,
           "first_frame": [
             0,
@@ -978,7 +909,92 @@
             0,
             0
           ],
-          "max_step": 0.073334,
+          "max_step": 0.061371,
+          "seconds": 0.45
+        },
+        "reorder": {
+          "file": "hextech/reorder.wav",
+          "sha256": "5b3c522fe890604d9e771c2cdc4f68babe1021585b92b992b88e4ec6c6cfbfe8",
+          "peak": 0.125885,
+          "rms": 0.029999,
+          "dc": 1.5e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.033203,
+          "seconds": 0.24
+        },
+        "waiting": {
+          "file": "hextech/waiting.wav",
+          "sha256": "75a68a83f02afdd7e37af7d3233f98257468a5b3e69d514d60510581c663a8ce",
+          "peak": 0.338165,
+          "rms": 0.054998,
+          "dc": 0.0,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.088684,
+          "seconds": 0.62
+        },
+        "ready": {
+          "file": "hextech/ready.wav",
+          "sha256": "cc50ec80cd738717b9f2fd56a0178ded2bb2f53816fc35cd9d801057eb0ff8df",
+          "peak": 0.374268,
+          "rms": 0.055998,
+          "dc": 1e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.090057,
+          "seconds": 0.75
+        },
+        "error": {
+          "file": "hextech/error.wav",
+          "sha256": "ce4b5497d4836347f9621317f79be0d9033cdf94687f7314f282a63f092382eb",
+          "peak": 0.327972,
+          "rms": 0.054998,
+          "dc": 4e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.092346,
+          "seconds": 0.6
+        },
+        "detent": {
+          "file": "hextech/detent.wav",
+          "sha256": "d42413cb4c6f966e30dc4df5ba7362837b606c92e51e2608211cc53215262f30",
+          "peak": 0.080872,
+          "rms": 0.018999,
+          "dc": 8e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.042358,
           "seconds": 0.052
         }
       }
@@ -989,10 +1005,10 @@
       "cues": {
         "switch": {
           "file": "tactical/switch.wav",
-          "sha256": "90eeda5ba8f55fdabad95d5f5af3ef04a1f04de346419c5838cec8f3af2be9bf",
-          "peak": 0.319977,
-          "rms": 0.036051,
-          "dc": 4.1e-07,
+          "sha256": "8a93d8624cdc44312c048e820ce72dd0234796a3522003d1c15c0ab8156e105c",
+          "peak": 0.439972,
+          "rms": 0.04957,
+          "dc": 8.9e-07,
           "first_frame": [
             0,
             0
@@ -1001,15 +1017,15 @@
             0,
             0
           ],
-          "max_step": 0.185089,
+          "max_step": 0.254517,
           "seconds": 0.3
         },
         "capture": {
           "file": "tactical/capture.wav",
-          "sha256": "61b50f2c6658612c4fb4d9aee8d91ba3a3318a083535558288b6ca11b5f19d1f",
-          "peak": 0.379974,
-          "rms": 0.049585,
-          "dc": 6e-08,
+          "sha256": "08c340d74fc513611478c26ed01e255229ee47f458f2be2a81dc188e02ddf0a4",
+          "peak": 0.439972,
+          "rms": 0.057414,
+          "dc": 1e-08,
           "first_frame": [
             0,
             0
@@ -1018,15 +1034,15 @@
             0,
             0
           ],
-          "max_step": 0.204041,
+          "max_step": 0.236237,
           "seconds": 0.48
         },
         "remove": {
           "file": "tactical/remove.wav",
-          "sha256": "e667c85b26233d182f7358fa1e649eabedee73824e027dac1cbdac6e148a93a2",
-          "peak": 0.279999,
-          "rms": 0.03465,
-          "dc": 8.3e-07,
+          "sha256": "03f85330f326e6bb49ae6b4dca4ad03b42f4f894c3051293a78f935af0eeff50",
+          "peak": 0.371704,
+          "rms": 0.045999,
+          "dc": 7.4e-07,
           "first_frame": [
             0,
             0
@@ -1035,15 +1051,15 @@
             0,
             0
           ],
-          "max_step": 0.152618,
+          "max_step": 0.202606,
           "seconds": 0.34
         },
         "expand": {
           "file": "tactical/expand.wav",
-          "sha256": "df8487d7e0e909627e2bca910ae01cdad29ad19c86cbcf199288f035b0dfaf76",
-          "peak": 0.25,
-          "rms": 0.029125,
-          "dc": 7.1e-07,
+          "sha256": "61a047116cf49f9197438ecee3f6d208f97e96a5f48a9965f49caf0d2bc40e69",
+          "peak": 0.29184,
+          "rms": 0.033999,
+          "dc": 1.14e-06,
           "first_frame": [
             0,
             0
@@ -1052,133 +1068,14 @@
             0,
             0
           ],
-          "max_step": 0.113708,
+          "max_step": 0.132721,
           "seconds": 0.34
         },
         "collapse": {
           "file": "tactical/collapse.wav",
-          "sha256": "8fea33352164d98f1a9ec736657efb83fa8e3f1d005995d227390749ff329c67",
-          "peak": 0.220001,
-          "rms": 0.027379,
-          "dc": 6e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.12085,
-          "seconds": 0.28
-        },
-        "inventoryopen": {
-          "file": "tactical/inventoryopen.wav",
-          "sha256": "0cd640ebd6811ff0ffc20dc1e539783a205c6235ad2dae212da1683604b145e2",
-          "peak": 0.319977,
-          "rms": 0.039154,
-          "dc": 4e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.167908,
-          "seconds": 0.51
-        },
-        "inventoryclose": {
-          "file": "tactical/inventoryclose.wav",
-          "sha256": "209b8ea8cf6a4b3eb17fca682a14599d406ed79f5e0f0d8b991ea26183449608",
-          "peak": 0.25,
-          "rms": 0.033382,
-          "dc": 0.0,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.121918,
-          "seconds": 0.33
-        },
-        "arrange": {
-          "file": "tactical/arrange.wav",
-          "sha256": "4b025b551cac28b521a09d5de1cdca0841b1eabee80504fc4d153dd98d692116",
-          "peak": 0.359985,
-          "rms": 0.032192,
-          "dc": 2e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.180695,
-          "seconds": 0.56
-        },
-        "restore": {
-          "file": "tactical/restore.wav",
-          "sha256": "043e64b0b8de374647011cde228135224aeb4f4d9df2ee2e1051a69514d00f88",
-          "peak": 0.299988,
-          "rms": 0.036468,
-          "dc": 2.4e-07,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.195892,
-          "seconds": 0.45
-        },
-        "reorder": {
-          "file": "tactical/reorder.wav",
-          "sha256": "59f2dcda8f64271fc743e63c8641f83d437aadde7e496b593739505ad5755edb",
-          "peak": 0.209991,
-          "rms": 0.024762,
-          "dc": 0.0,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.086517,
-          "seconds": 0.24
-        },
-        "waiting": {
-          "file": "tactical/waiting.wav",
-          "sha256": "51d859a9035b799f8f46c4c7424b4c13fc5497a913ee95c0dbf5feb06ad57a7f",
-          "peak": 0.399994,
-          "rms": 0.055292,
-          "dc": 3e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.211395,
-          "seconds": 0.62
-        },
-        "ready": {
-          "file": "tactical/ready.wav",
-          "sha256": "5756fa35aa7d470d64515bf92da4ee9a64571ec7a18ec1b547b17ebb7b0f5b10",
-          "peak": 0.399994,
-          "rms": 0.058503,
+          "sha256": "e1eaa8ea0d77aac233070039ab0e082c5031ed7b6179905e4043bbb19c57055a",
+          "peak": 0.224976,
+          "rms": 0.027999,
           "dc": 5e-08,
           "first_frame": [
             0,
@@ -1188,14 +1085,31 @@
             0,
             0
           ],
-          "max_step": 0.202087,
-          "seconds": 0.75
+          "max_step": 0.123566,
+          "seconds": 0.28
         },
-        "error": {
-          "file": "tactical/error.wav",
-          "sha256": "cda06b6e6a67d749bb77050217a3ff3e81cb5c71dcca1fc367e1c4cf0eb58ecc",
-          "peak": 0.429993,
-          "rms": 0.06085,
+        "inventoryopen": {
+          "file": "tactical/inventoryopen.wav",
+          "sha256": "da9b3b099ccf5bb0130b3622fbeea4937dcf745c39f7617f1aa3d5af3a1197e0",
+          "peak": 0.359589,
+          "rms": 0.043999,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.18869,
+          "seconds": 0.51
+        },
+        "inventoryclose": {
+          "file": "tactical/inventoryclose.wav",
+          "sha256": "be881a1254326238fbcc888a4e2456f01fd13c57b72cdc2678f6bee7f9ce5688",
+          "peak": 0.262115,
+          "rms": 0.034999,
           "dc": 2e-08,
           "first_frame": [
             0,
@@ -1205,15 +1119,15 @@
             0,
             0
           ],
-          "max_step": 0.297668,
-          "seconds": 0.6
+          "max_step": 0.127838,
+          "seconds": 0.33
         },
-        "detent": {
-          "file": "tactical/detent.wav",
-          "sha256": "742b25ee0b790067ea462b5ec4570de9d8cc1d68a88d12f1921317c5b1a07b78",
-          "peak": 0.139984,
-          "rms": 0.027422,
-          "dc": 3.3e-07,
+        "arrange": {
+          "file": "tactical/arrange.wav",
+          "sha256": "84d2f3d039c6198b563bae462dab5b199a9af962e6855ee94cfede46aff5f868",
+          "peak": 0.439972,
+          "rms": 0.039346,
+          "dc": 1e-07,
           "first_frame": [
             0,
             0
@@ -1222,7 +1136,109 @@
             0,
             0
           ],
-          "max_step": 0.050781,
+          "max_step": 0.220886,
+          "seconds": 0.56
+        },
+        "restore": {
+          "file": "tactical/restore.wav",
+          "sha256": "cb3498481c8287c50faabea6486d45e42b4822c783a3ae6be1a6d12977c09c1b",
+          "peak": 0.353699,
+          "rms": 0.042999,
+          "dc": 2.2e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.230957,
+          "seconds": 0.45
+        },
+        "reorder": {
+          "file": "tactical/reorder.wav",
+          "sha256": "c2ab67745f6a99e8957a5c40dc1257fc8abe8794fcf2a3e211c9d0fc5628a932",
+          "peak": 0.254395,
+          "rms": 0.029999,
+          "dc": 8e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.104797,
+          "seconds": 0.24
+        },
+        "waiting": {
+          "file": "tactical/waiting.wav",
+          "sha256": "d8e8fbf97f3f3506ac4fdc9342ed7f0af29651167f30d29f9a44fe430a8d5805",
+          "peak": 0.397858,
+          "rms": 0.054998,
+          "dc": 6e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.210297,
+          "seconds": 0.62
+        },
+        "ready": {
+          "file": "tactical/ready.wav",
+          "sha256": "bd39ea401d49dc67d303b74472be6233f26f7b69a40d7c7b51b4ca386e9f32b4",
+          "peak": 0.382874,
+          "rms": 0.055998,
+          "dc": 6e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.19342,
+          "seconds": 0.75
+        },
+        "error": {
+          "file": "tactical/error.wav",
+          "sha256": "2c4b8761b06a9ad454911dedda7924dad95a018187a52a81b35b42bec3edecc8",
+          "peak": 0.388641,
+          "rms": 0.054998,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.269043,
+          "seconds": 0.6
+        },
+        "detent": {
+          "file": "tactical/detent.wav",
+          "sha256": "54620d9ab905338916810def797f8bdfc6f403f4ca59936e33a99b01a0b9c6f3",
+          "peak": 0.096985,
+          "rms": 0.018999,
+          "dc": 1.2e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.035187,
           "seconds": 0.052
         }
       }
@@ -1233,10 +1249,10 @@
       "cues": {
         "switch": {
           "file": "protocol/switch.wav",
-          "sha256": "f68722d2b22ee80e5f6239ab47475b632711f00d372f7bfe049b249421d17c21",
-          "peak": 0.319977,
-          "rms": 0.046638,
-          "dc": 9.7e-07,
+          "sha256": "74ef5ecca712c44fb786af30d2761861049e84348187f82a923f61837bb80969",
+          "peak": 0.343048,
+          "rms": 0.049998,
+          "dc": 1.15e-06,
           "first_frame": [
             0,
             0
@@ -1245,15 +1261,15 @@
             0,
             0
           ],
-          "max_step": 0.058746,
+          "max_step": 0.062988,
           "seconds": 0.3
         },
         "capture": {
           "file": "protocol/capture.wav",
-          "sha256": "a44aa9097d1a3f8ed3cbfd2e4f2d79a4cfe1e7266c0ab795d393cb6b0318e780",
-          "peak": 0.379974,
-          "rms": 0.058383,
-          "dc": 3e-08,
+          "sha256": "5bbca55405406606fbc2cea828bbf4669e3b6c324e7460c30f964de5228434fb",
+          "peak": 0.390503,
+          "rms": 0.059998,
+          "dc": 5e-08,
           "first_frame": [
             0,
             0
@@ -1262,15 +1278,15 @@
             0,
             0
           ],
-          "max_step": 0.077209,
+          "max_step": 0.079346,
           "seconds": 0.48
         },
         "remove": {
           "file": "protocol/remove.wav",
-          "sha256": "33ff00f0d2b48930a355ea4c201cd3fb4a3fb5f3885d16b2d40efa9daea27cb8",
-          "peak": 0.279999,
-          "rms": 0.038305,
-          "dc": 9.6e-07,
+          "sha256": "315f185e05ad9744535a5d5f70d029c8857e4abda872a51d5dfe40202cff8a4c",
+          "peak": 0.336243,
+          "rms": 0.045999,
+          "dc": 1.08e-06,
           "first_frame": [
             0,
             0
@@ -1279,15 +1295,15 @@
             0,
             0
           ],
-          "max_step": 0.042694,
+          "max_step": 0.05127,
           "seconds": 0.34
         },
         "expand": {
           "file": "protocol/expand.wav",
-          "sha256": "b2a9e2077af87161e0c47393fc5be8b8b0003eee2b443fe05bc0e3942a3dbe21",
-          "peak": 0.25,
-          "rms": 0.031568,
-          "dc": 5.7e-07,
+          "sha256": "d26466d0b8f026d1468700be29bbc903807648ec852ce9f649b14ca197ec8e0c",
+          "peak": 0.269257,
+          "rms": 0.033999,
+          "dc": 5.3e-07,
           "first_frame": [
             0,
             0
@@ -1296,15 +1312,15 @@
             0,
             0
           ],
-          "max_step": 0.058136,
+          "max_step": 0.062622,
           "seconds": 0.34
         },
         "collapse": {
           "file": "protocol/collapse.wav",
-          "sha256": "0e114a2ed4bd7e86613caf3a2252a00098743a4c878801e3284a48347b8f5f1e",
-          "peak": 0.220001,
-          "rms": 0.032093,
-          "dc": 1.3e-07,
+          "sha256": "8c1bf0cf8038acfbc19632120c0207222dd68e794e553839614cd2746a3a8d19",
+          "peak": 0.191925,
+          "rms": 0.027999,
+          "dc": 9e-08,
           "first_frame": [
             0,
             0
@@ -1313,99 +1329,14 @@
             0,
             0
           ],
-          "max_step": 0.032898,
+          "max_step": 0.028687,
           "seconds": 0.28
         },
         "inventoryopen": {
           "file": "protocol/inventoryopen.wav",
-          "sha256": "207a0eacb61b8517f20b07f5c0560cdd9ea1dbbc123edac915cba8e1fa52ecde",
-          "peak": 0.319977,
-          "rms": 0.042436,
-          "dc": 5e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.074249,
-          "seconds": 0.51
-        },
-        "inventoryclose": {
-          "file": "protocol/inventoryclose.wav",
-          "sha256": "59c1c493819e0d58d4de1c665f128dc23e397d5d8e8d60ce423d638f32e6d2a0",
-          "peak": 0.25,
-          "rms": 0.035484,
-          "dc": 0.0,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.040192,
-          "seconds": 0.33
-        },
-        "arrange": {
-          "file": "protocol/arrange.wav",
-          "sha256": "6c5d676d6288db1356dc457f073d510b8a776620702a2560ce5af87560ffd661",
-          "peak": 0.359985,
-          "rms": 0.043914,
-          "dc": 5e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.066284,
-          "seconds": 0.56
-        },
-        "restore": {
-          "file": "protocol/restore.wav",
-          "sha256": "ff76904ad11dd30bf557a27ba388105cda046671003df161766f039b3442716e",
-          "peak": 0.299988,
-          "rms": 0.038153,
-          "dc": 3.6e-07,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.043549,
-          "seconds": 0.45
-        },
-        "reorder": {
-          "file": "protocol/reorder.wav",
-          "sha256": "0ca6e4716922a939016633162051d941cd940a0820f9e21159783393caab0bc6",
-          "peak": 0.209991,
-          "rms": 0.035396,
-          "dc": 5e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.038483,
-          "seconds": 0.24
-        },
-        "waiting": {
-          "file": "protocol/waiting.wav",
-          "sha256": "c91e46c7bdad3148dce8c7a2ed1a4deae8ff784aac74d86807d799ed5be932be",
-          "peak": 0.399994,
-          "rms": 0.056531,
+          "sha256": "1515668fb6c18e0718698347fb637a9145468049bc4061857a2a331e6f462adb",
+          "peak": 0.331757,
+          "rms": 0.043999,
           "dc": 6e-08,
           "first_frame": [
             0,
@@ -1415,14 +1346,99 @@
             0,
             0
           ],
-          "max_step": 0.073517,
+          "max_step": 0.076996,
+          "seconds": 0.51
+        },
+        "inventoryclose": {
+          "file": "protocol/inventoryclose.wav",
+          "sha256": "34945d0320d7e6ea994892f27cfa2ddba9db36c2f42067bd30e492afce284f58",
+          "peak": 0.246582,
+          "rms": 0.034999,
+          "dc": 1e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.039642,
+          "seconds": 0.33
+        },
+        "arrange": {
+          "file": "protocol/arrange.wav",
+          "sha256": "24348c752f47e84763e7c82f971c5630f093e722e30bccaec49582240fb20457",
+          "peak": 0.327911,
+          "rms": 0.039999,
+          "dc": 1.3e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.060364,
+          "seconds": 0.56
+        },
+        "restore": {
+          "file": "protocol/restore.wav",
+          "sha256": "90568cd20da737e343cd1f23ef9e113baff01f54d91021374f325ef7cd7a7faa",
+          "peak": 0.338104,
+          "rms": 0.042999,
+          "dc": 3.7e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.049072,
+          "seconds": 0.45
+        },
+        "reorder": {
+          "file": "protocol/reorder.wav",
+          "sha256": "6efe7d4563f68bcbb4f51f92880596209ab47861e1ab5b34edeb789bf53706b3",
+          "peak": 0.177979,
+          "rms": 0.029999,
+          "dc": 8e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.032623,
+          "seconds": 0.24
+        },
+        "waiting": {
+          "file": "protocol/waiting.wav",
+          "sha256": "a8f91d51f5975cf9d7b8d43cddc32df5938733150a72268099155c8129ded9d8",
+          "peak": 0.38913,
+          "rms": 0.054998,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.071564,
           "seconds": 0.62
         },
         "ready": {
           "file": "protocol/ready.wav",
-          "sha256": "98327a89580065693bf9827446cac27a980ec141af0d29b3f0f06877bf3c16ea",
-          "peak": 0.399994,
-          "rms": 0.056099,
+          "sha256": "d8d8dc1a9503068f664b6d324d50e9aaae595997dd10f04312a40491b85de876",
+          "peak": 0.399261,
+          "rms": 0.055998,
           "dc": 7e-08,
           "first_frame": [
             0,
@@ -1432,15 +1448,15 @@
             0,
             0
           ],
-          "max_step": 0.073608,
+          "max_step": 0.073456,
           "seconds": 0.75
         },
         "error": {
           "file": "protocol/error.wav",
-          "sha256": "29976c11ccbe82c4106f340cb7dfdc26b586234eaacf9bd81573e9144f033799",
-          "peak": 0.429993,
-          "rms": 0.061609,
-          "dc": 1.2e-07,
+          "sha256": "45b7b0444210c2adcd6818aced92ad239cbadaf07f1c98ce04e682066dadd646",
+          "peak": 0.38385,
+          "rms": 0.054998,
+          "dc": 0.0,
           "first_frame": [
             0,
             0
@@ -1449,15 +1465,15 @@
             0,
             0
           ],
-          "max_step": 0.079468,
+          "max_step": 0.070923,
           "seconds": 0.6
         },
         "detent": {
           "file": "protocol/detent.wav",
-          "sha256": "6a34f03ad354a10ad3ffd7c8dbcc4e90f9887e618ba190c422c4887ab7ae8cfc",
-          "peak": 0.139984,
-          "rms": 0.028384,
-          "dc": 1.2e-07,
+          "sha256": "20ec8002b0718fb2407ceb368bd71363207cdb8f734b312e73e237b496f77760",
+          "peak": 0.093719,
+          "rms": 0.018999,
+          "dc": 1.3e-07,
           "first_frame": [
             0,
             0
@@ -1466,7 +1482,7 @@
             0,
             0
           ],
-          "max_step": 0.075165,
+          "max_step": 0.050323,
           "seconds": 0.052
         }
       }
@@ -1477,10 +1493,10 @@
       "cues": {
         "switch": {
           "file": "adventure/switch.wav",
-          "sha256": "69ba73dd9ded0e1e8314fb0bc468eab4ebb42d2256f791f99a669f66f7f65191",
-          "peak": 0.319977,
-          "rms": 0.051652,
-          "dc": 7e-08,
+          "sha256": "4e44897bf6b4940af7c5589303bcd61114e0736d1f3b4a533a229d84c8e99d85",
+          "peak": 0.309753,
+          "rms": 0.049998,
+          "dc": 1e-08,
           "first_frame": [
             0,
             0
@@ -1489,14 +1505,14 @@
             0,
             0
           ],
-          "max_step": 0.106232,
+          "max_step": 0.102844,
           "seconds": 0.3
         },
         "capture": {
           "file": "adventure/capture.wav",
-          "sha256": "2709908230dc35465e33e1d89bfbc7b1b449893ef1eb41100d5449687ce905de",
-          "peak": 0.379974,
-          "rms": 0.053913,
+          "sha256": "c7d0de69f88f05ec4ef937671b3afe84c800386987fdd89f0bf4445181c415d9",
+          "peak": 0.422882,
+          "rms": 0.059998,
           "dc": 5e-08,
           "first_frame": [
             0,
@@ -1506,15 +1522,15 @@
             0,
             0
           ],
-          "max_step": 0.102692,
+          "max_step": 0.114258,
           "seconds": 0.48
         },
         "remove": {
           "file": "adventure/remove.wav",
-          "sha256": "6718127edc9b468e3aa81de4174563e5cd2909742e3e87959a0357397c4d86ae",
-          "peak": 0.279999,
-          "rms": 0.042678,
-          "dc": 4e-08,
+          "sha256": "34b01cdae24db6e644a8dcb87821a939f5816963faea224802b97e5664f4c7b8",
+          "peak": 0.301788,
+          "rms": 0.045999,
+          "dc": 1.3e-07,
           "first_frame": [
             0,
             0
@@ -1523,15 +1539,15 @@
             0,
             0
           ],
-          "max_step": 0.10733,
+          "max_step": 0.115692,
           "seconds": 0.34
         },
         "expand": {
           "file": "adventure/expand.wav",
-          "sha256": "9d8e45592dd56557e70ff0c8bfa9529add4c10d79e10a2f92a158ee9e08e5425",
-          "peak": 0.25,
-          "rms": 0.039801,
-          "dc": 2e-08,
+          "sha256": "9188d0c4aa7344c00ec0ae3449001906ee8f005afe1dd06c5874c565ff0e99be",
+          "peak": 0.213562,
+          "rms": 0.033999,
+          "dc": 1e-08,
           "first_frame": [
             0,
             0
@@ -1540,14 +1556,14 @@
             0,
             0
           ],
-          "max_step": 0.069397,
+          "max_step": 0.059296,
           "seconds": 0.34
         },
         "collapse": {
           "file": "adventure/collapse.wav",
-          "sha256": "0c789263d599434ca2cc49fdaae174ff4f9023eaff78e0730cafcccbc41626ce",
-          "peak": 0.220001,
-          "rms": 0.037226,
+          "sha256": "d1e4e5109728290d1ebe4031e30b95f43d7994efa2935c0f10cc318359d95800",
+          "peak": 0.165466,
+          "rms": 0.027999,
           "dc": 4e-08,
           "first_frame": [
             0,
@@ -1557,15 +1573,15 @@
             0,
             0
           ],
-          "max_step": 0.076721,
+          "max_step": 0.057739,
           "seconds": 0.28
         },
         "inventoryopen": {
           "file": "adventure/inventoryopen.wav",
-          "sha256": "1d9ef45c5671f8feefe5861354e4ee7789061f34412b4138839b0f29ca533f32",
-          "peak": 0.319977,
-          "rms": 0.043672,
-          "dc": 1e-07,
+          "sha256": "b35b359c666f6d98b838606ba04e74ecf2b38e7c1e4f6432cf53f51b9978f621",
+          "peak": 0.322388,
+          "rms": 0.043999,
+          "dc": 1e-08,
           "first_frame": [
             0,
             0
@@ -1574,15 +1590,15 @@
             0,
             0
           ],
-          "max_step": 0.122589,
+          "max_step": 0.123535,
           "seconds": 0.51
         },
         "inventoryclose": {
           "file": "adventure/inventoryclose.wav",
-          "sha256": "8760d3f6c5cd565a1b85be18774bcfc8ac30e11969b12cfc7dce7540b47a2981",
-          "peak": 0.25,
-          "rms": 0.037369,
-          "dc": 2e-08,
+          "sha256": "67491acfdafbebdde39780bc8c07abe03ba46f849d46ca726150a23d6b6888f6",
+          "peak": 0.234131,
+          "rms": 0.034999,
+          "dc": 1.5e-07,
           "first_frame": [
             0,
             0
@@ -1591,15 +1607,15 @@
             0,
             0
           ],
-          "max_step": 0.099823,
+          "max_step": 0.093475,
           "seconds": 0.33
         },
         "arrange": {
           "file": "adventure/arrange.wav",
-          "sha256": "50a2fcce86b8b32e76f4959698d262005ca818787c29d9ff7063d49a573920a9",
-          "peak": 0.359985,
-          "rms": 0.046357,
-          "dc": 1.1e-07,
+          "sha256": "2f93c691d221ec3276caba09e703e0e3ac2e3b908c2b1197b9f0c52e87428726",
+          "peak": 0.310608,
+          "rms": 0.039999,
+          "dc": 9e-08,
           "first_frame": [
             0,
             0
@@ -1608,15 +1624,15 @@
             0,
             0
           ],
-          "max_step": 0.17627,
+          "max_step": 0.1521,
           "seconds": 0.56
         },
         "restore": {
           "file": "adventure/restore.wav",
-          "sha256": "47e55a1b081372f8628026b99d06a898fbca680baec2cfe2a8590af3551fea21",
-          "peak": 0.299988,
-          "rms": 0.043557,
-          "dc": 1.8e-07,
+          "sha256": "c8e0c8cafd2f37462623ccaa60104fd35ad0cf97246bac6cdb4adf707062ef32",
+          "peak": 0.296143,
+          "rms": 0.042999,
+          "dc": 3.1e-07,
           "first_frame": [
             0,
             0
@@ -1625,14 +1641,31 @@
             0,
             0
           ],
-          "max_step": 0.09726,
+          "max_step": 0.095978,
           "seconds": 0.45
         },
         "reorder": {
           "file": "adventure/reorder.wav",
-          "sha256": "92c376b11d326ee1381ab6a2a70a32e7be9dd3faff6fe6aa82e1268401dc9692",
-          "peak": 0.209991,
-          "rms": 0.039657,
+          "sha256": "50bed3b7feed241bfc1667bb41ef1c93f894e2bf225f2ad8549e0834cdd85b11",
+          "peak": 0.158844,
+          "rms": 0.029999,
+          "dc": 4e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.052582,
+          "seconds": 0.24
+        },
+        "waiting": {
+          "file": "adventure/waiting.wav",
+          "sha256": "09115d80260899218e900c7767e74a64806d8ab399b8bbbf0800ac0b2ac2f4bb",
+          "peak": 0.417572,
+          "rms": 0.054998,
           "dc": 7e-08,
           "first_frame": [
             0,
@@ -1642,15 +1675,15 @@
             0,
             0
           ],
-          "max_step": 0.069519,
-          "seconds": 0.24
+          "max_step": 0.140991,
+          "seconds": 0.62
         },
-        "waiting": {
-          "file": "adventure/waiting.wav",
-          "sha256": "09bdc447108e682a03dbcb041ea7ee9d4e88c620f60473cd7b5b3421c5282147",
-          "peak": 0.399994,
-          "rms": 0.052682,
-          "dc": 3e-08,
+        "ready": {
+          "file": "adventure/ready.wav",
+          "sha256": "d116a26e7a6fa739e38d179fa3d3689c859e7d77417c32807601551d4b285864",
+          "peak": 0.373688,
+          "rms": 0.055998,
+          "dc": 2e-08,
           "first_frame": [
             0,
             0
@@ -1659,14 +1692,14 @@
             0,
             0
           ],
-          "max_step": 0.135071,
-          "seconds": 0.62
+          "max_step": 0.124847,
+          "seconds": 0.75
         },
-        "ready": {
-          "file": "adventure/ready.wav",
-          "sha256": "dc1643b556b6b7eae5b1383cd9718358114e39b50deb25a4d0d666dc1217ac81",
-          "peak": 0.399994,
-          "rms": 0.05994,
+        "error": {
+          "file": "adventure/error.wav",
+          "sha256": "2ca5ca01f4363a5931e51677281acec8e5ff9f5f830dbe40bc0fbc6981d5828b",
+          "peak": 0.395599,
+          "rms": 0.054998,
           "dc": 4e-08,
           "first_frame": [
             0,
@@ -1676,32 +1709,15 @@
             0,
             0
           ],
-          "max_step": 0.133606,
-          "seconds": 0.75
-        },
-        "error": {
-          "file": "adventure/error.wav",
-          "sha256": "675e7d6c20485f73810c658324a904cc007f0d4300b5c42656f31d4d0ba173e6",
-          "peak": 0.429993,
-          "rms": 0.059781,
-          "dc": 1e-07,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.158173,
+          "max_step": 0.145508,
           "seconds": 0.6
         },
         "detent": {
           "file": "adventure/detent.wav",
-          "sha256": "0742e15291e5b776d9943e64903ade1e0da63b5f4fdf25754f0e7955476555cc",
-          "peak": 0.139984,
-          "rms": 0.03158,
-          "dc": 1.7e-07,
+          "sha256": "b65da3270c8036c0ba17ec2a5941dd89f8d3eb6791909e27784bcfc60739fe44",
+          "peak": 0.084229,
+          "rms": 0.018999,
+          "dc": 2.7e-07,
           "first_frame": [
             0,
             0
@@ -1710,7 +1726,7 @@
             0,
             0
           ],
-          "max_step": 0.047028,
+          "max_step": 0.02829,
           "seconds": 0.052
         }
       }
@@ -1721,10 +1737,10 @@
       "cues": {
         "switch": {
           "file": "arsenal/switch.wav",
-          "sha256": "584dad1ace7e951df9b4b5046325607efa64bddc466d3f54a4f914fa46f3d9c7",
-          "peak": 0.319977,
-          "rms": 0.055948,
-          "dc": 9e-08,
+          "sha256": "1eb0fc39199e938bde6b2d0816746ea6169112a4126fb92040cf4a3adc126330",
+          "peak": 0.28595,
+          "rms": 0.049998,
+          "dc": 0.0,
           "first_frame": [
             0,
             0
@@ -1733,15 +1749,15 @@
             0,
             0
           ],
-          "max_step": 0.261475,
+          "max_step": 0.233673,
           "seconds": 0.3
         },
         "capture": {
           "file": "arsenal/capture.wav",
-          "sha256": "5b656b0d3c7d1bb18c62e63f1a4b9df6771970e6aa970fbb8c87f3849495f9c1",
-          "peak": 0.379974,
-          "rms": 0.059374,
-          "dc": 4e-08,
+          "sha256": "daeb843ddcdc1505ec8eae46af061aa800dd9777f3cf65169f40b23425f2161a",
+          "peak": 0.383972,
+          "rms": 0.059998,
+          "dc": 0.0,
           "first_frame": [
             0,
             0
@@ -1750,31 +1766,14 @@
             0,
             0
           ],
-          "max_step": 0.32608,
+          "max_step": 0.329498,
           "seconds": 0.48
         },
         "remove": {
           "file": "arsenal/remove.wav",
-          "sha256": "12c2b26b3ed023968e9d2ffca936ac8d194f9561e9835fa3d9e760f278197749",
-          "peak": 0.279999,
-          "rms": 0.042905,
-          "dc": 3e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.228455,
-          "seconds": 0.34
-        },
-        "expand": {
-          "file": "arsenal/expand.wav",
-          "sha256": "dde94df8d4cd96c7df31abfdbd6c77b777ad766e3667917689d97b84d247ff6c",
-          "peak": 0.25,
-          "rms": 0.033558,
+          "sha256": "42d6529f5d6ccbbdfde1ae6dbf537852cb0c639d786719494a04e4ebf73e0a07",
+          "peak": 0.300171,
+          "rms": 0.045999,
           "dc": 5e-08,
           "first_frame": [
             0,
@@ -1784,48 +1783,14 @@
             0,
             0
           ],
-          "max_step": 0.171295,
+          "max_step": 0.244965,
           "seconds": 0.34
         },
-        "collapse": {
-          "file": "arsenal/collapse.wav",
-          "sha256": "afb10277f78148c24528712f555aa7d6b61498e74d98180cc90fb6e686d43733",
-          "peak": 0.220001,
-          "rms": 0.034316,
-          "dc": 8e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.163361,
-          "seconds": 0.28
-        },
-        "inventoryopen": {
-          "file": "arsenal/inventoryopen.wav",
-          "sha256": "ffe2d085500be6ece3b4c1d778d7eb28c7670c6c087cb3331c1b9d7332d070cc",
-          "peak": 0.319977,
-          "rms": 0.040054,
-          "dc": 1.4e-07,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.295471,
-          "seconds": 0.51
-        },
-        "inventoryclose": {
-          "file": "arsenal/inventoryclose.wav",
-          "sha256": "ac4180854443e7926a27135a9db4fd57b8b3ad866cc97a051e6e0a7a8d205e25",
-          "peak": 0.25,
-          "rms": 0.039673,
+        "expand": {
+          "file": "arsenal/expand.wav",
+          "sha256": "78183e98a55fb3cb878b3e08437bed0c55504a3e04ebfdd700bb6d4ddbbb8c94",
+          "peak": 0.253265,
+          "rms": 0.033999,
           "dc": 3e-08,
           "first_frame": [
             0,
@@ -1835,15 +1800,15 @@
             0,
             0
           ],
-          "max_step": 0.17865,
-          "seconds": 0.33
+          "max_step": 0.173523,
+          "seconds": 0.34
         },
-        "arrange": {
-          "file": "arsenal/arrange.wav",
-          "sha256": "a5748e579c199daaa605808f27434f28ab475fa9fed830a7df4137e40047aa24",
-          "peak": 0.359985,
-          "rms": 0.050687,
-          "dc": 8e-08,
+        "collapse": {
+          "file": "arsenal/collapse.wav",
+          "sha256": "63bd92436de916c498b40deb27d62b6896b7c5925fb633e3688baa8b9b370c1a",
+          "peak": 0.179504,
+          "rms": 0.027999,
+          "dc": 6e-08,
           "first_frame": [
             0,
             0
@@ -1852,15 +1817,15 @@
             0,
             0
           ],
-          "max_step": 0.334015,
-          "seconds": 0.56
+          "max_step": 0.133301,
+          "seconds": 0.28
         },
-        "restore": {
-          "file": "arsenal/restore.wav",
-          "sha256": "ffb1db695bfc935d25b34a0f1db1a37e8bc5f1dc1238a230a73cdb7176f17e9c",
-          "peak": 0.299988,
-          "rms": 0.041724,
-          "dc": 1.2e-07,
+        "inventoryopen": {
+          "file": "arsenal/inventoryopen.wav",
+          "sha256": "ec747bdfb42169d639c1786ea451e9c813bf5e5596d449095f3ec0541e5ee6f1",
+          "peak": 0.351501,
+          "rms": 0.043999,
+          "dc": 1.1e-07,
           "first_frame": [
             0,
             0
@@ -1869,14 +1834,14 @@
             0,
             0
           ],
-          "max_step": 0.233734,
-          "seconds": 0.45
+          "max_step": 0.324585,
+          "seconds": 0.51
         },
-        "reorder": {
-          "file": "arsenal/reorder.wav",
-          "sha256": "5759c1d272123645590d241cd6d1c6e57c90436ff7373f7c4e7f4975bffa732a",
-          "peak": 0.209991,
-          "rms": 0.037091,
+        "inventoryclose": {
+          "file": "arsenal/inventoryclose.wav",
+          "sha256": "1aeba0b598a1895d9a236a2fecc93b9137bec57abbca39086572863846d88dfc",
+          "peak": 0.220551,
+          "rms": 0.034999,
           "dc": 4e-08,
           "first_frame": [
             0,
@@ -1886,15 +1851,66 @@
             0,
             0
           ],
-          "max_step": 0.178802,
+          "max_step": 0.157593,
+          "seconds": 0.33
+        },
+        "arrange": {
+          "file": "arsenal/arrange.wav",
+          "sha256": "5095e65b28edfd2531fdd46c865168ea94a22ea7a796d85332fa81a2c666c224",
+          "peak": 0.284088,
+          "rms": 0.039999,
+          "dc": 1e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.26358,
+          "seconds": 0.56
+        },
+        "restore": {
+          "file": "arsenal/restore.wav",
+          "sha256": "2a68810181bbdcfaf6e30226d475f03efad727cafda11081d53e2e1c83fe3830",
+          "peak": 0.309143,
+          "rms": 0.042999,
+          "dc": 3.5e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.240875,
+          "seconds": 0.45
+        },
+        "reorder": {
+          "file": "arsenal/reorder.wav",
+          "sha256": "f88e0df4695af6329aa68599e62cb35ca213f85a207e7da437ee6efd55ce5166",
+          "peak": 0.16983,
+          "rms": 0.029999,
+          "dc": 2e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.144623,
           "seconds": 0.24
         },
         "waiting": {
           "file": "arsenal/waiting.wav",
-          "sha256": "f5423a41fc691b3d95ff8547f15c521c93d93ce2c67f015fbabc4b92900a9370",
-          "peak": 0.399994,
-          "rms": 0.070764,
-          "dc": 5e-08,
+          "sha256": "b5f7250a3b8667b45bbc8d8dae49c19dd8dfb672ce4ead822a928253b14f829c",
+          "peak": 0.310883,
+          "rms": 0.054998,
+          "dc": 8e-08,
           "first_frame": [
             0,
             0
@@ -1903,15 +1919,15 @@
             0,
             0
           ],
-          "max_step": 0.384857,
+          "max_step": 0.299103,
           "seconds": 0.62
         },
         "ready": {
           "file": "arsenal/ready.wav",
-          "sha256": "82b108a9a090f94fcb8c2a5ec8c8aa663f3725ac1b68b76e141182117d814eee",
-          "peak": 0.399994,
-          "rms": 0.068012,
-          "dc": 1e-08,
+          "sha256": "35c5e7040206cea95d7ba24b36da2d1aea987e442ad83df470c96d4ab98a0b34",
+          "peak": 0.329346,
+          "rms": 0.055998,
+          "dc": 2e-08,
           "first_frame": [
             0,
             0
@@ -1920,14 +1936,31 @@
             0,
             0
           ],
-          "max_step": 0.378387,
+          "max_step": 0.311523,
           "seconds": 0.75
         },
         "error": {
           "file": "arsenal/error.wav",
-          "sha256": "28306727f1e3ed372901551cd5843f9dd58fb5861aea88de3004c1048b8fbbc3",
-          "peak": 0.429993,
-          "rms": 0.07411,
+          "sha256": "ac218253dda7ef84a66112cdff9ecdd05376a4c92d3d7e6ff85ea6cc0266efed",
+          "peak": 0.319092,
+          "rms": 0.054998,
+          "dc": 4e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.282928,
+          "seconds": 0.6
+        },
+        "detent": {
+          "file": "arsenal/detent.wav",
+          "sha256": "663522a96e857bdd2c29b93aa6d0a21509bff65f626682a8c44de245fc9060fe",
+          "peak": 0.124481,
+          "rms": 0.019,
           "dc": 3e-08,
           "first_frame": [
             0,
@@ -1937,24 +1970,7 @@
             0,
             0
           ],
-          "max_step": 0.381256,
-          "seconds": 0.6
-        },
-        "detent": {
-          "file": "arsenal/detent.wav",
-          "sha256": "f30508c620b75a804c6b1934c7e41d849764e8244b6baadc6f16afd021fac0fa",
-          "peak": 0.139984,
-          "rms": 0.021369,
-          "dc": 5e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.067902,
+          "max_step": 0.060364,
           "seconds": 0.052
         }
       }
@@ -1965,94 +1981,9 @@
       "cues": {
         "switch": {
           "file": "relic/switch.wav",
-          "sha256": "61f0eae41ba4d428cb4c0b5824771349507e63e94f1635e6ed0b714423e362cd",
-          "peak": 0.319977,
-          "rms": 0.079615,
-          "dc": 9e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.027344,
-          "seconds": 0.3
-        },
-        "capture": {
-          "file": "relic/capture.wav",
-          "sha256": "851057d20f7299d2e9d67b5e38b2478928570008748c177d0a809b0839eeec9a",
-          "peak": 0.379974,
-          "rms": 0.090379,
-          "dc": 5e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.032959,
-          "seconds": 0.48
-        },
-        "remove": {
-          "file": "relic/remove.wav",
-          "sha256": "1d3e9b95adbfb469f801c788827f1d65e3438e6d0413b6c688d23a7c0c22037a",
-          "peak": 0.279999,
-          "rms": 0.061529,
-          "dc": 1.5e-07,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.020813,
-          "seconds": 0.34
-        },
-        "expand": {
-          "file": "relic/expand.wav",
-          "sha256": "e4daa2ee0e76bb93a7038eb3f8318dc65dcfbb61bf4fbf53f40638cf949441ca",
-          "peak": 0.25,
-          "rms": 0.061109,
-          "dc": 1.6e-07,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.029785,
-          "seconds": 0.34
-        },
-        "collapse": {
-          "file": "relic/collapse.wav",
-          "sha256": "f919d49730244eba80cb71c7445c56be5c4cc713a905f4f00d9bce88dba003da",
-          "peak": 0.220001,
-          "rms": 0.058902,
-          "dc": 8e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.017853,
-          "seconds": 0.28
-        },
-        "inventoryopen": {
-          "file": "relic/inventoryopen.wav",
-          "sha256": "aa0b26d5edc32da95c0adeac22e5dddfcc99a491f7eb99699bf95dcab5b41f30",
-          "peak": 0.319977,
-          "rms": 0.0615,
+          "sha256": "6a1accaeb2ec7d39bf1b9fd8aafa1ed6b7c6ae9ef34af71ef6155e936516e2f8",
+          "peak": 0.200958,
+          "rms": 0.049999,
           "dc": 2e-08,
           "first_frame": [
             0,
@@ -2062,99 +1993,14 @@
             0,
             0
           ],
-          "max_step": 0.042603,
-          "seconds": 0.51
+          "max_step": 0.017181,
+          "seconds": 0.3
         },
-        "inventoryclose": {
-          "file": "relic/inventoryclose.wav",
-          "sha256": "c3c83909da726fdb8888441ea86de5c465727afaa95e21f6b416265419e4e0dc",
-          "peak": 0.25,
-          "rms": 0.061478,
-          "dc": 7e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.024658,
-          "seconds": 0.33
-        },
-        "arrange": {
-          "file": "relic/arrange.wav",
-          "sha256": "26940221b72ece4cb63652ccec92a4f042836aa7e2d4e2563cd423e5dd10ad60",
-          "peak": 0.359985,
-          "rms": 0.068273,
-          "dc": 8e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.03186,
-          "seconds": 0.56
-        },
-        "restore": {
-          "file": "relic/restore.wav",
-          "sha256": "2c31ee0f7bead833b51afeb83c7d340656782c2df5e3d21beecef34878b5bd8a",
-          "peak": 0.299988,
-          "rms": 0.061457,
-          "dc": 5e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.026337,
-          "seconds": 0.45
-        },
-        "reorder": {
-          "file": "relic/reorder.wav",
-          "sha256": "504f23a70e9ce4f394e276c7922ab8d9e6db8d9270b1f10c416402e5513bc633",
-          "peak": 0.209991,
-          "rms": 0.059209,
-          "dc": 1.2e-07,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.018768,
-          "seconds": 0.24
-        },
-        "waiting": {
-          "file": "relic/waiting.wav",
-          "sha256": "e42837fd9fbd61cf0f9005e13965849bea5eeb63afcab26dca92464ff07b29f8",
-          "peak": 0.399994,
-          "rms": 0.068438,
-          "dc": 4e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.031433,
-          "seconds": 0.62
-        },
-        "ready": {
-          "file": "relic/ready.wav",
-          "sha256": "55665e2ddeceef2fc796a12e5df52a8a3f0d9ea49c34fa4bfce771e059e516ff",
-          "peak": 0.399994,
-          "rms": 0.069766,
+        "capture": {
+          "file": "relic/capture.wav",
+          "sha256": "1a3b397c8c28a6a4ab9ccd5aea52e2ea558768c48acca5270a248c2e470b0360",
+          "peak": 0.252258,
+          "rms": 0.059998,
           "dc": 1e-08,
           "first_frame": [
             0,
@@ -2164,14 +2010,82 @@
             0,
             0
           ],
-          "max_step": 0.032867,
-          "seconds": 0.75
+          "max_step": 0.021881,
+          "seconds": 0.48
         },
-        "error": {
-          "file": "relic/error.wav",
-          "sha256": "3414e8f4e7b5c120d5ac0d61d9c20cd7290d39dd9616a90a48e4f809f8d148cb",
-          "peak": 0.429993,
-          "rms": 0.0777,
+        "remove": {
+          "file": "relic/remove.wav",
+          "sha256": "9e5a044bf6692a259a23110e4d3799d1d1f8ffc5b011237b2b752562f08c145a",
+          "peak": 0.20932,
+          "rms": 0.045999,
+          "dc": 4e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.015564,
+          "seconds": 0.34
+        },
+        "expand": {
+          "file": "relic/expand.wav",
+          "sha256": "0972c83f5cf15a5459af6858407490d617bd7a5fbf975ae2dff8405368cd1c34",
+          "peak": 0.139099,
+          "rms": 0.033999,
+          "dc": 1.8e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.016571,
+          "seconds": 0.34
+        },
+        "collapse": {
+          "file": "relic/collapse.wav",
+          "sha256": "f2e82bb5513bee4163b92d60cdf7ccd204b15aca88440be5c2d9fa74b1960525",
+          "peak": 0.104584,
+          "rms": 0.027999,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.008484,
+          "seconds": 0.28
+        },
+        "inventoryopen": {
+          "file": "relic/inventoryopen.wav",
+          "sha256": "8585a0af60a92e576b058c6e385ca6dd73b98bba54d67883fa16d18f1668ae27",
+          "peak": 0.228943,
+          "rms": 0.043999,
+          "dc": 1.1e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.030487,
+          "seconds": 0.51
+        },
+        "inventoryclose": {
+          "file": "relic/inventoryclose.wav",
+          "sha256": "b18d35c8b17e1019d79a9529c57bcacbe65bb1857be283c716b365369ab30ee7",
+          "peak": 0.142334,
+          "rms": 0.034999,
           "dc": 0.0,
           "first_frame": [
             0,
@@ -2181,15 +2095,15 @@
             0,
             0
           ],
-          "max_step": 0.038544,
-          "seconds": 0.6
+          "max_step": 0.014038,
+          "seconds": 0.33
         },
-        "detent": {
-          "file": "relic/detent.wav",
-          "sha256": "0e6b3f70ff09822dad878cb26f7e470d09a13f770597ddf62cc3ce3f7d6d2204",
-          "peak": 0.139984,
-          "rms": 0.026752,
-          "dc": 2.7e-07,
+        "arrange": {
+          "file": "relic/arrange.wav",
+          "sha256": "446b484d190bcd7be7f1726e901c9cb961768b6b133267288171b76c0fc5fdb3",
+          "peak": 0.210907,
+          "rms": 0.039999,
+          "dc": 3e-08,
           "first_frame": [
             0,
             0
@@ -2198,7 +2112,109 @@
             0,
             0
           ],
-          "max_step": 0.050781,
+          "max_step": 0.018646,
+          "seconds": 0.56
+        },
+        "restore": {
+          "file": "relic/restore.wav",
+          "sha256": "f703fa91aeb5c6ed4d9b428107c82a55bdfd468c5951b7782171c0ad8307e7b4",
+          "peak": 0.2099,
+          "rms": 0.042999,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.018433,
+          "seconds": 0.45
+        },
+        "reorder": {
+          "file": "relic/reorder.wav",
+          "sha256": "49ded8fed4ae8d4577f59ce6694af19ec4b86632af0d3dd15f3de60cf4e2bf58",
+          "peak": 0.106384,
+          "rms": 0.029999,
+          "dc": 9e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.009521,
+          "seconds": 0.24
+        },
+        "waiting": {
+          "file": "relic/waiting.wav",
+          "sha256": "3b49c25ac849d33e49e7764e12ed543be2337e9db42586a6403deeb94f64cb5f",
+          "peak": 0.321442,
+          "rms": 0.054998,
+          "dc": 7e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.025269,
+          "seconds": 0.62
+        },
+        "ready": {
+          "file": "relic/ready.wav",
+          "sha256": "f8d31c43f8f3d399500086dc54df96b15a03b5673560a1b40d868878c9cd3122",
+          "peak": 0.321045,
+          "rms": 0.055998,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.026398,
+          "seconds": 0.75
+        },
+        "error": {
+          "file": "relic/error.wav",
+          "sha256": "5a47fa4405d8900d6908ec0534cb4b4c65d90b9291ceccab23869a57b3ab1728",
+          "peak": 0.304352,
+          "rms": 0.054998,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.027283,
+          "seconds": 0.6
+        },
+        "detent": {
+          "file": "relic/detent.wav",
+          "sha256": "ca934582a23100e9de366318324ec93bbf85c9449b19a3bc21ab80746ce26237",
+          "peak": 0.099426,
+          "rms": 0.019,
+          "dc": 1.5e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.036072,
           "seconds": 0.052
         }
       }
@@ -2209,128 +2225,9 @@
       "cues": {
         "switch": {
           "file": "starlight/switch.wav",
-          "sha256": "e4b438093d8405186d05d904e56bf80ae806fb12756f8ac0e92cbfdb1955f0e4",
-          "peak": 0.319977,
-          "rms": 0.058328,
-          "dc": 1.5e-07,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.076599,
-          "seconds": 0.3
-        },
-        "capture": {
-          "file": "starlight/capture.wav",
-          "sha256": "2e8e963d8c5e7433330d4a5ee331e330f752546478b77810efaca740648008f4",
-          "peak": 0.379974,
-          "rms": 0.07315,
-          "dc": 1.2e-07,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.077393,
-          "seconds": 0.48
-        },
-        "remove": {
-          "file": "starlight/remove.wav",
-          "sha256": "0bdb9b0f82e2cea568eaaa40d0f67a52bbbee45fe5686f4a67e591fc19018a1f",
-          "peak": 0.279999,
-          "rms": 0.053613,
-          "dc": 1e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.050232,
-          "seconds": 0.34
-        },
-        "expand": {
-          "file": "starlight/expand.wav",
-          "sha256": "c46d60d4f86469d0978c53a7cc8290dd33ca7d0874a3883c45e11c7a22c2d7ac",
-          "peak": 0.25,
-          "rms": 0.03988,
-          "dc": 1.2e-07,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.051605,
-          "seconds": 0.34
-        },
-        "collapse": {
-          "file": "starlight/collapse.wav",
-          "sha256": "79d81a1c51c7cbbd9afc4783eca5a8d7571bcaa20bf79bc56116b5521391b0d3",
-          "peak": 0.220001,
-          "rms": 0.042986,
-          "dc": 3e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.040588,
-          "seconds": 0.28
-        },
-        "inventoryopen": {
-          "file": "starlight/inventoryopen.wav",
-          "sha256": "b5352eed314ec348abee6535be6fdd73b74f5a735785b1fcdcb9537083aaadf8",
-          "peak": 0.319977,
-          "rms": 0.044583,
-          "dc": 2e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.07608,
-          "seconds": 0.51
-        },
-        "inventoryclose": {
-          "file": "starlight/inventoryclose.wav",
-          "sha256": "114987d8f793fe6f7cab2a0a8db8488974342ba17734aa8339fdffd598b37a92",
-          "peak": 0.25,
-          "rms": 0.047698,
-          "dc": 7e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.052948,
-          "seconds": 0.33
-        },
-        "arrange": {
-          "file": "starlight/arrange.wav",
-          "sha256": "0477a9a4660ec5e1cb9dd1a9db5925adedc6186d6a76e5de77f2bfb354e51aa3",
-          "peak": 0.359985,
-          "rms": 0.05014,
+          "sha256": "e5d917ba9656ba67f1a64c55e82dda5bf23e7ffed71e244cf1f6244de98fc007",
+          "peak": 0.274292,
+          "rms": 0.049998,
           "dc": 1.3e-07,
           "first_frame": [
             0,
@@ -2340,14 +2237,99 @@
             0,
             0
           ],
-          "max_step": 0.088196,
-          "seconds": 0.56
+          "max_step": 0.065643,
+          "seconds": 0.3
         },
-        "restore": {
-          "file": "starlight/restore.wav",
-          "sha256": "17c11225c349dcad3dd27b21b49fde08072d1bbc4c9e2eb2842101bcb1088c1c",
-          "peak": 0.299988,
-          "rms": 0.052466,
+        "capture": {
+          "file": "starlight/capture.wav",
+          "sha256": "0c58fc9283a56080a4865b8cf858f09ca95834d3474a30cfc8b354219dcdf39a",
+          "peak": 0.311676,
+          "rms": 0.059998,
+          "dc": 0.0,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.063507,
+          "seconds": 0.48
+        },
+        "remove": {
+          "file": "starlight/remove.wav",
+          "sha256": "897c84c91a0a7a0e82586cfe81bd3e3c64e2b22c9941e2dd9c7596f2b40ece3e",
+          "peak": 0.240234,
+          "rms": 0.045999,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.043091,
+          "seconds": 0.34
+        },
+        "expand": {
+          "file": "starlight/expand.wav",
+          "sha256": "8fc1d0ff3548e3e94de10ef68e5e62dc58ce377b5c308788e21ab6cddc5f1438",
+          "peak": 0.213135,
+          "rms": 0.033999,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.044006,
+          "seconds": 0.34
+        },
+        "collapse": {
+          "file": "starlight/collapse.wav",
+          "sha256": "5f5b9d395f6da96a4dbc5b6c63dbad6efb4927d02276afa4571f54b98120056c",
+          "peak": 0.14328,
+          "rms": 0.027999,
+          "dc": 1.6e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.026428,
+          "seconds": 0.28
+        },
+        "inventoryopen": {
+          "file": "starlight/inventoryopen.wav",
+          "sha256": "69e22362061a313e22ce83099464bccecf25af5cf134aeda597d560cb9c2e2ec",
+          "peak": 0.315796,
+          "rms": 0.043999,
+          "dc": 5e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.075104,
+          "seconds": 0.51
+        },
+        "inventoryclose": {
+          "file": "starlight/inventoryclose.wav",
+          "sha256": "9953623a67e22afef7cabf45b8afc35b40bae4a5b32b764567c2287f791e3931",
+          "peak": 0.183441,
+          "rms": 0.034999,
           "dc": 7e-08,
           "first_frame": [
             0,
@@ -2357,65 +2339,48 @@
             0,
             0
           ],
-          "max_step": 0.088898,
+          "max_step": 0.038849,
+          "seconds": 0.33
+        },
+        "arrange": {
+          "file": "starlight/arrange.wav",
+          "sha256": "fb0f8daa9bad91d2782f0b14c09da735126ada9d96e302b96354801028149983",
+          "peak": 0.28717,
+          "rms": 0.039999,
+          "dc": 1e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.070374,
+          "seconds": 0.56
+        },
+        "restore": {
+          "file": "starlight/restore.wav",
+          "sha256": "12376464fe7e22d60c54680cc81ae4d86bb7500d805d1a12398265e281656b52",
+          "peak": 0.24585,
+          "rms": 0.042999,
+          "dc": 1e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.072845,
           "seconds": 0.45
         },
         "reorder": {
           "file": "starlight/reorder.wav",
-          "sha256": "d01aad6a5713286a53e5719bbc769517386cae1ddb506e2139a7ed080eece44d",
-          "peak": 0.209991,
-          "rms": 0.043298,
-          "dc": 5e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.048462,
-          "seconds": 0.24
-        },
-        "waiting": {
-          "file": "starlight/waiting.wav",
-          "sha256": "d8f188dfbe135ba43ddce1d3210da736ce91df2a96b92620e3099c7bb5b6290e",
-          "peak": 0.399994,
-          "rms": 0.058081,
-          "dc": 6e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.089783,
-          "seconds": 0.62
-        },
-        "ready": {
-          "file": "starlight/ready.wav",
-          "sha256": "8cbbbc5e4562b33d5b5788a51b42e28556c87e5a5fefcbbc0436f6cae165fc2f",
-          "peak": 0.399994,
-          "rms": 0.055578,
-          "dc": 5e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.082001,
-          "seconds": 0.75
-        },
-        "error": {
-          "file": "starlight/error.wav",
-          "sha256": "68da2bc6fe26e6518c2368def3e535ee28df7fc1255ca69f7ea759f473d7c595",
-          "peak": 0.429993,
-          "rms": 0.064364,
+          "sha256": "59edf543fba4260ead2a50642f5202dd5c83ca72eb3eba75deface3e71f1a421",
+          "peak": 0.145508,
+          "rms": 0.029999,
           "dc": 2e-08,
           "first_frame": [
             0,
@@ -2425,15 +2390,15 @@
             0,
             0
           ],
-          "max_step": 0.089905,
-          "seconds": 0.6
+          "max_step": 0.0336,
+          "seconds": 0.24
         },
-        "detent": {
-          "file": "starlight/detent.wav",
-          "sha256": "cc2f47b8f6e67f5b7d88c9667b6f07d5264bc9d55e0136262cbb1772956d3781",
-          "peak": 0.139984,
-          "rms": 0.028719,
-          "dc": 3.1e-07,
+        "waiting": {
+          "file": "starlight/waiting.wav",
+          "sha256": "d7018dd39d22ba9d0939a5fcf23510309485ef1c2e4db44ea0faa07ebdd47217",
+          "peak": 0.378754,
+          "rms": 0.054998,
+          "dc": 2e-08,
           "first_frame": [
             0,
             0
@@ -2442,7 +2407,58 @@
             0,
             0
           ],
-          "max_step": 0.064575,
+          "max_step": 0.085022,
+          "seconds": 0.62
+        },
+        "ready": {
+          "file": "starlight/ready.wav",
+          "sha256": "f2dc52a923afa712b105a5b0fdc9181e0a45a977192e825543816e8600957a18",
+          "peak": 0.403015,
+          "rms": 0.055998,
+          "dc": 9e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.082611,
+          "seconds": 0.75
+        },
+        "error": {
+          "file": "starlight/error.wav",
+          "sha256": "2fda4f2214e6f3ac807242a787ff85a9b857ef3870e1379f258aae0dfdb344ac",
+          "peak": 0.367432,
+          "rms": 0.054998,
+          "dc": 2e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.076813,
+          "seconds": 0.6
+        },
+        "detent": {
+          "file": "starlight/detent.wav",
+          "sha256": "e5ec1c82856a3178c32f56209804f1a9831693bb06d09df8231924efacfc063b",
+          "peak": 0.092621,
+          "rms": 0.018999,
+          "dc": 8e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.042725,
           "seconds": 0.052
         }
       }
@@ -2453,10 +2469,10 @@
       "cues": {
         "switch": {
           "file": "formation/switch.wav",
-          "sha256": "3df633e2a39d683ae6a0944a09bee98962f34213bda885fa42238259779207d5",
-          "peak": 0.319977,
-          "rms": 0.041694,
-          "dc": 1.59e-06,
+          "sha256": "c6add1bf70a64dd344c6abad2ef0d3b95ca3122d8fcdfb9cc4d7723188ccc543",
+          "peak": 0.383728,
+          "rms": 0.049998,
+          "dc": 1.92e-06,
           "first_frame": [
             0,
             0
@@ -2465,65 +2481,14 @@
             0,
             0
           ],
-          "max_step": 0.051117,
+          "max_step": 0.06131,
           "seconds": 0.3
         },
         "capture": {
           "file": "formation/capture.wav",
-          "sha256": "4a90d48777c60c0d0dcf1b7ffec87ace2e2d5ee2dcb8f5074a014143f9eba1b9",
-          "peak": 0.379974,
-          "rms": 0.055552,
-          "dc": 6e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.080627,
-          "seconds": 0.48
-        },
-        "remove": {
-          "file": "formation/remove.wav",
-          "sha256": "848f26a948e6b5e070387ddcccbef1ebf8fe728bc8c0c5e2e1ba616ee63465dd",
-          "peak": 0.279999,
-          "rms": 0.041649,
-          "dc": 0.0,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.043152,
-          "seconds": 0.34
-        },
-        "expand": {
-          "file": "formation/expand.wav",
-          "sha256": "ce69f4e1a51470177439655ed65f26daf1404989b2078ca05e69d07c54f57952",
-          "peak": 0.25,
-          "rms": 0.033787,
-          "dc": 1.1e-07,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.046173,
-          "seconds": 0.34
-        },
-        "collapse": {
-          "file": "formation/collapse.wav",
-          "sha256": "3cfb0773f777092a2c5c03d6c7964b0a4ca02c274d8fdf4069a90eb01dac8504",
-          "peak": 0.220001,
-          "rms": 0.040856,
+          "sha256": "fe16505bea63b638bdc27f8192f586890c8b308e292e0fc4d292ff4c3ab9601d",
+          "peak": 0.4104,
+          "rms": 0.059998,
           "dc": 2e-08,
           "first_frame": [
             0,
@@ -2533,48 +2498,65 @@
             0,
             0
           ],
-          "max_step": 0.048889,
+          "max_step": 0.087128,
+          "seconds": 0.48
+        },
+        "remove": {
+          "file": "formation/remove.wav",
+          "sha256": "801207e7b6a56a697633b5bc3d607c573315923d35d2661cf66bc4638b50590b",
+          "peak": 0.309235,
+          "rms": 0.045999,
+          "dc": 1e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.047638,
+          "seconds": 0.34
+        },
+        "expand": {
+          "file": "formation/expand.wav",
+          "sha256": "359f0d2d5940a96b84079ea4f1f50fe013dc9da79181da3b5e37f2fdbb2c20d3",
+          "peak": 0.251556,
+          "rms": 0.033999,
+          "dc": 9e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.046448,
+          "seconds": 0.34
+        },
+        "collapse": {
+          "file": "formation/collapse.wav",
+          "sha256": "20022e4e6bcadafaa7a324f98949d096d6fac9ae24938393350ffe9886353a85",
+          "peak": 0.150757,
+          "rms": 0.027999,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.033508,
           "seconds": 0.28
         },
         "inventoryopen": {
           "file": "formation/inventoryopen.wav",
-          "sha256": "2ec6739ac41cdd94a2ce71716d45073a9e8c4840e825e3a9510c031780630a9e",
-          "peak": 0.319977,
-          "rms": 0.035842,
-          "dc": 4e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.056274,
-          "seconds": 0.51
-        },
-        "inventoryclose": {
-          "file": "formation/inventoryclose.wav",
-          "sha256": "442d60750a419d04fd812182eccc70791cf2b6b36f813176377ec0dd7536008c",
-          "peak": 0.25,
-          "rms": 0.041792,
-          "dc": 8e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.048187,
-          "seconds": 0.33
-        },
-        "arrange": {
-          "file": "formation/arrange.wav",
-          "sha256": "31ebb8ebcd518f20844fb69db9ce6cf73dc55c5db3576a9ccc7810cd8e80b80b",
-          "peak": 0.359985,
-          "rms": 0.04313,
+          "sha256": "e6d46084d6e489aa4b5697ff71e1b025e983088b31c4939a4b3997f14c072707",
+          "peak": 0.392822,
+          "rms": 0.043999,
           "dc": 1e-07,
           "first_frame": [
             0,
@@ -2584,15 +2566,49 @@
             0,
             0
           ],
-          "max_step": 0.062225,
+          "max_step": 0.069092,
+          "seconds": 0.51
+        },
+        "inventoryclose": {
+          "file": "formation/inventoryclose.wav",
+          "sha256": "5b1dc729a6b3384a79d58742655827f64b510c4598a52e06f2ad57225cbfd611",
+          "peak": 0.209351,
+          "rms": 0.034999,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.040375,
+          "seconds": 0.33
+        },
+        "arrange": {
+          "file": "formation/arrange.wav",
+          "sha256": "cc2b520a0cc1b3bd2946054e51a78e81507903704c040fcf7cdc3f5b0925225b",
+          "peak": 0.333862,
+          "rms": 0.039999,
+          "dc": 3e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.057678,
           "seconds": 0.56
         },
         "restore": {
           "file": "formation/restore.wav",
-          "sha256": "5fbd469a6f12b92ce204cba1a87a659d4286ce040b73aa902059ee68e17a906e",
-          "peak": 0.299988,
-          "rms": 0.04655,
-          "dc": 9e-08,
+          "sha256": "c07a99461838d8e87cd964162df4fc4fd12de50b840285b046de1a9ef113001a",
+          "peak": 0.2771,
+          "rms": 0.042999,
+          "dc": 3e-08,
           "first_frame": [
             0,
             0
@@ -2601,15 +2617,15 @@
             0,
             0
           ],
-          "max_step": 0.049957,
+          "max_step": 0.046143,
           "seconds": 0.45
         },
         "reorder": {
           "file": "formation/reorder.wav",
-          "sha256": "511d3887d31922e4ac5c314345a9eee0bd06045acd24ad31571155f0880f929b",
-          "peak": 0.209991,
-          "rms": 0.036276,
-          "dc": 9e-08,
+          "sha256": "0fb71ca633344983419280c74e9a67caf0c11dc7af4fb9cd0afeddb5ef1da5bc",
+          "peak": 0.173645,
+          "rms": 0.029999,
+          "dc": 8e-08,
           "first_frame": [
             0,
             0
@@ -2618,15 +2634,15 @@
             0,
             0
           ],
-          "max_step": 0.031403,
+          "max_step": 0.02594,
           "seconds": 0.24
         },
         "waiting": {
           "file": "formation/waiting.wav",
-          "sha256": "06ebcc386590da00498d014221d70c06d6744354738f56acbadbc10e3d214f97",
-          "peak": 0.399994,
-          "rms": 0.068393,
-          "dc": 1e-08,
+          "sha256": "fe6f1a468ce92dc036f65fa0bc4d202e4dbcea13d2f9b348772b2c575fc736aa",
+          "peak": 0.321655,
+          "rms": 0.054998,
+          "dc": 4e-08,
           "first_frame": [
             0,
             0
@@ -2635,14 +2651,14 @@
             0,
             0
           ],
-          "max_step": 0.072388,
+          "max_step": 0.058197,
           "seconds": 0.62
         },
         "ready": {
           "file": "formation/ready.wav",
-          "sha256": "e0d65b80ad95ab2b5ebf6f292a16b5d1bc301755a37573b0f7849f662c1f3134",
-          "peak": 0.399994,
-          "rms": 0.063323,
+          "sha256": "fc029c9f9d50a792fbfa82892d19e04fe6647e34df805692f97ff2d65b38d2a0",
+          "peak": 0.353729,
+          "rms": 0.055998,
           "dc": 2e-08,
           "first_frame": [
             0,
@@ -2652,15 +2668,15 @@
             0,
             0
           ],
-          "max_step": 0.062164,
+          "max_step": 0.054962,
           "seconds": 0.75
         },
         "error": {
           "file": "formation/error.wav",
-          "sha256": "71ac863992c0a140e743a2bb46f82c4503944fa0f8476c475cba737fd0140cf3",
-          "peak": 0.429993,
-          "rms": 0.056504,
-          "dc": 1e-08,
+          "sha256": "6907436387a3b548c862d680ee80a38cb9ecc1353bf03173c02eb856671507fc",
+          "peak": 0.418518,
+          "rms": 0.054998,
+          "dc": 4e-08,
           "first_frame": [
             0,
             0
@@ -2669,14 +2685,14 @@
             0,
             0
           ],
-          "max_step": 0.063873,
+          "max_step": 0.062164,
           "seconds": 0.6
         },
         "detent": {
           "file": "formation/detent.wav",
-          "sha256": "4a917fd1614c46126d343a0e4193b168cb28ff41446d9517a7c1b66e4dbaa221",
-          "peak": 0.139984,
-          "rms": 0.029315,
+          "sha256": "b28c444a19cbc5fdfb5c129e7ef04ae9d3636834c32df56f10a3c0548f2c8740",
+          "peak": 0.090729,
+          "rms": 0.018999,
           "dc": 1.7e-07,
           "first_frame": [
             0,
@@ -2686,7 +2702,7 @@
             0,
             0
           ],
-          "max_step": 0.040741,
+          "max_step": 0.026398,
           "seconds": 0.052
         }
       }
@@ -2697,9 +2713,77 @@
       "cues": {
         "switch": {
           "file": "astral/switch.wav",
-          "sha256": "c0f887fdf88f9e5172fa1ddfc51df9ca0fca5fbc71ff039dc16d25c1289ec505",
-          "peak": 0.319977,
-          "rms": 0.066562,
+          "sha256": "446d8d87beffcea8c3a01ac63053b339bb817b9a3c31900e7319cbdb0ceff358",
+          "peak": 0.240356,
+          "rms": 0.049998,
+          "dc": 9e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.109039,
+          "seconds": 0.3
+        },
+        "capture": {
+          "file": "astral/capture.wav",
+          "sha256": "b526fe583645c187bbb1d0e88dd0ee3a3c7e621cda0fd4ea9dcde920db5d66a9",
+          "peak": 0.297607,
+          "rms": 0.059998,
+          "dc": 6e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.117889,
+          "seconds": 0.48
+        },
+        "remove": {
+          "file": "astral/remove.wav",
+          "sha256": "1688c483989e114c6b1f57ae11db6b61d2f512ea2da4cdcdaf43ac111c6eac89",
+          "peak": 0.225433,
+          "rms": 0.045999,
+          "dc": 1.1e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.103363,
+          "seconds": 0.34
+        },
+        "expand": {
+          "file": "astral/expand.wav",
+          "sha256": "14fbfcac024b8068f9ad4f9e3d7b17fc629fa0dd59d3b2b3e2c16e2e31f37f09",
+          "peak": 0.164124,
+          "rms": 0.033999,
+          "dc": 6e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.072479,
+          "seconds": 0.34
+        },
+        "collapse": {
+          "file": "astral/collapse.wav",
+          "sha256": "0cd2ef22f4b67c8b6d8d6552611a8b64bd9e9935722c8abc687c6a08eb96c137",
+          "peak": 0.132812,
+          "rms": 0.027999,
           "dc": 1.7e-07,
           "first_frame": [
             0,
@@ -2709,150 +2793,14 @@
             0,
             0
           ],
-          "max_step": 0.145172,
-          "seconds": 0.3
-        },
-        "capture": {
-          "file": "astral/capture.wav",
-          "sha256": "080333e73627a3d6a377670654647c693c9b4c3b39029c4b51fd3d4f89a43f04",
-          "peak": 0.379974,
-          "rms": 0.076605,
-          "dc": 5e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.150543,
-          "seconds": 0.48
-        },
-        "remove": {
-          "file": "astral/remove.wav",
-          "sha256": "184b64b0d32e6c1fad77e1bd35b638ca390f8787798e546ebce1c30f6ee1e848",
-          "peak": 0.279999,
-          "rms": 0.057132,
-          "dc": 6e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.128357,
-          "seconds": 0.34
-        },
-        "expand": {
-          "file": "astral/expand.wav",
-          "sha256": "4958908f16b28e52bcd20e487158d8ae95ba5979a9cdb260a57e6ca92d2ec798",
-          "peak": 0.25,
-          "rms": 0.051789,
-          "dc": 2e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.110443,
-          "seconds": 0.34
-        },
-        "collapse": {
-          "file": "astral/collapse.wav",
-          "sha256": "435e0aeabab2e9d4ff2192cdf1cbe22a038773fe658bed2f5ddec0637306e975",
-          "peak": 0.220001,
-          "rms": 0.046378,
-          "dc": 1.6e-07,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.09079,
+          "max_step": 0.05481,
           "seconds": 0.28
         },
         "inventoryopen": {
           "file": "astral/inventoryopen.wav",
-          "sha256": "cea0a0e756c6965c202a10a238c6b7862d758dc99cf59937e9a3631359731ae2",
-          "peak": 0.319977,
-          "rms": 0.058196,
-          "dc": 3e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.164062,
-          "seconds": 0.51
-        },
-        "inventoryclose": {
-          "file": "astral/inventoryclose.wav",
-          "sha256": "dd46e4d3323833067e2a713a08b6a63f39ffbbb009cf5865da570017c949ef22",
-          "peak": 0.25,
-          "rms": 0.053587,
-          "dc": 1.6e-07,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.08786,
-          "seconds": 0.33
-        },
-        "arrange": {
-          "file": "astral/arrange.wav",
-          "sha256": "8795bc1406824cd574b62ed4873f9e5e25e9d2b1128b45904c408406cd744f9e",
-          "peak": 0.359985,
-          "rms": 0.060849,
-          "dc": 6e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.167145,
-          "seconds": 0.56
-        },
-        "restore": {
-          "file": "astral/restore.wav",
-          "sha256": "03f13e60e7bf685509420b52b0cee456b761bda5c535e7c4e17f5e4bcf08a3f2",
-          "peak": 0.299988,
-          "rms": 0.053649,
-          "dc": 5e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.112427,
-          "seconds": 0.45
-        },
-        "reorder": {
-          "file": "astral/reorder.wav",
-          "sha256": "2de5d454358ef2bd21a7c358e991a43ca6d6e64d80ac3b144509ab3610be41d5",
-          "peak": 0.209991,
-          "rms": 0.053582,
+          "sha256": "90b42702d8520acf2d5124135f6dfd7f89033fac874b44c06f5e9b8b70733302",
+          "peak": 0.241913,
+          "rms": 0.043999,
           "dc": 7e-08,
           "first_frame": [
             0,
@@ -2862,15 +2810,83 @@
             0,
             0
           ],
-          "max_step": 0.097137,
+          "max_step": 0.124023,
+          "seconds": 0.51
+        },
+        "inventoryclose": {
+          "file": "astral/inventoryclose.wav",
+          "sha256": "6d02bb131cd0656837bc778169e51309b7a7f116ec9fc85f9c4765650b876cbd",
+          "peak": 0.163269,
+          "rms": 0.034999,
+          "dc": 9e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.057373,
+          "seconds": 0.33
+        },
+        "arrange": {
+          "file": "astral/arrange.wav",
+          "sha256": "e811546b76def0418405b1c57d97e06c152e7b6a3a71672473b83d98cb9501c3",
+          "peak": 0.236633,
+          "rms": 0.039999,
+          "dc": 8e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.109894,
+          "seconds": 0.56
+        },
+        "restore": {
+          "file": "astral/restore.wav",
+          "sha256": "2966430afa6543cd5b720bd65115d44a4cb5532227505c9edbb39a5d3a7680ef",
+          "peak": 0.240448,
+          "rms": 0.042999,
+          "dc": 4e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.090149,
+          "seconds": 0.45
+        },
+        "reorder": {
+          "file": "astral/reorder.wav",
+          "sha256": "de73e7a84e7804f9f58e42235358c7784ea39b80992edaa46d30e19ca167339e",
+          "peak": 0.117584,
+          "rms": 0.029999,
+          "dc": 1.8e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.054413,
           "seconds": 0.24
         },
         "waiting": {
           "file": "astral/waiting.wav",
-          "sha256": "579e31f44f49c8fe3a3d3f39ad11eebf4f2a670699abe77014b4c1c8c011150d",
-          "peak": 0.399994,
-          "rms": 0.066852,
-          "dc": 1e-08,
+          "sha256": "061d226edb1701ddf902d4c7e64bb8abc5a73cb4dfa0634c4a9069bfaf574c10",
+          "peak": 0.329071,
+          "rms": 0.054998,
+          "dc": 2e-08,
           "first_frame": [
             0,
             0
@@ -2879,15 +2895,15 @@
             0,
             0
           ],
-          "max_step": 0.181396,
+          "max_step": 0.1492,
           "seconds": 0.62
         },
         "ready": {
           "file": "astral/ready.wav",
-          "sha256": "142fc7e59990a66da628d063cd3b9f9bc87864380ab0a27bf818359249024196",
-          "peak": 0.399994,
-          "rms": 0.062074,
-          "dc": 3e-08,
+          "sha256": "cca86983ce2e549dd29ff854c05c6106b94664717ed03b6445de57511e1986d5",
+          "peak": 0.36084,
+          "rms": 0.055998,
+          "dc": 1.7e-07,
           "first_frame": [
             0,
             0
@@ -2896,15 +2912,15 @@
             0,
             0
           ],
-          "max_step": 0.176971,
+          "max_step": 0.159637,
           "seconds": 0.75
         },
         "error": {
           "file": "astral/error.wav",
-          "sha256": "a7a3560d14bbc25e124f804f8b939f4854b4192cb3066a11d747e7c0f0baafb6",
-          "peak": 0.429993,
-          "rms": 0.075108,
-          "dc": 5e-08,
+          "sha256": "2fb881e1424f31f52cc639c981c58b6923282c4e0a3de5e4267fdf76d9f719f2",
+          "peak": 0.31485,
+          "rms": 0.054998,
+          "dc": 1.1e-07,
           "first_frame": [
             0,
             0
@@ -2913,15 +2929,15 @@
             0,
             0
           ],
-          "max_step": 0.183289,
+          "max_step": 0.134186,
           "seconds": 0.6
         },
         "detent": {
           "file": "astral/detent.wav",
-          "sha256": "a834766f927fb4ed2a6fe91ce95b61cd3ad0725784dffc19cc32c928f76dff43",
-          "peak": 0.139984,
-          "rms": 0.025649,
-          "dc": 1.3e-07,
+          "sha256": "44483711d27e6eafab8afee7c0a0344d04c5b6612adf14f897e775b016a420d9",
+          "peak": 0.103699,
+          "rms": 0.018999,
+          "dc": 3.2e-07,
           "first_frame": [
             0,
             0
@@ -2930,7 +2946,7 @@
             0,
             0
           ],
-          "max_step": 0.08728,
+          "max_step": 0.064667,
           "seconds": 0.052
         }
       }
@@ -2941,10 +2957,10 @@
       "cues": {
         "switch": {
           "file": "wonderland/switch.wav",
-          "sha256": "5c40802fabcceac28b1a91805703dc2bac9b0a59a73def2eb810e67fb9f7a917",
-          "peak": 0.319977,
-          "rms": 0.057469,
-          "dc": 1e-08,
+          "sha256": "64d8d8afc8870e58e315927918f732cf8e90193dcd7e90b10dd5a6600f16d258",
+          "peak": 0.278381,
+          "rms": 0.049998,
+          "dc": 4e-08,
           "first_frame": [
             0,
             0
@@ -2953,14 +2969,48 @@
             0,
             0
           ],
-          "max_step": 0.081421,
+          "max_step": 0.070831,
           "seconds": 0.3
         },
         "capture": {
           "file": "wonderland/capture.wav",
-          "sha256": "14da59453c43b46045705f39f1f1dbe7cc1cd0e5684a33c7131f172819b1697e",
-          "peak": 0.379974,
-          "rms": 0.07603,
+          "sha256": "4ab0fbf393651da4fd6a2822b6573ac9cbd8aad7e14c2d2e0468cf4dea79c8c2",
+          "peak": 0.299866,
+          "rms": 0.059998,
+          "dc": 0.0,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.097443,
+          "seconds": 0.48
+        },
+        "remove": {
+          "file": "wonderland/remove.wav",
+          "sha256": "23333a2b549fb90e22192d4a939d7a7607c9d43f0adf8a033e2e13858fe90050",
+          "peak": 0.281433,
+          "rms": 0.045999,
+          "dc": 1.4e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.070312,
+          "seconds": 0.34
+        },
+        "expand": {
+          "file": "wonderland/expand.wav",
+          "sha256": "145c73ec46766c69ad3876ec56b1c327d50390cfdd3d336fa1804dcb16c8cb8b",
+          "peak": 0.206451,
+          "rms": 0.033999,
           "dc": 3e-08,
           "first_frame": [
             0,
@@ -2970,48 +3020,65 @@
             0,
             0
           ],
-          "max_step": 0.123444,
-          "seconds": 0.48
-        },
-        "remove": {
-          "file": "wonderland/remove.wav",
-          "sha256": "02fc945122b8e7d8044c35c6ad8db0cafcf9bbbca754a244f4aea04126a197e9",
-          "peak": 0.279999,
-          "rms": 0.045761,
-          "dc": 1.5e-07,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.069946,
-          "seconds": 0.34
-        },
-        "expand": {
-          "file": "wonderland/expand.wav",
-          "sha256": "5034350dd16941e9fb64e885921d859e9688cd28ae334a3a8d6f14f0f78f9671",
-          "peak": 0.25,
-          "rms": 0.041171,
-          "dc": 1.6e-07,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.077362,
+          "max_step": 0.063904,
           "seconds": 0.34
         },
         "collapse": {
           "file": "wonderland/collapse.wav",
-          "sha256": "16ceacd32bc0c15634fd90d86db6742cbb9ece6eb29d90d1d955cf25a0808e12",
-          "peak": 0.220001,
-          "rms": 0.042499,
+          "sha256": "ec41bf14d7dfcf472d45904f5cf4e71b3e2c4130d7752e8a1e9da63c55d179e8",
+          "peak": 0.144928,
+          "rms": 0.027999,
+          "dc": 1.3e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.03891,
+          "seconds": 0.28
+        },
+        "inventoryopen": {
+          "file": "wonderland/inventoryopen.wav",
+          "sha256": "eb1ed3a4d7d148638e10713e2026ec28a3d2313e1cce72a63e3e7ca99734f2d0",
+          "peak": 0.308411,
+          "rms": 0.043999,
+          "dc": 1.8e-07,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.082153,
+          "seconds": 0.51
+        },
+        "inventoryclose": {
+          "file": "wonderland/inventoryclose.wav",
+          "sha256": "f00063f3fdd2fc9776a0fae73bf5bd2e1130341983f6a055745bc4560c19ae4b",
+          "peak": 0.19455,
+          "rms": 0.034999,
+          "dc": 9e-08,
+          "first_frame": [
+            0,
+            0
+          ],
+          "last_frame": [
+            0,
+            0
+          ],
+          "max_step": 0.050964,
+          "seconds": 0.33
+        },
+        "arrange": {
+          "file": "wonderland/arrange.wav",
+          "sha256": "87c6f273ce47b6aacfb02687ead0b720475d6c462decaacf8da9539741a63b93",
+          "peak": 0.286499,
+          "rms": 0.039999,
           "dc": 2e-08,
           "first_frame": [
             0,
@@ -3021,65 +3088,14 @@
             0,
             0
           ],
-          "max_step": 0.059052,
-          "seconds": 0.28
-        },
-        "inventoryopen": {
-          "file": "wonderland/inventoryopen.wav",
-          "sha256": "78f3f6e3f4c65ba47664661bc07914c7779408accf458d525e1bb3a0fa17a042",
-          "peak": 0.319977,
-          "rms": 0.04565,
-          "dc": 5e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.085205,
-          "seconds": 0.51
-        },
-        "inventoryclose": {
-          "file": "wonderland/inventoryclose.wav",
-          "sha256": "dd5cf53dc94315c5fdf89b127d6d8b4b406407cba361a7c07987a105dbcdffd6",
-          "peak": 0.25,
-          "rms": 0.044971,
-          "dc": 8e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.06546,
-          "seconds": 0.33
-        },
-        "arrange": {
-          "file": "wonderland/arrange.wav",
-          "sha256": "8fd133c9b1032eb6b3f562db2bdf6d703b3b216217a26eab22542fa620e0eb75",
-          "peak": 0.359985,
-          "rms": 0.050258,
-          "dc": 5e-08,
-          "first_frame": [
-            0,
-            0
-          ],
-          "last_frame": [
-            0,
-            0
-          ],
-          "max_step": 0.091339,
+          "max_step": 0.072662,
           "seconds": 0.56
         },
         "restore": {
           "file": "wonderland/restore.wav",
-          "sha256": "8d52507c7a55995ba8c3496fd8a1217b74933f8c57b53132f11924dc05f4a9ce",
-          "peak": 0.299988,
-          "rms": 0.043903,
+          "sha256": "4f68364fd915e33ee8d9aae4091adb436c2fc027727e96694542188ea8e2c0f7",
+          "peak": 0.293823,
+          "rms": 0.042999,
           "dc": 1e-08,
           "first_frame": [
             0,
@@ -3089,15 +3105,15 @@
             0,
             0
           ],
-          "max_step": 0.072113,
+          "max_step": 0.070618,
           "seconds": 0.45
         },
         "reorder": {
           "file": "wonderland/reorder.wav",
-          "sha256": "afaad66a796418a87712a163e31699fd9e7c7e3ac34437761020b4a456e6da29",
-          "peak": 0.209991,
-          "rms": 0.042133,
-          "dc": 2.2e-07,
+          "sha256": "3b17497939ff4bdc8cb5b95c03bf217d83f5a2dfcf6ae314e7a3e4fc0ce84cc4",
+          "peak": 0.149506,
+          "rms": 0.029999,
+          "dc": 5e-08,
           "first_frame": [
             0,
             0
@@ -3106,14 +3122,14 @@
             0,
             0
           ],
-          "max_step": 0.054474,
+          "max_step": 0.038788,
           "seconds": 0.24
         },
         "waiting": {
           "file": "wonderland/waiting.wav",
-          "sha256": "11990c87746d1fa9f1edcad055c0c5caf89442c419841d7a14363bc6dbecf20c",
-          "peak": 0.399994,
-          "rms": 0.059192,
+          "sha256": "b768007e728ee77fc4e22804fa71de6e11df8192d38fcedbe205712cf229a6ff",
+          "peak": 0.371643,
+          "rms": 0.054998,
           "dc": 2e-08,
           "first_frame": [
             0,
@@ -3123,15 +3139,15 @@
             0,
             0
           ],
-          "max_step": 0.105255,
+          "max_step": 0.097809,
           "seconds": 0.62
         },
         "ready": {
           "file": "wonderland/ready.wav",
-          "sha256": "a2adbda4dce91fd8c1d8d2e1cdd4c340f61b6c13dee21fd56fcad79035dd7aa7",
-          "peak": 0.399994,
-          "rms": 0.054276,
-          "dc": 3e-08,
+          "sha256": "e570bb025e8f9ac5fa639ac20dbe83677b6133ede26da0b4893916de10d409c6",
+          "peak": 0.412689,
+          "rms": 0.055998,
+          "dc": 1e-08,
           "first_frame": [
             0,
             0
@@ -3140,15 +3156,15 @@
             0,
             0
           ],
-          "max_step": 0.097504,
+          "max_step": 0.100586,
           "seconds": 0.75
         },
         "error": {
           "file": "wonderland/error.wav",
-          "sha256": "b00de0c670e51b02c3f70a5b846939d462d29a26be1d7f1a0b872e6b8e13e5bb",
-          "peak": 0.429993,
-          "rms": 0.065297,
-          "dc": 3e-08,
+          "sha256": "ec11326122f25c73607e927c99c2e4f1bc941333777e9f730babf43602c0035b",
+          "peak": 0.362183,
+          "rms": 0.054998,
+          "dc": 5e-08,
           "first_frame": [
             0,
             0
@@ -3157,15 +3173,15 @@
             0,
             0
           ],
-          "max_step": 0.109863,
+          "max_step": 0.09256,
           "seconds": 0.6
         },
         "detent": {
           "file": "wonderland/detent.wav",
-          "sha256": "1b4ea7db26d31b9de962c1167d7d8311a752d697004db1c0e94068a905d09c8e",
-          "peak": 0.139984,
-          "rms": 0.02634,
-          "dc": 3e-08,
+          "sha256": "865adcb017e3e439e706a9fe841b62e459fed2b9c6c5432ee4663bd8fc048bd9",
+          "peak": 0.100983,
+          "rms": 0.018999,
+          "dc": 1.1e-07,
           "first_frame": [
             0,
             0
@@ -3174,7 +3190,7 @@
             0,
             0
           ],
-          "max_step": 0.062744,
+          "max_step": 0.045258,
           "seconds": 0.052
         }
       }
