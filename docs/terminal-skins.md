@@ -4,16 +4,18 @@
 
 | 名称 | 命令中的标识 | 终端边饰与动效 |
 | --- | --- | --- |
-| 海克斯枢纽 | `hextech` | 黄铜齿环、青色棱晶、缓慢旋转的齿纹 |
-| 战术终端 | `tactical` | 军绿标尺、琥珀括角、沿边慢速扫描 |
-| 行动协议 | `protocol` | 珊瑚红切角、简洁指令短线 |
-| 冒险装备栏 | `adventure` | 多层锻钢、铆钉、暖金锻造高光 |
-| 无间兵器匣 | `arsenal` | 成对剑刃、赤铜交叉符印 |
-| 灵蕴法宝匣 | `relic` | 台阶式石龛、旧金錾刻、低频灵蕴 |
-| 星曜指挥台 | `starlight` | 技能徽记、玉色四芒星、同心光环 |
-| Agent 备战席 | `formation` | 圆润备战格、棋盘刻度、环绕单位光点 |
-| 星旅背包 | `astral` | 香槟星图细线、稀疏星点 |
-| 三界百宝袋 | `wonderland` | 浅青瓷底、深色正文、彩绘祥云与玉带 |
+| 英雄联盟 · 海克斯枢纽 | `hextech` | 黄铜包边、棱晶嵌槽、齿环肩甲、青色导光 |
+| 三角洲行动 · 战术终端 | `tactical` | 哑光合金、双层标尺、设备括角、局部扫描 |
+| 无畏契约 · 行动协议 | `protocol` | 多面切角、珊瑚嵌板、分段指令轨道 |
+| 地下城与勇士 · 冒险装备栏 | `adventure` | 锻钢包角、皮革缝线、铆钉与宝石嵌件 |
+| 永劫无间 · 无间兵器匣 | `arsenal` | 成对长刃、玄铁铜轨、符印刻纹与余烬 |
+| 黑神话：悟空 · 灵蕴法宝匣 | `relic` | 颗粒石材、台阶龛沿、回纹印记、旧金高光 |
+| 王者荣耀 · 星曜指挥台 | `starlight` | 蓝色漆面、金色弧翼、切面玉石、星芒导光 |
+| 金铲铲之战 · Agent 备战席 | `formation` | 珐琅槽位、圆润金框、备战格嵌件与分段光点 |
+| 原神 · 星旅背包 | `astral` | 细金星盘、罗盘刻度、弧线星图与稀疏星点 |
+| 梦幻西游 · 三界百宝袋 | `wonderland` | 青瓷釉边、暖金勾线、彩绘祥云、玉石点缀 |
+
+2026-10-19 的细化版统一采用 **C：边框整体外移**，资源位于 `themes/windows-terminal/assets/refined-v1`。[修改前后图册](terminal-frame-refinement/index.html)包含十套逐项对比、窄窗口及 150% DPI 的离线预览，并可直接播放实际背景 GIF。
 
 ## 应用与切换
 
@@ -33,15 +35,15 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\themes\windows-terminal\Ap
 powershell -NoProfile -ExecutionPolicy Bypass -File .\themes\windows-terminal\Apply-Skin.ps1 -Skin wonderland -AllProfiles
 ```
 
-只保留插画与配色、关闭像素着色器：
+关闭动画，保留插画与静态 C 边框：
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\themes\windows-terminal\Apply-Skin.ps1 -Skin tactical -DisableEffects
 ```
 
-动效通过 Windows Terminal 的实验性 `experimental.pixelShaderPath` 接口提供；某些版本或渲染配置可能不支持。`-DisableEffects` 无需这个接口。动态边饰属于终端内容区域，不改变系统标题栏、窗口边框、拖动区域或关闭按钮。
+细化版使用 Windows Terminal 的背景 Image 播放 GIF，静态回退为 PNG；不再启用覆盖文字的 `experimental.pixelShaderPath`。边饰位于文字后面的背景层，不改变系统标题栏、窗口边框、拖动区域或关闭按钮。
 
-`-DisableArtwork` 可独立关闭插画；同时传入 `-DisableEffects -DisableArtwork`，只保留配色和阅读留白。字体、字号和光标沿用原设置。
+`-DisableArtwork` 可独立关闭插画，保留背景边饰动画；同时传入 `-DisableEffects -DisableArtwork`，只保留配色和阅读留白。字体、字号和光标沿用原设置。
 
 ## 备份和恢复
 
@@ -61,19 +63,33 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\themes\windows-terminal\Ap
 
 ## 设计与校准
 
-正文区域保留终端原始字形，着色器不扭曲、模糊或调色文字。装饰只作用于最外侧 24 DIP；配置预留左右 36、上下 32 DIP 留白，边饰与文字之间另有安全距离。流光低频运动，不做全屏闪烁。正文插画透明度固定 12%，窗口不透明，保证桌面背景不会影响阅读对比；外缘可以增强插画层次。
+正文区域保留终端原始字形。结构边框及动态高光只绘制在 1280 × 754 参考背景最外侧 24 像素带，角部不超过 31 像素；动画不修改中央区域。GIF 每套 96 帧、100 ms / 帧、9.6 秒无限循环，不做全屏闪烁。
 
-ANSI 16 色从共享色板派生，并逐色校准。在插画任何像素从纯黑到纯白的最坏混合条件下，正文和 ANSI 颜色与背景的对比度仍至少为 4.5:1。亮色三界百宝袋使用深色文字、深青/棕金/朱红状态色，不沿用深色主题的亮字。这里的语义色只是终端输出配色，不代表脚本能够自动识别终端中的任务状态。
+十套插画现已全部升级为完整环境画作：[实际效果总览](terminal-scene-gallery/index.html) · [源图与实际生成提示词清单](terminal-scene-gallery/README.md)。右侧主体保留，顶部建筑、左侧景物与底部地面连成同一场景。主画面不再叠加上一版的重复小纹样；关闭插画时，独立边框版本仍保留淡刻纹。场景细节烘焙进同一张 PNG / GIF，不加大 padding，不增加动画帧数或运行中的渲染层。
 
-每套边饰有独立形状源 `shaders/designs/<标识>.hlsl`；共享模板负责坐标、边界和采样。`Build-TerminalSkins.ps1` 从共享色板生成 `skins.json` 与十套独立可加载 HLSL，并可调用本机 Direct3D 编译器严格检查 `ps_4_0`，将警告视为错误：
+悟空主题进一步采用独立的 [完整洞窟插画](../skins/relic/terminal-scene-v2.png)：顶部石梁、左侧岩壁与石柱、底部石路连成完整场景，延续右侧石龛与玉璧。主画面不再叠加上一版重复的小回纹。目录中的 `terminalArtwork` 只指定 Terminal 源图，原 `artwork` 留给 OmniVibe 原生界面；原插画文件保留。构建时让边缘建筑更清晰，阅读区保留暗部空间，并继续校准全部 ANSI 对比度。关闭插画时仍使用独立边框资源。
+
+永劫无间也采用独立的 [完整兵器阁插画](../skins/arsenal/terminal-scene-v2.png)：顶部木梁与梅枝、左侧雕花木柱与格栅、底部石台和反光地面与原右侧兵器架相连。同样通过 `terminalArtwork` 指定，不覆盖原生界面的插画，也不叠加重复的小纹样。
+
+背景采用填充缩放。应用时根据当前所有显示器的逻辑尺寸计算保护留白，至少保留左右 36、上下 32 DIP，大屏可能增加留白；字号不变。该做法保证通常的单屏窗口缩放范围内边饰留在字形之外，代价是大屏配置下可用列数可能略减。改变显示器配置后需重新应用；跨多屏拉伸超过单屏尺寸时，仍应另行校准。读取尺寸只临时调整脚本线程的 DPI 上下文，并还原，不更改显示设置。依据：[显示器缩放](https://learn.microsoft.com/en-us/windows/win32/api/shellscalingapi/nf-shellscalingapi-getscalefactorformonitor)、[线程 DPI 上下文](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setthreaddpiawarenesscontext)。
+
+ANSI 16 色从共享色板派生。新版延续右侧原主体构图，左侧增加阅读遮光，顶部、左缘和底部保留更多环境细节，按实际插画像素做明度约束；解码后的 GIF 正文区域逐像素检验正文与全部 16 个 ANSI 色，对比度至少 4.5:1。亮色梦幻西游 · 三界百宝袋使用深色文字、深青/棕金/朱红状态色，不沿用深色主题的亮字。这里的语义色只是终端输出配色，不代表脚本能够自动识别终端中的任务状态。
+
+细化版材质与矢量造型源为 `tools/terminal_frame_materials.py`，关闭插画时的静态刻纹源为 `tools/terminal_margin_details.py`，构建器为 `tools/build-refined-terminal-frames.py`。十套独立 Terminal 源图与实际提示词分别保存在 `skins/<标识>/terminal-scene-v2.png` 和同名 `.prompt.md` 中，通过目录的 `terminalArtwork` 引用；原 `illustration.png` 保留。构建器生成十套实际 GIF / PNG、关闭插画的独立资源及验证记录。旧 `shaders/designs/<标识>.hlsl` 保留为原设计参考；`Build-TerminalSkins.ps1` 继续生成色板与历史 HLSL，应用脚本不再加载这些后处理文件。
 
 ```powershell
+python tools/build-refined-terminal-frames.py
+python tools/build-terminal-scene-gallery.py
 powershell -NoProfile -ExecutionPolicy Bypass -File .\themes\windows-terminal\Build-TerminalSkins.ps1 -Validate -RequireArtwork -ReportPath .\artifacts\terminal-skins-validation.json
 powershell -NoProfile -ExecutionPolicy Bypass -File .\themes\windows-terminal\Test-TerminalSkins.ps1 -RequireArtwork
 ```
 
-第一条检查十套 ANSI/正文最差对比、真实 HLSL 编译、插画存在与解码、最低清晰度。第二条只在隔离目录验证十套应用、关闭特效、配置保留、JSONC、重复应用不重复建色表、备份还原、BOM 和错误路径；不打开或操作真实终端。未加 `-RequireArtwork` 的开发测试可使用明确标记的图片夹具，最终验收必须加上它。
+Python 构建验证实际 GIF 所有帧、中央区域静止、字形相交和实际对比度，输出 `assets/refined-v1/validation.json`。PowerShell 构建仍检查历史 HLSL 的真实编译与色板；应用测试只在隔离目录验证十套 C 资源、关闭动画、独立关闭插画、配置保留、JSONC、备份还原、BOM 和错误路径，不打开或操作真实终端。最终验收使用 `-RequireArtwork`。
 
 原有墨玉及插画版仍保留，通过 [Apply-InkJade.ps1](../themes/windows-terminal/Apply-InkJade.ps1) 使用。
+
+完整应用皮肤时也会统一原生顶部栏、标签页和系统细边框的配色，保留 Terminal 自带的按钮与操作。若只需让当前顶部栏与已有外框衔接，可在应用命令后加 `-ChromeOnly`，不会替换背景、字体或正文设置。细边框颜色需要终端版本与 Windows 支持；实现与验证见[原生顶部栏说明](../themes/windows-terminal/README.md#原生顶部栏与外框衔接)。
+
+原生顶部配色已覆盖全部 13 套 UI 主题。三套经典主题通过 `-Skin ink-jade|midnight|cinnabar -ChromeOnly` 单独应用顶部配色，设置中也提供对应入口；不套用其他游戏的背景资源。`Apply-Skin.ps1 -RegisterAllChrome` 可一次更新全部 13 套原生定义，保留当前主题选择、背景和正文配置。十套游戏主题仍支持上面的完整插画与边饰应用流程。
 
 依据：[Microsoft 外观配置](https://learn.microsoft.com/en-us/windows/terminal/customize-settings/profile-appearance)、[Microsoft 窗口主题](https://learn.microsoft.com/en-us/windows/terminal/customize-settings/themes)。

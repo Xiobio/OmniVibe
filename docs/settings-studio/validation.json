@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "failures": 0,
+  "results": [
+    {
+      "name": "13 stable choices and five independent preview views",
+      "passed": true
+    },
+    {
+      "name": "Full settings, gallery and five grouped pages render",
+      "passed": true
+    },
+    {
+      "name": "Animation changes actual frames and stops when hidden or unloaded",
+      "passed": true
+    },
+    {
+      "name": "Save commits the draft while caller preferences remain unchanged",
+      "passed": true
+    },
+    {
+      "name": "Narrow/short layouts keep footer actions inside the window",
+      "passed": true
+    },
+    {
+      "name": "Preview and validation never write live Terminal settings",
+      "passed": true
+    }
+  ],
+  "themeCount": 13,
+  "previewModes": 5,
+  "packaged": false,
+  "liveTerminalSettingsChanged": false
+}

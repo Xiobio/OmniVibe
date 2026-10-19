@@ -1,0 +1,53 @@
+{
+  "updated_at": "2026-10-19T10:57:14.459380+00:00",
+  "groups": {
+    "regression": {
+      "passed": 39,
+      "total": 39,
+      "report": "artifacts/interaction-ux/self-test.json"
+    },
+    "loadout": {
+      "passed": 8,
+      "total": 8,
+      "report": "artifacts/interaction-ux/loadout/report.json"
+    },
+    "settings": {
+      "passed": 6,
+      "total": 6,
+      "report": "artifacts/interaction-ux/settings-validation/report.json"
+    }
+  },
+  "seven_interaction_fixes_verified": true,
+  "history_limit": 30,
+  "hover_retraction_grace_ms": 400,
+  "hint_uses_system_dwell_timer": false,
+  "live_refresh": {
+    "at": "2026-10-19T10:57:14.459380+00:00",
+    "valid_bindings_and_equipment_preserved": true,
+    "valid_bindings": 4,
+    "closed_before_refresh": 0,
+    "closed_records_preserved": true,
+    "recent_task_count": 0,
+    "skin_preserved": true,
+    "arrangement_keeps_entrance": true,
+    "runtime_process_count": 1,
+    "dock_windows": [
+      {
+        "title": "OmniVibe · 无间兵器匣",
+        "visible": true,
+        "minimized": false,
+        "topmost": true,
+        "rect": [
+          2323,
+          1248,
+          2439,
+          1364
+        ]
+      }
+    ],
+    "cli_sessions_restarted": false,
+    "packaged": false
+  },
+  "packaged": false,
+  "uploaded": false
+}

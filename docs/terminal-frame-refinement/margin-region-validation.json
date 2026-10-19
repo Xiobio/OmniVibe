@@ -1,0 +1,86 @@
+{
+  "passed": true,
+  "count": 10,
+  "themes": [
+    {
+      "slug": "hextech",
+      "changedPixels": 10013,
+      "changesOutsideRequestedBands": 0,
+      "minimumDecodedAnsiContrast": 4.781,
+      "originalArtworkUnmodified": true,
+      "animationFrames": 96
+    },
+    {
+      "slug": "tactical",
+      "changedPixels": 11638,
+      "changesOutsideRequestedBands": 0,
+      "minimumDecodedAnsiContrast": 4.791,
+      "originalArtworkUnmodified": true,
+      "animationFrames": 96
+    },
+    {
+      "slug": "protocol",
+      "changedPixels": 9621,
+      "changesOutsideRequestedBands": 0,
+      "minimumDecodedAnsiContrast": 4.766,
+      "originalArtworkUnmodified": true,
+      "animationFrames": 96
+    },
+    {
+      "slug": "adventure",
+      "changedPixels": 14460,
+      "changesOutsideRequestedBands": 0,
+      "minimumDecodedAnsiContrast": 4.789,
+      "originalArtworkUnmodified": true,
+      "animationFrames": 96
+    },
+    {
+      "slug": "arsenal",
+      "changedPixels": 10274,
+      "changesOutsideRequestedBands": 0,
+      "minimumDecodedAnsiContrast": 4.793,
+      "originalArtworkUnmodified": true,
+      "animationFrames": 96
+    },
+    {
+      "slug": "relic",
+      "changedPixels": 12164,
+      "changesOutsideRequestedBands": 0,
+      "minimumDecodedAnsiContrast": 4.782,
+      "originalArtworkUnmodified": true,
+      "animationFrames": 96
+    },
+    {
+      "slug": "starlight",
+      "changedPixels": 9472,
+      "changesOutsideRequestedBands": 0,
+      "minimumDecodedAnsiContrast": 4.777,
+      "originalArtworkUnmodified": true,
+      "animationFrames": 96
+    },
+    {
+      "slug": "formation",
+      "changedPixels": 9802,
+      "changesOutsideRequestedBands": 0,
+      "minimumDecodedAnsiContrast": 4.774,
+      "originalArtworkUnmodified": true,
+      "animationFrames": 96
+    },
+    {
+      "slug": "astral",
+      "changedPixels": 7693,
+      "changesOutsideRequestedBands": 0,
+      "minimumDecodedAnsiContrast": 4.777,
+      "originalArtworkUnmodified": true,
+      "animationFrames": 96
+    },
+    {
+      "slug": "wonderland",
+      "changedPixels": 9571,
+      "changesOutsideRequestedBands": 0,
+      "minimumDecodedAnsiContrast": 4.782,
+      "originalArtworkUnmodified": true,
+      "animationFrames": 96
+    }
+  ]
+}

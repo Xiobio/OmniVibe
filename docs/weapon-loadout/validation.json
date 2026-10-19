@@ -1,0 +1,46 @@
+{
+  "updated_at": "2026-10-19T09:28:14.269861+00:00",
+  "groups": {
+    "loadout": {
+      "passed": 7,
+      "total": 7,
+      "report": "artifacts/weapon-loadout/tests/report.json"
+    },
+    "regression": {
+      "passed": 38,
+      "total": 38,
+      "report": "artifacts/weapon-loadout/self-test.json"
+    },
+    "settings": {
+      "passed": 6,
+      "total": 6,
+      "report": "artifacts/weapon-loadout/settings-validation/report.json"
+    }
+  },
+  "weapon_count": 9,
+  "source_manifest": "skins/loadouts/naraka/catalog.json",
+  "screenshots": "actual WPF controls with sample tasks",
+  "packaged": false,
+  "live_terminal_settings_changed": false,
+  "live_debug_refresh": {
+    "at": "2026-10-19T09:29:52.413393+00:00",
+    "bindings_preserved": true,
+    "occupied_bindings": 5,
+    "skin_preserved": true,
+    "current_skin": "Relic",
+    "all_nine_equipment_assignments_persisted": true,
+    "runtime_assets_match": true,
+    "normal_debug_restart": true,
+    "packaged": false,
+    "binding_identity_fields": [
+      "Slot.Id",
+      "Slot.Number",
+      "Window.Handle",
+      "Window.ProcessId",
+      "Window.ProcessStartedUtcTicks",
+      "Window.ProcessName"
+    ],
+    "title_updates_observed": 1
+  },
+  "http_resources_verified": 19
+}

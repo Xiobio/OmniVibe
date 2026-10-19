@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <ReviewAssembly Condition="'$(ReviewAssembly)' == ''">$(MSBuildThisFileDirectory)../../artifacts/code-review/app/CodeManager.dll</ReviewAssembly>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CodeManager"><HintPath>$(ReviewAssembly)</HintPath><Private>true</Private></Reference>
+  </ItemGroup>
+  <Target Name="RequireReviewAssembly" BeforeTargets="ResolveReferences" Condition="!Exists('$(ReviewAssembly)')">
+    <Error Text="Build the isolated review snapshot first: dotnet build src/CodeManager/CodeManager.csproj -o artifacts/code-review/app" />
+  </Target>
+</Project>

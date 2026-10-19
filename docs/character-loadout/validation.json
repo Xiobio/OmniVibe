@@ -1,0 +1,45 @@
+{
+  "updated_at": "2026-10-19T10:05:10.753917+00:00",
+  "groups": {
+    "loadout": {
+      "passed": 8,
+      "total": 8,
+      "report": "artifacts/character-loadout/tests/report.json"
+    },
+    "regression": {
+      "passed": 38,
+      "total": 38,
+      "report": "artifacts/character-loadout/self-test.json"
+    },
+    "settings": {
+      "passed": 6,
+      "total": 6,
+      "report": "artifacts/character-loadout/settings-validation/report.json"
+    }
+  },
+  "character_count": 9,
+  "native_source_dimensions": [
+    1024,
+    1536
+  ],
+  "artwork_mode": "built-in imagegen edits based on official reference artwork",
+  "prompts": "skins/loadouts/naraka/characters-v2/prompts.json",
+  "asset_validation": "skins/loadouts/naraka/characters-v2/validation.json",
+  "source_manifest": "skins/loadouts/naraka/catalog.json",
+  "gallery": "docs/character-loadout/index.html",
+  "live_refresh": {
+    "at": "2026-10-19T10:05:10.753917+00:00",
+    "bindings_and_equipment_preserved": true,
+    "occupied_bindings": 5,
+    "skin_preserved": true,
+    "current_skin": "Arsenal",
+    "all_nine_runtime_character_assets_match": true,
+    "normal_debug_restart": true,
+    "packaged": false
+  },
+  "empty_slots_hidden": true,
+  "empty_targets_visible_during_capture_only": true,
+  "ring_and_backplates_removed": true,
+  "packaged": false,
+  "uploaded": false
+}

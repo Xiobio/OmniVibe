@@ -1,0 +1,957 @@
+{
+  "kind": "offline deterministic design fixtures; not Terminal screenshots",
+  "themes": [
+    {
+      "slug": "hextech",
+      "name": "英雄联盟 · 海克斯枢纽",
+      "artwork": "skins/hextech/illustration.png",
+      "sourceSha256": "ce013cf244d1454a5db1c98f42d20e3e0c1e65fe7b35551cae3ab8bc57a6dabb",
+      "sizes": {
+        "regular": {
+          "A": {
+            "image": "hextech-A-regular.png",
+            "glyphEffectIntersectionPixels": 194,
+            "frameBounds": [
+              36,
+              32,
+              1244,
+              722
+            ],
+            "foregroundPreserved": false,
+            "originalViewportEnclosed": false
+          },
+          "B": {
+            "image": "hextech-B-regular.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              7,
+              7,
+              1272,
+              746
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": false
+          },
+          "C": {
+            "image": "hextech-C-regular.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              2,
+              2,
+              1278,
+              752
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": true
+          }
+        },
+        "compact": {
+          "A": {
+            "image": "hextech-A-compact.png",
+            "glyphEffectIntersectionPixels": 216,
+            "frameBounds": [
+              36,
+              32,
+              924,
+              522
+            ],
+            "foregroundPreserved": false,
+            "originalViewportEnclosed": false
+          },
+          "B": {
+            "image": "hextech-B-compact.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              7,
+              7,
+              952,
+              546
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": false
+          },
+          "C": {
+            "image": "hextech-C-compact.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              2,
+              2,
+              958,
+              552
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": true
+          }
+        }
+      }
+    },
+    {
+      "slug": "tactical",
+      "name": "三角洲行动 · 战术终端",
+      "artwork": "skins/tactical/illustration.png",
+      "sourceSha256": "d3705e32b18357d883a1e7de14fc268c9fdb636dd8bde8576005166239d6ba6b",
+      "sizes": {
+        "regular": {
+          "A": {
+            "image": "tactical-A-regular.png",
+            "glyphEffectIntersectionPixels": 115,
+            "frameBounds": [
+              36,
+              32,
+              1244,
+              722
+            ],
+            "foregroundPreserved": false,
+            "originalViewportEnclosed": false
+          },
+          "B": {
+            "image": "tactical-B-regular.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              7,
+              7,
+              1272,
+              746
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": false
+          },
+          "C": {
+            "image": "tactical-C-regular.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              2,
+              2,
+              1278,
+              752
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": true
+          }
+        },
+        "compact": {
+          "A": {
+            "image": "tactical-A-compact.png",
+            "glyphEffectIntersectionPixels": 107,
+            "frameBounds": [
+              36,
+              32,
+              924,
+              522
+            ],
+            "foregroundPreserved": false,
+            "originalViewportEnclosed": false
+          },
+          "B": {
+            "image": "tactical-B-compact.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              7,
+              7,
+              952,
+              546
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": false
+          },
+          "C": {
+            "image": "tactical-C-compact.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              2,
+              2,
+              958,
+              552
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": true
+          }
+        }
+      }
+    },
+    {
+      "slug": "protocol",
+      "name": "无畏契约 · 行动协议",
+      "artwork": "skins/protocol/illustration.png",
+      "sourceSha256": "3cc25035b49d0800dc8e6499b0ee52d45ffc10c2746bcfc7c8df2034330d7544",
+      "sizes": {
+        "regular": {
+          "A": {
+            "image": "protocol-A-regular.png",
+            "glyphEffectIntersectionPixels": 105,
+            "frameBounds": [
+              36,
+              32,
+              1244,
+              722
+            ],
+            "foregroundPreserved": false,
+            "originalViewportEnclosed": false
+          },
+          "B": {
+            "image": "protocol-B-regular.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              7,
+              7,
+              1272,
+              746
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": false
+          },
+          "C": {
+            "image": "protocol-C-regular.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              2,
+              2,
+              1278,
+              752
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": true
+          }
+        },
+        "compact": {
+          "A": {
+            "image": "protocol-A-compact.png",
+            "glyphEffectIntersectionPixels": 115,
+            "frameBounds": [
+              36,
+              32,
+              924,
+              522
+            ],
+            "foregroundPreserved": false,
+            "originalViewportEnclosed": false
+          },
+          "B": {
+            "image": "protocol-B-compact.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              7,
+              7,
+              952,
+              546
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": false
+          },
+          "C": {
+            "image": "protocol-C-compact.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              2,
+              2,
+              958,
+              552
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": true
+          }
+        }
+      }
+    },
+    {
+      "slug": "adventure",
+      "name": "地下城与勇士 · 冒险装备栏",
+      "artwork": "skins/adventure/illustration.png",
+      "sourceSha256": "62fc2b235df6a501bd4e010beab7b034fc6521aaba834fac275e0d5c64599a49",
+      "sizes": {
+        "regular": {
+          "A": {
+            "image": "adventure-A-regular.png",
+            "glyphEffectIntersectionPixels": 242,
+            "frameBounds": [
+              36,
+              32,
+              1244,
+              722
+            ],
+            "foregroundPreserved": false,
+            "originalViewportEnclosed": false
+          },
+          "B": {
+            "image": "adventure-B-regular.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              7,
+              7,
+              1272,
+              746
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": false
+          },
+          "C": {
+            "image": "adventure-C-regular.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              2,
+              2,
+              1278,
+              752
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": true
+          }
+        },
+        "compact": {
+          "A": {
+            "image": "adventure-A-compact.png",
+            "glyphEffectIntersectionPixels": 225,
+            "frameBounds": [
+              36,
+              32,
+              924,
+              522
+            ],
+            "foregroundPreserved": false,
+            "originalViewportEnclosed": false
+          },
+          "B": {
+            "image": "adventure-B-compact.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              7,
+              7,
+              952,
+              546
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": false
+          },
+          "C": {
+            "image": "adventure-C-compact.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              2,
+              2,
+              958,
+              552
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": true
+          }
+        }
+      }
+    },
+    {
+      "slug": "arsenal",
+      "name": "永劫无间 · 无间兵器匣",
+      "artwork": "skins/arsenal/illustration.png",
+      "sourceSha256": "d5498e88aa7aa77d1e04d34b0a2f8dac4db7703945f87b90ec466e61e0e413e2",
+      "sizes": {
+        "regular": {
+          "A": {
+            "image": "arsenal-A-regular.png",
+            "glyphEffectIntersectionPixels": 105,
+            "frameBounds": [
+              36,
+              32,
+              1244,
+              722
+            ],
+            "foregroundPreserved": false,
+            "originalViewportEnclosed": false
+          },
+          "B": {
+            "image": "arsenal-B-regular.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              7,
+              7,
+              1272,
+              746
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": false
+          },
+          "C": {
+            "image": "arsenal-C-regular.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              2,
+              2,
+              1278,
+              752
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": true
+          }
+        },
+        "compact": {
+          "A": {
+            "image": "arsenal-A-compact.png",
+            "glyphEffectIntersectionPixels": 118,
+            "frameBounds": [
+              36,
+              32,
+              924,
+              522
+            ],
+            "foregroundPreserved": false,
+            "originalViewportEnclosed": false
+          },
+          "B": {
+            "image": "arsenal-B-compact.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              7,
+              7,
+              952,
+              546
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": false
+          },
+          "C": {
+            "image": "arsenal-C-compact.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              2,
+              2,
+              958,
+              552
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": true
+          }
+        }
+      }
+    },
+    {
+      "slug": "relic",
+      "name": "黑神话：悟空 · 灵蕴法宝匣",
+      "artwork": "skins/relic/illustration.png",
+      "sourceSha256": "ca4efa0570fe2f3e460a830c660fdd8834fd56eea4e330dd6a13133506fda239",
+      "sizes": {
+        "regular": {
+          "A": {
+            "image": "relic-A-regular.png",
+            "glyphEffectIntersectionPixels": 218,
+            "frameBounds": [
+              36,
+              32,
+              1244,
+              722
+            ],
+            "foregroundPreserved": false,
+            "originalViewportEnclosed": false
+          },
+          "B": {
+            "image": "relic-B-regular.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              7,
+              7,
+              1272,
+              746
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": false
+          },
+          "C": {
+            "image": "relic-C-regular.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              2,
+              2,
+              1278,
+              752
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": true
+          }
+        },
+        "compact": {
+          "A": {
+            "image": "relic-A-compact.png",
+            "glyphEffectIntersectionPixels": 203,
+            "frameBounds": [
+              36,
+              32,
+              924,
+              522
+            ],
+            "foregroundPreserved": false,
+            "originalViewportEnclosed": false
+          },
+          "B": {
+            "image": "relic-B-compact.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              7,
+              7,
+              952,
+              546
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": false
+          },
+          "C": {
+            "image": "relic-C-compact.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              2,
+              2,
+              958,
+              552
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": true
+          }
+        }
+      }
+    },
+    {
+      "slug": "starlight",
+      "name": "王者荣耀 · 星曜指挥台",
+      "artwork": "skins/starlight/illustration.png",
+      "sourceSha256": "4daf67a0dbf9052241a7475bf6584b037a4e532c09bc16f29dc58afac3de7ad9",
+      "sizes": {
+        "regular": {
+          "A": {
+            "image": "starlight-A-regular.png",
+            "glyphEffectIntersectionPixels": 95,
+            "frameBounds": [
+              36,
+              32,
+              1244,
+              722
+            ],
+            "foregroundPreserved": false,
+            "originalViewportEnclosed": false
+          },
+          "B": {
+            "image": "starlight-B-regular.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              7,
+              7,
+              1272,
+              746
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": false
+          },
+          "C": {
+            "image": "starlight-C-regular.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              2,
+              2,
+              1278,
+              752
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": true
+          }
+        },
+        "compact": {
+          "A": {
+            "image": "starlight-A-compact.png",
+            "glyphEffectIntersectionPixels": 114,
+            "frameBounds": [
+              36,
+              32,
+              924,
+              522
+            ],
+            "foregroundPreserved": false,
+            "originalViewportEnclosed": false
+          },
+          "B": {
+            "image": "starlight-B-compact.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              7,
+              7,
+              952,
+              546
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": false
+          },
+          "C": {
+            "image": "starlight-C-compact.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              2,
+              2,
+              958,
+              552
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": true
+          }
+        }
+      }
+    },
+    {
+      "slug": "formation",
+      "name": "金铲铲之战 · Agent 备战席",
+      "artwork": "skins/formation/illustration.png",
+      "sourceSha256": "f34215ea4d32c0e3427a88bdff02471b2c9c50b3c2820dbd2bc4e447c9cbde43",
+      "sizes": {
+        "regular": {
+          "A": {
+            "image": "formation-A-regular.png",
+            "glyphEffectIntersectionPixels": 232,
+            "frameBounds": [
+              36,
+              32,
+              1244,
+              722
+            ],
+            "foregroundPreserved": false,
+            "originalViewportEnclosed": false
+          },
+          "B": {
+            "image": "formation-B-regular.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              7,
+              7,
+              1272,
+              746
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": false
+          },
+          "C": {
+            "image": "formation-C-regular.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              2,
+              2,
+              1278,
+              752
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": true
+          }
+        },
+        "compact": {
+          "A": {
+            "image": "formation-A-compact.png",
+            "glyphEffectIntersectionPixels": 250,
+            "frameBounds": [
+              36,
+              32,
+              924,
+              522
+            ],
+            "foregroundPreserved": false,
+            "originalViewportEnclosed": false
+          },
+          "B": {
+            "image": "formation-B-compact.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              7,
+              7,
+              952,
+              546
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": false
+          },
+          "C": {
+            "image": "formation-C-compact.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              2,
+              2,
+              958,
+              552
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": true
+          }
+        }
+      }
+    },
+    {
+      "slug": "astral",
+      "name": "原神 · 星旅背包",
+      "artwork": "skins/astral/illustration.png",
+      "sourceSha256": "2f7e45def476e992e568599feb2fd4ee9a7effbdb61bd065109e3f898aaae13b",
+      "sizes": {
+        "regular": {
+          "A": {
+            "image": "astral-A-regular.png",
+            "glyphEffectIntersectionPixels": 39,
+            "frameBounds": [
+              36,
+              32,
+              1244,
+              722
+            ],
+            "foregroundPreserved": false,
+            "originalViewportEnclosed": false
+          },
+          "B": {
+            "image": "astral-B-regular.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              7,
+              7,
+              1272,
+              746
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": false
+          },
+          "C": {
+            "image": "astral-C-regular.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              2,
+              2,
+              1278,
+              752
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": true
+          }
+        },
+        "compact": {
+          "A": {
+            "image": "astral-A-compact.png",
+            "glyphEffectIntersectionPixels": 41,
+            "frameBounds": [
+              36,
+              32,
+              924,
+              522
+            ],
+            "foregroundPreserved": false,
+            "originalViewportEnclosed": false
+          },
+          "B": {
+            "image": "astral-B-compact.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              7,
+              7,
+              952,
+              546
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": false
+          },
+          "C": {
+            "image": "astral-C-compact.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              2,
+              2,
+              958,
+              552
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": true
+          }
+        }
+      }
+    },
+    {
+      "slug": "wonderland",
+      "name": "梦幻西游 · 三界百宝袋",
+      "artwork": "skins/wonderland/illustration.png",
+      "sourceSha256": "27e2db1e1361041e3db58ca830bf438e2863f6e50e4b9ceb4dc7f210adde654c",
+      "sizes": {
+        "regular": {
+          "A": {
+            "image": "wonderland-A-regular.png",
+            "glyphEffectIntersectionPixels": 286,
+            "frameBounds": [
+              36,
+              32,
+              1244,
+              722
+            ],
+            "foregroundPreserved": false,
+            "originalViewportEnclosed": false
+          },
+          "B": {
+            "image": "wonderland-B-regular.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              7,
+              7,
+              1272,
+              746
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": false
+          },
+          "C": {
+            "image": "wonderland-C-regular.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              2,
+              2,
+              1278,
+              752
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": true
+          }
+        },
+        "compact": {
+          "A": {
+            "image": "wonderland-A-compact.png",
+            "glyphEffectIntersectionPixels": 288,
+            "frameBounds": [
+              36,
+              32,
+              924,
+              522
+            ],
+            "foregroundPreserved": false,
+            "originalViewportEnclosed": false
+          },
+          "B": {
+            "image": "wonderland-B-compact.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              7,
+              7,
+              952,
+              546
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": false
+          },
+          "C": {
+            "image": "wonderland-C-compact.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              2,
+              2,
+              958,
+              552
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": true
+          }
+        }
+      }
+    },
+    {
+      "slug": "ink-jade",
+      "name": "墨玉 · 当前主题参考",
+      "artwork": "themes/windows-terminal/assets/ink-jade-ornate-v2.png",
+      "sourceSha256": "6362a588e969df52ab75687bf6b90d73ec3adb30476f321ea12738f99e2c2a0c",
+      "sizes": {
+        "regular": {
+          "A": {
+            "image": "ink-jade-A-regular.png",
+            "glyphEffectIntersectionPixels": 195,
+            "frameBounds": [
+              36,
+              32,
+              1244,
+              722
+            ],
+            "foregroundPreserved": false,
+            "originalViewportEnclosed": false
+          },
+          "B": {
+            "image": "ink-jade-B-regular.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              8.96,
+              9.05,
+              1271.04,
+              724.59
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": false
+          },
+          "C": {
+            "image": "ink-jade-C-regular.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              2,
+              2,
+              1278,
+              752
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": true
+          }
+        },
+        "compact": {
+          "A": {
+            "image": "ink-jade-A-compact.png",
+            "glyphEffectIntersectionPixels": 195,
+            "frameBounds": [
+              36,
+              32,
+              924,
+              522
+            ],
+            "foregroundPreserved": false,
+            "originalViewportEnclosed": false
+          },
+          "B": {
+            "image": "ink-jade-B-compact.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              6.72,
+              6.65,
+              953.28,
+              532.39
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": false
+          },
+          "C": {
+            "image": "ink-jade-C-compact.png",
+            "glyphEffectIntersectionPixels": 0,
+            "frameBounds": [
+              2,
+              2,
+              958,
+              552
+            ],
+            "foregroundPreserved": true,
+            "originalViewportEnclosed": true
+          }
+        }
+      }
+    }
+  ],
+  "gameThemes": 10,
+  "bonusReferenceThemes": 1,
+  "variants": {
+    "A": "保留内框",
+    "B": "只留外框",
+    "C": "内框整体外移"
+  },
+  "sizes": {
+    "regular": [
+      1280,
+      800
+    ],
+    "compact": [
+      960,
+      600
+    ]
+  },
+  "terminalSettingsChanged": false,
+  "frameGeometrySource": "themes/windows-terminal/shaders/designs/*.hlsl",
+  "actualGpuRendering": false,
+  "timeSeconds": 8.0,
+  "comparisonScope": "frame placement and glyph interference; not an exact Terminal compositing simulation",
+  "backgroundAndTextIdenticalAcrossVariants": true,
+  "liveTerminalThemeChanged": false,
+  "allMovedFramesEncloseOriginalViewport": true,
+  "allBAndCGlyphIntersectionsZero": true,
+  "fixtureCount": 66,
+  "allSourcesUnmodified": true
+}

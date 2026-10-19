@@ -1,0 +1,153 @@
+{
+    "passed":  true,
+    "nativeGifCount":  20,
+    "nativeDecodedFrames":  1920,
+    "files":  [
+                  {
+                      "file":  "adventure-c-v1.gif",
+                      "frames":  96,
+                      "centerStatic":  true,
+                      "rimAnimation":  true,
+                      "rimSampleColors":  8
+                  },
+                  {
+                      "file":  "adventure-frame-only-v1.gif",
+                      "frames":  96,
+                      "centerStatic":  true,
+                      "rimAnimation":  true,
+                      "rimSampleColors":  11
+                  },
+                  {
+                      "file":  "arsenal-c-v1.gif",
+                      "frames":  96,
+                      "centerStatic":  true,
+                      "rimAnimation":  true,
+                      "rimSampleColors":  7
+                  },
+                  {
+                      "file":  "arsenal-frame-only-v1.gif",
+                      "frames":  96,
+                      "centerStatic":  true,
+                      "rimAnimation":  true,
+                      "rimSampleColors":  8
+                  },
+                  {
+                      "file":  "astral-c-v1.gif",
+                      "frames":  96,
+                      "centerStatic":  true,
+                      "rimAnimation":  true,
+                      "rimSampleColors":  4
+                  },
+                  {
+                      "file":  "astral-frame-only-v1.gif",
+                      "frames":  96,
+                      "centerStatic":  true,
+                      "rimAnimation":  true,
+                      "rimSampleColors":  7
+                  },
+                  {
+                      "file":  "formation-c-v1.gif",
+                      "frames":  96,
+                      "centerStatic":  true,
+                      "rimAnimation":  true,
+                      "rimSampleColors":  5
+                  },
+                  {
+                      "file":  "formation-frame-only-v1.gif",
+                      "frames":  96,
+                      "centerStatic":  true,
+                      "rimAnimation":  true,
+                      "rimSampleColors":  6
+                  },
+                  {
+                      "file":  "hextech-c-v1.gif",
+                      "frames":  96,
+                      "centerStatic":  true,
+                      "rimAnimation":  true,
+                      "rimSampleColors":  6
+                  },
+                  {
+                      "file":  "hextech-frame-only-v1.gif",
+                      "frames":  96,
+                      "centerStatic":  true,
+                      "rimAnimation":  true,
+                      "rimSampleColors":  8
+                  },
+                  {
+                      "file":  "protocol-c-v1.gif",
+                      "frames":  96,
+                      "centerStatic":  true,
+                      "rimAnimation":  true,
+                      "rimSampleColors":  6
+                  },
+                  {
+                      "file":  "protocol-frame-only-v1.gif",
+                      "frames":  96,
+                      "centerStatic":  true,
+                      "rimAnimation":  true,
+                      "rimSampleColors":  8
+                  },
+                  {
+                      "file":  "relic-c-v1.gif",
+                      "frames":  96,
+                      "centerStatic":  true,
+                      "rimAnimation":  true,
+                      "rimSampleColors":  7
+                  },
+                  {
+                      "file":  "relic-frame-only-v1.gif",
+                      "frames":  96,
+                      "centerStatic":  true,
+                      "rimAnimation":  true,
+                      "rimSampleColors":  9
+                  },
+                  {
+                      "file":  "starlight-c-v1.gif",
+                      "frames":  96,
+                      "centerStatic":  true,
+                      "rimAnimation":  true,
+                      "rimSampleColors":  7
+                  },
+                  {
+                      "file":  "starlight-frame-only-v1.gif",
+                      "frames":  96,
+                      "centerStatic":  true,
+                      "rimAnimation":  true,
+                      "rimSampleColors":  8
+                  },
+                  {
+                      "file":  "tactical-c-v1.gif",
+                      "frames":  96,
+                      "centerStatic":  true,
+                      "rimAnimation":  true,
+                      "rimSampleColors":  10
+                  },
+                  {
+                      "file":  "tactical-frame-only-v1.gif",
+                      "frames":  96,
+                      "centerStatic":  true,
+                      "rimAnimation":  true,
+                      "rimSampleColors":  9
+                  },
+                  {
+                      "file":  "wonderland-c-v1.gif",
+                      "frames":  96,
+                      "centerStatic":  true,
+                      "rimAnimation":  true,
+                      "rimSampleColors":  12
+                  },
+                  {
+                      "file":  "wonderland-frame-only-v1.gif",
+                      "frames":  96,
+                      "centerStatic":  true,
+                      "rimAnimation":  true,
+                      "rimSampleColors":  11
+                  }
+              ],
+    "logicalScreen":  [
+                          2560,
+                          1440
+                      ],
+    "padding":  "66, 64, 66, 64",
+    "actualTerminalPlaybackVisuallyVerified":  false
+}

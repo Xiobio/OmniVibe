@@ -1,0 +1,1287 @@
+{
+  "generatedAtUtc": "2026-10-19T12:06:11.730213+00:00",
+  "baselineCommit": "1f39ef496e31a5f8dc317b2f65b4b7aaae106b22",
+  "developmentFinishedAtUtc": "2026-10-19T11:58:29.372917+00:00",
+  "developmentTurnCompleted": true,
+  "developmentQueueEmpty": true,
+  "sourceFingerprint": "e4cc19d696f512c01bac6b9cf2614e0a3fcae7a3a3f502e04a17770dc543bf33",
+  "sourceHashes": {
+    "run.ps1": "9fc11fba21073301b8f6017e7f128d87048259922a054a1665ca4c866d04509c",
+    "scripts/Receive-AgentHook.ps1": "bac4bb5f059663f9a326da8ec79349ed9ffbe7fb4e724cbe8c9e82ae4335ee97",
+    "scripts/Set-TaskStatus.ps1": "b85d903934bcf8e94b7604c9877fac67a1ece188278be34904f23dabaae4d35d",
+    "scripts/Start-TrackedSession.ps1": "5072fe28ed0421c78b7b6f83c188b492662722ec0a83f5161a7adeac267a3695",
+    "scripts/monitoring/codex_rpc.py": "8504675f5012d78853b3e9b4da8179e5085ad0fd88a458d1582db0796b5ec3ac",
+    "scripts/monitoring/schedule_review.py": "5d9298d33936cf1b44e0a42b0f84f4fdf49579f3012ca43e8bd5d668506e8a65",
+    "scripts/monitoring/test_schedule_review.py": "853a80fff06297eabde6ddda380b9e72061445a5554953c5b743351034f4eb47",
+    "src/CodeManager/App.xaml": "799fd44f071172cc15e8dbac0529f978e9b60328e19a1150fe6ab1ed0dd65660",
+    "src/CodeManager/App.xaml.cs": "f6325a249e4af5871a6698fc7551fb5720ca8a5c9c999e29aaf25b0f67de849d",
+    "src/CodeManager/AudioOverrideTransaction.cs": "92ade468bab2195b71ac732c2dacbd84dc56a61659e68a230f349ed86b432219",
+    "src/CodeManager/AudioSettingsPanel.cs": "b507ec134c13fb62dfe3a404fccefba9407bc16b9063006ed5211d0d3cbc4a47",
+    "src/CodeManager/CodeManager.csproj": "33d62c9905dd560b9da8997436eecc5f6ab22b290772e4a6d5a19bd928f72082",
+    "src/CodeManager/Diagnostics.cs": "501cd00d47d9f157ee8f604e558a18ab2fdb9308095682ba515a9d92a0e563b9",
+    "src/CodeManager/Dialogs.cs": "aeffc225f1ce45309b772e99f35d01c20c8655c9dbc36787d041b1dca8c2a3ce",
+    "src/CodeManager/DockEquipment.cs": "66563a0972804c464199f6c652f79457ac215796d4941dec2af88c12edd7d229",
+    "src/CodeManager/DockWeaponWheel.cs": "0a64a9ec52f578ce47af4539b6bc11c8945ec21440d51840d194ef9722fb82c5",
+    "src/CodeManager/DockWindow.xaml": "50724d16dfce00be2e20d0e7c58d2ef49bc138c62420d7ca9d85ae2ec8b1f46d",
+    "src/CodeManager/DockWindow.xaml.cs": "c3f28d1fc0df7bca65f5f2fd14f6e7ef1117279e7d6dd9085613f200f782911c",
+    "src/CodeManager/EquipmentCatalog.cs": "d3cb22b1ebeb6574cfb825a65b63543a93cce2735fdd97f3826e243449e9f696",
+    "src/CodeManager/EquipmentPedestal.cs": "57aa06dbb7609e04ad15b51ca7981be299fd330e6449c14479f9c3c5f73d86a2",
+    "src/CodeManager/EquipmentTests.cs": "b45e0bedcfbf288fc26ba9a0ccdd3bf1ddc1df817e5dcbe77255b8f829ba73df",
+    "src/CodeManager/GameAudio.cs": "2d597fe452e99f0770315da3223ed52fcb2f7fc35193d05baf61af5624812da4",
+    "src/CodeManager/HookBridge.cs": "3d99082e318228b7952e02d7aa28637e2772cf6a11cec6bcd0efacb9e889f68d",
+    "src/CodeManager/InkEffects.cs": "6fe9af9c872caad7c24e58d4c274c22898e693ee497d5af00b1d2936445703e2",
+    "src/CodeManager/InputService.cs": "4bc89a7027b1371ffb29b89477dc3c1eba6cd3e6203c094e9034927b99323a52",
+    "src/CodeManager/IntegrationWindow.cs": "d71696b480e4784c7e13cc58de9af0be7f70f1e16c7ade4ff246afd1dd4695e6",
+    "src/CodeManager/InventoryWindow.cs": "b5d7e5906c1ed0e24dd79b80f49714a380f1ae0550cccc604724d73f0c992075",
+    "src/CodeManager/LoadoutWindow.cs": "f84b1a2ceb2836bcc8b809223d8e76dd1030748117b75aac6e68abbfb9888e42",
+    "src/CodeManager/Manager.cs": "e68e6dad30079ea3f98e1b3cecae20e2ae0fd2c47fb36caf826af8cd9cdf31c3",
+    "src/CodeManager/Models.cs": "2c3091c229508532aa3ccd11f2d86d084fbbff42215d29f4da062434f473a171",
+    "src/CodeManager/Native.cs": "3c59e1eaa404f5ed094672faa2ab1d0044003f426940f0e029b0d5b70eb4a0c8",
+    "src/CodeManager/NativeCardDetail.cs": "eb9a3de05d4d27b48667d9496eef402f09483ddb14894e781f8aa63b27222dd0",
+    "src/CodeManager/NativeSkinArt.cs": "8e678468874447454324f606b0440794be124abecacd42ed222e85d6f129b3ec",
+    "src/CodeManager/PreviewWindow.cs": "b71692715949429082724c5e1abe05f106327b75d48fa5e7115d928dff8625ec",
+    "src/CodeManager/ProductIcon.cs": "e172aeff0b8b58c41b9be2463977ab3d45a770542cfe48dee4233a051d6388b7",
+    "src/CodeManager/QiParticles.cs": "2566e8444d1f7d388254e4cd6fafd5b5fe86fe955c3d234962943f00a27ad112",
+    "src/CodeManager/RadialInventoryWindow.cs": "c6a7381d2483f16b798fc927789575c9b02050ade9be2b9f79cc96879eb27673",
+    "src/CodeManager/RecoveryLaunch.cs": "9021dbd7d0af1065b1c525d56c54e92364ee70f171855b96eb066eb974d23a10",
+    "src/CodeManager/RecoveryWindow.cs": "a868ca3043981eaad65cabf285400c67bced32753f6ee484f4f0edb71904784c",
+    "src/CodeManager/SelfTests.cs": "406245f0cfe914bd87031a40e78c6f1a42bd10ad17864bcdbf57c63d506e3eb5",
+    "src/CodeManager/SettingsWindow.cs": "56db3f92dff702b10a9b8e8255dd07b2db9d6e126bf25be38f6b6213aead7158",
+    "src/CodeManager/SkinCatalog.cs": "e097fc0d551ade97b00c802395fdd43cdd43c944b476fd81d7416be53759fa37",
+    "src/CodeManager/SkinPicker.cs": "a786230d98111741db492a1238022e1c8004f9c8d0742a2c693525a9e06f8aed",
+    "src/CodeManager/SkinSuitePreview.cs": "592f89d0f88cf0176053f921717bf41193003134181905080a7f2ae108126545",
+    "src/CodeManager/SkinTaskCard.cs": "c30bf8ed9e81eaeb6ec470cb13de02ad448bbc552055bc7ed72933c0ae6c1c96",
+    "src/CodeManager/SkinTests.cs": "7a1e3a62692ab629e823ba8a67a541a5d7deecd6cc6a62cdfc0dbcf913de906a",
+    "src/CodeManager/SkinVisuals.cs": "b6fae4ebb47203751a8161d1cc97e0217e178803e839c5b3b47b0ecdf4f2ac2f",
+    "src/CodeManager/SlotHintWindow.cs": "967ed17bcef6382d4079fae7a0f6ae31e76749fa95b4d7c83d2adc8bd704a2fc",
+    "src/CodeManager/StateStore.cs": "fbd030bb6869f68e5414c8797a83c413dfdca070fb352a0080377f6294a2ef73",
+    "src/CodeManager/TaskEditorWindow.cs": "07ad9258f61062a2a73454d6d00174dad8672321d3f3f8364ce55608598e0e7b",
+    "src/CodeManager/TrayMenuRenderer.cs": "f3867e30d2687f5cb190d3abda6f392bd091070804f6df83e652245116b15e66",
+    "src/CodeManager/WheelMotionDiagnostics.cs": "6aa8ffe1455be0a8151a4ea4f2da523e224abdf41ef8b56b5463b4f7448a8365",
+    "src/CodeManager/WuxiaTheme.cs": "2d38365688ee2296b014f7c5bcc0a5915d8c557121a169285f8854f5100bd07d",
+    "themes/windows-terminal/Apply-InkJade.ps1": "9f0288635276942dfa1dfea0c7fe747b0674eeaa9dc54091ea1fde77ae2d1fc4",
+    "themes/windows-terminal/Apply-Skin.ps1": "e5178301d61cc9fd526d6a3e5c14f1a5d55ce1c7da2934f9bf749a161b55c746",
+    "themes/windows-terminal/Build-TerminalSkins.ps1": "4851cc9e607d427c84433555e3732fe7b1a8da26274fec13ccc4dc31d094e8f1",
+    "themes/windows-terminal/FrameLayout.cs": "f9cde430952848ef5c6a04b21e712908eb1da343ea058e26686ce337a0b97356",
+    "themes/windows-terminal/Jsonc.cs": "a7492ac42ac7fc3ca91ae54cba2500776ba53f05ab75c9ee11d29a2b575b33f2",
+    "themes/windows-terminal/ShaderCompiler.cs": "11e1d5b0da82336cb173c52005d1e1e89209c062a986c4303c8087befa941ed5",
+    "themes/windows-terminal/TerminalChrome.ps1": "67d8181f7b181e12353cc8589f63b18d319ccd79cb188cae087dd7d8f7e1d963",
+    "themes/windows-terminal/Test-InkJadeBackground.ps1": "107b64bb93fc0dcfbcd6067b38cf0db38b12b06c2a48ac0ef1206fd67120f781",
+    "themes/windows-terminal/Test-RefinedFrames.ps1": "f9fac9930f2f3e84fa305043ec67615d48940e44785ff80afdac9bf01b19a0f4",
+    "themes/windows-terminal/Test-TerminalChrome.ps1": "d62f6f9374e18df19e801d828c29558cae9cfcc775678d90469e37c797614b3a",
+    "themes/windows-terminal/Test-TerminalSkins.ps1": "e8d41ab1d7348237ee1a705bed0630786d4def258eb828eb7ca8793719c39343",
+    "themes/windows-terminal/ornate-frame-v2.hlsl": "7409efb9725938aa9b0c139e7d28ce42e196554f250ca9058cda2dd43f485f0c",
+    "themes/windows-terminal/shaders/adventure.hlsl": "eeb8d839b027160a07f6cdeaf7d74c5dd665174b22aae06b9d269a375adb89b7",
+    "themes/windows-terminal/shaders/arsenal.hlsl": "8e54d7b888b6a9d78967af386cd411ff43078ecc23f8fbe11e3e774177e381db",
+    "themes/windows-terminal/shaders/astral.hlsl": "5d9efe44ceec2bb1ef6855f56718976931888185016cb3671861872959e08f7a",
+    "themes/windows-terminal/shaders/designs/adventure.hlsl": "7456debaa1b10dc717ddd7d7467663ba004b32edeef6fe45b17e8557a29292cc",
+    "themes/windows-terminal/shaders/designs/arsenal.hlsl": "695c643d455746235a865cf451bb641a17b9502b30bd317608b951db4e659046",
+    "themes/windows-terminal/shaders/designs/astral.hlsl": "8de1c0d124cab6da5e33ebef5553a827ac5ec45a757a1d1e6e712954c8a35f4f",
+    "themes/windows-terminal/shaders/designs/formation.hlsl": "10f575ff76ad68c33f3e6f38e036d9a409a18236aa8f9e7066e65a97d541acbd",
+    "themes/windows-terminal/shaders/designs/hextech.hlsl": "a05754f5c8c08ffb1119b2c8ff56c7bdcff0ab97007d6932ab6b15d8f0c26f1f",
+    "themes/windows-terminal/shaders/designs/protocol.hlsl": "b77382073424d716ad6ec20fd3472e820c3eaf3552fe8f8789451899e68055ad",
+    "themes/windows-terminal/shaders/designs/relic.hlsl": "00bf3a93308fb51a0540406694d4efc177a7bcc8a84ea74a2b90db19e0c3eba2",
+    "themes/windows-terminal/shaders/designs/starlight.hlsl": "0351ed71c1699dc52f3cbbaf9eb2e12c36e43efb6ee2a173203dd1e7ced01708",
+    "themes/windows-terminal/shaders/designs/tactical.hlsl": "6dd3a7646fb0f4e9ef0e4159942148354f26d92da40a91719396c45e01e92535",
+    "themes/windows-terminal/shaders/designs/wonderland.hlsl": "c61e82ae73c3c43c47d201368c1b3f97847ab928c58a9bdaf4f67e798e31b7bb",
+    "themes/windows-terminal/shaders/formation.hlsl": "1db341b14038a67186b4f56c2fa84800ce2b29fe0c42560686fe2fe2eec0f805",
+    "themes/windows-terminal/shaders/frame-template.hlsl": "7105bad8b69d12b7a719c273a628adad2241872bf9ddeaa111b5f347b388df7b",
+    "themes/windows-terminal/shaders/hextech.hlsl": "b6591f61a6b8c9f2320e61ee489ecb808faa0984917ee6f53efbb8fcbd907490",
+    "themes/windows-terminal/shaders/protocol.hlsl": "3800a87a54d6947db1dd8b8b7adcc98ecff783870c4bb3e88e012f3ddd87508c",
+    "themes/windows-terminal/shaders/relic.hlsl": "64a73e50e43ed3fe1ff77994004fbdc3269e012ff6a149855a5c634e88acab29",
+    "themes/windows-terminal/shaders/starlight.hlsl": "d48fd481e5bc7ae4bb2ebc93ea43b590913f3e61ce24010585b5d493b0b5efd3",
+    "themes/windows-terminal/shaders/tactical.hlsl": "c7502a50affdb8563cad7c0bfbf9447f0cfa24bbbb4f8531f21a33ea6a1b7c6a",
+    "themes/windows-terminal/shaders/wonderland.hlsl": "d2528426014f6cd4ca3f18c12690bbaf21ecbcc2a6028bb5008a3632dfb946f0",
+    "tools/build-brand-icons.py": "84bc3bddcf460e6da6792e08e304f39cf62a09c5815ae37e8ec1ee90fc4f2d08",
+    "tools/build-brand-kit.py": "5836ecd512d5504acd29d5e9727042a4f2b89fa8e7479bf1fac2aa9d16be6d1f",
+    "tools/build-brand-v2.py": "d50f9b761272fe5b7916bec614231a590a05d4180fe7710c614071da9784d392",
+    "tools/build-native-refinement-gallery.py": "54b48d4045adc638eb439d0a25f1fe1ece2b0d1f624dd5318384781c765e54e4",
+    "tools/build-native-skin-art.py": "483f088271a44ffd154247fd47bbb04baaa1e4db3de5c8b11b47d842e838009b",
+    "tools/build-refined-terminal-frames.py": "ee133a366d8fbccd1232c43c966e66d7b7d8b9030cf5a3f736c1dd1756d9072f",
+    "tools/build-settings-studio-gallery.py": "3e9975f73992306ccabec6b4ee4df1a1133a61b0076d94beed87c391878ddcec",
+    "tools/build-skin-gallery.py": "127a9206f32bf65ea163a328982c887ea18d51a3d97a0582e044c2555e915f6a",
+    "tools/build-suite-assets.py": "3d0edb33f8c6c72c65e5d97864a39068a15b06fbf179f85852d1db2a01ef764c",
+    "tools/build-terminal-background.py": "2887bf17361d8a604c95fe25ce26324aa5f0595a0316a29e14453d3b8a704bbd",
+    "tools/build-terminal-frame-comparison.py": "3f8059c325a66c6d5dd018ec5b450c45e2b9e11a72f5d5962b8c0427a8a38fe6",
+    "tools/build-terminal-scene-gallery.py": "d74d9297b9de7f1e1cc8ab018ac8a0d295462ad64f90f711dd625d19569aa565",
+    "tools/code-review/Program.cs": "05daa8651369d45cd5817e07e701c2d6e9072fba4ad64be6cfff8f8aab9aabfa",
+    "tools/code-review/ReviewProbe.csproj": "ebbfc3edcc7043071099482582b879ba3e283e7949aab3d0c78dfef113f3322b",
+    "tools/code-review/review-snapshot.py": "9896068700241284a8c32487be9a2cb8486868278c7a8d6258c03f9715eda790",
+    "tools/experience-audit/AfterAudit.cs": "691ff368d15be5a8dda60949c1788d3db07a9436175be37fba2897db5b4f4f1c",
+    "tools/experience-audit/ExperienceAudit.csproj": "632789305c0645e001e365c8c37f854bbc4827016af60398ca4f0ca95d935bc2",
+    "tools/experience-audit/Program.cs": "3eb55409b4282a98c8aaddbcf5fa215b39439c2bdaa3db9205f2ebfce2fbd154",
+    "tools/feedback-validation/FeedbackValidation.csproj": "d5ef583673e21f83f8151f06620b3acd0f72fd9176096438abe12ae2b81132d8",
+    "tools/feedback-validation/Program.cs": "b2c19062c492d8770dfce6e12d42630a8c2880d3c41d0798695fb38776cf6ae5",
+    "tools/game-audio-validation/GameAudioValidation.csproj": "4f09b04da5d363cd47c871a2f33d150ba3832fadcad38f78d1bb207751664f23",
+    "tools/game-audio-validation/Program.cs": "98a9f77e7a3aecb35136be4b5fefd3c5187f64ee40b73f2eb6bbf8bf0dd7311b",
+    "tools/game-audio-validation/SkinFixture.cs": "a4b0f1e4c70e79c70c0bc72803abe00da8ec9bc21669cef9a058989d4c9dfe3c",
+    "tools/game-audio/generate.py": "c8c197fdd1ed9999a2b837fb9be9cbbd8101e3ac90b35c3ea227db66a3543990",
+    "tools/settings-studio-validation/Program.cs": "be48a7d49599ea3b9689aabfc45bf70b0a9ecaf5462a03462a800ea499ee79e3",
+    "tools/settings-studio-validation/SettingsStudioValidation.csproj": "14c08f87cf44bf00e7a1304b9b57735272ed904652c9b8ecb7be7870979b04ee",
+    "tools/suite-performance/Program.cs": "cbfa4e5a4826c0845d3b098dc15d1a204ee589e43da846139d7107f5b91948c4",
+    "tools/suite-performance/SuitePerformance.csproj": "9ad9df87732be3a2ea92d56be493d2614eef29e2d6671e395ed5789ea9fa040f",
+    "tools/terminal_frame_materials.py": "e8579fef2f5286439d01402d868876de157165a72588bd31004592beff8b4265",
+    "tools/terminal_margin_details.py": "3e367e9817780fd767392a339afb5f1abab656932457fccc0a81b5224591b1b0"
+  },
+  "configurationHashes": {
+    "skins/catalog.json": "2bb2b0ecb4376a9bc690bcca5587ff392798a8574777ecc18bf2654fecaff5dc",
+    "skins/loadouts/suites-v1/catalog.json": "0c72b7410989e6f9ccafc53db47171e02553a5e234011f291f4b1f56d06e87e3",
+    "skins/audio/manifest.json": "2fb4ecb7efc61eb541fb9e1fdac64ce58c770a612c32acfbf99ec6ffa956603d",
+    "themes/windows-terminal/skins.json": "eb368ac40fff2606f51379a8d212d69a2292a60eae4c6f50a59691d8ab9ab529",
+    "themes/windows-terminal/classic-palettes.json": "b76fef42a50c55e1120970fb2017a5fc570f27290e53b3712715b767b99e23e0",
+    "src/CodeManager/app.manifest": "440bc41d013350ca120cc767634a6294c2dafec512042e3ca20b1cee6399a6a5"
+  },
+  "environment": {
+    "OS": "Microsoft Windows 11 专业版",
+    "OSVersion": "10.0.26200",
+    "OSBuild": "26200",
+    "Architecture": "64 位",
+    "CPU": "12th Gen Intel(R) Core(TM) i7-12700KF",
+    "LogicalProcessors": 20,
+    "RAMBytes": 68498673664,
+    "DotnetSDK": "10.0.102",
+    "PowerShell": "5.1.26100.9444",
+    "system": "Windows",
+    "release": "11",
+    "python": "3.13.5",
+    "packages": {
+      "Pillow": "11.1.0",
+      "numpy": "2.1.3",
+      "scipy": "1.15.3",
+      "imageio-ffmpeg": "0.6.0"
+    }
+  },
+  "snapshotInventory": {
+    "fileCount": 1148,
+    "totalBytes": 403073615,
+    "sourceFiles": 116,
+    "physicalSourceLinesByExtension": {
+      ".ps1": 1024,
+      ".py": 3104,
+      ".xaml": 93,
+      ".cs": 9347,
+      ".csproj": 65,
+      ".hlsl": 837
+    },
+    "rasterBytes": 375571762,
+    "checks": {
+      "relativeLinks": 676,
+      "textFilesScannedForStrongTokenPatterns": 247,
+      "raster": 712,
+      "svg": 17,
+      "python": 19,
+      "xml": 9
+    },
+    "issues": [],
+    "strongTokenPatternHits": []
+  },
+  "build": {
+    "configuration": "Release",
+    "warnings": 0,
+    "errors": 0,
+    "elapsedSeconds": 2.62,
+    "output": "artifacts/code-review/app",
+    "liveRuntimeReplaced": false
+  },
+  "validation": {
+    "selfTest": {
+      "total": 39,
+      "passed": 39,
+      "results": [
+        {
+          "Name": "Tiling: 1–9 windows fill the work area exactly, including odd dimensions and negative origins",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Arrangement preferences: every mode fills work area; gaps stay bounded",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Selection: fixed sparse slots, high-resolution wheel, cancel and wrap",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Alt mouse gestures: wheel routing, AltGr exclusion and middle-click passthrough",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Settings: configurable modifiers, valid toggle keys and off-screen placement",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Input: connected digits only; Tab toggles inventory and yields when paused or disabled",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Agent events: real lifecycle mapping, nested-agent filtering and idle notifications",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Persistence: identity, stable task ID, placement, atomic events and corrupt recovery",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Win32: enumerate, validate identity, tile/minimize/restore owned fixture",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Win32: activating an already focused window raises it above a nonactivating covering window",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Win32: hotkey registration and low-level mouse/keyboard/drag hooks",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Win32: DWM live preview relationship between owned fixture windows",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Integration: capture, rename, external status, move fixed slot, overview and cleanup",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Interaction: persistent entrance, immediate hints, direct removal and closed-task history",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Hook transport: PowerShell observer emits Unicode event without agent instructions",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Recovery: exact matching, ambiguity rejection, startup quoting and saved session metadata",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Recovery: repeat suppression, title handshake, stable identity, move and timeout",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Recovery: Claude launcher forwards only the specified resume ID",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Motion: repeated commands preserve transitions and reversal renders intermediate frames",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Motion: warm text layouts ignore task renames while changing equipment updates the rendered identity",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Overlay: desktop gaps are alpha-zero and native clicks pass to the window underneath",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Compact host: native bounds shrink to the ring, deployment preserves the screen anchor",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Equipment gesture: dead zone, connected-only release and boundary hysteresis preserve task data",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Equipment core: hover opens without focus, desktop gaps retain it, leaving retracts with reentry grace",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Radial inventory: fixed sectors, centre cancel, outer cancel and scaled hit testing",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Radial inventory: confirm only connected slots; no focus steal, reordering or retained window",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Radial inventory: release after a quick chord cancels once and stops its timer",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Dock wheel: nine permanent sectors replace the list across skins without changing bindings",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Dock equipment: switch cue never takes focus and releases itself after feedback",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Skins: all 13 palettes meet body, panel, card and status text contrast >= 4.5",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Skins: terminal/native JSON palette contract matches every new skin",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Skins: switching and rendering each task state preserves task IDs, launch, session and window snapshots",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Skins: family glyphs are distinct and decorations-off renders a clean interactive background",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Dock wheel: resize preserves nine hit targets and centre capture resolves to an empty slot",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Skins: 13 settings choices use stable enum tags; cancel and save preserve preference boundaries",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Skins: nine-card overview remains readable at 780x650 and 200-percent display scaling",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Skins: themed settings scroll viewer retains vertical and horizontal scrolling",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Skins: short work areas scroll all nine tasks and suppress clipped native thumbnails",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Skins: themed slider retains native commands; menu and combo popups honor animation off/on",
+          "Passed": true,
+          "Detail": "OK"
+        }
+      ],
+      "includedSkinGroups": 21
+    },
+    "loadout": {
+      "total": 12,
+      "passed": 12,
+      "results": [
+        {
+          "Name": "Nine distinct HD transparent character cutouts match their provenance manifest",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Legacy migration and restart preserve task identity and chosen weapon",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Picker is an isolated draft, supports per-slot choices and fixed short-window actions",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Custom import survives original removal; missing, corrupt and unsafe files fall back",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Resting 116-DIP core is contained and weapon identity ignores task titles",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Reordering a task preserves the remembered current entity after focus leaves managed terminals",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "All nine deployed weapons retain fixed hit positions at 320, 360 and 480 DIP",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Empty slots visibly offer direct add targets without moving existing task positions",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Every theme has nine distinct readable entities with explicit provenance",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Theme loadouts remain independent and equipment assignment copies value semantics",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "All theme entities render with fixed targets and no task initials, with decorations on or off",
+          "Passed": true,
+          "Detail": "OK"
+        },
+        {
+          "Name": "Loadout validation preserves live window bindings, appearance and preferences",
+          "Passed": true,
+          "Detail": "OK"
+        }
+      ]
+    },
+    "settings": {
+      "passed": true,
+      "failures": 0,
+      "results": [
+        {
+          "name": "13 stable choices and five independent preview views",
+          "passed": true
+        },
+        {
+          "name": "Full settings, gallery and five grouped pages render",
+          "passed": true
+        },
+        {
+          "name": "Animation changes actual frames and stops when hidden or unloaded",
+          "passed": true
+        },
+        {
+          "name": "Save commits the draft while caller preferences remain unchanged",
+          "passed": true
+        },
+        {
+          "name": "Narrow/short layouts keep footer actions inside the window",
+          "passed": true
+        },
+        {
+          "name": "Preview and validation never write live Terminal settings",
+          "passed": true
+        }
+      ],
+      "themeCount": 13,
+      "previewModes": 5,
+      "packaged": false,
+      "liveTerminalSettingsChanged": false
+    },
+    "audio": {
+      "passed": true,
+      "suites": 8,
+      "files": 182,
+      "nativeOutputExercised": true,
+      "tests": [
+        {
+          "name": "All 182 PCM files decode and have independent hashes",
+          "passed": true
+        },
+        {
+          "name": "Strict malformed RIFF rejection and safe identity paths",
+          "passed": true
+        },
+        {
+          "name": "User item import, precedence, safe invalid fallback and reset",
+          "passed": true
+        },
+        {
+          "name": "Native output opens; calls are nonblocking and bounded; stop cancels voices",
+          "passed": true
+        },
+        {
+          "name": "Quiet mode suppresses hover; disabled master remains silent; explicit audition works",
+          "passed": true
+        },
+        {
+          "name": "Natural completion releases idle native device",
+          "passed": true
+        },
+        {
+          "name": "Unsaved file audition and built-in audition do not import or change overrides",
+          "passed": true
+        },
+        {
+          "name": "Shutdown releases native audio output",
+          "passed": true
+        }
+      ]
+    },
+    "terminal": {
+      "skins": [
+        {
+          "backgroundGifFrames": 96,
+          "jsoncAccepted": true,
+          "postTextShaderEnabled": false,
+          "applied": true,
+          "testIllustrationFixture": false,
+          "effectsDisableVerified": true,
+          "backupRestoreByteExact": true,
+          "commandsAndShortcutsPreserved": true,
+          "originalFontPreserved": true,
+          "slug": "hextech",
+          "frameLayout": "C",
+          "allProfilesVerified": true,
+          "artworkOffAnimationPreserved": true
+        },
+        {
+          "backgroundGifFrames": 96,
+          "jsoncAccepted": true,
+          "postTextShaderEnabled": false,
+          "applied": true,
+          "testIllustrationFixture": false,
+          "effectsDisableVerified": true,
+          "backupRestoreByteExact": true,
+          "commandsAndShortcutsPreserved": true,
+          "originalFontPreserved": true,
+          "slug": "tactical",
+          "frameLayout": "C",
+          "allProfilesVerified": true,
+          "artworkOffAnimationPreserved": true
+        },
+        {
+          "backgroundGifFrames": 96,
+          "jsoncAccepted": true,
+          "postTextShaderEnabled": false,
+          "applied": true,
+          "testIllustrationFixture": false,
+          "effectsDisableVerified": true,
+          "backupRestoreByteExact": true,
+          "commandsAndShortcutsPreserved": true,
+          "originalFontPreserved": true,
+          "slug": "protocol",
+          "frameLayout": "C",
+          "allProfilesVerified": true,
+          "artworkOffAnimationPreserved": true
+        },
+        {
+          "backgroundGifFrames": 96,
+          "jsoncAccepted": true,
+          "postTextShaderEnabled": false,
+          "applied": true,
+          "testIllustrationFixture": false,
+          "effectsDisableVerified": true,
+          "backupRestoreByteExact": true,
+          "commandsAndShortcutsPreserved": true,
+          "originalFontPreserved": true,
+          "slug": "adventure",
+          "frameLayout": "C",
+          "allProfilesVerified": true,
+          "artworkOffAnimationPreserved": true
+        },
+        {
+          "backgroundGifFrames": 96,
+          "jsoncAccepted": true,
+          "postTextShaderEnabled": false,
+          "applied": true,
+          "testIllustrationFixture": false,
+          "effectsDisableVerified": true,
+          "backupRestoreByteExact": true,
+          "commandsAndShortcutsPreserved": true,
+          "originalFontPreserved": true,
+          "slug": "arsenal",
+          "frameLayout": "C",
+          "allProfilesVerified": true,
+          "artworkOffAnimationPreserved": true
+        },
+        {
+          "backgroundGifFrames": 96,
+          "jsoncAccepted": true,
+          "postTextShaderEnabled": false,
+          "applied": true,
+          "testIllustrationFixture": false,
+          "effectsDisableVerified": true,
+          "backupRestoreByteExact": true,
+          "commandsAndShortcutsPreserved": true,
+          "originalFontPreserved": true,
+          "slug": "relic",
+          "frameLayout": "C",
+          "allProfilesVerified": true,
+          "artworkOffAnimationPreserved": true
+        },
+        {
+          "backgroundGifFrames": 96,
+          "jsoncAccepted": true,
+          "postTextShaderEnabled": false,
+          "applied": true,
+          "testIllustrationFixture": false,
+          "effectsDisableVerified": true,
+          "backupRestoreByteExact": true,
+          "commandsAndShortcutsPreserved": true,
+          "originalFontPreserved": true,
+          "slug": "starlight",
+          "frameLayout": "C",
+          "allProfilesVerified": true,
+          "artworkOffAnimationPreserved": true
+        },
+        {
+          "backgroundGifFrames": 96,
+          "jsoncAccepted": true,
+          "postTextShaderEnabled": false,
+          "applied": true,
+          "testIllustrationFixture": false,
+          "effectsDisableVerified": true,
+          "backupRestoreByteExact": true,
+          "commandsAndShortcutsPreserved": true,
+          "originalFontPreserved": true,
+          "slug": "formation",
+          "frameLayout": "C",
+          "allProfilesVerified": true,
+          "artworkOffAnimationPreserved": true
+        },
+        {
+          "backgroundGifFrames": 96,
+          "jsoncAccepted": true,
+          "postTextShaderEnabled": false,
+          "applied": true,
+          "testIllustrationFixture": false,
+          "effectsDisableVerified": true,
+          "backupRestoreByteExact": true,
+          "commandsAndShortcutsPreserved": true,
+          "originalFontPreserved": true,
+          "slug": "astral",
+          "frameLayout": "C",
+          "allProfilesVerified": true,
+          "artworkOffAnimationPreserved": true
+        },
+        {
+          "backgroundGifFrames": 96,
+          "jsoncAccepted": true,
+          "postTextShaderEnabled": false,
+          "applied": true,
+          "testIllustrationFixture": false,
+          "effectsDisableVerified": true,
+          "backupRestoreByteExact": true,
+          "commandsAndShortcutsPreserved": true,
+          "originalFontPreserved": true,
+          "slug": "wonderland",
+          "frameLayout": "C",
+          "allProfilesVerified": true,
+          "artworkOffAnimationPreserved": true
+        }
+      ],
+      "negativeCasesPassed": 8,
+      "utf8BomRestoreByteExact": true,
+      "isolatedSettingsOnly": true,
+      "artworkFixtureCount": 0
+    },
+    "nativeChrome": {
+      "Passed": true,
+      "ThemeCount": 13,
+      "Cases": [
+        {
+          "Skin": "hextech",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "tactical",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "protocol",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "adventure",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "arsenal",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "relic",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "starlight",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "formation",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "astral",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "wonderland",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "ink-jade",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "midnight",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "cinnabar",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "ink-jade-Minimal",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "ink-jade-Ornate",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        }
+      ],
+      "BulkCases": [
+        {
+          "Selection": "named",
+          "RegisteredThemeCount": 13,
+          "SelectionAndProfilesPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Selection": "automatic",
+          "RegisteredThemeCount": 13,
+          "SelectionAndProfilesPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Selection": "absent",
+          "RegisteredThemeCount": 13,
+          "SelectionAndProfilesPreserved": true,
+          "BackupRestoreByteExact": true
+        }
+      ]
+    },
+    "nativeGif": {
+      "passed": true,
+      "nativeGifCount": 20,
+      "nativeDecodedFrames": 1920,
+      "files": [
+        {
+          "file": "adventure-c-v1.gif",
+          "frames": 96,
+          "centerStatic": true,
+          "rimAnimation": true,
+          "rimSampleColors": 8
+        },
+        {
+          "file": "adventure-frame-only-v1.gif",
+          "frames": 96,
+          "centerStatic": true,
+          "rimAnimation": true,
+          "rimSampleColors": 11
+        },
+        {
+          "file": "arsenal-c-v1.gif",
+          "frames": 96,
+          "centerStatic": true,
+          "rimAnimation": true,
+          "rimSampleColors": 7
+        },
+        {
+          "file": "arsenal-frame-only-v1.gif",
+          "frames": 96,
+          "centerStatic": true,
+          "rimAnimation": true,
+          "rimSampleColors": 8
+        },
+        {
+          "file": "astral-c-v1.gif",
+          "frames": 96,
+          "centerStatic": true,
+          "rimAnimation": true,
+          "rimSampleColors": 4
+        },
+        {
+          "file": "astral-frame-only-v1.gif",
+          "frames": 96,
+          "centerStatic": true,
+          "rimAnimation": true,
+          "rimSampleColors": 7
+        },
+        {
+          "file": "formation-c-v1.gif",
+          "frames": 96,
+          "centerStatic": true,
+          "rimAnimation": true,
+          "rimSampleColors": 5
+        },
+        {
+          "file": "formation-frame-only-v1.gif",
+          "frames": 96,
+          "centerStatic": true,
+          "rimAnimation": true,
+          "rimSampleColors": 6
+        },
+        {
+          "file": "hextech-c-v1.gif",
+          "frames": 96,
+          "centerStatic": true,
+          "rimAnimation": true,
+          "rimSampleColors": 6
+        },
+        {
+          "file": "hextech-frame-only-v1.gif",
+          "frames": 96,
+          "centerStatic": true,
+          "rimAnimation": true,
+          "rimSampleColors": 8
+        },
+        {
+          "file": "protocol-c-v1.gif",
+          "frames": 96,
+          "centerStatic": true,
+          "rimAnimation": true,
+          "rimSampleColors": 6
+        },
+        {
+          "file": "protocol-frame-only-v1.gif",
+          "frames": 96,
+          "centerStatic": true,
+          "rimAnimation": true,
+          "rimSampleColors": 8
+        },
+        {
+          "file": "relic-c-v1.gif",
+          "frames": 96,
+          "centerStatic": true,
+          "rimAnimation": true,
+          "rimSampleColors": 7
+        },
+        {
+          "file": "relic-frame-only-v1.gif",
+          "frames": 96,
+          "centerStatic": true,
+          "rimAnimation": true,
+          "rimSampleColors": 9
+        },
+        {
+          "file": "starlight-c-v1.gif",
+          "frames": 96,
+          "centerStatic": true,
+          "rimAnimation": true,
+          "rimSampleColors": 7
+        },
+        {
+          "file": "starlight-frame-only-v1.gif",
+          "frames": 96,
+          "centerStatic": true,
+          "rimAnimation": true,
+          "rimSampleColors": 8
+        },
+        {
+          "file": "tactical-c-v1.gif",
+          "frames": 96,
+          "centerStatic": true,
+          "rimAnimation": true,
+          "rimSampleColors": 10
+        },
+        {
+          "file": "tactical-frame-only-v1.gif",
+          "frames": 96,
+          "centerStatic": true,
+          "rimAnimation": true,
+          "rimSampleColors": 9
+        },
+        {
+          "file": "wonderland-c-v1.gif",
+          "frames": 96,
+          "centerStatic": true,
+          "rimAnimation": true,
+          "rimSampleColors": 12
+        },
+        {
+          "file": "wonderland-frame-only-v1.gif",
+          "frames": 96,
+          "centerStatic": true,
+          "rimAnimation": true,
+          "rimSampleColors": 11
+        }
+      ],
+      "logicalScreen": [
+        2560,
+        1440
+      ],
+      "padding": "66, 64, 66, 64",
+      "actualTerminalPlaybackVisuallyVerified": false
+    },
+    "powershellSyntax": {
+      "parsed": 11,
+      "issues": []
+    },
+    "monitoringUnitTests": {
+      "total": 7,
+      "passed": 7,
+      "scope": "Pure mocked scheduling decisions; source hash checked unchanged at final freeze"
+    }
+  },
+  "performance": {
+    "wheel": {
+      "metric": "UI thread drawing-recording time; excludes OS composition, window activation and screenshot encoding",
+      "samples": 180,
+      "median_ms": 0.0936,
+      "p95_ms": 0.1638,
+      "max_ms": 0.7684,
+      "mean_allocated_bytes": 14429.155555555555
+    },
+    "imageCache": {
+      "at": "2026-10-19T12:02:13.4678142+00:00",
+      "original_assets_unchanged": true,
+      "first_theme": {
+        "load_and_materialize_ms": 167.8746,
+        "cache": {
+          "entries": 9,
+          "estimated_pixel_bytes": 6365184,
+          "longest_decoded_edge": 512
+        }
+      },
+      "same_theme_warm": {
+        "calls": 900,
+        "median_ms": 0.0005,
+        "p95_ms": 0.0007,
+        "allocated_bytes_per_call": 67.44888888888889
+      },
+      "all_theme_rotation": [
+        {
+          "skin": "ink-jade",
+          "has_pack": true,
+          "load_ms": 72.8521
+        },
+        {
+          "skin": "midnight",
+          "has_pack": true,
+          "load_ms": 72.6203
+        },
+        {
+          "skin": "cinnabar",
+          "has_pack": true,
+          "load_ms": 75.9398
+        },
+        {
+          "skin": "hextech",
+          "has_pack": true,
+          "load_ms": 74.7869
+        },
+        {
+          "skin": "tactical",
+          "has_pack": true,
+          "load_ms": 62.1832
+        },
+        {
+          "skin": "protocol",
+          "has_pack": true,
+          "load_ms": 117.1996
+        },
+        {
+          "skin": "adventure",
+          "has_pack": true,
+          "load_ms": 60.3471
+        },
+        {
+          "skin": "arsenal",
+          "has_pack": true,
+          "load_ms": 94.4689
+        },
+        {
+          "skin": "relic",
+          "has_pack": true,
+          "load_ms": 77.9121
+        },
+        {
+          "skin": "starlight",
+          "has_pack": true,
+          "load_ms": 63.331
+        },
+        {
+          "skin": "formation",
+          "has_pack": true,
+          "load_ms": 64.2131
+        },
+        {
+          "skin": "astral",
+          "has_pack": true,
+          "load_ms": 76.3711
+        },
+        {
+          "skin": "wonderland",
+          "has_pack": true,
+          "load_ms": 73.9449
+        }
+      ],
+      "final_cache": {
+        "entries": 49,
+        "estimated_pixel_bytes": 50018304,
+        "longest_decoded_edge": 512
+      },
+      "observed_private_bytes": {
+        "before": 13717504,
+        "after_first_theme": 19963904,
+        "after_rotation": 65699840
+      },
+      "limits": "Private bytes include WPF/WIC/JIT and are process observations, not exact texture accounting. Cache pixel bytes estimate retained runtime bitmap surfaces; original PNG files remain full resolution. Timings include decoding/materialization, not native window switching."
+    }
+  },
+  "robustnessProbe": {
+    "generatedAtUtc": "2026-10-19T12:02:09.8121657+00:00",
+    "malformedJson": {
+      "backupCreated": true,
+      "fallbackHasNineSlots": true,
+      "warningPresent": true
+    },
+    "nestedNullTitle": {
+      "acceptedByStateStore": true,
+      "recoveryException": "NullReferenceException",
+      "handledWithoutException": false
+    },
+    "imageDecodePressure": [
+      {
+        "imagesAttempted": 9,
+        "elapsedMs": 57.629,
+        "privateMemoryGrowthBytes": 10272768,
+        "retainedManagedBytes": 2673424,
+        "decodedPixelBytesEstimate": 9437184
+      },
+      {
+        "imagesAttempted": 90,
+        "elapsedMs": 373.9584,
+        "privateMemoryGrowthBytes": 53686272,
+        "retainedManagedBytes": 2727456,
+        "decodedPixelBytesEstimate": 87648256
+      }
+    ],
+    "limitations": [
+      "Synthetic malformed configuration; not a claim about normal saves",
+      "Standalone image decode process, not product idle memory",
+      "Memory includes WPF/native decoder initialization; timings are machine-specific",
+      "No remote input or authorization bypass assessed"
+    ]
+  },
+  "userDataPreservation": {
+    "occupiedSlots": 4,
+    "identityAndEquipmentUnchanged": true,
+    "terminalSettingsUnchanged": true
+  },
+  "visualInspection": {
+    "currentNativeFixtures": [
+      "docs/game-suite-refinement/screens/inventory-hextech.png",
+      "docs/game-suite-refinement/screens/inventory-wonderland.png"
+    ],
+    "brandFixtures": [
+      "assets/brand/v2/brand-overview.png",
+      "assets/brand/v2/icon-size-proof.png",
+      "assets/brand/v2/promo/readme-banner-1600x600.png"
+    ],
+    "limitations": "Representative fixture inspection, not all 117 assets or a live end-to-end session."
+  },
+  "commands": [
+    "python tools/code-review/review-snapshot.py --decode-raster --output artifacts/code-review/frozen-snapshot.json",
+    "dotnet build src/CodeManager/CodeManager.csproj -c Release -o artifacts/code-review/app --no-restore",
+    "artifacts/code-review/app/CodeManager.exe --self-test artifacts/code-review/self-test.json",
+    "artifacts/code-review/app/CodeManager.exe --loadout-test artifacts/code-review/loadout-test.json",
+    "dotnet run --project tools/settings-studio-validation/SettingsStudioValidation.csproj -c Release -- artifacts/code-review/settings",
+    "dotnet run --project tools/game-audio-validation/GameAudioValidation.csproj -c Release -- artifacts/code-review/audio",
+    "powershell -NoProfile -ExecutionPolicy Bypass -File themes/windows-terminal/Test-TerminalSkins.ps1 -OutputRoot artifacts/code-review/terminal -RequireArtwork",
+    "powershell -NoProfile -ExecutionPolicy Bypass -File themes/windows-terminal/Test-TerminalChrome.ps1 -OutputRoot artifacts/code-review/chrome",
+    "powershell -NoProfile -ExecutionPolicy Bypass -File themes/windows-terminal/Test-RefinedFrames.ps1 -ReportPath artifacts/code-review/native-gif.json",
+    "dotnet run --project tools/code-review/ReviewProbe.csproj -c Release -- artifacts/code-review/probes .",
+    "dotnet run --project tools/suite-performance/SuitePerformance.csproj -c Release -- artifacts/code-review/image-cache.json",
+    "artifacts/code-review/app/CodeManager.exe --wheel-benchmark artifacts/code-review/wheel-benchmark.json",
+    "python -m unittest discover -s scripts/monitoring -p test_*.py -v"
+  ],
+  "limitations": [
+    "Test groups overlap; counts are not a formal coverage percentage.",
+    "No 24-hour soak, physical mixed-DPI multi-monitor, RDP, sleep/resume or elevated-window compatibility run.",
+    "No microphone-to-display or input-to-photon end-to-end latency measurement.",
+    "Native GIF validation does not claim live Terminal playback visually inspected during this review.",
+    "Strong-token pattern scan is not a full security audit.",
+    "No personal task file, current terminal text, credentials or runtime logs are included in this evidence file."
+  ],
+  "gitBlobHashes": {
+    "run.ps1": "ed668a1564ab4ddecb0f735a1497ee7d053b6cfc",
+    "scripts/Receive-AgentHook.ps1": "75834b4c735cafd0db16f59bfb6d6fe27fc2164f",
+    "scripts/Set-TaskStatus.ps1": "1e5b7a7468394cbc5bacd4f6679f043571fa9cf4",
+    "scripts/Start-TrackedSession.ps1": "9e598e546ffe4f1b203f1f26d8e8918516d31bd7",
+    "scripts/monitoring/codex_rpc.py": "98be7a979ff0609e5d899d531c0d5aad8c2d119a",
+    "scripts/monitoring/schedule_review.py": "8b5d40af7a096d703eacef944eba7fc3a0758cb9",
+    "scripts/monitoring/test_schedule_review.py": "8d08b28f31754a67c628f75e3dee8ebf0b55140b",
+    "skins/audio/manifest.json": "f1f7953284de8094fd64b769aba47c304bab319e",
+    "skins/catalog.json": "61fbb7510570776fea792e8ebdb07cc5745fb3a1",
+    "skins/loadouts/suites-v1/catalog.json": "eb781f5baa446628dad2d6ccfbe5200a4309a50b",
+    "src/CodeManager/App.xaml": "97e3276e7ada580f69be527f8299133193e9cd31",
+    "src/CodeManager/App.xaml.cs": "3ca13d09aba0a7a35cccbee01a94bdd61ba5a813",
+    "src/CodeManager/AudioOverrideTransaction.cs": "a1601e7460a71cd0bf1eb6f32a83dc7368596c0a",
+    "src/CodeManager/AudioSettingsPanel.cs": "950988423d40cfd21dc9187b0f7c6328726a28f4",
+    "src/CodeManager/CodeManager.csproj": "000476a3345a5d45774a38e23399c2fcda449cde",
+    "src/CodeManager/Diagnostics.cs": "5521a92327f0aa5ca5df0638c2a1e01c8e226ff9",
+    "src/CodeManager/Dialogs.cs": "11da2f6c19d0ead8a5a4c2d722d50925ddae5011",
+    "src/CodeManager/DockEquipment.cs": "63450aa0da408b278217c44eb689119ac5f29b68",
+    "src/CodeManager/DockWeaponWheel.cs": "e944ca392ccf1663a7b7adef1bd5ada8dee02b35",
+    "src/CodeManager/DockWindow.xaml": "d675b61e5a8c12eb65b012143cf938b70b04c3e3",
+    "src/CodeManager/DockWindow.xaml.cs": "5960494b2e20e3fb0e24bc375fd0d432510b0cf7",
+    "src/CodeManager/EquipmentCatalog.cs": "08c9cee87b2886078af9460a1e8161d7af2be195",
+    "src/CodeManager/EquipmentPedestal.cs": "5f534619b5e84936949ffda7d41eac188cca1696",
+    "src/CodeManager/EquipmentTests.cs": "0d72ea68593231ce7b2f48ee655bfcfb87049516",
+    "src/CodeManager/GameAudio.cs": "3b61958768838f9fa47fb592694c7e0d8e8158a7",
+    "src/CodeManager/HookBridge.cs": "ec343da7749d5bfce424aed50bd83ba529084d0d",
+    "src/CodeManager/InkEffects.cs": "bffdde108841336ad5e1afcf5d4f702830b70047",
+    "src/CodeManager/InputService.cs": "7c797bd5c8445c1dcaa38f51211766e929e08db3",
+    "src/CodeManager/IntegrationWindow.cs": "ca498bd733edfeb297b3d2b4d08fbd58754482fa",
+    "src/CodeManager/InventoryWindow.cs": "5d296320f12114624dedc8c1b8b9a50fd962d03b",
+    "src/CodeManager/LoadoutWindow.cs": "25482bbd274c29ab773c08f86583c0a8ff7cde53",
+    "src/CodeManager/Manager.cs": "4c47e6198b01287af35e059d9de62349325bfc1e",
+    "src/CodeManager/Models.cs": "ed3d9e404fc50e0629e0938d1be1affa5a067f82",
+    "src/CodeManager/Native.cs": "20766857c2a727450be4d341d4b530040e2fc887",
+    "src/CodeManager/NativeCardDetail.cs": "6c362d15ce6b7d709359bddf411c1b8a18c92ad5",
+    "src/CodeManager/NativeSkinArt.cs": "526c448c2cde63e4b647bf7ff25279c66c8814c1",
+    "src/CodeManager/PreviewWindow.cs": "c17be0462b90d0d81ac7d8ae0e09453785755db7",
+    "src/CodeManager/ProductIcon.cs": "562f4e01306b672a0d14748ddb5715405113792f",
+    "src/CodeManager/QiParticles.cs": "11e2e73bdde59ddf8d6e2543e9b475f092a5c3dc",
+    "src/CodeManager/RadialInventoryWindow.cs": "00981eca5e45e6453877e19a168126c6b51e05fb",
+    "src/CodeManager/RecoveryLaunch.cs": "137d5f9d0ed1f7150691748108b8756ede37a592",
+    "src/CodeManager/RecoveryWindow.cs": "6ef0b22d644cd9b4193a1afbfb8011b6388a3322",
+    "src/CodeManager/SelfTests.cs": "cb11e2860acc98ab6be410985675789e42e892f2",
+    "src/CodeManager/SettingsWindow.cs": "ab8a794ffdba6c1cbdfd757044aaa91b665bc579",
+    "src/CodeManager/SkinCatalog.cs": "4d22ad97982e8de729e0a1804ac00e7067b63a89",
+    "src/CodeManager/SkinPicker.cs": "988dcaec8db4d6db80da0b222c61941f3a3503b0",
+    "src/CodeManager/SkinSuitePreview.cs": "8560e254863ee4490c5b13126ec6c04f8f7b966e",
+    "src/CodeManager/SkinTaskCard.cs": "316b3be4e3d914488db9c2b761dee3594d5f59e8",
+    "src/CodeManager/SkinTests.cs": "4e1c09fea6ce5729fb70a41efd04ac0148d432e3",
+    "src/CodeManager/SkinVisuals.cs": "dc5f7ebc22293af4e659040c9b52dd87812174c6",
+    "src/CodeManager/SlotHintWindow.cs": "5f1d7e81d9004d43735a874ca89d876c2c3e5ced",
+    "src/CodeManager/StateStore.cs": "953a3a26469d4b317785dc4ade263be616a0e266",
+    "src/CodeManager/TaskEditorWindow.cs": "8b1cb8d6b810116b08ab4d9a8572f5224216422f",
+    "src/CodeManager/TrayMenuRenderer.cs": "c575e3fffb9d042cbe9654394b9684da8928e181",
+    "src/CodeManager/WheelMotionDiagnostics.cs": "9031bc2996c48010b84c97cc5ea12818dc664247",
+    "src/CodeManager/WuxiaTheme.cs": "9508a70d5d83919c491cd8e035015c49fe4c5994",
+    "src/CodeManager/app.manifest": "f0b3b1d7056f3c512b6e53ec4ee575dadc12c3e2",
+    "themes/windows-terminal/Apply-InkJade.ps1": "8c5af8e72d7a2c9c917fe4c2aca8836766f49818",
+    "themes/windows-terminal/Apply-Skin.ps1": "b8df4a4b431de18b4aaa45d5d640f97eaafbd0ee",
+    "themes/windows-terminal/Build-TerminalSkins.ps1": "f90199f961dc14252d7bb6705c2b1266b7594ab3",
+    "themes/windows-terminal/FrameLayout.cs": "43bd416edcc8b58fdb99ae5fac22f852e0e2e4b9",
+    "themes/windows-terminal/Jsonc.cs": "200874d42bd9eca408306dd6f0e389acac882798",
+    "themes/windows-terminal/ShaderCompiler.cs": "b38e7ae81c9b3ea42fad25e52b955e61a426647f",
+    "themes/windows-terminal/TerminalChrome.ps1": "4dfe43e15c668a88963e24028a13bb0c5aa2e6c5",
+    "themes/windows-terminal/Test-InkJadeBackground.ps1": "f002b04e7c53a17ef200ac52b6b713a578cd417c",
+    "themes/windows-terminal/Test-RefinedFrames.ps1": "d1bbfc9398fda3fa8a6a8f9a2856a007c985c4ae",
+    "themes/windows-terminal/Test-TerminalChrome.ps1": "72145376a20dd03004266e94595a603a1a894cc0",
+    "themes/windows-terminal/Test-TerminalSkins.ps1": "c361072e97db5ce9b7fdb88f06840181632458df",
+    "themes/windows-terminal/classic-palettes.json": "4c14d162d21ac6674d0f24a847ebdabc096ee6b5",
+    "themes/windows-terminal/ornate-frame-v2.hlsl": "3ef4975da58f8d380b88eb2d35c62ad8767e4f20",
+    "themes/windows-terminal/shaders/adventure.hlsl": "535c4b1e787c968dfe63c61c51eb8a915279d930",
+    "themes/windows-terminal/shaders/arsenal.hlsl": "313b1779cbcecec52d3e086affd12c9d629c38b1",
+    "themes/windows-terminal/shaders/astral.hlsl": "596431a25637f1f853195295bb7402d5b76a367e",
+    "themes/windows-terminal/shaders/designs/adventure.hlsl": "381f34a955e1897681eb253279cfac6e11ab6013",
+    "themes/windows-terminal/shaders/designs/arsenal.hlsl": "93db3a56978d3699474ce4e5244c5b82298e0745",
+    "themes/windows-terminal/shaders/designs/astral.hlsl": "8922e5e9ceee13bf9a3ad29488aceb84d50acd72",
+    "themes/windows-terminal/shaders/designs/formation.hlsl": "d9937448ca150b0c6cd55324abfa96cdf10e9a12",
+    "themes/windows-terminal/shaders/designs/hextech.hlsl": "8ee5b50de21675939b644014c183948cb2cea009",
+    "themes/windows-terminal/shaders/designs/protocol.hlsl": "24fe3baa514bc51ea49867deb6afea19e7e5cfa2",
+    "themes/windows-terminal/shaders/designs/relic.hlsl": "a72847b41e179afd032b75f110ff73c8a813d2c0",
+    "themes/windows-terminal/shaders/designs/starlight.hlsl": "8f879ba4a486379cd3f46b1478d5d0a8a8bb7eda",
+    "themes/windows-terminal/shaders/designs/tactical.hlsl": "b868f64d5071d747debe3fb0548c2c6dc127a4ad",
+    "themes/windows-terminal/shaders/designs/wonderland.hlsl": "3f46dd8edb1afe5d6fe4e5bfe98a4a1ed3703053",
+    "themes/windows-terminal/shaders/formation.hlsl": "a9f184b5c7810a703657ae050a032f20c0e65916",
+    "themes/windows-terminal/shaders/frame-template.hlsl": "c30ee5bd2308be78b5cb3a3fd4fa889d77218aad",
+    "themes/windows-terminal/shaders/hextech.hlsl": "466536966842dd4e35ed46c909213cc5edecdabc",
+    "themes/windows-terminal/shaders/protocol.hlsl": "88b1082611a6dc4f34567ce22ee79fd7297b823e",
+    "themes/windows-terminal/shaders/relic.hlsl": "1fe88eb46d30da2b6e90bd282ee276faa4c9ae50",
+    "themes/windows-terminal/shaders/starlight.hlsl": "330b7eca3a92680a2ea09f31a04b70fa48fc1a9f",
+    "themes/windows-terminal/shaders/tactical.hlsl": "d6718362dd5e1d295bdddfba57e18b8fbd25597b",
+    "themes/windows-terminal/shaders/wonderland.hlsl": "5f0607bfbfd785123f3ff4b498975268c13cb16f",
+    "themes/windows-terminal/skins.json": "e48c3e4fdececb47f7d74197af5fc885de6fdc9c",
+    "tools/build-brand-icons.py": "9275af560d0464776fafe0de24119482e8495ff9",
+    "tools/build-brand-kit.py": "3ec51607569dee3a9594c7e6faa131fcec839888",
+    "tools/build-brand-v2.py": "c793665f1a98dd70995ff4a09f1bc1f342c67e24",
+    "tools/build-native-refinement-gallery.py": "a1e8167191882207331865804053299e58078298",
+    "tools/build-native-skin-art.py": "a93c11e5c0adf081330bf12907af093c5415ebd5",
+    "tools/build-refined-terminal-frames.py": "57ad2f466d711da1a1b64e8b855a4f258c6f1ad6",
+    "tools/build-settings-studio-gallery.py": "eb2c95adc468f5517a828615d75c109396671de4",
+    "tools/build-skin-gallery.py": "22279e49ea0e4afedd7fd2bd21c0637ee0290402",
+    "tools/build-suite-assets.py": "659f624c5316dddb85ccbd9822687d092a245cff",
+    "tools/build-terminal-background.py": "f629a8427f6365b4a620e5469cc50e4d07c34a87",
+    "tools/build-terminal-frame-comparison.py": "0cb28d862001f479b26088d46c1420b0d4be2d29",
+    "tools/build-terminal-scene-gallery.py": "9274308a2b173f0829537c9833cdb7c0c93f4ec5",
+    "tools/code-review/Program.cs": "bb39f9e4ac8a0fcd28b663276822eb673e85da6d",
+    "tools/code-review/ReviewProbe.csproj": "3812edd7dabaee9b31906c91dab221a4860b1033",
+    "tools/code-review/review-snapshot.py": "e6dcfb732afe7327a8c60f8dafdddbd64843b028",
+    "tools/experience-audit/AfterAudit.cs": "2b9ea5fb8b94e849623af4fc674065518444783c",
+    "tools/experience-audit/ExperienceAudit.csproj": "879b2fc7096d6eba2fa8640769f5ecabf80213b5",
+    "tools/experience-audit/Program.cs": "2b566a32810c9e2db87b817de7e3b351b0b10b6f",
+    "tools/feedback-validation/FeedbackValidation.csproj": "904f7d08b2d0a3d5773c75d5aef7ad3fdef77836",
+    "tools/feedback-validation/Program.cs": "7f33b41207667eb5c160fb6956d16862cc3adb61",
+    "tools/game-audio-validation/GameAudioValidation.csproj": "83bb2b989d81b0df5833f6b75b706f7b97629607",
+    "tools/game-audio-validation/Program.cs": "02c2d64be6bdd50de3e7fabd95385f92e212e79b",
+    "tools/game-audio-validation/SkinFixture.cs": "5b5ce40739ac7699beee27ca74c32e8244da1952",
+    "tools/game-audio/generate.py": "028331151559af98685bb2b23404f951382b7d8e",
+    "tools/settings-studio-validation/Program.cs": "1c12f5c2c4200ecfd91db49b48cfc16e2b07d0bd",
+    "tools/settings-studio-validation/SettingsStudioValidation.csproj": "0fa1b2bdb8b27ed45d41280c02decee27c01db5a",
+    "tools/suite-performance/Program.cs": "cd4ffa60bba5882a94bf78aab2ad21c556b6cb15",
+    "tools/suite-performance/SuitePerformance.csproj": "62e5a869ff68db093bfffab5ec6740b5130f1df5",
+    "tools/terminal_frame_materials.py": "6608dc5fc71c125b3eb18dfa8b1459647e33e8b5",
+    "tools/terminal_margin_details.py": "8fc12a2e0b8ea76770a0b61609296e42fbcfc5ca"
+  },
+  "hashInterpretation": "SHA-256 hashes use the tested Windows worktree raw bytes. Git CRLF conversion can change raw-byte hashes on checkout. gitBlobHashes identify the corresponding normalized Git objects for portable verification; this is not a byte-reproducible build claim."
+}

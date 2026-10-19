@@ -1,5 +1,7 @@
 # OmniVibe
 
+![OmniVibe：让并行开发，像切换装备一样直觉。](assets/brand/v2/promo/readme-banner-1600x600.png)
+
 **The Open-Source Task Inventory for Vibe Coding**
 
 让并行开发，像切换装备一样直觉。
@@ -49,4 +51,6 @@ powershell -ExecutionPolicy Bypass -File .\run.ps1
 - [内容包规范](skins/loadouts/suites-v1/README.md)：素材来源、原生尺寸、提示词与九实体替换约定。
 - [皮肤校准记录](skins/VALIDATION.md)：可读性、状态、布局与回归验证。
 - [Terminal 套装](docs/terminal-skins.md)：十套配套终端外观与恢复方法。
+- [品牌与宣传素材](assets/brand/v2/README.md)：桌面图标、产品图标、图标动效、发布图与可编辑源文件。
+- [代码分析与评测](docs/reviews/2026-10-19-code-review.md)：架构、独立回归、性能实测、发现项与发行准备。
 - [使用与开发指南](docs/usage.md)：完整操作、快捷键、状态接入、数据恢复和开发检查。
