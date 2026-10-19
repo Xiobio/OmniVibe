@@ -81,5 +81,24 @@
     "Drawing recording time excludes OS composition and native window activation.",
     "Original game-style sound design; no bundled official character voices.",
     "Use settings to audition every operation or import a custom PCM WAV."
-  ]
+  ],
+  "live_refresh": {
+    "at": "2026-10-19T11:53:25.5797560+00:00",
+    "ready_checked_at": "2026-10-19T11:54:24.4542176+00:00",
+    "bindings_and_equipment_preserved": true,
+    "occupied": 4,
+    "cli_host_processes_preserved": true,
+    "skin_preserved": true,
+    "sound_enable_preference_preserved": true,
+    "sound_volume": 0.45,
+    "immersive": true,
+    "runtime_process_count": 1,
+    "packaged": false,
+    "dock_visible_topmost_116x116": true
+  },
+  "integration_commit": "9be46dd",
+  "gallery_http": {
+    "passed": true,
+    "resources": 238
+  }
 }

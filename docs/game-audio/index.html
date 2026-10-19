@@ -7,7 +7,7 @@
 <section class="player"><div><div class="now" id="now">选择下面任一操作试听</div><div class="detail" id="detail">不会自动播放；点击新音效会替换上一段。</div></div><audio id="audio" controls preload="none"></audio><canvas id="wave" aria-label="当前音效的实际双声道波形"></canvas><div class="controls"><label>试听音量 <input type="range" id="volume" min="0" max="1" value=".45" step=".01"> <output id="level">45%</output></label><label>比较操作 <select id="compare"></select></label><button id="next">下一套主题 →</button><button id="stop">停止</button><a id="download" hidden download>下载当前 WAV</a></div></section>
 <main class="catalog" id="catalog"></main>
 <section class="legend"><div><h3>沉浸模式与工作轻声模式</h3><p>本页试听完整音效。沉浸模式启用全部十四类反馈；工作轻声模式保留切换、收容、移出和三种 AI 通知，将短操作收敛为 140–200 ms。通知会压低普通反馈，不会靠堆叠声音抢注意力。</p></div><div><h3>也可以换成自己的角色声音</h3><p>内置均为原创合成材质音效，没有使用游戏官方角色台词。设置中可为整套主题或单个实体导入自己的 WAV；取消不改动，保存后生效。默认原声音效可随时恢复。</p></div></section>
-<div class="footer">声音素材采用 CC0 1.0。主题名用于说明灵感；音频并非官方游戏素材。<a href="../../skins/audio/manifest.json">182 项素材清单与波形指标</a> · <a href="../../skins/audio/LICENSE.txt">素材许可</a> · <a href="../../tools/game-audio/README.md">合成、限频与自定义接口</a><br>本页直接播放项目内实际 WAV，不使用演示占位音频。</div>
+<div class="footer">声音素材采用 CC0 1.0。主题名用于说明灵感；音频并非官方游戏素材。<a href="../../skins/audio/manifest.json">182 项素材清单与波形指标</a> · <a href="validation.json">八组引擎验证与响度校准</a> · <a href="../../skins/audio/LICENSE.txt">素材许可</a> · <a href="../../tools/game-audio/README.md">合成、限频与自定义接口</a><br>本页直接播放项目内实际 WAV；同一操作的跨主题 RMS 差异已校准在 0.83 dB 以内。</div>
 <script>
 const themes=[
 ['ink-jade','墨玉机关','经典 · JADE MECHANISM','#bfa76c','竹节轻扣、玉珠碰撞和丝绸拂过。清透的高频收在柔和木质落点上。'],
