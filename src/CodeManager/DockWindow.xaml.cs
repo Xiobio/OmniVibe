@@ -483,6 +483,9 @@ public partial class DockWindow : Window
     }
     private void SlotLeave(object sender, MouseEventArgs e)
     {
+        // Native teardown can send MouseLeave after the visual loses its HWND.
+        // PointFromScreen requires a live presentation source even during exit.
+        if (PresentationSource.FromVisual(WeaponWheel) == null) { ClosePreview(); return; }
         Native.GetCursorPos(out var cursor);
         var point = WeaponWheel.PointFromScreen(new Point(cursor.X,cursor.Y));
         if (WeaponWheel.IsDeployed && WeaponWheel.HitSlot(point) != null) return;

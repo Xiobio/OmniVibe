@@ -85,6 +85,21 @@ public static class TaskStatusTests
             var summary=WheelStatusSummary.From(slots);Check(summary.Running==1 && summary.Ready==1 && summary.Errors==0 && summary.Attention==1,"Aggregate wrong");
             slots[1].Unread=false;Check(WheelStatusSummary.From(slots).Attention==0 && slots[1].State==AgentState.Ready,"Viewing erased result");
         });
+        Test("Quiet status HUD: mixed outcomes share one accurate count; acknowledged idle tasks leave artwork unobstructed",()=>{
+            var mixed=new WheelStatusSummary(2,1,2,1,0);
+            Check(WheelTaskStatus.CoreCount(mixed)==4,"Badge counted only the highest-priority state");
+            Check(WheelTaskStatus.CoreState(mixed)==AgentState.Error,"Error priority lost");
+            var quiet=new WheelStatusSummary(0,0,0,0,0);
+            Check(!WheelTaskStatus.CoreVisible(quiet),"Acknowledged idle artwork still has a status plate");
+            var missing=new WheelStatusSummary(0,0,0,0,2);
+            Check(WheelTaskStatus.CoreVisible(missing) && WheelTaskStatus.CoreCount(missing)==0,"Unknown state should not masquerade as a notification count");
+        });
+        Test("Dock teardown: a late MouseLeave without a presentation source closes hints safely",()=>{
+            var dock=new DockWindow(interactionTest:true);
+            try {
+                typeof(DockWindow).GetMethod("SlotLeave",BindingFlags.Instance|BindingFlags.NonPublic)!.Invoke(dock,new object[]{dock,new System.Windows.Input.MouseEventArgs(System.Windows.Input.Mouse.PrimaryDevice,0)});
+            }finally{dock.Close();}
+        });
         Test("Observed completion reaches the real manager and saved state; acknowledgement and the next turn remain distinct",()=>{
             File.WriteAllText(path,Header(id,"fixture-login")+"\n"+Record("event_msg","{\"type\":\"task_complete\"}",2)+"\n",new UTF8Encoding(false));
             var store=new StateStore(Path.Combine(fixture,"manager-state"));var state=new AppState();var slot=state.Slots[0];

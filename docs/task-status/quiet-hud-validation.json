@@ -1,0 +1,34 @@
+{
+  "updated_at": "2026-10-20T10:09:42.841929+00:00",
+  "passed": true,
+  "status_groups": 12,
+  "skin_groups": 24,
+  "themes": 13,
+  "native_surfaces": 39,
+  "static_and_animated_variants_pass": true,
+  "continuous_state_text_removed": true,
+  "global_badges_per_core": 1,
+  "acknowledged_idle_badge_hidden": true,
+  "hover_and_overview_keep_full_state": true,
+  "comparison": "docs/task-status/quiet-hud-comparison.png",
+  "evidence": [
+    "artifacts/status-polish/validation/report.json",
+    "artifacts/status-polish/skins/report.json",
+    "artifacts/status-polish/validation/desktop-contrast.png",
+    "artifacts/status-polish/live-refresh.json"
+  ],
+  "live": {
+    "occupied": 4,
+    "linked": 4,
+    "recent_records": 5,
+    "preferences_preserved": true,
+    "terminal_processes_and_configuration_preserved": true
+  },
+  "shutdown_fix": {
+    "issue": "A late MouseLeave after native source destruction raised InvalidOperationException on PointFromScreen.",
+    "fix": "Guard the presentation source before translating pointer coordinates.",
+    "regression_test": true,
+    "old_tool_shutdown_recovery": "artifacts/status-polish/stuck-tool-exit.json"
+  },
+  "packaged": false
+}

@@ -298,12 +298,6 @@ public sealed class DockWeaponWheel : FrameworkElement
                     EquipmentPedestal.Draw(dc, skin, new Rect(-w*.4, h/2-3, w*.8, 8));
                     dc.Pop();
                 }
-                if (SkinCatalog.DecorationsEnabled && slot.Connected && slot.State is AgentState.Running or AgentState.Waiting) {
-                    double gleam = .35 + Math.Sin(Flow * Math.PI * 2 + slot.Number) * .18;
-                    dc.PushOpacity(gleam);
-                    dc.DrawLine(new Pen(B(slot.StateColor), 1), new Point(-w*.16, h/2+2), new Point(w*.16, h/2+2));
-                    dc.Pop();
-                }
                 if (selected || active) {
                     dc.PushOpacity(selected ? .8 : .45);
                     dc.DrawLine(new Pen(B(skin.Accent), 1.2), new Point(-w*.24, h/2+3), new Point(w*.24, h/2+3));
@@ -311,8 +305,6 @@ public sealed class DockWeaponWheel : FrameworkElement
                 }
                 EquipmentCatalog.Draw(dc, slot, new Rect(-w*zoom/2, -h*zoom/2, w*zoom, h*zoom), slot.Connected ? selected || active ? 1 : .94 : .55);
                 Text(dc, slot.Number.ToString(), -w/2 + 5, h/2 - 3, 11, selected || active ? skin.Accent : skin.Text, 18, true);
-                if (slot.Connected && slot.State is AgentState.Waiting or AgentState.Error or AgentState.Ready)
-                    Text(dc, slot.State == AgentState.Ready ? "✓" : "!", w/2 - 5, h/2 - 3, 11, slot.StateColor, 16, true);
                 WheelTaskStatus.DrawSlot(dc,skin,slot,w,h,Flow,_motionEnabled && SkinCatalog.DecorationsEnabled);
                 dc.Pop();
             }
@@ -327,13 +319,9 @@ public sealed class DockWeaponWheel : FrameworkElement
                 dc.Pop();
             }
             EquipmentCatalog.Draw(dc, current, new Rect(-55, -55, 110, 110));
-            if (current.Connected && current.State is AgentState.Waiting or AgentState.Error or AgentState.Ready) {
-                dc.DrawEllipse(B(skin.Background), null, new Point(40, 43), 8, 8);
-                Text(dc, current.State == AgentState.Ready ? "✓" : "!", 40, 43, 11, current.StateColor, 14, true);
-            }
         }
         else DrawEmptyCore(dc, d);
-        WheelTaskStatus.DrawCore(dc,skin,_slots,current,Flow,_motionEnabled && SkinCatalog.DecorationsEnabled);
+        WheelTaskStatus.DrawCore(dc,skin,_slots,current,Flow,_motionEnabled && SkinCatalog.DecorationsEnabled,Phase);
         dc.Pop();
     }
     private void DrawEmptyCore(DrawingContext dc, double deployment)

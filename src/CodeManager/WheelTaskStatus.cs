@@ -10,7 +10,7 @@ namespace CodeManager;
 internal readonly record struct WheelStatusSummary(int Running, int Waiting, int Ready, int Errors, int Unlinked)
 {
     internal int Attention => Waiting+Ready+Errors;
-    internal string Label => Errors>0 ? Errors+" 处异常 · 待处理" : Waiting>0 ? Waiting+" 项需要处理" : Ready>0 ? Ready+" 个回复待查看" : Running>0 ? Running+" 个任务执行中" : Unlinked>0 ? "未接入自动状态" : "已查看 · 等待任务";
+    internal string Label => Attention>0 ? Attention+" 项待处理" : Running>0 ? Running+" 个任务执行中" : Unlinked>0 ? "未接入自动状态" : "已查看 · 等待任务";
     internal string Color(SkinDefinition skin) => Errors>0 ? skin.Error : Waiting>0 ? skin.Waiting : Ready>0 ? skin.Ready : Running>0 ? skin.Running : skin.Muted;
     internal static WheelStatusSummary From(IEnumerable<Slot> slots)
     {
@@ -26,13 +26,16 @@ internal readonly record struct WheelStatusSummary(int Running, int Waiting, int
     }
 }
 
-/// <summary>State feedback independent of weapon art: theme-colored rune rails,
-/// live motion and a persistent aggregate notification inside the 116px idle host.</summary>
+/// <summary>Quiet equipment HUD: one glyph per socket, one aggregate seal on the
+/// core. State names belong in the immediate hover hint, never around the artwork.</summary>
 internal static class WheelTaskStatus
 {
     private static readonly Dictionary<string,Brush> Brushes=new();
     private static readonly Dictionary<(string,double),Pen> Pens=new();
     private static readonly Dictionary<(string,string,double,double),DrawingGroup> Labels=new();
+    private static readonly Dictionary<(string,string),Brush> Glass=new();
+    private static readonly Dictionary<string,Brush> Glows=new();
+    private static readonly Dictionary<(double,bool),Geometry> Seals=new();
     private static readonly Typeface Typeface=new(new FontFamily("Microsoft YaHei UI"),FontStyles.Normal,FontWeights.SemiBold,FontStretches.Normal);
     private static Brush B(string color) { if(Brushes.TryGetValue(color,out var b))return b;var brush=new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));brush.Freeze();Brushes[color]=brush;return brush; }
     private static Pen P(string color,double width) { if(Pens.TryGetValue((color,width),out var p))return p; p=new Pen(B(color),width){StartLineCap=PenLineCap.Round,EndLineCap=PenLineCap.Round};p.Freeze();Pens[(color,width)]=p;return p; }
@@ -50,53 +53,96 @@ internal static class WheelTaskStatus
     internal static string LabelFor(Slot slot) => !slot.Connected ? "已断开" : Stale(slot) ? "状态待确认" : slot.State switch {
         AgentState.Running=>"执行中",AgentState.Waiting=>slot.StateSource=="终端状态信号"?"通知待查看":"等待确认",AgentState.Ready=>slot.Unread?"回复待查看":"已查看回复",AgentState.Error=>"发生错误",_=>slot.IntegrationConnected?"等待任务":"未接入状态"
     };
-    private static void Rail(DrawingContext dc,SkinDefinition skin,string color,double half,double y,double flow,bool active,bool attention)
+    internal static bool CoreVisible(WheelStatusSummary summary) => summary.Attention>0 || summary.Running>0 || summary.Unlinked>0;
+    internal static int CoreCount(WheelStatusSummary summary) => summary.Attention>0 ? summary.Attention : summary.Running;
+    internal static AgentState CoreState(WheelStatusSummary summary) => summary.Errors>0 ? AgentState.Error : summary.Waiting>0 ? AgentState.Waiting : summary.Ready>0 ? AgentState.Ready : summary.Running>0 ? AgentState.Running : AgentState.Unknown;
+    private static Brush Glow(string color)
     {
-        dc.PushOpacity(.38);dc.DrawLine(P(color,1),new Point(-half,y),new Point(half,y));dc.Pop();
-        // Material-specific finials: instrument diamonds, mechanical notches,
-        // tactical ticks and star points. These do not surround the weapon art.
-        bool angular=skin.Family is "mechanical" or "tactical" or "protocol" or "formation";
-        foreach(double x in new[]{-half,half}) {
-            double lean=x<0?-3:3;
-            dc.DrawLine(P(color,1),new Point(x,y),new Point(x+lean,y-(angular?4:2)));
-            if(!angular)dc.DrawLine(P(color,1),new Point(x,y),new Point(x-lean,y+2));
-        }
-        if(active) {
-            double t=(flow*3)%1, x=-half+half*2*t;
-            dc.PushOpacity(attention?.55+.4*Math.Pow(Math.Sin(flow*Math.PI*6),2):.9);
-            if(attention) {
-                dc.DrawLine(P(color,2),new Point(-half,y),new Point(half,y));
-                dc.DrawLine(P(color,1.2),new Point(-half-2,y-5),new Point(-half-2,y+3));
-                dc.DrawLine(P(color,1.2),new Point(half+2,y-5),new Point(half+2,y+3));
-            } else {
-                dc.DrawLine(P(color,2),new Point(Math.Max(-half,x-12),y),new Point(x,y));
-                dc.DrawEllipse(B(color),null,new Point(x,y),1.7,1.7);
+        if(Glows.TryGetValue(color,out var cached))return cached;
+        var c=(Color)ColorConverter.ConvertFromString(color);c.A=65;
+        var brush=new RadialGradientBrush(c,Colors.Transparent);brush.Freeze();Glows[color]=brush;return brush;
+    }
+    private static Brush SealGlass(SkinDefinition skin)
+    {
+        var key=(skin.Background,skin.Elevated);if(Glass.TryGetValue(key,out var cached))return cached;
+        Color top=(Color)ColorConverter.ConvertFromString(skin.Elevated),bottom=(Color)ColorConverter.ConvertFromString(skin.Background);top.A=244;bottom.A=230;
+        var brush=new LinearGradientBrush(top,bottom,90);brush.Freeze();Glass[key]=brush;return brush;
+    }
+    private static Geometry Seal(double width,bool angular)
+    {
+        if(Seals.TryGetValue((width,angular),out var cached))return cached;
+        Geometry result;
+        if(angular) {
+            var g=new StreamGeometry();using(var c=g.Open()) {
+                c.BeginFigure(new Point(-width/2+4,-9),true,true);
+                c.PolyLineTo(new[]{new Point(width/2-3,-9),new Point(width/2,-6),new Point(width/2,5),new Point(width/2-4,9),new Point(-width/2+3,9),new Point(-width/2,6),new Point(-width/2,-5)},true,false);
             }
-            dc.Pop();
+            result=g;
+        } else result=new RectangleGeometry(new Rect(-width/2,-9,width,18),6,6);
+        result.Freeze();Seals[(width,angular)]=result;return result;
+    }
+    private static void Glyph(DrawingContext dc,SkinDefinition skin,AgentState state,string color,double flow,bool motion,bool unread)
+    {
+        double breath=motion && unread ? .82+.16*Math.Pow(Math.Sin(flow*Math.PI*3),2) : 1;
+        if(unread) {
+            dc.PushOpacity(breath);dc.DrawEllipse(Glow(color),null,new Point(0,0),10,9);dc.Pop();
         }
+        dc.PushOpacity(breath);
+        switch(state) {
+            case AgentState.Running:
+                for(int i=0;i<3;i++) {
+                    double opacity=motion ? .28+.70*Math.Pow(Math.Cos(flow*Math.PI*6-i*.75),2) : .5+i*.2;
+                    dc.PushOpacity(opacity);double x=(i-1)*3.5;
+                    if(skin.Family is "tactical" or "mechanical" or "protocol") dc.DrawRectangle(B(color),null,new Rect(x-.8,-2,1.6,4));
+                    else dc.DrawEllipse(B(color),null,new Point(x,0),1.05,1.05);
+                    dc.Pop();
+                }
+                break;
+            case AgentState.Ready:
+                dc.DrawLine(P(color,1.55),new Point(-3.6,0),new Point(-1.1,2.5));
+                dc.DrawLine(P(color,1.55),new Point(-1.1,2.5),new Point(3.7,-3));break;
+            case AgentState.Waiting:
+                dc.DrawLine(P(color,1.55),new Point(-2,-3.3),new Point(-2,3.3));
+                dc.DrawLine(P(color,1.55),new Point(2,-3.3),new Point(2,3.3));break;
+            case AgentState.Error:
+                dc.DrawLine(P(color,1.6),new Point(0,-3.7),new Point(0,.6));
+                dc.DrawEllipse(B(color),null,new Point(0,3.3),.9,.9);break;
+            default:
+                dc.PushOpacity(.65);dc.DrawLine(P(color,1),new Point(-3,0),new Point(0,-3));dc.DrawLine(P(color,1),new Point(0,-3),new Point(3,0));dc.DrawLine(P(color,1),new Point(3,0),new Point(0,3));dc.DrawLine(P(color,1),new Point(0,3),new Point(-3,0));dc.Pop();break;
+        }
+        dc.Pop();
     }
     internal static void DrawSlot(DrawingContext dc,SkinDefinition skin,Slot slot,double w,double h,double flow,bool motion)
     {
         if(!slot.Occupied)return;
-        string color=Stale(slot)?skin.Unknown:slot.StateColor; bool attention=slot.Unread && slot.Connected && slot.State is AgentState.Ready or AgentState.Waiting or AgentState.Error;
-        Rail(dc,skin,color,w*.36,h/2+4,flow+slot.Number*.13,motion && slot.Connected && !Stale(slot) && (attention || slot.State==AgentState.Running),attention);
-        dc.PushOpacity(.94);dc.DrawRoundedRectangle(B(skin.Background),null,new Rect(-w*.54,h/2+8,w*1.08,16),5,5);dc.Pop();
-        Label(dc,LabelFor(slot),color,9,w*1.02,0,h/2+16);
+        bool stale=Stale(slot),attention=slot.Unread && slot.Connected && slot.State is AgentState.Ready or AgentState.Waiting or AgentState.Error;
+        string color=stale?skin.Unknown:slot.StateColor;
+        var state=slot.Connected && !stale?slot.State:AgentState.Unknown;
+        dc.PushTransform(new TranslateTransform(-w/2+22,h/2-3));
+        Glyph(dc,skin,state,color,flow+slot.Number*.13,motion && !stale,attention);dc.Pop();
     }
-    internal static void DrawCore(DrawingContext dc,SkinDefinition skin,IReadOnlyList<Slot> slots,Slot? current,double flow,bool motion)
+    internal static void DrawCore(DrawingContext dc,SkinDefinition skin,IReadOnlyList<Slot> slots,Slot? current,double flow,bool motion,double reveal=1)
     {
-        if(!slots.Any(s=>s.Occupied))return;
-        var summary=WheelStatusSummary.From(slots);string color=summary.Color(skin);
-        bool animated=motion && (summary.Attention>0 || summary.Running>0);
-        // Gentle breathing and moving accents fit entirely inside the compact host.
-        Rail(dc,skin,color,44,29,flow,animated,summary.Attention>0);
-        dc.PushOpacity(.96);dc.DrawRoundedRectangle(B(skin.Background),P(color,.75),new Rect(-55,34,110,21),9,9);dc.Pop();
-        Label(dc,summary.Label,color,9,105,0,44);
-        if(summary.Attention>0) {
-            dc.PushOpacity(animated?.6+.4*Math.Pow(Math.Sin(flow*Math.PI*6),2):1);
-            dc.DrawEllipse(B(skin.Background),P(color,1.3),new Point(43,-40),11,11);
-            Label(dc,summary.Attention.ToString(),color,11,19,43,-40);dc.Pop();
+        var summary=WheelStatusSummary.From(slots);if(!CoreVisible(summary))return;
+        int count=CoreCount(summary);string color=summary.Color(skin);var state=CoreState(summary);
+        double width=count>0?32:19;
+        // One small equipment seal, tucked into the lower-right corner. The only
+        // persistent text is a meaningful aggregate count; artwork remains open.
+        dc.PushTransform(new TranslateTransform(36,43));
+        var plate=Seal(width,skin.Family is "mechanical" or "tactical" or "protocol" or "formation");
+        dc.DrawGeometry(SealGlass(skin),null,plate);
+        dc.PushOpacity(.32);dc.DrawGeometry(null,P(skin.Border,.6),plate);dc.Pop();
+        dc.PushOpacity(.22);dc.DrawLine(P(skin.Accent,.6),new Point(-width/2+5,-7),new Point(width/2-5,-7));dc.Pop();
+        double glyphX=count>0?-6:0;
+        dc.PushTransform(new TranslateTransform(glyphX,0));Glyph(dc,skin,state,color,flow,motion,summary.Attention>0);dc.Pop();
+        if(count>0)Label(dc,count.ToString(CultureInfo.InvariantCulture),skin.Text,10,14,7.5,0);
+        if(motion && summary.Attention>0 && reveal<1) {
+            dc.PushOpacity((1-reveal)*.65);
+            double spread=9+reveal*10;
+            dc.DrawEllipse(B(color),null,new Point(-spread,-7-reveal*5),1.1,1.1);
+            dc.DrawEllipse(B(color),null,new Point(6+reveal*9,-11-reveal*7),.8,.8);
+            dc.Pop();
         }
-        if(summary.Running>0 && summary.Attention>0) Label(dc,summary.Running+" 执行中",skin.Running,8,84,0,-47);
+        dc.Pop();
     }
 }
