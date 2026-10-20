@@ -42,8 +42,15 @@ public sealed class StateStore
             result.Preferences.DockWidth = double.IsFinite(result.Preferences.DockWidth) ? Math.Clamp(result.Preferences.DockWidth, 210, 620) : 460;
             result.Preferences.DockHeight = double.IsFinite(result.Preferences.DockHeight) ? Math.Clamp(result.Preferences.DockHeight, 0, 1800) : 0;
             result.Preferences.LayoutGap = Math.Clamp(result.Preferences.LayoutGap, 0, 32);
-            if (!InputService.TryParseGesture(result.Preferences.ArrangeGesture, out _, out _)) result.Preferences.ArrangeGesture = "Alt+Oem3";
-            if (result.Preferences.InventoryGesture != "Tab" && !InputService.TryParseGesture(result.Preferences.InventoryGesture, out _, out _)) result.Preferences.InventoryGesture = "Tab";
+            result.Preferences.ToggleGesture ??= "Ctrl+Alt+Space";
+            result.Preferences.ArrangeGesture ??= "Alt+Oem3";
+            result.Preferences.InventoryGesture ??= "Tab";
+            result.Preferences.RadialGesture ??= "Alt+Q";
+            if (!string.IsNullOrWhiteSpace(result.Preferences.ArrangeGesture) && !InputService.TryParseGesture(result.Preferences.ArrangeGesture, out _, out _)) result.Preferences.ArrangeGesture = "Alt+Oem3";
+            if (!string.IsNullOrWhiteSpace(result.Preferences.InventoryGesture) && !InputService.TryParseGesture(result.Preferences.InventoryGesture, out _, out _)) result.Preferences.InventoryGesture = "Tab";
+            result.Preferences.TaskGestures ??= new();
+            foreach (int number in result.Preferences.TaskGestures.Keys.ToArray())
+                if (number is < 1 or > 9 || result.Preferences.TaskGestures[number] is not string value || value != "" && !InputService.TryParseGesture(value, out _, out _)) result.Preferences.TaskGestures.Remove(number);
             foreach (Slot slot in result.Slots)
             {
                 if (!Enum.IsDefined(slot.LaunchMode)) slot.LaunchMode = LaunchMode.Unconfigured;

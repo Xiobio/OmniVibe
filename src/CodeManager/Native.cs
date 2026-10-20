@@ -115,7 +115,7 @@ public static class Native
     }
     public static bool ChordDown => MouseGestureRouter.AltOnly(Down(0x12), Down(0x11), Down(0x10), Down(0x5B) || Down(0x5C));
     public static bool ChordDownFor(ShortcutModifiers modifiers) => MouseGestureRouter.Matches(modifiers, Down(0x12), Down(0x11), Down(0x10), Down(0x5B) || Down(0x5C));
-    public static bool RequiredModifiersDown(ShortcutModifiers modifiers) => (((int)modifiers & 1) == 0 || Down(0x12)) && (((int)modifiers & 2) == 0 || Down(0x11)) && (((int)modifiers & 4) == 0 || Down(0x10));
+    public static bool RequiredModifiersDown(ShortcutModifiers modifiers) => (((int)modifiers & 1) == 0 || Down(0x12)) && (((int)modifiers & 2) == 0 || Down(0x11)) && (((int)modifiers & 4) == 0 || Down(0x10)) && (((int)modifiers & 8) == 0 || Down(0x5B) || Down(0x5C));
     public static bool RequestExit()
     {
         var input = FindWindowEx(new IntPtr(-3), IntPtr.Zero, null, "CodeManager.Input");

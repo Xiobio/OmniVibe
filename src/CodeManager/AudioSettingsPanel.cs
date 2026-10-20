@@ -46,6 +46,8 @@ public sealed class AudioSettingsPanel : StackPanel
         _auditionStatus.Foreground = WuxiaTheme.Brush(SkinCatalog.Current.Muted); controls.Children.Add(_auditionStatus);
 
         var custom = Section("自定义标志音", "为所选声音主题导入一段 WAV；按「保存并应用」后生效。关闭或取消设置会保留原声音。");
+        var customCard = Children[Children.Count - 1]; Children.Remove(customCard);
+        Children.Add(new Expander { Header = "自定义声音文件", Content = customCard, Margin = new Thickness(0, 4, 0, 12) });
         var actions = new WrapPanel(); custom.Children.Add(actions);
         var import = Action("导入 WAV…"); var reset = Action("恢复默认声音"); actions.Children.Add(import); actions.Children.Add(reset);
         _status.Foreground = WuxiaTheme.Brush(SkinCatalog.Current.Muted); custom.Children.Add(_status);

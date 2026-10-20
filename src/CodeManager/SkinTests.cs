@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -414,8 +414,7 @@ public static class SkinTests
                     {
                         var picker = Descendants(window.Content).OfType<SkinPicker>().Single();
                         Check(picker.SelectedSkin == s.Id, s.Slug + ": saved enum selected the wrong theme");
-                        var choices = picker.Children.OfType<ComboBox>().Single();
-                        choices.SelectedIndex = (choices.SelectedIndex + 1) % SkinCatalog.All.Count;
+                        picker.SelectSkin((Skin)(((int)s.Id + 1) % SkinCatalog.All.Count));
                         Check(picker.SelectedSkin == (Skin)((int)s.Id + 1 == SkinCatalog.All.Count ? 0 : (int)s.Id + 1), s.Slug + ": choice does not map to enum tag");
                         Check(window.Result.Skin == s.Id && !window.Result.DecorationsEnabled, "Preview changed uncommitted settings");
                         Check(JsonSerializer.Serialize(source, StateStore.Json) == before && WuxiaTheme.CurrentSkin == active, "Preview changed the active palette or source preferences");
@@ -427,8 +426,8 @@ public static class SkinTests
                 Dispatcher.CurrentDispatcher.BeginInvoke(() =>
                 {
                     var picker = Descendants(dialog.Content).OfType<SkinPicker>().Single();
-                    picker.Children.OfType<ComboBox>().Single().SelectedItem = picker.Children.OfType<ComboBox>().Single().Items.OfType<ComboBoxItem>().Single(i => i.Tag is Skin s && s == Skin.Wonderland);
-                    var decoration = Descendants(dialog.Content).OfType<CheckBox>().Single(c => c.Content is TextBlock t && t.Text.Contains("装饰")); decoration.IsChecked = false;
+                    picker.SelectSkin(Skin.Wonderland);
+                    var quality = Descendants(dialog.Content).OfType<ComboBox>().Single(c => c.Items.OfType<ComboBoxItem>().Any(i => i.Content as string == "简洁外观 · 保留任务与状态")); quality.SelectedIndex = 2;
                     Descendants(dialog.Content).OfType<Button>().Single(b => b.Content as string == "保存并应用").RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                 }, DispatcherPriority.ApplicationIdle);
                 Check(dialog.ShowDialog() == true, "Settings save failed");

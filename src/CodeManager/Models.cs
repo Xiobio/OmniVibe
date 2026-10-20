@@ -12,12 +12,16 @@ public enum WakeMode { LastPosition, WorkArea }
 public enum ArrangementMode { Balanced, Columns, Rows, MainLeft }
 public enum Skin { InkJade = 0, Midnight = 1, Cinnabar = 2, Hextech, Tactical, Protocol, Adventure, Arsenal, Relic, Starlight, Formation, Astral, Wonderland }
 public enum LaunchMode { Unconfigured, Terminal, Claude, Codex }
-public enum ShortcutModifiers { Alt = 1, Ctrl = 2, CtrlAlt = 3, AltShift = 5, CtrlShift = 6, CtrlAltShift = 7 }
+[Flags]
+public enum ShortcutModifiers { Alt = 1, Ctrl = 2, CtrlAlt = 3, Shift = 4, AltShift = 5, CtrlShift = 6, CtrlAltShift = 7, Win = 8, WinAlt = 9, WinCtrl = 10, WinCtrlAlt = 11, WinShift = 12, WinAltShift = 13, WinCtrlShift = 14, WinCtrlAltShift = 15 }
 
 public sealed class Preferences
 {
     public ShortcutModifiers TaskModifiers { get; set; } = ShortcutModifiers.Alt;
     public ShortcutModifiers MouseModifiers { get; set; } = ShortcutModifiers.Alt;
+    public Dictionary<int, string> TaskGestures { get; set; } = new();
+    public bool WheelSwitchEnabled { get; set; } = true;
+    public bool HasSeenIntroduction { get; set; }
     public string ToggleGesture { get; set; } = "Ctrl+Alt+Space";
     public string ArrangeGesture { get; set; } = "Alt+Oem3";
     public string InventoryGesture { get; set; } = "Tab";
@@ -46,9 +50,9 @@ public sealed class Preferences
     public bool AutoRestoreOnStartup { get; set; }
     public bool HasDockAnchor { get; set; }
     public Native.Point DockAnchor { get; set; }
-    public static string ModifierLabel(ShortcutModifiers modifiers) => modifiers switch
-    { ShortcutModifiers.Ctrl => "Ctrl", ShortcutModifiers.CtrlAlt => "Ctrl+Alt", ShortcutModifiers.AltShift => "Alt+Shift", ShortcutModifiers.CtrlShift => "Ctrl+Shift", ShortcutModifiers.CtrlAltShift => "Ctrl+Alt+Shift", _ => "Alt" };
-    public Preferences Copy() => (Preferences)MemberwiseClone();
+    public static string ModifierLabel(ShortcutModifiers modifiers) => string.Join("+", new[] { ((int)modifiers & 2) != 0 ? "Ctrl" : null, ((int)modifiers & 1) != 0 ? "Alt" : null, ((int)modifiers & 4) != 0 ? "Shift" : null, ((int)modifiers & 8) != 0 ? "Win" : null }.Where(x => x != null));
+    public string TaskGesture(int number) => TaskGestures != null && TaskGestures.TryGetValue(number, out string? gesture) ? gesture ?? "" : ModifierLabel(TaskModifiers) + "+" + number;
+    public Preferences Copy() { var result = (Preferences)MemberwiseClone(); result.TaskGestures = new(TaskGestures ?? new()); return result; }
 }
 
 public sealed class WindowIdentity

@@ -82,7 +82,7 @@ public static class SelfTests
             Check(!MouseGestureRouter.Matches(ShortcutModifiers.Alt, true, true, false, false), "AltGr matched plain Alt");
             Check(MouseGestureRouter.Matches(ShortcutModifiers.CtrlShift, false, true, true, false), "CtrlShift setting ignored");
             Check(InputService.TryParseGesture("Ctrl+Alt+Space", out uint mods, out uint key) && mods == 3 && key == 0x20, "Toggle gesture parsing failed");
-            Check(!InputService.TryParseGesture("1", out _, out _), "Bare numeric input was allowed as a global shortcut");
+            Check(InputService.TryParseGesture("1", out _, out _) && ShortcutBindings.IsTypingKey("1"), "Explicit single-key binding or typing-impact classification failed");
             var area = new Native.Rect(-1920, 0, 0, 1080);
             var cell = WindowLayout.Clamp(new Cell(2400, -500, 2400, 1400), area);
             Check(cell.X == -1920 && cell.Y == 0 && cell.Width == 1920 && cell.Height == 1080, "Disconnected monitor placement was not clamped");
@@ -92,9 +92,9 @@ public static class SelfTests
             using var input = new InputService(Dispatcher.CurrentDispatcher);
             Check(input.RegisteredTasks.Length == 0, "Empty task slots reserve digits");
             Check(!input.ArrangeRegistered, "Empty inventory reserved the arrange shortcut");
-            Check(input.TabRegistered || input.Warnings.Any(w => w.StartsWith("Tab ")), "Default Tab inventory shortcut neither registered nor reported a conflict");
+            Check(input.TabRegistered || input.Warnings.Any(w => w.StartsWith("总览快捷键")), "Default Tab inventory shortcut neither registered nor reported a conflict");
             input.Configure(new(), new[] { 2, 7 }, false);
-            Check(input.ArrangeRegistered || input.Warnings.Any(w => w.StartsWith("Alt + 反引号")), "Arrange shortcut neither registered nor reported a conflict");
+            Check(input.ArrangeRegistered || input.Warnings.Any(w => w.StartsWith("排列快捷键")), "Arrange shortcut neither registered nor reported a conflict");
             Check(input.RegisteredTasks.All(n => n is 2 or 7), "Unconnected slot registered a digit");
             input.Configure(new(), new[] { 2, 7 }, true);
             Check(input.RegisteredTasks.Length == 0, "Pause left task keys registered");
@@ -104,7 +104,7 @@ public static class SelfTests
             input.Configure(new(), Array.Empty<int>(), false);
             Check(input.RegisteredTasks.Length == 0, "Disconnect left task keys registered");
             Check(!input.ArrangeRegistered, "Disconnected inventory left Alt+backquote registered");
-            Check(input.TabRegistered || input.Warnings.Any(w => w.StartsWith("Tab ")), "Empty inventory silently lost Tab");
+            Check(input.TabRegistered || input.Warnings.Any(w => w.StartsWith("总览快捷键")), "Empty inventory silently lost Tab");
             input.Configure(new() { TabTogglesInventory = false }, Array.Empty<int>(), false);
             Check(!input.TabRegistered, "Disabling Tab did not restore input");
             input.Configure(new() { InventoryGesture = "Ctrl+Alt+Shift+F8", ArrangeGesture = "Ctrl+Alt+Shift+F9" }, new[] { 2 }, false);
@@ -304,12 +304,9 @@ public static class SelfTests
                 Check(equipment.IsDeployed && !manager.Dock.IsManipulating && Native.GetForegroundWindow() == hoverFocus && Native.IsIconic(new(firstIdentity.Handle)) && Native.IsIconic(new(secondIdentity.Handle)), "Hover activated a task or stole terminal focus");
                 var management = manager.Dock.BuildManagementMenu();
                 var commands = management.Items.OfType<System.Windows.Controls.MenuItem>().ToList();
-                Check(commands.Count == 5, "Main menu is no longer compact");
-                foreach (string command in new[] { "\u6dfb\u52a0\u7a97\u53e3", "\u4efb\u52a1\u603b\u89c8", "\u6392\u5217\u7a97\u53e3", "\u8bbe\u7f6e\u4e0e\u76ae\u80a4", "\u66f4\u591a" })
+                Check(commands.Count == 8 && commands.All(c => c.Items.Count == 0), "Management menu must stay flat and contain only eight immediate actions");
+                foreach (string command in new[] { "添加窗口", "任务总览", "排列窗口", "设置", "快速上手", "最近任务 / 恢复工作现场" })
                     Check(commands.Any(i => i.Header?.ToString() == command), "Quick command missing from menu: " + command);
-                commands.Last().Items.OfType<System.Windows.Controls.MenuItem>().Single(i => i.Header?.ToString() == "\u79fb\u52a8\u5706\u73af").RaiseEvent(new RoutedEventArgs(System.Windows.Controls.MenuItem.ClickEvent));
-                manager.Dock.HandleWheelPointerMove(equipment.Centre);
-                Check(!equipment.IsDeployed && equipment.Cursor == System.Windows.Input.Cursors.SizeAll, "Move command did not reserve the next core drag");
                 manager.Dock.CancelManipulation();
                 Check(equipment.Cursor == System.Windows.Input.Cursors.Hand, "Cancel did not restore the core cursor");
                 IntPtr dragFocus = Native.GetForegroundWindow();

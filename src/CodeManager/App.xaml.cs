@@ -172,7 +172,7 @@ public partial class App : Application
             radial.Surface.Select(3); radial.Surface.SetPhase(.23); window = radial;
         }
         else if (mode is "inventory" or "inventory-small" or "inventory-hidpi" or "inventory-short") window = new InventoryWindow(slots, mode == "inventory-small" ? new Native.Rect(0, 0, 836, 698) : mode == "inventory-short" ? new Native.Rect(0, 0, 1920, 698) : new Native.Rect(0, 0, 1920, 1040), mode is "inventory-hidpi" or "inventory-short" ? 2 : 1, 3, false, presentationPreview: true);
-        else if (mode.StartsWith("settings")) window = new SettingsWindow(new() { Skin = SkinCatalog.Current.Id, Animate = false, SoundEffects = false }, new Native.Rect(0, 0, 1920, 1040), "", page: mode.Contains("audio") ? 5 : mode.Contains("layout") ? 1 : mode.Contains("skin") ? 2 : mode.Contains("general") ? 3 : 0);
+        else if (mode.StartsWith("settings")) window = new SettingsWindow(new() { Skin = SkinCatalog.Current.Id, Animate = false, SoundEffects = false }, new Native.Rect(0, 0, 1920, 1040), "", page: mode.Contains("guide") ? 4 : mode.Contains("audio") ? 5 : mode.Contains("layout") ? 1 : mode.Contains("skin") ? 2 : mode.Contains("general") ? 3 : 0);
         else if (mode == "menu")
         {
             var menu = new System.Windows.Controls.ContextMenu();

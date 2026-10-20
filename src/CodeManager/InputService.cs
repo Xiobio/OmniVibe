@@ -20,6 +20,7 @@ public sealed class InputService : IDisposable
     private IntPtr _mouse, _keyboard, _events;
     private string _signature = "", _toggleSetting = "", _toggleWarning = "";
     private ShortcutModifiers _mouseModifiers = ShortcutModifiers.Alt;
+    private bool _wheelEnabled = true;
     public event Action<int>? Hotkey;
     public event Action<int>? Wheel;
     public event Action<int>? InventoryWheel;
@@ -53,37 +54,40 @@ public sealed class InputService : IDisposable
     public void Configure(Preferences preferences, IEnumerable<int> connectedNumbers, bool suspended)
     {
         int[] numbers = suspended ? Array.Empty<int>() : connectedNumbers.Distinct().OrderBy(n => n).ToArray();
-        string signature = preferences.TaskModifiers + ":" + preferences.MouseModifiers + ":" + preferences.ToggleGesture + ":" + preferences.ArrangeGesture + ":" + preferences.InventoryGesture + ":" + preferences.RadialGesture + ":" + preferences.TabTogglesInventory + ":" + suspended + ":" + string.Join(",", numbers);
+        string signature = string.Join("|", ShortcutBindings.All(preferences).Select(b => b.Id + ":" + b.Gesture)) + ":" + preferences.MouseModifiers + ":" + preferences.WheelSwitchEnabled + ":" + suspended + ":" + string.Join(",", numbers);
         if (signature == _signature) return;
-        _signature = signature; _mouseModifiers = preferences.MouseModifiers;
+        _signature = signature; _mouseModifiers = preferences.MouseModifiers; _wheelEnabled = preferences.WheelSwitchEnabled;
         foreach (int number in _registered.Where(n => n < 10).ToList()) { Native.UnregisterHotKey(_source.Handle, number); _registered.Remove(number); }
         Warnings.Clear(); Warnings.AddRange(_hookWarnings);
         if (_registered.Remove(13)) Native.UnregisterHotKey(_source.Handle, 13);
         if (!suspended)
         {
             if (TryParseGesture(preferences.RadialGesture, out uint rm, out uint rk) && Native.RegisterHotKey(_source.Handle, 13, 0x4000 | rm, rk)) _registered.Add(13);
-            else Warnings.Add("轮盘快捷键不可用，请更改组合键或点击侧栏轮盘入口");
+            else if (!string.IsNullOrWhiteSpace(preferences.RadialGesture)) Warnings.Add("轮盘快捷键不可用：" + ShortcutBindings.Display(preferences.RadialGesture));
         }
         if (_registered.Remove(12)) Native.UnregisterHotKey(_source.Handle, 12);
         if (!suspended && numbers.Length > 0)
         {
             if (TryParseGesture(preferences.ArrangeGesture, out uint am, out uint ak) && Native.RegisterHotKey(_source.Handle, 12, 0x4000 | am, ak)) _registered.Add(12);
-            else Warnings.Add("Alt + 反引号 / 自定义排列键不可用，请使用侧栏排列按钮");
+            else if (!string.IsNullOrWhiteSpace(preferences.ArrangeGesture)) Warnings.Add("排列快捷键被占用：" + ShortcutBindings.Display(preferences.ArrangeGesture));
         }
         if (_registered.Remove(11)) Native.UnregisterHotKey(_source.Handle, 11);
-        if (preferences.TabTogglesInventory && !suspended)
+        if (preferences.TabTogglesInventory && !suspended && !string.IsNullOrWhiteSpace(preferences.InventoryGesture))
         {
             bool bareTab = preferences.InventoryGesture == "Tab";
             uint im = 0, ik = 0x09;
             if ((bareTab || TryParseGesture(preferences.InventoryGesture, out im, out ik)) && Native.RegisterHotKey(_source.Handle, 11, 0x4000 | im, ik)) _registered.Add(11);
-            else Warnings.Add("Tab 背包键被占用，可使用侧栏显示组合键或托盘图标");
+            else Warnings.Add("总览快捷键被占用：" + ShortcutBindings.Display(preferences.InventoryGesture));
         }
         foreach (int number in numbers)
         {
-            if (Native.RegisterHotKey(_source.Handle, number, 0x4000 | (uint)preferences.TaskModifiers, (uint)(0x30 + number))) _registered.Add(number);
-            else Warnings.Add(Preferences.ModifierLabel(preferences.TaskModifiers) + "+" + number + " 被占用");
+            string gesture = preferences.TaskGesture(number);
+            if (string.IsNullOrWhiteSpace(gesture)) continue;
+            if (TryParseGesture(gesture, out uint tm, out uint tk) && Native.RegisterHotKey(_source.Handle, number, 0x4000 | tm, tk)) _registered.Add(number);
+            else Warnings.Add("窗口 " + number + " 快捷键被占用：" + ShortcutBindings.Display(gesture));
         }
-        if (_toggleSetting != preferences.ToggleGesture) RegisterToggle(preferences.ToggleGesture);
+        if (suspended) { if (_registered.Remove(10)) Native.UnregisterHotKey(_source.Handle, 10); }
+        else if (_toggleSetting != preferences.ToggleGesture || !_registered.Contains(10)) RegisterToggle(preferences.ToggleGesture);
         if (_toggleWarning != "") Warnings.Add(_toggleWarning);
     }
     public static bool TryParseGesture(string text, out uint modifiers, out uint key)
@@ -91,10 +95,17 @@ public sealed class InputService : IDisposable
         modifiers = key = 0;
         try
         {
-            if (new KeyGestureConverter().ConvertFromInvariantString(text) is not KeyGesture gesture || gesture.Modifiers == ModifierKeys.None) return false;
-            modifiers = (uint)((gesture.Modifiers.HasFlag(ModifierKeys.Alt) ? 1 : 0) | (gesture.Modifiers.HasFlag(ModifierKeys.Control) ? 2 : 0) | (gesture.Modifiers.HasFlag(ModifierKeys.Shift) ? 4 : 0) | (gesture.Modifiers.HasFlag(ModifierKeys.Windows) ? 8 : 0));
-            key = (uint)KeyInterop.VirtualKeyFromKey(gesture.Key);
-            return key != 0 && key is not (0x10 or 0x11 or 0x12 or 0x5B or 0x5C);
+            if (string.IsNullOrWhiteSpace(text)) return false;
+            var parts = text.Split('+', StringSplitOptions.TrimEntries);
+            if (parts.Any(string.IsNullOrEmpty)) return false;
+            foreach (string part in parts.Take(parts.Length - 1)) {
+                uint bit = part.ToUpperInvariant() switch { "CTRL" or "CONTROL" => 2, "ALT" => 1, "SHIFT" => 4, "WIN" or "WINDOWS" => 8, _ => 0 };
+                if (bit == 0 || (modifiers & bit) != 0) return false;
+                modifiers |= bit;
+            }
+            if (new KeyConverter().ConvertFromInvariantString(parts[^1]) is not Key parsed) return false;
+            key = (uint)KeyInterop.VirtualKeyFromKey(parsed);
+            return key != 0 && key is not (0x10 or 0x11 or 0x12 or 0x5B or 0x5C or >= 0xA0 and <= 0xA5);
         }
         catch (Exception ex) when (ex is NotSupportedException or ArgumentException or FormatException) { return false; }
     }
@@ -108,12 +119,12 @@ public sealed class InputService : IDisposable
     {
         if (_registered.Remove(10)) Native.UnregisterHotKey(_source.Handle, 10);
         _toggleSetting = setting; _toggleWarning = "";
-        string[] choices = { setting, "Ctrl+Alt+Shift+Space", "Ctrl+Alt+Shift+D" };
+        if (string.IsNullOrWhiteSpace(setting)) { ToggleShortcut = "未设置（双击托盘图标可显示）"; return; }
+        string[] choices = { setting };
         foreach (string choice in choices.Distinct())
         {
             if (!TryParseGesture(choice, out uint modifiers, out uint key) || !Native.RegisterHotKey(_source.Handle, 10, modifiers | 0x4000, key)) continue;
             _registered.Add(10); ToggleShortcut = choice.Replace("Space", "空格");
-            if (choice != setting) _toggleWarning = "侧栏显示键改为 " + ToggleShortcut + "（设定按键不可用）";
             return;
         }
         ToggleShortcut = "系统托盘图标"; _toggleWarning = "显示快捷键不可用，请双击托盘图标恢复侧栏";
@@ -140,7 +151,7 @@ public sealed class InputService : IDisposable
                 _dispatcher.BeginInvoke(() => InventoryWheel?.Invoke(delta));
                 return new IntPtr(1);
             }
-            var gesture = _mouseGestures.Route(msg, CanHandleMouse?.Invoke() == true && Native.ChordDownFor(_mouseModifiers), delta);
+            var gesture = _mouseGestures.Route(msg, _wheelEnabled && CanHandleMouse?.Invoke() == true && Native.ChordDownFor(_mouseModifiers), delta);
             if (gesture.Consume)
             {
                 if (gesture.MaskAlt && ((int)_mouseModifiers & 1) != 0) Native.MaskAltMenu();
@@ -166,7 +177,27 @@ public sealed class InputService : IDisposable
     private bool IsRequiredRelease(uint key) =>
         (((int)_mouseModifiers & 1) != 0 && key is 0x12 or 0xA4 or 0xA5) ||
         (((int)_mouseModifiers & 2) != 0 && key is 0x11 or 0xA2 or 0xA3) ||
-        (((int)_mouseModifiers & 4) != 0 && key is 0x10 or 0xA0 or 0xA1);
+        (((int)_mouseModifiers & 4) != 0 && key is 0x10 or 0xA0 or 0xA1) ||
+        (((int)_mouseModifiers & 8) != 0 && key is 0x5B or 0x5C);
+    public static string? RegistrationConflict(Preferences preferences, Preferences? baseline = null)
+    {
+        using var probe = new HwndSource(new HwndSourceParameters("OmniVibe.ShortcutProbe") { ParentWindow = new IntPtr(-3), Width = 0, Height = 0 });
+        var registrations = new List<int>();
+        try {
+            foreach (var binding in ShortcutBindings.All(preferences)) {
+                if (string.IsNullOrWhiteSpace(binding.Gesture)) continue;
+                // A theme/layout save must not be blocked by an unchanged key
+                // that was already unavailable before opening settings.
+                var prior = baseline == null ? null : ShortcutBindings.All(baseline).First(b => b.Id == binding.Id);
+                if (prior != null && TryParseGesture(prior.Gesture, out uint oldMods, out uint oldKey) && TryParseGesture(binding.Gesture, out uint newMods, out uint newKey) && oldMods == newMods && oldKey == newKey) continue;
+                if (!TryParseGesture(binding.Gesture, out uint mods, out uint key) || !Native.RegisterHotKey(probe.Handle, binding.Id + 200, mods | 0x4000, key))
+                    return binding.Name + "：" + ShortcutBindings.Display(binding.Gesture) + " 已被系统或其他程序占用，请换一个组合。";
+                registrations.Add(binding.Id + 200);
+            }
+            return null;
+        }
+        finally { foreach (int id in registrations) Native.UnregisterHotKey(probe.Handle, id); }
+    }
     private void WindowEvent(IntPtr hook, uint evt, IntPtr hwnd, int obj, int child, uint thread, uint time)
     { if (hwnd != IntPtr.Zero && obj == 0 && child == 0) _dispatcher.BeginInvoke(() => Drag?.Invoke(hwnd, evt == 0xA)); }
     public void Dispose()

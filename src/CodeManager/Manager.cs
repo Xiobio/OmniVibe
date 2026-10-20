@@ -52,7 +52,7 @@ public sealed class Manager : IDisposable
     public string TaskChord => Preferences.ModifierLabel(State.Preferences.TaskModifiers);
     public string MouseChord => Preferences.ModifierLabel(State.Preferences.MouseModifiers);
     public string ToggleShortcut => _input.ToggleShortcut;
-    public string InventoryMenuLabel => "打开任务背包" + (State.Preferences.TabTogglesInventory ? "（" + State.Preferences.InventoryGesture + "）" : "");
+    public string InventoryMenuLabel => "任务总览" + (State.Preferences.TabTogglesInventory ? "（" + ShortcutBindings.Display(State.Preferences.InventoryGesture) + "）" : "");
 
     public Manager(StateStore? store = null, bool interactionTest = false, Action<ProcessStartInfo>? startRecovery = null)
     {
@@ -85,14 +85,12 @@ public sealed class Manager : IDisposable
         _trayIcon = ProductIcon.CreateTrayIcon();
         _tray = new Forms.NotifyIcon { Icon = _trayIcon, Text = "OmniVibe · AI 任务武器栏", Visible = true };
         var menu = new Forms.ContextMenuStrip { BackColor = System.Drawing.Color.FromArgb(22, 30, 27), ForeColor = System.Drawing.Color.FromArgb(250, 234, 203), Font = new System.Drawing.Font("Microsoft YaHei UI", 10), Renderer = new TrayMenuRenderer() };
-        menu.Items.Add("显示 / 隐藏武器栏", null, (_, _) => Dock.Dispatcher.Invoke(ToggleVisibility));
+        menu.Items.Add("显示 / 隐藏悬浮入口", null, (_, _) => Dock.Dispatcher.Invoke(ToggleVisibility));
         menu.Items.Add(InventoryMenuLabel, null, (_, _) => Dock.Dispatcher.Invoke(ToggleInventory));
-        menu.Items.Add("打开任务轮盘", null, (_, _) => Dock.Dispatcher.Invoke(() => OpenRadial()));
         menu.Items.Add("最近关闭 / 恢复工作现场…", null, (_, _) => Dock.Dispatcher.Invoke(ShowRecovery));
-        menu.Items.Add("全部展开 / 恢复布局", null, (_, _) => Dock.Dispatcher.Invoke(RequestOverview));
-        menu.Items.Add("暂停 / 恢复任务快捷键", null, (_, _) => Dock.Dispatcher.Invoke(TogglePause));
+        menu.Items.Add("排列 / 恢复窗口", null, (_, _) => Dock.Dispatcher.Invoke(RequestOverview));
         menu.Items.Add("设置", null, (_, _) => Dock.Dispatcher.Invoke(ShowSettings));
-        menu.Items.Add("使用说明", null, (_, _) => Dock.Dispatcher.Invoke(ShowHelp));
+        menu.Items.Add("快速上手", null, (_, _) => Dock.Dispatcher.Invoke(ShowHelp));
         menu.Items.Add("退出并恢复窗口", null, (_, _) => Dock.Dispatcher.Invoke(Exit));
         _tray.ContextMenuStrip = menu; RefreshTrayTheme();
         _tray.DoubleClick += (_, _) => Dock.Dispatcher.Invoke(() => { _dockHiddenByUser = false; EnsureDockVisible(); Expand(); });
@@ -128,6 +126,7 @@ public sealed class Manager : IDisposable
     }
     public void StartupRecovery()
     {
+        if (GettingStartedPanel.ShouldOpenOnStartup(State)) ShowHelp();
         if (State.Preferences.AutoReconnectExisting) ReconnectExisting();
         if (State.Preferences.AutoRestoreOnStartup) RestoreAllTasks();
         ArchiveClosedWindows(includePreviouslyDisconnected: true);
@@ -595,7 +594,7 @@ public sealed class Manager : IDisposable
         _captureFlashes.Clear(); CancelSelection();
         Dock.SetSlots(State.Slots.ToArray());
         foreach (var slot in State.Slots) { slot.JustCaptured = false; slot.Refresh(); }
-        RefreshBindings(); UpdateSlotsVisibility(); Save(); Hint("顺序已更新 · Alt+数字随当前编号切换");
+        RefreshBindings(); UpdateSlotsVisibility(); Save(); Hint("顺序已更新 · 各窗口使用新槽位对应的快捷键");
         PlayCue(AudioCue.Reorder, source);
     }
     private static void ClearSlot(Slot slot)
@@ -892,15 +891,30 @@ public sealed class Manager : IDisposable
         Dock.UpdateChrome(); Hint("主题配装已保存 · 右键槽位可再次更换");
     }
     public void ShowSettings()
+        => ShowSettingsPage(2);
+    public void ShowSettingsPage(int page)
     {
+        string warnings = string.Join("\n", _input.Warnings);
         BeginDialog();
         try
         {
-            var settings = new SettingsWindow(State.Preferences, WorkArea, string.Join("\n", _input.Warnings), State.AutoHide, State.MinimizeOnCapture);
-            settings.LoadoutRequested += () => EditLoadout(owner: settings, previewSkin: settings.LoadoutSkin);
+            var settings = new SettingsWindow(State.Preferences, WorkArea, warnings, State.AutoHide, State.MinimizeOnCapture, page, ShortcutsPaused);
+            settings.ShortcutAvailabilityCheck = p => InputService.RegistrationConflict(p, State.Preferences);
+            IReadOnlyDictionary<string, EquipmentAssignment>? equipmentDraft = null;
+            settings.LoadoutRequested += () => {
+                var draft = LoadoutWindow.CreateDraft(State.Slots, equipmentDraft);
+                var picker = new LoadoutWindow(draft, WorkArea, previewSkin: settings.LoadoutSkin, settingsDraft: true) { Owner = settings };
+                if (picker.ShowDialog() == true) equipmentDraft = picker.Result;
+            };
+            settings.AddWindowRequested += AddWindow;
+            settings.RecoveryRequested += ShowRecovery;
+            settings.DataDirectoryRequested += OpenDataDirectory;
             if (settings.ShowDialog() == true)
             {
                 State.Preferences = settings.Result; State.MinimizeOnCapture = settings.MinimizeOnCapture;
+                if (equipmentDraft != null) foreach (var slot in State.Slots) if (equipmentDraft.TryGetValue(slot.Id, out var assignment)) assignment.Apply(slot);
+                if (settings.PauseShortcuts != ShortcutsPaused) TogglePause();
+                if (settings.ResetDockPositionRequested) ResetDockPosition();
                 ApplyAudioPreferences();
                 InkEffects.CancelVisuals();
                 SkinCatalog.DecorationsEnabled = State.Preferences.DecorationsEnabled;
@@ -933,17 +947,26 @@ public sealed class Manager : IDisposable
         });
     }
     public void OpenDataDirectory() => Process.Start(new ProcessStartInfo("explorer.exe", Store.Root) { UseShellExecute = true });
+    public void AddWindow()
+    {
+        var empty = State.Slots.FirstOrDefault(s => !s.Occupied);
+        if (empty != null) PickWindow(empty); else Hint("九个槽位已满，请先移出一个任务");
+    }
     public void ShowHelp()
     {
+        string? next = null;
+        string warnings = string.Join("\n", _input.Warnings);
         BeginDialog();
         try
         {
-            string text = "拖动窗口标题栏到右侧空槽位，松手收纳。点击空槽位也可添加窗口。\n\n" + TaskChord + "+1–9：唤出任务，再按同一编号恢复原样\n" + MouseChord + "+滚轮：直接切换窗口\nTab：打开任务总览，滚轮浏览、Enter / 数字 / 点击进入\nAlt+反引号：直接全部排列 / 恢复布局\n" + ToggleShortcut + "：显示 / 隐藏武器栏\n\n排列中唤出任务会临时放大，再按编号回到原格子。\n\n右键任务：编辑名称与颜色、重连窗口、连接 Claude/Codex 状态。\n右上角菜单：设置、暂停快捷键、自动收起、退出。\n\n任务状态来自真实 CLI hooks；右键任务复制接入命令，在对应终端执行。已经运行的 CLI 需要重新启动才会加载新 hooks。Codex 首次接入需在 /hooks 中确认观察脚本。\n未接入时显示状态未知，不猜测 AI 是否完成。\n\n关闭窗口会腾出槽位并保存到「最近关闭」，可从更多菜单恢复。退出只恢复由本工具收起的窗口，CLI 继续运行。";
-            if (State.Preferences.TabTogglesInventory) text += "\n\nTab：打开 / 关闭任务总览。会接管终端 Tab 补全，可在设置中关闭。";
-            if (_input.Warnings.Count > 0) text += "\n\n快捷键 / 监听提示：\n" + string.Join("\n", _input.Warnings);
-            MessageBox.Show(text, "OmniVibe · 本地开发版", MessageBoxButton.OK, MessageBoxImage.Information);
+            var guide = new GettingStartedWindow(State.Preferences, WorkArea, warnings, ShortcutsPaused);
+            guide.ShowDialog(); next = guide.NextAction;
+            State.Preferences.HasSeenIntroduction = true; Save();
         }
         finally { EndDialog(); }
+        if (next == "add") AddWindow();
+        else if (next == "keys") ShowSettingsPage(0);
+        else if (next == "recovery") ShowRecovery();
     }
     public void Exit()
     {

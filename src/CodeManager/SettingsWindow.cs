@@ -14,7 +14,11 @@ public sealed class SettingsWindow : Window
     public bool MinimizeOnCapture { get; private set; }
     public event Action? LoadoutRequested;
     public Skin LoadoutSkin { get; private set; }
-    public SettingsWindow(Preferences source, Native.Rect workArea, string warnings, bool autoHide = false, bool minimize = true, int page = 2)
+    public event Action? AddWindowRequested, RecoveryRequested, DataDirectoryRequested;
+    public bool PauseShortcuts { get; private set; }
+    public bool ResetDockPositionRequested { get; private set; }
+    public Func<Preferences, string?>? ShortcutAvailabilityCheck { get; set; }
+    public SettingsWindow(Preferences source, Native.Rect workArea, string warnings, bool autoHide = false, bool minimize = true, int page = 2, bool shortcutsPaused = false)
     {
         Result = source.Copy(); AutoHide = autoHide; MinimizeOnCapture = minimize;
         LoadoutSkin = source.Skin;
@@ -29,12 +33,13 @@ public sealed class SettingsWindow : Window
         var host = SkinCatalog.Current;
         Resources[typeof(Button)] = SettingsButtonStyle(host);
         var root = new DockPanel();
-        var title = new StackPanel { Margin = new Thickness(26, 19, 26, 17) };
+        var title = new StackPanel { Margin = new Thickness(24, 10, 24, 9) };
         title.Children.Add(new TextBlock { Text = "OMNIVIBE / 工作台", FontSize = 10, Foreground = WuxiaTheme.Brush(host.Muted), Margin = new Thickness(0, 0, 0, 6) });
-        title.Children.Add(new TextBlock { Text = "设置", FontSize = 26, FontWeight = FontWeights.SemiBold });
+        title.Children.Add(new TextBlock { Text = "设置", FontSize = 22, FontWeight = FontWeights.SemiBold });
         var header = new Border { Child = title, BorderBrush = WuxiaTheme.Brush(host.Border), BorderThickness = new Thickness(0, 0, 0, .5) }; DockPanel.SetDock(header, Dock.Top); root.Children.Add(header);
         var bottom = new StackPanel { Margin = new Thickness(24, 8, 24, 16) }; var footer = new Border { Child = bottom, Background = WuxiaTheme.Brush(host.Surface), BorderBrush = WuxiaTheme.Brush(host.Border), BorderThickness = new Thickness(0, .5, 0, 0) }; DockPanel.SetDock(footer, Dock.Bottom); root.Children.Add(footer);
-        var error = new TextBlock { Foreground = WuxiaTheme.Cinnabar, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 8, 0, 8) }; bottom.Children.Add(error);
+        var error = new TextBlock { Foreground = WuxiaTheme.Cinnabar, TextWrapping = TextWrapping.Wrap, Visibility = Visibility.Collapsed, Margin = new Thickness(0, 8, 0, 8) }; bottom.Children.Add(error);
+        void Fail(string message) { error.Text = message; error.Visibility = Visibility.Visible; }
         var actionRow = new DockPanel(); var draft = new TextBlock { Text = "保存后应用 · Terminal 外观单独应用", Foreground = WuxiaTheme.Brush(host.Muted), FontSize = 11, VerticalAlignment = VerticalAlignment.Center, TextWrapping = TextWrapping.Wrap, MaxWidth = 330 }; DockPanel.SetDock(draft, Dock.Left); actionRow.Children.Add(draft);
         var actions = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right };
         var reset = new Button { Content = "恢复默认", Margin = new Thickness(0, 0, 16, 0) }; var cancel = new Button { Content = "取消", IsCancel = true, Margin = new Thickness(0, 0, 10, 0) }; var save = new Button { Content = "保存并应用", IsDefault = true, Background = WuxiaTheme.Brush("#354730") };
@@ -50,87 +55,110 @@ public sealed class SettingsWindow : Window
         {
             var panel = new StackPanel { Margin = new Thickness(0, 0, 12, 12) }; var scroll = new ScrollViewer { Content = panel, VerticalScrollBarVisibility = ScrollBarVisibility.Auto, Visibility = pages.Children.Count == 0 ? Visibility.Visible : Visibility.Collapsed }; pages.Children.Add(scroll);
             panel.Children.Add(new TextBlock { Text = name, FontSize = 25, FontWeight = FontWeights.SemiBold });
-            panel.Children.Add(new TextBlock { Text = description, FontSize = 12, Foreground = WuxiaTheme.Brush(host.Muted), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 8, 0, 22) });
+            panel.Children.Add(new TextBlock { Text = description, FontSize = 12, Foreground = WuxiaTheme.Brush(host.Muted), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 6, 0, 14) });
             var b = new Button { Content = name, HorizontalContentAlignment = HorizontalAlignment.Left, Padding = new Thickness(14, 13, 8, 13), FontSize = 13, BorderThickness = new Thickness(3, 0, 0, 0), Margin = new Thickness(0, 0, 0, 7) };
             b.Click += (_, _) => { foreach (UIElement item in pages.Children) item.Visibility = item == scroll ? Visibility.Visible : Visibility.Collapsed; foreach (Button button in navButtons) { button.Background = WuxiaTheme.Brush(button == b ? host.Elevated : host.Surface); button.BorderBrush = WuxiaTheme.Brush(button == b ? host.Accent : host.Surface); } };
             nav.Children.Add(b); navButtons.Add(b); return panel;
         }
-        var keyPage = Page("快捷键", "把常用操作放到顺手的位置。点击快捷键输入框后，按下新的组合键。");
-        var keys = Section(keyPage, "快速唤出", "数字键 1–9 始终对应当前任务排序。"); Label(keys, "数字键修饰键"); var number = Modifiers(source.TaskModifiers); keys.Children.Add(number);
-        Label(keys, "滚轮切换修饰键"); var mouse = Modifiers(source.MouseModifiers); keys.Children.Add(mouse);
-        keys = Section(keyPage, "总览与轮盘", "总览用于查看任务；轮盘用于快速选择。");
-        var inventoryEnabled = Check("启用任务总览快捷键", source.TabTogglesInventory); keys.Children.Add(inventoryEnabled);
-        Label(keys, "任务总览（单独 Tab 或组合键）"); var inventory = Gesture(source.InventoryGesture, true); keys.Children.Add(inventory);
-        Label(keys, "任务轮盘（按住 → 指向 → 松键切换）"); var radial = Gesture(source.RadialGesture); keys.Children.Add(radial);
-        keys = Section(keyPage, "窗口与圆环", "排列、恢复与显示状态均支持独立快捷键。");
-        Label(keys, "全部排列 / 再按恢复"); var arrange = Gesture(source.ArrangeGesture); keys.Children.Add(arrange);
-        Label(keys, "显示 / 隐藏圆环"); var toggle = Gesture(source.ToggleGesture); keys.Children.Add(toggle);
-        Label(keys, "点击输入框后按新组合键。单独 Tab 会接管终端补全；本工具对话框中自动停用。", 12);
-        var layoutPage = Page("窗口与排列", "选择任务唤出方式，以及多个窗口同时展示时的布局。");
-        var layout = Section(layoutPage, "全部排列", "按排列快捷键铺开窗口，再按一次恢复。");
-        var arrangement = Options(new[] { "均衡网格 · 铺满屏幕", "纵向分栏", "横向分行", "主窗居左 · 其余居右" }, (int)source.Arrangement); layout.Children.Add(arrangement);
-        Label(layout, "窗口间距（0 为无缝铺满）"); var gap = Slider(0, 32, source.LayoutGap, layout);
-        Label(layout, "全部排列和恢复布局时，悬浮入口始终保留；仅主动隐藏时关闭。", 12);
-        layout = Section(layoutPage, "单个窗口唤出", "选择切换到某个任务时的窗口大小。"); var wake = Options(new[] { "恢复最近使用的大小与位置", "铺满侧栏所在屏幕工作区" }, (int)source.WakeMode); layout.Children.Add(wake);
-        Label(layout, "排列中，Alt+数字临时放大任务，再按返回原格子。偏好在下次排列时使用。", 12);
-        var appearance = Page("主题套装", "先看整套效果，再决定应用。每套包含圆环、任务总览、菜单与配套 Terminal 外观。");
+        var guidePage = Page("快速上手", "把窗口收进来，用形象认任务，用快捷键找回窗口。");
+        var guide = new GettingStartedPanel(source, warnings, shortcutsPaused);
+        guide.AddWindowRequested += () => AddWindowRequested?.Invoke();
+        guide.ConfigureShortcutsRequested += () => navButtons[2].RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        guide.RecoveryRequested += () => RecoveryRequested?.Invoke();
+        guidePage.Children.Add(guide);
+
+        var appearance = Page("主题与换装", "所有主题直接陈列。先点图片选风格，再调整这套主题的角色和武器。");
         var skin = new SkinPicker(source.Skin); appearance.Children.Add(skin);
         skin.SelectionChanged += () => { LoadoutSkin = skin.SelectedSkin; draft.Text = skin.SelectedSkin == source.Skin ? "保存后应用 · Terminal 外观单独应用" : "正在预览新主题 · 保存后应用"; };
-        var generalPage = Page("常规与状态", "安排日常行为、工作现场恢复与 AI 任务状态接入。");
-        var ringPage = Page("圆环与位置", "圆环悬停展开，离开操作范围后收回；左键长按可拖动，右键打开管理菜单。");
-        var ring = Section(ringPage, "展开范围", "调整展开后的装备范围，核心位置保持不动。");
-        Label(ring, "宽度"); var width = Slider(320, 480, source.DockWidth, ring);
-        Label(ring, "常驻圆环为 116×116；上面的尺寸只影响悬停展开后的任务范围。", 12);
-        ring = Section(ringPage, "屏幕位置", "也可以直接长按圆环拖动，松手后自动保存位置。");
-        var position = Check("恢复右侧贴边位置", !source.FreeDockPosition); ring.Children.Add(position);
-        var loadout = Section(appearance, "主题配装", "内置藏品按上方主题分别记忆；导入图片随任务跨主题保留。配装单独保存。");
-        var equipment = new Button { Content = "配置这套主题的角色与藏品…", HorizontalAlignment = HorizontalAlignment.Left, Padding = new Thickness(14, 9, 14, 9) };
-        equipment.Click += (_, _) => LoadoutRequested?.Invoke(); loadout.Children.Add(equipment);
-        var feedback = Section(appearance, "视听反馈", "预览会跟随动效与材质开关。音效在实际任务操作中播放。");
-        var animate = Check("启用皮肤动效、任务入场与切换反馈", source.Animate); feedback.Children.Add(animate);
-        var decorations = Check("启用材质、插画与装饰（关闭后保留状态和操作）", source.DecorationsEnabled); feedback.Children.Add(decorations);
-        Label(feedback, "窗口切换标志音、声音主题与音量可在「声音与反馈」中试听和设置。", 12);
-        var audioPage = Page("声音与反馈", "每套游戏保留一个窗口切换标志音。声音主题可跟随界面或单独选择，保存后应用。");
-        var audio = new AudioSettingsPanel(source, () => skin.SelectedSkin); audioPage.Children.Add(audio);
-        skin.EffectsEnabled = () => animate.IsChecked == true;
-        skin.DecorationsEnabled = () => decorations.IsChecked == true;
-        animate.Click += (_, _) => skin.RefreshOptions(); decorations.Click += (_, _) => skin.RefreshOptions();
-        var general = Section(generalPage, "日常行为", "收纳窗口后仍保留任务与项目的绑定。");
-        var mini = Check("收纳窗口后最小化原窗口", minimize); general.Children.Add(mini);
-        general = Section(generalPage, "启动与工作现场", "继续上次的工作，减少重复寻找窗口。");
-        var recoveryPage = Check("启动时显示未恢复的任务清单", source.ShowRecoveryOnStartup); general.Children.Add(recoveryPage);
-        var reconnect = Check("启动时自动重连可唯一确认的已有窗口", source.AutoReconnectExisting); general.Children.Add(reconnect);
-        var restore = Check("启动时自动打开已配置的断开任务", source.AutoRestoreOnStartup); general.Children.Add(restore);
-        Label(general, "自动打开仅使用任务中保存的项目、启动方式与会话 ID；缺少信息的任务仍需配置。", 12);
-        general = Section(generalPage, "AI 工作状态", "接入真实事件后显示运行、等待处理、本轮回复与错误。");
-        Label(general, "Claude Code / Codex 可通过真实 hooks 事件更新运行、等待处理、本轮回复和错误。右键任务 → 连接自动任务状态，复制该任务的启动命令。已运行的 CLI 需要用接入命令重新启动。", 13);
-        Label(general, "仅拖入终端不能判断内部 AI 状态，未接入时显示未知。建议一个窗口对应一个 AI 会话；本轮回复不等于整个任务完成。", 13);
-        if (warnings != "") Label(general, "当前监听提示\n" + warnings, 12);
-        reset.Click += (_, _) => { Result = new(); AutoHide = false; MinimizeOnCapture = true; DialogResult = true; };
+        skin.LoadoutRequested += () => LoadoutRequested?.Invoke();
+        var qualitySection = Section(appearance, "界面效果", "影响 OmniVibe；Terminal 动画在主题预览里单独开启。");
+        var quality = Options(new[] { "完整效果 · 插画、装饰与动画", "静态外观 · 保留插画和装饰", "简洁外观 · 保留任务与状态" }, source.DecorationsEnabled ? source.Animate ? 0 : 1 : 2);
+        qualitySection.Children.Add(quality);
+        skin.EffectsEnabled = () => quality.SelectedIndex == 0;
+        skin.DecorationsEnabled = () => quality.SelectedIndex != 2;
+        quality.SelectionChanged += (_, _) => skin.RefreshOptions();
+
+        var keyPage = Page("快捷键", "点击右侧按键后直接录入，保存后全局生效。× 清除，↺ 恢复默认，Esc 取消录入。Windows 保留组合无法接管。");
+        var recorders = new Dictionary<int, ShortcutRecorder>();
+        var defaults = new Preferences();
+        var wheelEditor = new ShortcutRecorder("滚轮切换", source.WheelSwitchEnabled ? Preferences.ModifierLabel(source.MouseModifiers) + "+Wheel" : "", "Alt+Wheel", wheel: true);
+        var keyNotice = new TextBlock { FontSize = 11, TextWrapping = TextWrapping.Wrap, Foreground = WuxiaTheme.Brush(host.Waiting), Margin = new Thickness(0, 0, 0, 12) }; keyPage.Children.Add(keyNotice);
+        void KeyRow(Panel parent, ShortcutBinding binding)
+        {
+            var row = new Grid { Margin = new Thickness(0, 6, 0, 9) };
+            row.ColumnDefinitions.Add(new()); row.ColumnDefinitions.Add(new() { Width = new GridLength(238) });
+            var info = new StackPanel { Margin = new Thickness(0, 2, 14, 0), VerticalAlignment = VerticalAlignment.Center };
+            info.Children.Add(new TextBlock { Text = binding.Name, FontSize = 13, FontWeight = FontWeights.SemiBold });
+            info.Children.Add(new TextBlock { Text = binding.Purpose, FontSize = 11, TextWrapping = TextWrapping.Wrap, Foreground = WuxiaTheme.Brush(host.Muted), Margin = new Thickness(0, 4, 0, 0) }); row.Children.Add(info);
+            var editor = new ShortcutRecorder(binding.Name, binding.Gesture, ShortcutBindings.All(defaults).First(b => b.Id == binding.Id).Gesture);
+            editor.Changed += () => UpdateKeyNotice(); recorders[binding.Id] = editor; Grid.SetColumn(editor, 1); row.Children.Add(editor); parent.Children.Add(row);
+        }
+        var commonKeys = Section(keyPage, "常用操作", "总览看全部任务，轮盘用指向选择；选你顺手的一种即可。");
+        foreach (var binding in ShortcutBindings.All(source).Where(b => b.Id >= 10)) KeyRow(commonKeys, binding);
+        var wheelSection = Section(keyPage, "滚轮切换", "不用打开总览，按住修饰键并滚动即可切换已收纳的窗口。");
+        wheelEditor.Changed += () => UpdateKeyNotice(); wheelSection.Children.Add(wheelEditor);
+        var slotsBody = new StackPanel();
+        foreach (var binding in ShortcutBindings.All(source).Where(b => b.Id < 10)) KeyRow(slotsBody, binding);
+        var taskKeys = new Expander { Header = "窗口 1–9 · 展开后逐个自定义", Content = slotsBody, Margin = new Thickness(0, 4, 0, 16), IsExpanded = true }; keyPage.Children.Add(taskKeys);
+        Preferences KeyDraft()
+        {
+            var candidate = Result.Copy();
+            candidate.TaskGestures = recorders.Where(x => x.Key < 10).ToDictionary(x => x.Key, x => x.Value.Gesture);
+            candidate.InventoryGesture = recorders[11].Gesture; candidate.TabTogglesInventory = candidate.InventoryGesture.Length > 0;
+            candidate.RadialGesture = recorders[13].Gesture; candidate.ArrangeGesture = recorders[12].Gesture; candidate.ToggleGesture = recorders[10].Gesture;
+            candidate.WheelSwitchEnabled = wheelEditor.Gesture.Length > 0;
+            if (candidate.WheelSwitchEnabled && InputService.TryParseGesture(wheelEditor.Gesture.Replace("Wheel", "F24"), out uint mods, out uint key)) candidate.MouseModifiers = (ShortcutModifiers)mods;
+            return candidate;
+        }
+        void UpdateKeyNotice()
+        {
+            if (recorders.Count != 13) return;
+            var candidate = KeyDraft();
+            keyNotice.Text = !ShortcutBindings.Validate(candidate, out string problem) ? problem : string.Join("、", ShortcutBindings.All(candidate).Where(b => ShortcutBindings.IsTypingKey(b.Gesture)).Select(b => b.Name + "（" + ShortcutBindings.Display(b.Gesture) + "）")) is string typing && typing.Length > 0 ? typing + " 会全局接管原应用的这个键；清除或加修饰键即可交还。" : "";
+        }
+        UpdateKeyNotice();
+
+        var layoutPage = Page("窗口与布局", "调整多个窗口怎么排、单个窗口怎么唤出，以及桌面入口的位置。");
+        var layout = Section(layoutPage, "全部排列", "按「排列 / 恢复」快捷键铺开窗口，再按一次恢复。");
+        var arrangement = Options(new[] { "均衡网格 · 铺满屏幕", "纵向分栏", "横向分行", "主窗居左 · 其余居右" }, (int)source.Arrangement); layout.Children.Add(arrangement);
+        Label(layout, "窗口间距"); var gap = Slider(0, 32, source.LayoutGap, layout);
+        layout = Section(layoutPage, "切换窗口", "同一个窗口的快捷键再按一次，会恢复唤出之前的样子。");
+        var wake = Options(new[] { "保留窗口最近的大小和位置", "唤出时铺满当前屏幕工作区" }, (int)source.WakeMode); layout.Children.Add(wake);
+        var mini = Check("收纳后最小化原窗口", minimize); layout.Children.Add(mini);
+        var ring = Section(layoutPage, "悬浮入口", "鼠标移入展开任务，移开收回；长按入口可直接拖动位置。");
+        Label(ring, "展开范围"); var width = Slider(320, 480, source.DockWidth, ring);
+        var resetPosition = new Button { Content = "恢复右侧默认位置", HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(0, 8, 0, 0) };
+        resetPosition.Click += (_, _) => { ResetDockPositionRequested = true; resetPosition.Content = "保存后恢复右侧位置"; }; ring.Children.Add(resetPosition);
+
+        var generalPage = Page("常规", "管理启动恢复和声音。少用的维护工具收在页面底部。");
+        var general = Section(generalPage, "启动与输入", "选择打开 OmniVibe 后如何继续上次的工作。");
+        var startup = Options(new[] { "只显示悬浮入口", "重连仍在运行的窗口", "重连窗口，并显示待恢复任务", "重连窗口，并自动打开已配置任务" }, source.AutoRestoreOnStartup ? 3 : source.ShowRecoveryOnStartup ? 2 : source.AutoReconnectExisting ? 1 : 0); general.Children.Add(startup);
+        var pause = Check("本次运行暂停全局快捷键（鼠标仍可用）", shortcutsPaused); general.Children.Add(pause);
+        var audio = new AudioSettingsPanel(source, () => skin.SelectedSkin); generalPage.Children.Add(audio);
+        var maintenance = new StackPanel();
+        var history = new Button { Content = "查看最近任务 / 恢复工作现场", HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(0, 6, 0, 6) }; history.Click += (_, _) => RecoveryRequested?.Invoke(); maintenance.Children.Add(history);
+        var data = new Button { Content = "打开配置目录", HorizontalAlignment = HorizontalAlignment.Left }; data.Click += (_, _) => DataDirectoryRequested?.Invoke(); maintenance.Children.Add(data);
+        if (warnings != "") Label(maintenance, "当前快捷键 / 监听提示\n" + warnings, 12);
+        generalPage.Children.Add(new Expander { Header = "维护与诊断", Content = maintenance, Margin = new Thickness(0, 10, 0, 16) });
+        reset.Click += (_, _) => { Result = new(); AutoHide = false; MinimizeOnCapture = true; PauseShortcuts = false; DialogResult = true; };
         save.Click += (_, _) =>
         {
-            var chords = new HashSet<string>(); var taskMods = Enum.GetValues<ShortcutModifiers>()[number.SelectedIndex];
-            bool Validate(string text, bool tabAllowed)
-            {
-                uint mods = 0, key = 9;
-                if (!(tabAllowed && text == "Tab") && !InputService.TryParseGesture(text, out mods, out key)) { error.Text = "请选择有效组合键；仅总览允许单独 Tab。"; return false; }
-                if (mods == (uint)taskMods && key is >= 0x31 and <= 0x39 || !chords.Add(mods + ":" + key)) { error.Text = "快捷键重复，请使用不同组合。"; return false; }
-                return true;
-            }
-            string toggleKey = (string)toggle.Tag, arrangeKey = (string)arrange.Tag, inventoryKey = (string)inventory.Tag, radialKey = (string)radial.Tag;
-            if (!Validate(toggleKey, false) || !Validate(arrangeKey, false) || !Validate(radialKey, false) || inventoryEnabled.IsChecked == true && !Validate(inventoryKey, true)) return;
-            Result.RadialGesture = radialKey;
-            Result.TaskModifiers = taskMods; Result.MouseModifiers = Enum.GetValues<ShortcutModifiers>()[mouse.SelectedIndex]; Result.ToggleGesture = toggleKey; Result.ArrangeGesture = arrangeKey; Result.InventoryGesture = inventoryKey; Result.TabTogglesInventory = inventoryEnabled.IsChecked == true;
-            Result.Arrangement = (ArrangementMode)arrangement.SelectedIndex; Result.LayoutGap = (int)gap.Value; Result.HideDockOnArrange = false; Result.WakeMode = (WakeMode)wake.SelectedIndex;
-            Result.Skin = skin.SelectedSkin; Result.DockWidth = width.Value; Result.DockHeight = 0; if (position.IsChecked == true) Result.FreeDockPosition = false;
-            Result.Animate = animate.IsChecked == true; Result.DecorationsEnabled = decorations.IsChecked == true; MinimizeOnCapture = mini.IsChecked == true;
-            if (!audio.TryCommit(Result, out string audioError)) { error.Text = audioError; return; }
-            Result.ShowRecoveryOnStartup = recoveryPage.IsChecked == true; Result.AutoReconnectExisting = reconnect.IsChecked == true; Result.AutoRestoreOnStartup = restore.IsChecked == true; DialogResult = true;
+            error.Visibility = Visibility.Collapsed;
+            if (recorders.Values.Any(r => r.IsCapturing) || wheelEditor.IsCapturing) { Fail("请先完成按键录入，或按 Esc 取消本次录入。"); return; }
+            var candidate = KeyDraft();
+            if (!ShortcutBindings.Validate(candidate, out string problem)) { Fail(problem); navButtons[2].RaiseEvent(new RoutedEventArgs(Button.ClickEvent)); return; }
+            if (ShortcutAvailabilityCheck?.Invoke(candidate) is string occupied) { Fail(occupied); navButtons[2].RaiseEvent(new RoutedEventArgs(Button.ClickEvent)); return; }
+            candidate.Arrangement = (ArrangementMode)arrangement.SelectedIndex; candidate.LayoutGap = (int)gap.Value; candidate.HideDockOnArrange = false; candidate.WakeMode = (WakeMode)wake.SelectedIndex;
+            candidate.Skin = skin.SelectedSkin; candidate.DockWidth = width.Value; candidate.DockHeight = 0;
+            candidate.Animate = quality.SelectedIndex == 0; candidate.DecorationsEnabled = quality.SelectedIndex != 2;
+            candidate.ShowRecoveryOnStartup = startup.SelectedIndex >= 2; candidate.AutoReconnectExisting = startup.SelectedIndex >= 1; candidate.AutoRestoreOnStartup = startup.SelectedIndex == 3;
+            if (!audio.TryCommit(candidate, out string audioError)) { Fail(audioError); return; }
+            Result = candidate; MinimizeOnCapture = mini.IsChecked == true; PauseShortcuts = pause.IsChecked == true; DialogResult = true;
         };
         Content = root;
-        nav.Children.Clear(); foreach (int index in new[] { 2, 5, 4, 1, 0, 3 }) nav.Children.Add(navButtons[index]);
         SizeChanged += (_, _) => { sidebar.Width = ActualWidth < 880 ? 144 : 184; pages.Margin = new Thickness(ActualWidth < 880 ? 16 : 26, 20, 12, 0); draft.Visibility = ActualWidth < 820 ? Visibility.Collapsed : Visibility.Visible; };
-        navButtons[Math.Clamp(page, 0, navButtons.Count - 1)].RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        int initial = page switch { 0 => 2, 1 => 3, 2 => 1, 3 or 5 => 4, _ => 0 };
+        navButtons[initial].RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
     }
     private static StackPanel Section(Panel parent, string title, string description)
     {
@@ -167,19 +195,10 @@ public sealed class SettingsWindow : Window
     private static void Label(Panel p, string text, double size = 13) => p.Children.Add(new TextBlock { Text = text, FontSize = size, Foreground = WuxiaTheme.Brush(size <= 12 ? SkinCatalog.Current.Muted : SkinCatalog.Current.Text), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 12, 0, 8) });
     private static CheckBox Check(string text, bool value) => new() { Content = new TextBlock { Text = text, TextWrapping = TextWrapping.Wrap }, IsChecked = value, Foreground = WuxiaTheme.Ivory, Margin = new Thickness(0, 10, 0, 8) };
     private static ComboBox Options(string[] choices, int selected) { var c = new ComboBox { FontSize = 14, MinHeight = 36 }; foreach (string s in choices) c.Items.Add(new ComboBoxItem { Content = s }); c.SelectedIndex = Math.Clamp(selected, 0, choices.Length - 1); return c; }
-    private static ComboBox Modifiers(ShortcutModifiers m) => Options(Enum.GetValues<ShortcutModifiers>().Select(Preferences.ModifierLabel).ToArray(), Array.IndexOf(Enum.GetValues<ShortcutModifiers>(), m));
     private static Slider Slider(double min, double max, double value, Panel panel)
     {
         var row = new DockPanel(); var label = new TextBlock { Width = 48, TextAlignment = TextAlignment.Right }; DockPanel.SetDock(label, Dock.Right); row.Children.Add(label);
-        var s = new Slider { Minimum = min, Maximum = max, Value = Math.Clamp(value, min, max), IsSnapToTickEnabled = true, TickFrequency = 1, VerticalAlignment = VerticalAlignment.Center }; void Update() => label.Text = Math.Round(s.Value).ToString(); s.ValueChanged += (_, _) => Update(); Update(); row.Children.Add(s); panel.Children.Add(row); return s;
-    }
-    private static TextBox Gesture(string value, bool allowTab = false)
-    {
-        var box = new TextBox { Text = value.Replace("Oem3", "反引号"), Tag = value, IsReadOnly = true, ToolTip = "点击后按快捷键", MinHeight = 36, VerticalContentAlignment = VerticalAlignment.Center, Padding = new Thickness(10, 6, 10, 6) };
-        box.PreviewKeyDown += (_, e) => { Key key = e.Key == Key.System ? e.SystemKey : e.Key; if (key == Key.Escape) return; e.Handled = true;
-            if (allowTab && key == Key.Tab && Keyboard.Modifiers == ModifierKeys.None) { box.Tag = box.Text = "Tab"; return; }
-            if (key is Key.LeftAlt or Key.RightAlt or Key.LeftCtrl or Key.RightCtrl or Key.LeftShift or Key.RightShift or Key.LWin or Key.RWin || Keyboard.Modifiers == ModifierKeys.None) return;
-            try { string gesture = new KeyGestureConverter().ConvertToInvariantString(new KeyGesture(key, Keyboard.Modifiers))!; box.Tag = gesture; box.Text = gesture.Replace("Oem3", "反引号"); } catch (ArgumentException) { } };
-        return box;
+        var slider = new Slider { Minimum = min, Maximum = max, Value = Math.Clamp(value, min, max), IsSnapToTickEnabled = true, TickFrequency = 1, VerticalAlignment = VerticalAlignment.Center };
+        void Update() => label.Text = Math.Round(slider.Value).ToString(); slider.ValueChanged += (_, _) => Update(); Update(); row.Children.Add(slider); panel.Children.Add(row); return slider;
     }
 }

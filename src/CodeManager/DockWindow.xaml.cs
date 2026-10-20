@@ -465,21 +465,13 @@ public partial class DockWindow : Window
         menu.Items.Add(Item("添加窗口", AddWindow, Manager.State.Slots.Any(s => !s.Occupied)));
         menu.Items.Add(Item("任务总览", () => Manager.ToggleInventory()));
         menu.Items.Add(Item(Manager.State.Layout.Count > 0 ? "恢复布局" : "排列窗口", () => Manager.RequestOverview()));
-        menu.Items.Add(Item("设置与皮肤", () => Manager.ShowSettings()));
-        var more = new MenuItem { Header = "更多" };
-        more.Items.Add(Item("我的角色配装…", () => Manager.ShowLoadout()));
-        more.Items.Add(Item("最近关闭 / 恢复工作现场", () => Manager.ShowRecovery()));
-        var pause = Item("暂停快捷键", () => Manager.TogglePause()); pause.IsCheckable = true; pause.IsChecked = Manager.ShortcutsPaused; more.Items.Add(pause);
-        more.Items.Add(Item("收起所有窗口", () => Manager.ParkAll()));
-        more.Items.Add(Item(SkinCatalog.Current.Id == Skin.Arsenal ? "移动悬浮角色" : "移动圆环", ArmDockMove));
-        more.Items.Add(Item("移到当前屏幕", () => Manager.MoveToCursorScreen()));
-        more.Items.Add(Item(SkinCatalog.Current.Id == Skin.Arsenal ? "重置角色位置" : "重置圆环位置", () => Manager.ResetDockPosition()));
-        more.Items.Add(Item(SkinCatalog.Current.Id == Skin.Arsenal ? "隐藏悬浮角色" : "隐藏圆环", () => Manager.ToggleVisibility()));
-        more.Items.Add(new Separator());
-        more.Items.Add(Item("使用帮助", () => Manager.ShowHelp()));
-        more.Items.Add(Item("打开配置目录", () => Manager.OpenDataDirectory()));
-        more.Items.Add(Item("退出", () => Manager.Exit()));
-        menu.Items.Add(more);
+        menu.Items.Add(new Separator());
+        menu.Items.Add(Item("设置", () => Manager.ShowSettings()));
+        menu.Items.Add(Item("最近任务 / 恢复工作现场", () => Manager.ShowRecovery()));
+        menu.Items.Add(Item("快速上手", () => Manager.ShowHelp()));
+        menu.Items.Add(Item("隐藏悬浮入口", () => Manager.ToggleVisibility()));
+        menu.Items.Add(new Separator());
+        menu.Items.Add(Item("退出 · 终端继续运行", () => Manager.Exit()));
         return menu;
     }
     private void AddWindow()

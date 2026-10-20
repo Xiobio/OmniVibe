@@ -1,0 +1,98 @@
+{
+  "updated_at": "2026-10-20T05:26:07.782902+00:00",
+  "passed": true,
+  "packaged": false,
+  "cli_sessions_restarted": false,
+  "core": {
+    "passed": 39,
+    "total": 39,
+    "evidence": "artifacts/settings-refresh/staged-self-test.json"
+  },
+  "settings": {
+    "passed": true,
+    "groups": 12,
+    "evidence": "artifacts/settings-refresh/staged-validation/report.json",
+    "checks": [
+      "13 stable choices and five independent preview views",
+      "Full settings, gallery and five grouped pages render",
+      "Static frame-only preview stays visible; explicit animation advances and stops when hidden or unloaded",
+      "Save commits the draft while caller preferences remain unchanged",
+      "Narrow/short layouts keep footer actions inside the window",
+      "Preview and validation never write live Terminal settings",
+      "Custom bindings preserve legacy defaults, deep drafts, clears and saved round trips",
+      "Recorder consumes routed function keys, cancels with Escape, clears and restores defaults",
+      "Saved UI bindings reach preferences; conflicts keep the dialog open without committing",
+      "Native registration follows per-slot custom keys and releases every chord during recording",
+      "Guide uses saved custom keys and disabled actions; visual equipment draft preserves task identity",
+      "First-run guide is fresh-install only and its three entry points dispatch real actions"
+    ]
+  },
+  "audio_settings": {
+    "passed": true,
+    "groups": 9,
+    "evidence": "artifacts/signature-settings-validation/report.json"
+  },
+  "clean_staged_source": {
+    "build_passed": true,
+    "warnings": 0,
+    "errors": 0,
+    "unrelated_optimization_and_maintenance_edits_excluded": true,
+    "path": "artifacts/settings-refresh/staged-source"
+  },
+  "visual": {
+    "themes": 13,
+    "preview_modes": 5,
+    "equipment_choices": 9,
+    "nine_equipment_choices_above_footer_verified": true,
+    "short_window": {
+      "width": 720,
+      "height": 580,
+      "pages": 5
+    },
+    "screenshots": 83,
+    "gallery": "docs/settings-and-onboarding/README.md"
+  },
+  "live_refresh": {
+    "at": "2026-10-20T05:25:11.2920153+00:00",
+    "occupied_task_identities_preserved": true,
+    "occupied_count": 4,
+    "recent_task_identities_preserved": true,
+    "recent_count": 5,
+    "preferences_preserved": true,
+    "terminal_configuration_unchanged": true,
+    "terminal_processes_unchanged": true,
+    "terminal_pids": [
+      2900
+    ],
+    "previous_manager_pids": [
+      2520
+    ],
+    "current_manager_pids": [
+      19540
+    ],
+    "manager_path": [
+      "D:\\tools\\OmniVibe\\src\\CodeManager\\bin\\Debug\\net10.0-windows\\CodeManager.exe"
+    ],
+    "one_debug_process_running": true,
+    "deployed_catalog_matches_source": true,
+    "packaged": false,
+    "cli_sessions_restarted": false,
+    "visible_windows": [
+      {
+        "title": "OmniVibe · 灵蕴法宝匣",
+        "topmost": true,
+        "left": 2365,
+        "top": 1257,
+        "width": 116,
+        "height": 116
+      }
+    ],
+    "evidence": "artifacts/settings-refresh/live-refresh.json"
+  },
+  "boundaries": [
+    "Windows-reserved shortcuts and global F12 cannot be registered. Escape cancels recording.",
+    "Plain keys intentionally configured by the user capture the corresponding global input; the editor reports this.",
+    "Terminal appearance applies separately and is never changed by browsing or saving OmniVibe settings.",
+    "Native tests use isolated fixtures; no physical keystrokes are sent to user terminals."
+  ]
+}

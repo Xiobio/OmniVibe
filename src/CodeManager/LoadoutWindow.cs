@@ -15,6 +15,7 @@ public sealed class LoadoutWindow : Window
     private readonly List<Slot> _draft;
     private readonly StackPanel _slotList = new();
     private readonly UniformGrid _weapons = new() { Columns = 3 };
+    private readonly List<Image> _choiceImages = new();
     private readonly Image _portrait = new() { Width = 125, Height = 154, Stretch = Stretch.Uniform };
     private readonly TextBlock _title = new() { FontSize = 24, FontWeight = FontWeights.SemiBold };
     private readonly TextBlock _subtitle = new() { FontSize = 12, TextWrapping = TextWrapping.Wrap };
@@ -24,13 +25,20 @@ public sealed class LoadoutWindow : Window
     private int _index;
     private bool _refreshing;
     public IReadOnlyDictionary<string, EquipmentAssignment> Result => _draft.ToDictionary(x => x.Id, EquipmentAssignment.From);
-    public LoadoutWindow(IReadOnlyList<Slot> slots, Native.Rect area, Slot? focus = null, Skin? previewSkin = null)
+    public static List<Slot> CreateDraft(IReadOnlyList<Slot> slots, IReadOnlyDictionary<string, EquipmentAssignment>? pending = null)
+    {
+        return slots.OrderBy(s => s.Number).Select(s => {
+            var copy = new Slot { Number = s.Number, Id = s.Id, Name = s.Name, Window = s.Window, ProjectDirectory = s.ProjectDirectory, Connected = s.Connected };
+            (pending != null && pending.TryGetValue(s.Id, out var assignment) ? assignment : EquipmentAssignment.From(s)).Apply(copy);
+            return copy;
+        }).ToList();
+    }
+    public LoadoutWindow(IReadOnlyList<Slot> slots, Native.Rect area, Slot? focus = null, Skin? previewSkin = null, bool settingsDraft = false)
     {
         _skin = SkinCatalog.Get(previewSkin ?? SkinCatalog.Current.Id);
         RenderOptions.SetBitmapScalingMode(this, BitmapScalingMode.HighQuality);
-        _draft = slots.OrderBy(x => x.Number).Select(s => new Slot { Number = s.Number, Id = s.Id, EquipmentId = s.EquipmentId, EquipmentImage = s.EquipmentImage, EquipmentName = s.EquipmentName, Name = s.Name, Window = s.Window, ProjectDirectory = s.ProjectDirectory, Connected = s.Connected }).ToList();
+        _draft = CreateDraft(slots);
         EquipmentCatalog.EnsureDefaults(_draft);
-        for (int i = 0; i < _draft.Count; i++) _draft[i].EquipmentSelections = new Dictionary<string, string>(slots.First(x => x.Id == _draft[i].Id).EquipmentSelections ?? new());
         _index = Math.Max(0, _draft.FindIndex(x => x.Id == focus?.Id));
         var pack = EquipmentCatalog.Pack(_skin.Id);
         Title = "OmniVibe · " + pack.Title; Width = 1040; Height = 840; MinWidth = 690; MinHeight = 460;
@@ -44,43 +52,43 @@ public sealed class LoadoutWindow : Window
         Resources[typeof(Button)] = SettingsWindow.SettingsButtonStyle(_skin);
         SourceInitialized += (_, _) => Native.Decorate(this, noActivate: false);
         var root = new DockPanel(); Content = root;
-        var heading = new StackPanel { Margin = new Thickness(26, 20, 26, 18) };
+        var heading = new StackPanel { Margin = new Thickness(24, 14, 24, 12) };
         heading.Children.Add(Label(_skin.Name + " / LOADOUT", 10, _skin.Accent));
-        heading.Children.Add(Label(pack.Title, 27, _skin.Text));
+        heading.Children.Add(Label(pack.Title, 22, _skin.Text));
         heading.Children.Add(Label(pack.Subtitle + " · 为当前主题独立保存选择，任务与窗口绑定保持不变。", 12, _skin.Muted));
         DockPanel.SetDock(heading, Dock.Top); root.Children.Add(heading);
         var footer = new DockPanel { Margin = new Thickness(24, 12, 24, 18), LastChildFill = true };
         var actions = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right };
         var cancel = Button("取消"); cancel.IsCancel = true;
-        var save = Button("保存配装"); save.IsDefault = true; save.FontWeight = FontWeights.SemiBold;
+        var save = Button(settingsDraft ? "使用这些形象" : "保存配装"); save.IsDefault = true; save.FontWeight = FontWeights.SemiBold;
         save.Click += (_, _) => { DialogResult = true; };
         actions.Children.Add(cancel); actions.Children.Add(save); DockPanel.SetDock(actions, Dock.Right); footer.Children.Add(actions);
-        footer.Children.Add(Label("配装跟随任务移动 · 取消不改变当前配置", 11, _skin.Muted));
+        footer.Children.Add(Label(settingsDraft ? "返回设置后，点「保存并应用」才会生效" : "配装跟随任务移动 · 取消不改变当前配置", 11, _skin.Muted));
         DockPanel.SetDock(footer, Dock.Bottom); root.Children.Add(footer);
         var left = new ScrollViewer { Width = 236, Margin = new Thickness(16, 0, 0, 8), VerticalScrollBarVisibility = ScrollBarVisibility.Auto, Content = _slotList };
         DockPanel.SetDock(left, Dock.Left); root.Children.Add(left);
         var body = new StackPanel { Margin = new Thickness(24, 0, 24, 18) };
         root.Children.Add(new ScrollViewer { Content = body, VerticalScrollBarVisibility = ScrollBarVisibility.Auto });
-        var hero = new Grid { Height = 174, Margin = new Thickness(0, 0, 0, 16), Background = new LinearGradientBrush((Color)ColorConverter.ConvertFromString(_skin.Elevated), (Color)ColorConverter.ConvertFromString(_skin.Background), 0) };
-        hero.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(168) }); hero.ColumnDefinitions.Add(new ColumnDefinition());
+        var hero = new Grid { Height = 48, Margin = new Thickness(0, 0, 0, 8), Background = new LinearGradientBrush((Color)ColorConverter.ConvertFromString(_skin.Elevated), (Color)ColorConverter.ConvertFromString(_skin.Background), 0) };
+        _portrait.Visibility = Visibility.Collapsed; _title.FontSize = 17; _title.TextTrimming = TextTrimming.CharacterEllipsis;
+        _subtitle.TextWrapping = TextWrapping.NoWrap; _subtitle.TextTrimming = TextTrimming.CharacterEllipsis; _subtitle.FontSize = 11;
+        hero.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(0) }); hero.ColumnDefinitions.Add(new ColumnDefinition());
         hero.Children.Add(_portrait);
         var info = new StackPanel { VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(6, 0, 18, 0) };
-        info.Children.Add(Label("当前槽位装备", 10, _skin.Accent)); info.Children.Add(_title); info.Children.Add(_subtitle);
+        info.Children.Add(_title); info.Children.Add(_subtitle);
         Grid.SetColumn(info, 1); hero.Children.Add(info); body.Children.Add(hero);
         _weapons.SizeChanged += (_, _) => _weapons.Columns = _weapons.ActualWidth < 480 ? 2 : 3;
         SizeChanged += (_, _) => {
             left.Width = Math.Clamp(ActualWidth * .23, 150, 236);
-            bool narrow = ActualWidth - left.Width < 440;
-            hero.ColumnDefinitions[0].Width = new GridLength(narrow ? 100 : 168); _portrait.Width = narrow ? 80 : 125;
+            foreach (var image in _choiceImages) image.Height = ChoiceHeight;
         };
-        body.Children.Add(Label("选择主题藏品", 16, _skin.Text));
-        body.Children.Add(Label("角色、武器与道具形成独立轮廓 · 悬停查看名称与素材来源", 11, _skin.Muted));
+        body.Children.Add(Label("点击图片选择形象 · 选中项高亮 · 悬停查看名称与来源", 11, _skin.Muted));
         body.Children.Add(_weapons);
-        body.Children.Add(new Border { Height = 1, Background = WuxiaTheme.Brush(_skin.Border), Margin = new Thickness(0, 18, 0, 14) });
-        body.Children.Add(Label("自定义藏品", 16, _skin.Text));
-        body.Children.Add(Label("也可导入自己的角色、皮肤或武器图；透明 PNG 效果最佳。", 11, _skin.Muted));
-        var custom = new WrapPanel(); var import = Button("导入图片…"); var reset = Button("恢复主题藏品"); custom.Children.Add(import); custom.Children.Add(reset); body.Children.Add(custom);
-        body.Children.Add(Label("藏品名称", 11, _skin.Muted)); body.Children.Add(_customName);
+        var customization = new StackPanel();
+        body.Children.Add(new Expander { Header = "使用自己的图片", Content = customization, Margin = new Thickness(0, 16, 0, 0) });
+        customization.Children.Add(Label("导入透明 PNG，可替换当前槽位的角色或武器。", 11, _skin.Muted));
+        var custom = new WrapPanel(); var import = Button("导入图片…"); var reset = Button("恢复主题藏品"); custom.Children.Add(import); custom.Children.Add(reset); customization.Children.Add(custom);
+        customization.Children.Add(Label("藏品名称", 11, _skin.Muted)); customization.Children.Add(_customName);
         _customName.TextChanged += (_, _) => { if (!_refreshing && _draft[_index].EquipmentImage != "") { _draft[_index].EquipmentName = _customName.Text.Trim(); UpdateHero(); } };
         _error.Foreground = WuxiaTheme.Brush(_skin.Waiting); _error.Margin = new Thickness(0, 8, 0, 0); body.Children.Add(_error);
         import.Click += (_, _) => {
@@ -95,6 +103,7 @@ public sealed class LoadoutWindow : Window
     }
     private TextBlock Label(string text, double size, string color) => new() { Text = text, FontSize = size, Foreground = WuxiaTheme.Brush(color), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 3, 0, 6), VerticalAlignment = VerticalAlignment.Center };
     private Button Button(string text) => new() { Content = text, Padding = new Thickness(14, 8, 14, 8), MinHeight = 36, Margin = new Thickness(0, 4, 8, 4) };
+    private double ChoiceHeight => Math.Clamp(((ActualHeight > 0 ? ActualHeight : Height) - 330) / 3 - 47, 52, 112);
     public void SelectSlot(int number) { _index = _draft.FindIndex(x => x.Number == number); if (_index < 0) _index = 0; Refresh(); }
     public void SelectWeapon(string id)
     {
@@ -115,27 +124,27 @@ public sealed class LoadoutWindow : Window
     {
         var slot = _draft[_index]; _portrait.Source = EquipmentCatalog.Image(slot, _skin.Id); _title.Text = EquipmentCatalog.Name(slot, _skin.Id);
         var item = EquipmentCatalog.Item(slot, _skin.Id);
-        _subtitle.Text = "槽位 " + slot.Number + "  /  " + (slot.Occupied ? slot.DisplayName : "等待收纳窗口") + "\n" + (slot.EquipmentImage == "" ? item.Kind : "自定义藏品") + "\n" + (slot.EquipmentImage == "" ? item.Provenance : "用户导入 · 保留原图透明通道");
+        _subtitle.Text = "槽位 " + slot.Number + "  /  " + (slot.Occupied ? slot.DisplayName : "等待收纳窗口");
     }
     private void Refresh()
     {
-        _refreshing = true; var selected = _draft[_index]; _slotList.Children.Clear(); _weapons.Children.Clear(); UpdateHero();
+        _refreshing = true; var selected = _draft[_index]; _slotList.Children.Clear(); _weapons.Children.Clear(); _choiceImages.Clear(); UpdateHero();
         foreach (var slot in _draft) {
-            var row = new Grid { Height = 53 }; row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(25) }); row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(42) }); row.ColumnDefinitions.Add(new ColumnDefinition());
+            var row = new Grid { Height = 36 }; row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(25) }); row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(34) }); row.ColumnDefinitions.Add(new ColumnDefinition());
             row.Children.Add(Label(slot.Number.ToString("D2"), 11, _skin.Accent));
-            var image = new Image { Source = EquipmentCatalog.Image(slot, _skin.Id), Height = 46, Width = 38, Stretch = Stretch.Uniform }; Grid.SetColumn(image, 1); row.Children.Add(image);
+            var image = new Image { Source = EquipmentCatalog.Image(slot, _skin.Id), Height = 34, Width = 30, Stretch = Stretch.Uniform }; Grid.SetColumn(image, 1); row.Children.Add(image);
             var name = new StackPanel { VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(8, 0, 0, 0) };
-            name.Children.Add(new TextBlock { Text = EquipmentCatalog.Name(slot, _skin.Id), FontSize = 13, Foreground = WuxiaTheme.Brush(_skin.Text) });
-            name.Children.Add(new TextBlock { Text = slot.Occupied ? slot.DisplayName : "空槽位", FontSize = 10, Foreground = WuxiaTheme.Brush(_skin.Muted), TextTrimming = TextTrimming.CharacterEllipsis, Margin = new Thickness(0, 4, 0, 0) });
+            name.Children.Add(new TextBlock { Text = EquipmentCatalog.Name(slot, _skin.Id), FontSize = 12, TextTrimming = TextTrimming.CharacterEllipsis, Foreground = WuxiaTheme.Brush(_skin.Text) });
+            name.Children.Add(new TextBlock { Text = slot.Occupied ? slot.DisplayName : "空槽位", FontSize = 9, Foreground = WuxiaTheme.Brush(_skin.Muted), TextTrimming = TextTrimming.CharacterEllipsis, Margin = new Thickness(0, 2, 0, 0) });
             Grid.SetColumn(name, 2); row.Children.Add(name);
-            var b = new Button { Content = row, Padding = new Thickness(8, 4, 8, 4), Margin = new Thickness(0, 0, 0, 5), HorizontalContentAlignment = HorizontalAlignment.Stretch, Background = WuxiaTheme.Brush(slot == selected ? _skin.Elevated : _skin.Surface), BorderBrush = WuxiaTheme.Brush(slot == selected ? _skin.Accent : _skin.Border), ToolTip = slot.DisplayName };
+            var b = new Button { Content = row, Padding = new Thickness(8, 2, 8, 2), Margin = new Thickness(0, 0, 0, 4), HorizontalContentAlignment = HorizontalAlignment.Stretch, Background = WuxiaTheme.Brush(slot == selected ? _skin.Elevated : _skin.Surface), BorderBrush = WuxiaTheme.Brush(slot == selected ? _skin.Accent : _skin.Border), ToolTip = slot.DisplayName };
             b.Click += (_, _) => SelectSlot(slot.Number); _slotList.Children.Add(b);
         }
         foreach (var item in EquipmentCatalog.Pack(_skin.Id).Items) {
             var sample = new Slot { Number = 1, EquipmentId = item.Id };
             var stack = new StackPanel { Margin = new Thickness(0, 5, 0, 4) };
-            stack.Children.Add(new Image { Source = EquipmentCatalog.Image(sample, _skin.Id), Height = 92, Stretch = Stretch.Uniform });
-            stack.Children.Add(new TextBlock { Text = item.Name, FontSize = 12, Foreground = WuxiaTheme.Brush(_skin.Text), TextAlignment = TextAlignment.Center, Margin = new Thickness(0, 6, 0, 0) });
+            var portrait = new Image { Source = EquipmentCatalog.Image(sample, _skin.Id), Height = ChoiceHeight, Stretch = Stretch.Uniform }; _choiceImages.Add(portrait); stack.Children.Add(portrait);
+            stack.Children.Add(new TextBlock { Text = item.Name, FontSize = 12, Foreground = WuxiaTheme.Brush(_skin.Text), TextAlignment = TextAlignment.Center, TextTrimming = TextTrimming.CharacterEllipsis, Margin = new Thickness(0, 6, 0, 0) });
             bool active = selected.EquipmentImage == "" && EquipmentCatalog.Item(selected, _skin.Id).Id == item.Id;
             var b = new Button { Content = stack, Padding = new Thickness(6), Margin = new Thickness(3), Background = WuxiaTheme.Brush(active ? _skin.Elevated : _skin.Surface), BorderBrush = WuxiaTheme.Brush(active ? _skin.Accent : _skin.Border), ToolTip = item.Name + " · " + item.Kind + "\n" + item.Provenance + (item.Source == "" ? "" : "\n" + item.Source) };
             b.Click += (_, _) => SelectWeapon(item.Id); _weapons.Children.Add(b);

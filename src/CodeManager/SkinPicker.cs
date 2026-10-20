@@ -32,7 +32,9 @@ public sealed class SkinPicker : StackPanel
     private bool _applyingTerminal;
     public Skin SelectedSkin => (_choices.SelectedItem as ComboBoxItem)?.Tag is Skin s ? s : Skin.InkJade;
     public SkinSuitePreview Scene => _scene;
+    public void SelectSkin(Skin skin) => _choices.SelectedIndex = Math.Max(0, SkinCatalog.All.ToList().FindIndex(s => s.Id == skin));
     public event Action? SelectionChanged;
+    public event Action? LoadoutRequested;
     public Func<bool>? EffectsEnabled { get => _effectsEnabled; set { _effectsEnabled = value; RefreshOptions(); } }
     public Func<bool>? DecorationsEnabled { get => _decorationsEnabled; set { _decorationsEnabled = value; RefreshOptions(); } }
     public SkinPicker(Skin selected)
@@ -41,7 +43,7 @@ public sealed class SkinPicker : StackPanel
         foreach (var s in SkinCatalog.All) _choices.Items.Add(new ComboBoxItem { Content = s.Name, ToolTip = s.Subtitle, Tag = s.Id });
         _choices.SelectedIndex = Math.Max(0, SkinCatalog.All.ToList().FindIndex(s => s.Id == selected));
         AutomationProperties.SetName(_choices, "皮肤套装");
-        Children.Add(_choices);
+        // Selection state stays independent of the visual catalogue; no duplicate text dropdown.
         var heading = new StackPanel { Margin = new Thickness(0, 4, 0, 10) };
         _description.Foreground = WuxiaTheme.Brush(host.Muted);
         heading.Children.Add(_description); Children.Add(heading);
@@ -68,34 +70,52 @@ public sealed class SkinPicker : StackPanel
         _assetStatus.Foreground = WuxiaTheme.Brush(host.Muted); Children.Add(_assetStatus);
         var apply = new Border { Background = WuxiaTheme.Brush(host.Surface), CornerRadius = new CornerRadius(9), Padding = new Thickness(16), Margin = new Thickness(0, 0, 0, 24) };
         var applyBody = new StackPanel();
-        applyBody.Children.Add(new TextBlock { Text = "两处外观，分别应用", FontSize = 13, FontWeight = FontWeights.SemiBold });
-        applyBody.Children.Add(new TextBlock { Text = "OmniVibe：点击底部「保存并应用」。Terminal：使用下方按钮单独应用，会自动备份配置。", FontSize = 12, Foreground = WuxiaTheme.Brush(host.Muted), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 6, 0, 12) });
-        applyBody.Children.Add(new TextBlock { Text = "Terminal 默认使用同款静态插画和边框。动画需单独开启，不随 OmniVibe 的界面动画自动启用。", FontSize = 11, Foreground = WuxiaTheme.Brush(host.Muted), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 9) });
+        applyBody.Children.Add(new TextBlock { Text = "此按钮只应用 Terminal 外观，并自动备份其配置。默认使用静态插画和边框，动画需单独开启。", FontSize = 11, Foreground = WuxiaTheme.Brush(host.Muted), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 9) });
         AutomationProperties.SetName(_terminalAnimation, "Terminal 背景动画");
         _terminalAnimation.Checked += (_, _) => RefreshOptions();
         _terminalAnimation.Unchecked += (_, _) => RefreshOptions();
-        applyBody.Children.Add(_terminalAnimation); applyBody.Children.Add(_terminal); applyBody.Children.Add(_feedback); apply.Child = applyBody; Children.Add(apply);
-        Children.Add(new TextBlock { Text = "全部主题套装", FontSize = 17, FontWeight = FontWeights.SemiBold });
-        Children.Add(new TextBlock { Text = "点击主题查看整套效果 · 十套游戏风格 + 三套经典主题", FontSize = 12, Foreground = WuxiaTheme.Brush(host.Muted), Margin = new Thickness(0, 5, 0, 6) });
-        foreach (var s in SkinCatalog.All)
+        applyBody.Children.Add(_terminalAnimation); applyBody.Children.Add(_terminal); applyBody.Children.Add(_feedback); apply.Child = applyBody;
+        Children.Add(new Expander { Header = "配套 Terminal 外观 · 单独应用", Content = apply, Margin = new Thickness(0, 8, 0, 14) });
+        foreach (var s in SkinCatalog.All.OrderBy(s => (int)s.Id >= (int)Skin.Hextech ? 0 : 1))
         {
-            var tile = new Grid { Height = 103, ClipToBounds = true, Background = WuxiaTheme.Brush(s.Background) };
+            var tile = new Grid { Height = 78, ClipToBounds = true, Background = WuxiaTheme.Brush(s.Background) };
             var picture = Thumbnail(s);
-            if (picture != null) tile.Children.Add(new Image { Source = picture, Stretch = Stretch.UniformToFill, Opacity = s.IsLight ? .17 : .24, IsHitTestVisible = false });
-            var body = new StackPanel { Margin = new Thickness(12, 10, 12, 8), VerticalAlignment = VerticalAlignment.Bottom };
+            if (picture != null) tile.Children.Add(new Image { Source = picture, Stretch = Stretch.UniformToFill, Opacity = .88, IsHitTestVisible = false });
+            tile.Children.Add(new Image { Source = EquipmentCatalog.Image(new Slot { Number = 1 }, s.Id), Width = 62, Height = 76, HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Top, Stretch = Stretch.Uniform, IsHitTestVisible = false, Margin = new Thickness(0, 1, 5, 0) });
+            tile.Children.Add(new Border { Background = new LinearGradientBrush(Color.FromArgb(0, 0, 0, 0), Color.FromArgb(s.IsLight ? (byte)210 : (byte)240, s.IsLight ? (byte)245 : (byte)9, s.IsLight ? (byte)235 : (byte)14, s.IsLight ? (byte)210 : (byte)16), 90), IsHitTestVisible = false });
+            var body = new StackPanel { Margin = new Thickness(8, 6, 8, 6), VerticalAlignment = VerticalAlignment.Bottom };
             string[] parts = s.Name.Split(" · ", 2);
-            body.Children.Add(new TextBlock { Text = parts[0], Foreground = WuxiaTheme.Brush(s.Text), FontSize = 14, FontWeight = FontWeights.SemiBold, TextTrimming = TextTrimming.CharacterEllipsis });
-            body.Children.Add(new TextBlock { Text = parts.Length == 2 ? parts[1] : s.Subtitle, Foreground = WuxiaTheme.Brush(s.Muted), FontSize = 10, TextTrimming = TextTrimming.CharacterEllipsis, Margin = new Thickness(0, 4, 0, 9) });
+            body.Children.Add(new TextBlock { Text = parts[0], Foreground = WuxiaTheme.Brush(s.Text), FontSize = 12, FontWeight = FontWeights.SemiBold, TextTrimming = TextTrimming.CharacterEllipsis });
+            body.Children.Add(new TextBlock { Text = parts.Length == 2 ? parts[1] : s.Subtitle, Foreground = WuxiaTheme.Brush(s.Muted), FontSize = 9, TextTrimming = TextTrimming.CharacterEllipsis, Margin = new Thickness(0, 3, 0, 6) });
             var swatches = new StackPanel { Orientation = Orientation.Horizontal };
-            foreach (string color in new[] { s.Accent, s.Secondary, s.Running, s.Waiting }) swatches.Children.Add(new Border { Background = WuxiaTheme.Brush(color), Width = 20, Height = 4, CornerRadius = new CornerRadius(2), Margin = new Thickness(0, 0, 4, 0) });
+            foreach (string color in new[] { s.Accent, s.Secondary, s.Running, s.Waiting }) swatches.Children.Add(new Border { Background = WuxiaTheme.Brush(color), Width = 14, Height = 3, CornerRadius = new CornerRadius(2), Margin = new Thickness(0, 0, 4, 0) });
             body.Children.Add(swatches); tile.Children.Add(body);
             var button = new Button { Content = tile, Padding = new Thickness(0), Margin = new Thickness(4), BorderThickness = new Thickness(1), HorizontalContentAlignment = HorizontalAlignment.Stretch, ToolTip = s.Name + "\n" + s.Subtitle, Tag = s.Id };
             AutomationProperties.SetName(button, "选择主题 " + s.Name);
-            button.Click += (_, _) => { _choices.SelectedIndex = SkinCatalog.All.ToList().FindIndex(row => row.Id == s.Id); _choices.BringIntoView(); };
+            button.Click += (_, _) => { _choices.SelectedIndex = SkinCatalog.All.ToList().FindIndex(row => row.Id == s.Id); };
             _tileButtons[s.Id] = button; _tiles.Children.Add(button);
         }
-        Children.Add(_tiles);
-        void ResizePreview() { _tiles.Columns = ActualWidth < 520 ? 2 : ActualWidth < 800 ? 3 : 4; double height = Window.GetWindow(this)?.ActualHeight ?? 900; _scene.Height = Math.Clamp(Math.Min(ActualWidth * .51, height * .42), 220, 410); }
+        var details = new StackPanel { Margin = new Thickness(18, 0, 0, 0) };
+        var detailChildren = Children.Cast<UIElement>().ToArray(); Children.Clear();
+        details.Children.Add(_name);
+        foreach (var child in detailChildren) details.Children.Add(child);
+        var catalogue = new StackPanel();
+        var catalogueHeading = new DockPanel();
+        var equipment = new Button { Content = "角色与武器 →", FontSize = 11, Padding = new Thickness(8, 4, 8, 4), MinHeight = 27, Margin = new Thickness(6, 0, 0, 0) };
+        equipment.Click += (_, _) => LoadoutRequested?.Invoke(); DockPanel.SetDock(equipment, Dock.Right); catalogueHeading.Children.Add(equipment);
+        catalogueHeading.Children.Add(new TextBlock { Text = "选择主题", FontSize = 17, FontWeight = FontWeights.SemiBold, VerticalAlignment = VerticalAlignment.Center }); catalogue.Children.Add(catalogueHeading);
+        catalogue.Children.Add(new TextBlock { Text = "直接点图片 · 预览不会修改当前外观", FontSize = 11, Foreground = WuxiaTheme.Brush(host.Muted), Margin = new Thickness(0, 6, 0, 10) });
+        catalogue.Children.Add(_tiles);
+        var studio = new Grid(); studio.ColumnDefinitions.Add(new()); studio.ColumnDefinitions.Add(new()); studio.RowDefinitions.Add(new() { Height = GridLength.Auto }); studio.RowDefinitions.Add(new() { Height = GridLength.Auto });
+        studio.Children.Add(catalogue); Grid.SetColumn(details, 1); studio.Children.Add(details); Children.Add(studio);
+        void ResizePreview() {
+            bool wide = ActualWidth >= 790;
+            studio.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star); studio.ColumnDefinitions[1].Width = wide ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
+            Grid.SetColumn(details, wide ? 1 : 0); Grid.SetRow(details, wide ? 0 : 1); details.Margin = new Thickness(wide ? 18 : 0, wide ? 0 : 22, 0, 0);
+            _tiles.Columns = wide ? 4 : ActualWidth < 430 ? 2 : ActualWidth < 650 ? 3 : 4;
+            double width = wide ? ActualWidth / 2 - 18 : ActualWidth;
+            _scene.Height = Math.Clamp(width * .61, 210, 360);
+        }
         SizeChanged += (_, _) => ResizePreview(); Loaded += (_, _) => ResizePreview();
         _choices.SelectionChanged += (_, _) => RefreshPreview();
         _terminal.Click += async (_, _) =>
