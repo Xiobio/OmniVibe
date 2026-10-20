@@ -462,6 +462,7 @@ public static class SkinTests
                     WuxiaTheme.Apply(skin.Id);
                     var identity = ThemeIdentityArt.Image(skin.Id);
                     Check(identity != null && identity.IsFrozen && identity.PixelWidth <= 512 && identity.PixelHeight <= 512, skin.Slug + ": missing or unbounded identity artwork");
+                    Check(ThemeIdentityArt.HasTransparentSilhouette(identity!), skin.Slug + ": opaque poster replaced the floating identity");
                     var slots = Enumerable.Range(1,9).Select(n => new Slot { Number = n }).ToList();
                     EquipmentCatalog.EnsureDefaults(slots);
                     var wheel = new DockWeaponWheel(); wheel.SetSlots(slots); Render(wheel);
@@ -472,6 +473,10 @@ public static class SkinTests
                     Check(!slots.Any(s => s.Occupied) && wheel.HitSlot(wheel.Centre,duringCapture:true) == slots[0], "Identity decoration consumed the capture target");
                     card.StopAnimations();
                 }
+                var opaque = Enumerable.Repeat((byte)255, 16*16*4).ToArray();
+                var poster = BitmapSource.Create(16,16,96,96,PixelFormats.Bgra32,null,opaque,16*4);
+                var blank = BitmapSource.Create(16,16,96,96,PixelFormats.Bgra32,null,new byte[16*16*4],16*4);
+                Check(!ThemeIdentityArt.HasTransparentSilhouette(poster) && !ThemeIdentityArt.HasTransparentSilhouette(blank), "Opaque covers or blank assets bypassed the silhouette guard");
             });
             Test("Skins: nine-card overview remains readable at 780x650 and 200-percent display scaling", () =>
             {

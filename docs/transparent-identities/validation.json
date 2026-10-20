@@ -1,0 +1,78 @@
+{
+  "updated_at": "2026-10-20T07:25:11.235636+00:00",
+  "change": "Transparent silhouettes replace opaque cover rectangles; no rectangular drawing clip",
+  "passed_groups": 42,
+  "test_report": "artifacts/transparent-identities/staged-self-test.json",
+  "assets": {
+    "hextech": {
+      "path": "skins/identities/hextech-mark-v2.png",
+      "transparent_fraction_below_alpha16": 0.4627,
+      "sha256": "c701d1c3cf24b963ee5980d96e3b0e53fcd730ae5bef714bd201f2418c24aa14"
+    },
+    "protocol": {
+      "path": "skins/identities/protocol.png",
+      "transparent_fraction_below_alpha16": 0.7681,
+      "sha256": "d947a1f3afddaa19a0405cd900ec63efeb813dea4993f30a2153fed4dbc5e364"
+    },
+    "tactical": {
+      "path": "skins/identities/tactical-mark-v2.png",
+      "transparent_fraction_below_alpha16": 0.7236,
+      "sha256": "0ab91c731fe45fe946cae191c78a702f33ef7e56ab543edad87c2bfbf5c7bdac"
+    },
+    "formation": {
+      "path": "skins/identities/formation-mark-v2.png",
+      "transparent_fraction_below_alpha16": 0.3056,
+      "sha256": "09051207daddf8a117321d57dcd06f14fdfa376afaa1cfd35b7c71e637876007"
+    },
+    "starlight": {
+      "path": "skins/identities/starlight.png",
+      "transparent_fraction_below_alpha16": 0.3516,
+      "sha256": "630e325a0dbc81047eb2fd77da298db8996c3c15f35d12a619caf787730d9350"
+    },
+    "adventure": {
+      "path": "skins/identities/adventure.png",
+      "transparent_fraction_below_alpha16": 0.613,
+      "sha256": "798dd39686304460778cadb974e7b8d3037f12ae9ab1563cfdae2b1d9db7cbcf"
+    },
+    "wonderland": {
+      "path": "skins/identities/wonderland-mark-v2.png",
+      "transparent_fraction_below_alpha16": 0.6268,
+      "sha256": "0f5dbfc23f7601b15e0d003dd5a3fd5f1d3551c67959b47e0e28b2e954e0beb2"
+    },
+    "astral": {
+      "path": "skins/identities/astral-mark-v2.png",
+      "transparent_fraction_below_alpha16": 0.8671,
+      "sha256": "9f520dd493c6ea59c70a9474799eb22c3afdae8c566ad28e0cf5ecaae8004c0a"
+    },
+    "relic": {
+      "path": "skins/identities/relic-cutout-v2.png",
+      "transparent_fraction_below_alpha16": 0.2814,
+      "sha256": "f4dfd26535bd86cd563826f8fef86a5990ceb0fbc5dcda7b35da53d437b57bdb"
+    },
+    "arsenal": {
+      "path": "skins/identities/arsenal-mark-v2.png",
+      "transparent_fraction_below_alpha16": 0.679,
+      "sha256": "28b3108f2fa779bec6fafb248abcd6487fb5eccd266a354a32ed2891837944f1"
+    }
+  },
+  "generated_asset": "skins/identities/relic-cutout-v2.png",
+  "prompt": "skins/identities/relic-cutout-v2.prompt.md",
+  "generation_tool": "built-in imagegen, background-extraction, transparent_background=true",
+  "runtime_longest_edge": 512,
+  "opaque_poster_guard_tested": true,
+  "blank_image_guard_tested": true,
+  "transparent_native_fallback": true,
+  "previews": [
+    "artifacts/transparent-identities/dock-empty-relic.png",
+    "artifacts/transparent-identities/dock-empty-rest-relic.png",
+    "artifacts/transparent-identities/inventory-empty-relic.png",
+    "artifacts/transparent-identities/dock-empty-hextech.png",
+    "artifacts/transparent-identities/dock-empty-tactical.png",
+    "artifacts/transparent-identities/dock-empty-formation.png",
+    "artifacts/transparent-identities/dock-empty-astral.png",
+    "artifacts/transparent-identities/dock-empty-wonderland.png",
+    "artifacts/transparent-identities/dock-empty-arsenal.png"
+  ],
+  "live_refresh": "artifacts/transparent-identities/live-refresh.json",
+  "packaged": false
+}

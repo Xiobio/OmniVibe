@@ -337,13 +337,14 @@ public sealed class DockWeaponWheel : FrameworkElement
     {
         var skin = SkinCatalog.Current;
         // The idle core identifies the game, independently of any empty slot's saved equipment.
-        if (!ThemeIdentityArt.DrawCached(dc, skin.Id, new Rect(-51, -52, 102, 88)))
+        var bounds = deployment > .9 ? new Rect(-55, -64, 110, 100) : new Rect(-55, -55, 110, 110);
+        if (!ThemeIdentityArt.DrawCached(dc, skin.Id, bounds))
             NativeSkinArt.Core(dc, skin, new Point(0, -8), 84);
         dc.DrawRoundedRectangle(B(skin.Background), new Pen(B(skin.Border), .7), new Rect(30, 16, 18, 18), 5, 5);
         var plus = new Pen(B(skin.Accent), 1.2) { StartLineCap = PenLineCap.Round, EndLineCap = PenLineCap.Round };
         dc.DrawLine(plus, new Point(35, 25), new Point(43, 25));
         dc.DrawLine(plus, new Point(39, 21), new Point(39, 29));
-        Text(dc, deployment > .9 ? "点击空槽添加" : "拖入窗口", 0, 44, 10, skin.Text, 108);
+        if (deployment > .9) Text(dc, "点击空槽添加", 0, 44, 10, skin.Text, 108);
     }
     private void DrawEmptyTarget(DrawingContext dc, Slot slot, bool selected, double f)
     {
