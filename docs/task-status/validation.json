@@ -1,0 +1,70 @@
+{
+  "updated_at": "2026-10-20T09:49:20.668504+00:00",
+  "passed": true,
+  "checks": [
+    {
+      "name": "Task-state lifecycle and thirteen-theme feedback",
+      "groups": 10,
+      "passed": true,
+      "evidence": "artifacts/task-status/final-task-status-test/report.json"
+    },
+    {
+      "name": "Core regression",
+      "groups": 42,
+      "passed": true,
+      "evidence": "artifacts/task-status/final-self-test/report.json"
+    },
+    {
+      "name": "Skin regression",
+      "groups": 24,
+      "passed": true,
+      "evidence": "artifacts/task-status/clean-skin-test/report.json"
+    }
+  ],
+  "native_theme_surfaces": 39,
+  "theme_count": 13,
+  "animation_pixels_verified": true,
+  "motion_off_static_verified": true,
+  "local_discovery": {
+    "sessions": 24,
+    "scanMilliseconds": 44.2985,
+    "boundWindows": 4,
+    "uniqueTitleMatches": 4,
+    "privateConversationContentRecorded": false
+  },
+  "live": {
+    "occupied": 4,
+    "linked": 4,
+    "states": {
+      "Running": 1,
+      "Ready": 3
+    },
+    "pending": 3,
+    "all_four_automatically_connected": true,
+    "window_and_recovery_identities_preserved": true,
+    "preferences_preserved": true,
+    "terminal_processes_and_configuration_preserved": true,
+    "evidence": [
+      "artifacts/task-status/live-refresh.json",
+      "artifacts/task-status/live-state.json"
+    ]
+  },
+  "performance": {
+    "snapshot": {
+      "seconds": 5.0088921,
+      "one_core_cpu_percent": 9.67030214126593,
+      "working_set_mib": 172.75,
+      "threads": 26,
+      "running_tasks": 2,
+      "pending_tasks": 2
+    },
+    "note": "One five-second local snapshot, not a before/after benchmark. UI animation caps at 24fps; no terminal text or screen scraping. Accessibility probes have at most four in flight."
+  },
+  "capability_limits": [
+    "Terminal bell indicates attention, not proof of success; completion comes from explicit lifecycle records.",
+    "Accessibility availability varies by Terminal version. Transcript formats are not stable APIs; unknown formats remain unknown.",
+    "Ambiguous session/window titles require one explicit selection; no project-only guessing.",
+    "Window-level signals follow the selected Terminal tab/pane."
+  ],
+  "packaged": false
+}

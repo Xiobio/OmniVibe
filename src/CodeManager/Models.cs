@@ -84,6 +84,7 @@ public sealed class Slot : INotifyPropertyChanged
     public string ProjectDirectory { get; set; } = "";
     public string AgentProvider { get; set; } = "";
     public string SessionId { get; set; } = "";
+    public string StatusSessionPath { get; set; } = "";
     public bool IntegrationConnected { get; set; }
     public LaunchMode LaunchMode { get; set; }
     public string ResumeSessionId { get; set; } = "";
@@ -182,6 +183,7 @@ public sealed class PopupEntry
 
 public sealed class StatusEvent
 {
+    public string TranscriptPath { get; set; } = "";
     public string TaskId { get; set; } = "";
     public AgentState State { get; set; }
     public string Message { get; set; } = "";

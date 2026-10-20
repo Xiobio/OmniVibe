@@ -431,7 +431,8 @@ public partial class DockWindow : Window
             }
             legacy.Items.Add(statuses);
             legacy.Items.Add(Item("标记已查看", () => Manager.MarkRead(slot)));
-            var integration = new MenuItem { Header = "连接自动任务状态" };
+            menu.Items.Add(Item("连接当前 CLI 会话状态…", () => Manager.ConnectExistingSession(slot)));
+            var integration = new MenuItem { Header = "精确状态 hooks 接入" };
             integration.Items.Add(Item("Claude Code…", () => Manager.ConnectAgent(slot, "claude")));
             integration.Items.Add(Item("Codex…", () => Manager.ConnectAgent(slot, "codex")));
             legacy.Items.Add(integration);

@@ -11,7 +11,7 @@ using Forms = System.Windows.Forms;
 
 namespace CodeManager;
 
-public sealed class Manager : IDisposable
+public sealed partial class Manager : IDisposable
 {
     public AppState State { get; }
     public StateStore Store { get; }
@@ -535,7 +535,7 @@ public sealed class Manager : IDisposable
         slot.LastPlacement = slot.CapturePlacement;
         slot.Connected = true; slot.State = AgentState.Unknown; slot.StateSource = "";
         slot.Message = ""; slot.UpdatedAt = null; slot.Unread = false; slot.ParkedByApp = false;
-        slot.SessionId = ""; slot.AgentProvider = ""; slot.IntegrationConnected = false;
+        slot.SessionId = ""; slot.StatusSessionPath = ""; slot.AgentProvider = ""; slot.IntegrationConnected = false;
         slot.Recovery = null; slot.RecoveryError = ""; slot.LastSeenAt = DateTimeOffset.UtcNow;
         // The capture gesture must not become the restored working position.
         if (original.HasValue) Native.RestorePlacement(new(identity.Handle), original.Value);
@@ -577,7 +577,7 @@ public sealed class Manager : IDisposable
         EquipmentAssignment.From(source).Apply(target); destinationEquipment.Apply(source);
         target.CapturePlacement = source.CapturePlacement; target.ParkedByApp = source.ParkedByApp;
         target.LastPlacement = source.LastPlacement; target.CustomName = source.CustomName; target.TagColor = source.TagColor; target.ProjectDirectory = source.ProjectDirectory;
-        target.AgentProvider = source.AgentProvider; target.SessionId = source.SessionId; target.IntegrationConnected = source.IntegrationConnected;
+        target.AgentProvider = source.AgentProvider; target.SessionId = source.SessionId; target.StatusSessionPath = source.StatusSessionPath; target.IntegrationConnected = source.IntegrationConnected;
         target.LaunchMode = source.LaunchMode; target.ResumeSessionId = source.ResumeSessionId; target.ResumeConversation = source.ResumeConversation; target.Notes = source.Notes; target.LastSeenAt = source.LastSeenAt; target.Recovery = source.Recovery; target.RecoveryError = source.RecoveryError;
         target.State = source.State; target.StateSource = source.StateSource; target.UpdatedAt = source.UpdatedAt;
         target.Unread = source.Unread; target.Message = source.Message;
@@ -603,7 +603,7 @@ public sealed class Manager : IDisposable
         slot.Connected = false; slot.ParkedByApp = false; slot.Unread = false; slot.State = AgentState.Unknown;
         slot.StateSource = ""; slot.Message = ""; slot.UpdatedAt = null; slot.IsActive = slot.IsSelected = slot.IsDropTarget = false; slot.Refresh();
         slot.LastPlacement = null; slot.CustomName = false; slot.ProjectDirectory = ""; slot.TagColor = "#7EB5C8";
-        slot.SessionId = ""; slot.AgentProvider = ""; slot.IntegrationConnected = false; slot.JustCaptured = false;
+        slot.SessionId = ""; slot.StatusSessionPath = ""; slot.AgentProvider = ""; slot.IntegrationConnected = false; slot.JustCaptured = false;
         slot.LaunchMode = LaunchMode.Unconfigured; slot.ResumeSessionId = ""; slot.ResumeConversation = true; slot.Notes = ""; slot.LastSeenAt = null; slot.Recovery = null; slot.RecoveryError = "";
     }
     private static void ReleaseSlotWindow(Slot slot)
@@ -631,7 +631,7 @@ public sealed class Manager : IDisposable
         bool changed = slot.State != state || slot.Message != message;
         slot.State = state; slot.StateSource = source; slot.Message = message;
         slot.UpdatedAt = timestamp;
-        slot.Unread = (state is AgentState.Waiting or AgentState.Ready or AgentState.Error) && !slot.IsActive && (changed || slot.Unread);
+        slot.Unread = (state is AgentState.Waiting or AgentState.Ready or AgentState.Error) && (changed || slot.Unread);
         slot.Refresh();
         if (_processingStatusBatch)
         {
@@ -780,7 +780,7 @@ public sealed class Manager : IDisposable
         EnsureDockVisible();
         // Native inspection and disk polling wait until manipulation or a hover transition ends.
         if (Dock.IsManipulating || Dock.IsTransitioning) return;
-        ProcessRecoveries(); RefreshConnections(); ConsumeEvents(); CheckpointWindows(); Dock.UpdateSummary();
+        ProcessRecoveries(); RefreshConnections(); ConsumeEvents(); PollSessionStatus(); CheckpointWindows(); Dock.UpdateSummary();
         if (Selecting && !Native.RequiredModifiersDown(State.Preferences.MouseModifiers)) CommitSelection();
         foreach (int number in _captureFlashes.Where(p => p.Value <= DateTime.UtcNow).Select(p => p.Key).ToList())
         { State.Slots[number - 1].JustCaptured = false; State.Slots[number - 1].Refresh(); _captureFlashes.Remove(number); }
@@ -840,6 +840,8 @@ public sealed class Manager : IDisposable
         if (status.Provider != "")
         {
             if (slot.SessionId != "" && status.SessionId != "" && slot.SessionId != status.SessionId && status.EventName is not ("SessionStart" or "UserPromptSubmit")) return false;
+            if(status.TranscriptPath!="")slot.StatusSessionPath=status.TranscriptPath;
+            else if(status.SessionId!="" && slot.SessionId!=status.SessionId)slot.StatusSessionPath="";
             slot.AgentProvider = status.Provider; slot.SessionId = status.SessionId;
             slot.IntegrationConnected = !status.SessionEnded;
             if (Guid.TryParse(status.SessionId, out _)) slot.ResumeSessionId = status.SessionId;

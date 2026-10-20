@@ -93,6 +93,7 @@ public sealed class DockWeaponWheel : FrameworkElement
         NativeSkinArt.Warm(SkinCatalog.Current);
         ThemeIdentityArt.Image(SkinCatalog.Current.Id);
         Loaded += (_, _) => { Subscribe(); UpdateFlow(); ScheduleWarmup(); };
+        IsVisibleChanged += (_, _) => UpdateFlow();
         SizeChanged += (_, _) => ScheduleWarmup();
         Unloaded += (_, _) => { Unsubscribe(); foreach (var dp in new[] { PhaseProperty, DeploymentProperty, LiftProperty, FlowProperty }.Concat(HoverWeights)) BeginAnimation(dp, null); };
     }
@@ -121,11 +122,11 @@ public sealed class DockWeaponWheel : FrameworkElement
     private bool _flowing;
     private void UpdateFlow()
     {
-        bool run = IsLoaded && _motionEnabled && SkinCatalog.Current.Id != Skin.Arsenal && SkinCatalog.DecorationsEnabled && _slots.Any(s => s.Connected && s.State is AgentState.Running or AgentState.Waiting);
+        bool run = IsLoaded && IsVisible && _motionEnabled && SkinCatalog.DecorationsEnabled && WheelTaskStatus.NeedsMotion(_slots);
         if (_flowing == run) return;
         _flowing = run;
         if (!run) { BeginAnimation(FlowProperty, null); return; }
-        var flow = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(7)) { RepeatBehavior = RepeatBehavior.Forever };
+        var flow = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(6)) { RepeatBehavior = RepeatBehavior.Forever };
         Timeline.SetDesiredFrameRate(flow, 24); BeginAnimation(FlowProperty, flow);
     }
     internal void Deploy(bool expanded, bool animate)
@@ -312,6 +313,7 @@ public sealed class DockWeaponWheel : FrameworkElement
                 Text(dc, slot.Number.ToString(), -w/2 + 5, h/2 - 3, 11, selected || active ? skin.Accent : skin.Text, 18, true);
                 if (slot.Connected && slot.State is AgentState.Waiting or AgentState.Error or AgentState.Ready)
                     Text(dc, slot.State == AgentState.Ready ? "✓" : "!", w/2 - 5, h/2 - 3, 11, slot.StateColor, 16, true);
+                WheelTaskStatus.DrawSlot(dc,skin,slot,w,h,Flow,_motionEnabled && SkinCatalog.DecorationsEnabled);
                 dc.Pop();
             }
             dc.Pop();
@@ -331,6 +333,7 @@ public sealed class DockWeaponWheel : FrameworkElement
             }
         }
         else DrawEmptyCore(dc, d);
+        WheelTaskStatus.DrawCore(dc,skin,_slots,current,Flow,_motionEnabled && SkinCatalog.DecorationsEnabled);
         dc.Pop();
     }
     private void DrawEmptyCore(DrawingContext dc, double deployment)

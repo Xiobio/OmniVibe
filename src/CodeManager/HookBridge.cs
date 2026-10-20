@@ -40,7 +40,7 @@ public static class HookBridge
         if (suggested.Length > 60) suggested = suggested[..60] + "…";
         return new StatusEvent
         {
-            TaskId = taskId, State = state, Message = message, Provider = provider, SessionId = Text("session_id"),
+            TaskId = taskId, State = state, Message = message, Provider = provider, SessionId = Text("session_id"), TranscriptPath = Text("transcript_path"),
             ProjectDirectory = Text("cwd"), SuggestedName = suggested.Trim(), At = at ?? DateTimeOffset.UtcNow,
             SessionEnded = name == "SessionEnd", EventName = name
         };
