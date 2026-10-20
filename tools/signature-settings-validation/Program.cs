@@ -272,9 +272,28 @@ internal static class Program
                 }
                 return new { managerConstructorInvoked = false, hooksInstalled = false, playback = heard, volume = .001 };
             });
-            if (args.Contains("--playback-all")) Test("all-ten-real-signatures-persist-and-play-completely-through-manager", () => {
-                var games = SkinCatalog.All.Where(s => (int)s.Id >= (int)Skin.Hextech).ToArray();
-                Require(games.Length == 10, "The all-game fixture must cover exactly ten game themes");
+            Test("classic-signatures-work-offline-and-preserve-installed-precedence", () => {
+                var resolve = typeof(SignatureAudio).GetMethod("ResolveDefaultPath", BindingFlags.Static | BindingFlags.NonPublic)!;
+                string cache = Path.Combine(isolated, "offline-cache");
+                var evidence = new List<object>();
+                foreach (Skin skin in new[] { Skin.InkJade, Skin.Midnight, Skin.Cinnabar })
+                {
+                    string slug = SkinCatalog.Get(skin).Slug;
+                    string bundled = Path.Combine(AppContext.BaseDirectory, "skins", "signature-audio", "bundled", slug, "signature.wav");
+                    string found = (string)resolve.Invoke(null, new object[] { skin, cache, AppContext.BaseDirectory })!;
+                    Require(found == bundled && GameAudio.ValidateWave(found, out _), "Fresh offline install has no valid classic sound: " + slug);
+                    string installed = Path.Combine(cache, slug, "signature.wav"); Directory.CreateDirectory(Path.GetDirectoryName(installed)!);
+                    File.Copy(bundled, installed);
+                    Require((string)resolve.Invoke(null, new object[] { skin, cache, AppContext.BaseDirectory })! == installed, "Existing local signature lost precedence");
+                    evidence.Add(new { slug, bundledHash = InspectWave(bundled).Sha256, offlineDefault = true, installedPreserved = true });
+                }
+                string absent = (string)resolve.Invoke(null, new object[] { Skin.Hextech, cache, AppContext.BaseDirectory })!;
+                Require(!File.Exists(absent), "Missing game audio unexpectedly fell back to another theme or legacy cue");
+                return new { classics = evidence, missingGameStaysMissing = true, userFilesUntouched = true };
+            });
+            if (args.Contains("--playback-all")) Test("all-thirteen-signatures-persist-and-play-completely-through-manager", () => {
+                var games = SkinCatalog.All.ToArray();
+                Require(games.Length == 13, "The signature fixture must cover all thirteen themes");
                 using var catalog = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(AppContext.BaseDirectory, "skins", "signature-audio", "catalog.json")));
                 var entries = catalog.RootElement.GetProperty("sounds").EnumerateArray().ToDictionary(x => x.GetProperty("slug").GetString()!, x => x);
                 var waves = new Dictionary<Skin, WaveEvidence>();

@@ -101,16 +101,18 @@ internal static class Program
             });
             Test("Missing signature stays silent instead of playing a synthesized substitute", () =>
             {
-                var missing = Enum.GetValues<Skin>().Where(s => !File.Exists(SignatureAudio.GetPath(s))).ToArray();
-                Require(missing.Length > 0, "Missing-signature fixture unavailable");
+                // The test catalog maps this deliberate unknown ID to a nonexistent
+                // isolated slug. All thirteen real themes may now be installed.
+                Skin missing = (Skin)int.MaxValue;
+                Require(!File.Exists(SignatureAudio.GetPath(missing)), "Missing-signature fixture unavailable");
                 GameAudio.Configure(true, .001);
-                GameAudio.PlaySignature(missing[0], true, .001);
+                GameAudio.PlaySignature(missing, true, .001);
                 Until(() => GameAudio.LastError != null, "Missing signature did not report unavailable");
                 Require(GameAudio.Diagnostics.ActiveVoices == 0 && !GameAudio.Diagnostics.OutputOpen, "Missing signature played legacy audio");
             });
             Test("Actual signature path changes with theme and plays beyond the former 140 ms truncation", () =>
             {
-                var installed = Enum.GetValues<Skin>().Where(s => File.Exists(SignatureAudio.GetPath(s))).Take(2).ToArray();
+                var installed = new[] { Skin.Hextech, Skin.Protocol }.Where(s => File.Exists(SignatureAudio.GetPath(s))).ToArray();
                 Require(installed.Length == 2 && installed.Contains(Skin.Hextech), "Install Heartsteel and at least one other signature before this integration test");
                 bool verifiedLong = false;
                 foreach (Skin skin in installed)

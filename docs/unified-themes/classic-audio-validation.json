@@ -1,0 +1,77 @@
+{
+  "updated_at": "2026-10-20T08:42:35.513897+00:00",
+  "passed": true,
+  "classic_signatures": [
+    {
+      "slug": "ink-jade",
+      "name": "玉铃清鸣",
+      "output_seconds": 1.05,
+      "output_sha256": "b3cd142f1d80583e9b11583697043dbcfd4b37fd7a4e41dbeff5dd8850f91f68",
+      "bundled_file": "skins/signature-audio/bundled/ink-jade/signature.wav",
+      "source_kind": "cc0-acoustic-theme-adaptation",
+      "license": "CC0-1.0",
+      "license_url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/LICENSE"
+    },
+    {
+      "slug": "midnight",
+      "name": "星钟微光",
+      "output_seconds": 1.45,
+      "output_sha256": "5dc0f15c1588e4e53c949ecc22a2b2b43b451125b593a5c9b94db2c561cf6da7",
+      "bundled_file": "skins/signature-audio/bundled/midnight/signature.wav",
+      "source_kind": "cc0-acoustic-theme-adaptation",
+      "license": "CC0-1.0",
+      "license_url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/LICENSE"
+    },
+    {
+      "slug": "cinnabar",
+      "name": "铜钟落印",
+      "output_seconds": 1.25,
+      "output_sha256": "54c7374a2ffcf2794c9e348ad07c3d036a764f09724d09d2c9bf94ffaad2be9b",
+      "bundled_file": "skins/signature-audio/bundled/cinnabar/signature.wav",
+      "source_kind": "cc0-acoustic-theme-adaptation",
+      "license": "CC0-1.0",
+      "license_url": "https://raw.githubusercontent.com/sgossner/VCSL/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/LICENSE"
+    }
+  ],
+  "file_validation": {
+    "verified": 13,
+    "missing": 0,
+    "pcm": "stereo PCM16 44100 Hz",
+    "source_recordings_for_classics_verified": true,
+    "evidence": "artifacts/signature-audio/validation.json"
+  },
+  "native_playback": {
+    "themes": 13,
+    "playbacks": 26,
+    "complete": true,
+    "settings_groups": 11,
+    "user_settings_preserved": true,
+    "user_overrides_preserved": true,
+    "evidence": "artifacts/classic-signatures/staged-source/artifacts/signature-settings-validation/report.json"
+  },
+  "engine": {
+    "groups": 10,
+    "passed": true,
+    "evidence": "artifacts/classic-signatures/engine/engine-validation.json"
+  },
+  "offline": {
+    "bundled_without_local_cache": true,
+    "installed_signature_precedence_preserved": true,
+    "custom_import_precedence_preserved": true,
+    "no_network_or_decoder_required": true,
+    "evidence": [
+      "artifacts/classic-signatures/offline-install.log",
+      "artifacts/classic-signatures/offline-preserve.log"
+    ]
+  },
+  "live_refresh": {
+    "occupied": 4,
+    "recent": 5,
+    "preferences_preserved": true,
+    "terminal_config_and_processes_preserved": true,
+    "debug_running": true,
+    "evidence": "artifacts/classic-signatures/live-refresh.json"
+  },
+  "validation_note": "Initial live-app run completed all 26 playbacks but failed the real-task-file hash guard while the application was active. Failure retained; complete clean-source repeat during normal Debug refresh passed every guard. No guard was disabled.",
+  "packaged": false
+}

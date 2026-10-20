@@ -65,6 +65,16 @@ def install_one(sound,args,ffmpeg):
     # just to preserve a file the user already has.
     if destination.exists() and not args.replace:
         return {'slug':slug,'status':'preserved-existing','path':str(destination),'sha256':digest(destination)}
+    if sound.get('bundled_file'):
+        bundled=(ROOT/sound['bundled_file']).resolve()
+        if not bundled.is_relative_to((ROOT/'skins/signature-audio/bundled').resolve()):raise ValueError('Unsafe bundled signature path')
+        if sound.get('license')!='CC0-1.0' or digest(bundled)!=sound['output_sha256']:raise ValueError('Bundled signature provenance or checksum mismatch')
+        metadata=check_wave(bundled)
+        destination.parent.mkdir(parents=True,exist_ok=True)
+        temporary=destination.with_suffix('.wav.tmp');shutil.copyfile(bundled,temporary);os.replace(temporary,destination)
+        receipt={**sound,'installed_at_utc':datetime.now(timezone.utc).isoformat(),'path':str(destination),'actual_output':metadata,'installation':'bundled-offline-copy'}
+        (destination.parent/'signature.source.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+        return {'slug':slug,'status':'installed-bundled','path':str(destination),**metadata}
     ffmpeg=executable(ffmpeg)
     folder=args.work_dir/slug;folder.mkdir(parents=True,exist_ok=True)
     source=folder/('source'+sound['source_extension'])

@@ -6,5 +6,5 @@ public sealed class Preferences { public Skin Skin { get; set; } public Skin? So
 public static class SkinCatalog
 {
     public sealed record Definition(string Slug);
-    public static Definition Get(Skin skin) => new(new[] { "ink-jade", "midnight", "cinnabar", "hextech", "tactical", "protocol", "adventure", "arsenal", "relic", "starlight", "formation", "astral", "wonderland" }[(int)skin]);
+    public static Definition Get(Skin skin) => new(!System.Enum.IsDefined(skin) ? "missing-audio-validation" : new[] { "ink-jade", "midnight", "cinnabar", "hextech", "tactical", "protocol", "adventure", "arsenal", "relic", "starlight", "formation", "astral", "wonderland" }[(int)skin]);
 }

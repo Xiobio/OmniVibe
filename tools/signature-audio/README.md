@@ -1,13 +1,23 @@
 # Real game signature audio
 
-This workflow replaces procedural theme imitations with **one sourced signature
-per game**. It does not produce fourteen action variations, music loops, voice
+This workflow provides **one signature per theme**: ten sourced game clips and
+three bundled CC0 acoustic adaptations for the original classic themes.
+It does not produce fourteen action variations, music loops, voice
 clones or synthetic substitutes. A missing original stays explicitly missing.
 
-The distributable repository contains only a source catalog and installer.
-Copyrighted source files and converted WAVs are kept in ignored `artifacts/`
+For game audio the repository contains only a source catalog and installer.
+Copyrighted game source files and converted WAVs are kept in ignored `artifacts/`
 and `%LOCALAPPDATA%/CodeManager/SignatureAudio/<slug>/signature.wav`. Existing
 custom action/character audio under `CodeManager/Audio/` is not touched.
+
+The three classic signatures (Bell Tree E5, Glockenspiel C6, Tubular Bells C3)
+are redistributed under the upstream VCSL CC0 dedication, with source hashes,
+pinned commit, processing metadata and license included. They work immediately
+offline via the product's same-theme bundled fallback. The installer can copy
+them to the local cache without networking or FFmpeg. Rebuild their derivatives
+with `python tools/signature-audio/build-classics.py`; this maintenance command
+requires FFmpeg and fetches hash-pinned original recordings. It never runs at
+application startup.
 
 ```
 python tools/signature-audio/install.py
@@ -41,7 +51,7 @@ community hosting and public download are not claims of CC0 or blanket
 redistribution rights. The catalog distinguishes wiki game assets, official
 promotional game assets and community game recordings.
 
-Current delivery: ten installed signatures, covering every game theme. DNF's
+Current delivery: thirteen available signatures, covering every theme. DNF's
 Phantom Slash voice is community-attributed through DFQ's README, named skill
 configuration and actual voice playback call; it is not independently compared
 with a retail client bank. Golden Spatula uses its official Little Penguin

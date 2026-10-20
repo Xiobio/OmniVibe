@@ -5,13 +5,22 @@ using System.Text.Json;
 
 namespace CodeManager;
 
-/// <summary>One identifiable game sound per theme. Missing packs stay silent;
+/// <summary>One identifiable sound per theme. Missing packs stay silent;
 /// legacy synthesized event cues are never used as a substitute.</summary>
 public static class SignatureAudio
 {
     public static string Root => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CodeManager", "SignatureAudio");
     public static Skin ResolveTheme(Preferences preferences) => preferences.SoundTheme ?? preferences.Skin;
-    public static string DefaultPath(Skin skin) => Path.Combine(Root, SkinCatalog.Get(skin).Slug, "signature.wav");
+    public static string DefaultPath(Skin skin)
+        => ResolveDefaultPath(skin, Root, AppContext.BaseDirectory);
+    internal static string ResolveDefaultPath(Skin skin, string installedRoot, string assetRoot)
+    {
+        string slug = SkinCatalog.Get(skin).Slug;
+        string installed = Path.Combine(installedRoot, slug, "signature.wav");
+        if (File.Exists(installed)) return installed;
+        string bundled = Path.Combine(assetRoot, "skins", "signature-audio", "bundled", slug, "signature.wav");
+        return File.Exists(bundled) ? bundled : installed;
+    }
     public static string GetPath(Skin skin)
     {
         string custom = Path.Combine(GameAudio.OverrideDirectory(skin), "switch.wav");
