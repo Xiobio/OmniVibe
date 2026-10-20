@@ -12,14 +12,15 @@ namespace CodeManager;
 internal static class ThemeIdentityArt
 {
     private static readonly Dictionary<Skin, BitmapSource?> Images = new();
-    private static readonly Dictionary<string, string> Files = ReadFiles();
-    private static Dictionary<string, string> ReadFiles()
+    private sealed record IdentityAsset(string File, string Name);
+    private static readonly Dictionary<string, IdentityAsset> Files = ReadFiles();
+    private static Dictionary<string, IdentityAsset> ReadFiles()
     {
-        var files = new Dictionary<string, string>(StringComparer.Ordinal);
+        var files = new Dictionary<string, IdentityAsset>(StringComparer.Ordinal);
         try {
             using var document = JsonDocument.Parse(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "skins/identities/catalog.json")));
             foreach (var entry in document.RootElement.EnumerateObject())
-                if (entry.Value.TryGetProperty("file", out var file) && file.GetString() is string name && name == Path.GetFileName(name) && !Path.IsPathRooted(name)) files[entry.Name] = name;
+                if (entry.Value.TryGetProperty("file", out var file) && file.GetString() is string name && name == Path.GetFileName(name) && !Path.IsPathRooted(name)) files[entry.Name] = new(name,entry.Value.TryGetProperty("name",out var label) ? label.GetString() ?? "主题灵物" : "主题灵物");
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or JsonException or InvalidOperationException) { }
         return files;
@@ -29,19 +30,11 @@ internal static class ThemeIdentityArt
         if (Images.TryGetValue(id, out var cached)) return cached;
         var skin = SkinCatalog.Get(id);
         string fallback = Path.Combine(AppContext.BaseDirectory, "skins/native-v2", skin.Slug, "core.png");
-        string file = Files.TryGetValue(skin.Slug, out string? name) ? Path.Combine(AppContext.BaseDirectory, "skins/identities", name) : fallback;
+        string file = Files.TryGetValue(skin.Slug, out var asset) ? Path.Combine(AppContext.BaseDirectory, "skins/identities", asset.File) : fallback;
         var image = Decode(file) ?? (file != fallback ? Decode(fallback) : null);
-        // The official gray wordmark needs the theme's foreground on a dark desktop.
-        if (id == Skin.Astral && image != null) {
-            var visual = new DrawingVisual();
-            using (var dc = visual.RenderOpen()) {
-                dc.PushOpacityMask(new ImageBrush(image) { Stretch = Stretch.Fill });
-                dc.DrawRectangle(WuxiaTheme.Brush(skin.Accent), null, new Rect(0, 0, image.PixelWidth, image.PixelHeight)); dc.Pop();
-            }
-            var tinted = new RenderTargetBitmap(image.PixelWidth, image.PixelHeight, 96, 96, PixelFormats.Pbgra32); tinted.Render(visual); tinted.Freeze(); image = tinted;
-        }
         Images[id] = image; return image;
     }
+    internal static string Name(Skin skin) => Files.TryGetValue(SkinCatalog.Get(skin).Slug,out var asset) ? asset.Name : "主题灵物";
     private static BitmapSource? Decode(string path)
     {
         try {

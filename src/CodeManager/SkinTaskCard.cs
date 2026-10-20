@@ -51,7 +51,7 @@ public sealed class SkinTaskCard : Grid
         {
             var emblem = new StackPanel { Orientation = Orientation.Horizontal };
             top.Children.Remove(number); emblem.Children.Add(number);
-            _weaponImage = new Image { Source = slot.Occupied ? EquipmentCatalog.Image(slot, _skin.Id) : ThemeIdentityArt.Image(_skin.Id), Width = 27, Height = 28, Stretch = Stretch.Uniform, Margin = new Thickness(7, 0, 1, 0), ToolTip = slot.Occupied ? EquipmentCatalog.Name(slot, _skin.Id) : _skin.Name };
+            _weaponImage = new Image { Source = slot.Occupied ? EquipmentCatalog.Image(slot, _skin.Id) : ThemeIdentityArt.Image(_skin.Id), Width = 27, Height = 28, Stretch = Stretch.Uniform, Margin = new Thickness(7, 0, 1, 0), ToolTip = slot.Occupied ? EquipmentCatalog.Name(slot, _skin.Id) : ThemeIdentityArt.Name(_skin.Id) };
             emblem.Children.Add(_weaponImage); top.Children.Add(emblem);
         }
         var stateGroup = new StackPanel { VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(9, 0, 4, 0) };
@@ -214,7 +214,7 @@ public sealed class SkinTaskCard : Grid
         _remove.Visibility = _slot.Occupied ? Visibility.Visible : Visibility.Collapsed;
         _previewEntity.Source = _slot.Occupied ? EquipmentCatalog.Image(_slot, _skin.Id) : ThemeIdentityArt.Image(_skin.Id);
         UpdatePreviewEntity(PreviewRegion.ActualWidth, PreviewRegion.ActualHeight);
-        if (_weaponImage != null) { _weaponImage.Source = _slot.Occupied ? EquipmentCatalog.Image(_slot, _skin.Id) : ThemeIdentityArt.Image(_skin.Id); _weaponImage.ToolTip = _slot.Occupied ? EquipmentCatalog.Name(_slot, _skin.Id) : _skin.Name; _weaponImage.Visibility = Visibility.Visible; ToolTip = _slot.Occupied ? EquipmentCatalog.Detail(_slot) : _skin.Name + " · 空槽位\n拖入窗口，或点击选择已有窗口"; }
+        if (_weaponImage != null) { _weaponImage.Source = _slot.Occupied ? EquipmentCatalog.Image(_slot, _skin.Id) : ThemeIdentityArt.Image(_skin.Id); _weaponImage.ToolTip = _slot.Occupied ? EquipmentCatalog.Name(_slot, _skin.Id) : ThemeIdentityArt.Name(_skin.Id); _weaponImage.Visibility = Visibility.Visible; ToolTip = _slot.Occupied ? EquipmentCatalog.Detail(_slot) : ThemeIdentityArt.Name(_skin.Id) + " · 空槽位\n拖入窗口，或点击选择已有窗口"; }
         string statusColor = SkinUi.StateColor(_slot, _skin);
         var status = WuxiaTheme.Brush(statusColor);
         _state.Text = SkinUi.StateSymbol(_slot) + "  " + (_slot.Occupied ? _slot.StateLabel : "空槽位 · 等待接入");
