@@ -417,24 +417,67 @@
     },
     {
       "slug": "adventure",
-      "name": "原声待核实 · 暂不播放",
-      "game": "Dungeon Fighter Online",
-      "status": "missing",
-      "missing_reason": "No authenticated original short MMO-client SFX obtained. Search hits are replacement mods (Diablo 3 / Zelda) or DNF Duel, a different game. No substitute is installed.",
-      "research_sources": [
-        "https://www.962.net/patch/182060.html",
-        "https://www.reddit.com/r/DFO/comments/1fn9atd/"
-      ]
+      "name": "DNF · 鬼剑士鬼斩（社区收录）",
+      "game": "Dungeon Fighter Online / DFQ community collection",
+      "source_page": "https://github.com/2DScrollGames/DFQ-Original/tree/d4b9088d9e6efeede3e504d3b6e64e3a459aa012",
+      "source_url": "https://raw.githubusercontent.com/2DScrollGames/DFQ-Original/d4b9088d9e6efeede3e504d3b6e64e3a459aa012/asset/sound/actor/voice/swordman/onigiri1.ogg",
+      "source_extension": ".ogg",
+      "source_sha256": "5b4593475c1f9f2f98135620778ada85b545e0dc7fd1370e2a38a662cc944655",
+      "source_bytes": 14306,
+      "source_kind": "community-attributed-game-sfx",
+      "verification": "The repository README explicitly identifies DFQ as a coterie game of DNF. config/actor/skill/swordman/onigiri.cfg names 鬼斩 and selects duelist/swordman/onigiri; that state config maps voice/swordman/onigiri1 and onigiri2. The corresponding Lua state plays a selected voice at attack tick 3. This is a community-attributed DNF skill voice, not independently verified against an official client sound bank and not claimed to be an official extraction.",
+      "verification_sources": [
+        "https://raw.githubusercontent.com/2DScrollGames/DFQ-Original/d4b9088d9e6efeede3e504d3b6e64e3a459aa012/README.md",
+        "https://raw.githubusercontent.com/2DScrollGames/DFQ-Original/d4b9088d9e6efeede3e504d3b6e64e3a459aa012/config/actor/skill/swordman/onigiri.cfg",
+        "https://raw.githubusercontent.com/2DScrollGames/DFQ-Original/d4b9088d9e6efeede3e504d3b6e64e3a459aa012/config/actor/state/duelist/swordman/onigiri.cfg",
+        "https://raw.githubusercontent.com/2DScrollGames/DFQ-Original/d4b9088d9e6efeede3e504d3b6e64e3a459aa012/source/actor/state/duelist/swordman/onigiri.lua"
+      ],
+      "rights_holder": "Neople / Nexon; community hosting by DFQ-Original",
+      "status": "verified",
+      "trim_start_seconds": 0,
+      "trim_duration_seconds": 0.893968253968254,
+      "source_float_peak": 0.672277569770813,
+      "attenuation_gain": 1,
+      "constant_gain": 1,
+      "ffmpeg_filter": "volume=1.000000000000,afade=t=in:st=0:d=0.0005,afade=t=out:st=0.885968253968:d=0.008",
+      "conversion_format": "PCM signed 16-bit stereo 44100 Hz",
+      "verified_at": "2026-10-20",
+      "license_note": "Third-party game-related audio; public availability is not a redistribution license. Binaries remain in the local cache, outside git.",
+      "processing_note": "Complete original clip retained. Constant gain only, with tiny edge fades; no RMS matching, EQ, compression, pitch change, layering or synthesis. Community source attribution is retained explicitly.",
+      "output_sha256": "b9a63be2beeaefd9d0441d2a55cb0a31467c992fc0846c7a9aff1136ba44a321",
+      "output_seconds": 0.893968253968254,
+      "output_peak": 0.672271728515625
     },
     {
       "slug": "formation",
-      "name": "原声待核实 · 暂不播放",
-      "game": "Battle of Golden Spatula",
-      "status": "missing",
-      "missing_reason": "CommunityDragon candidate is explicitly PC TFT battle-pass XP-bar audio, not verified as the mobile Golden Spatula game. It is retained only as research and is not installed.",
-      "research_sources": [
-        "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-tft/global/default/sfx/"
-      ]
+      "name": "金铲铲 · 小企鹅历险记点击提示",
+      "game": "金铲铲之战官方活动网页",
+      "source_page": "https://jcc.qq.com/act/a20230907guide/index.html",
+      "source_url": "https://game.gtimg.cn/images/jk/act/a20230907guide/media/click.mp3",
+      "source_extension": ".mp3",
+      "source_sha256": "56864a7b54330ce39a2d4e303c3d50dab54f84f848b1279e713756b3aae259b7",
+      "source_bytes": 7886,
+      "source_kind": "official-promotional-game-asset",
+      "verification": "The official JCC basicConfig links to this activity. Official page title is 小企鹅历险记 and its script creates a non-looping clickAudio from media/click.mp3. The .btn-audio-click handler invokes clickAudio.play(); 19 buttons bear this class. Intro/bejwt/yxte tracks are separately created as looped BGM. This clip is the actual standalone official activity click sound, not a recording cut from music and not a claim of a mobile-client star-up sound.",
+      "rights_holder": "Tencent / Riot Games",
+      "status": "verified",
+      "trim_start_seconds": 0,
+      "trim_duration_seconds": 0.14401360544217687,
+      "source_float_peak": 0.08977486193180084,
+      "attenuation_gain": 3.8986414734436914,
+      "constant_gain": 3.8986414734436914,
+      "ffmpeg_filter": "volume=3.898641473444,afade=t=in:st=0:d=0.0005,afade=t=out:st=0.142013605442:d=0.002",
+      "conversion_format": "PCM signed 16-bit stereo 44100 Hz",
+      "verified_at": "2026-10-20",
+      "license_note": "Third-party game-related audio; public availability is not a redistribution license. Binaries remain in the local cache, outside git.",
+      "processing_note": "Complete original clip retained. Constant gain only, with tiny edge fades; no RMS matching, EQ, compression, pitch change, layering or synthesis. Quiet official activity click amplified to a 0.35 peak to remain audible; this is not a client star-up or character cue.",
+      "verification_sources": [
+        "https://jcc.qq.com/data-js/basicConfig.js",
+        "https://jcc.qq.com/act/a20230907guide/js/index.js?v=1.1"
+      ],
+      "output_sha256": "ca88d09e087abe331ce3ae0ca70639b9b047321c470cf8eea08c94e90a5de1df",
+      "output_seconds": 0.14401360544217687,
+      "output_peak": 0.350006103515625
     },
     {
       "slug": "wonderland",

@@ -1,0 +1,279 @@
+{
+  "updated_at": "2026-10-20T03:54:52.756964+00:00",
+  "passed": true,
+  "packaged": false,
+  "third_party_audio_binaries_committed": false,
+  "sources": {
+    "verified": 10,
+    "missing": 0,
+    "evidence": "artifacts/signature-audio/validation.json",
+    "independent_reinstall": "artifacts/signature-completion/reinstall/compare.json",
+    "new_clips": [
+      {
+        "slug": "adventure",
+        "status": "installed",
+        "path": "C:\\Users\\Win11\\AppData\\Local\\CodeManager\\SignatureAudio\\adventure\\signature.wav",
+        "seconds": 0.893968253968254,
+        "peak": 0.672271728515625,
+        "sha256": "b9a63be2beeaefd9d0441d2a55cb0a31467c992fc0846c7a9aff1136ba44a321",
+        "bytes": 157740
+      },
+      {
+        "slug": "formation",
+        "status": "installed",
+        "path": "C:\\Users\\Win11\\AppData\\Local\\CodeManager\\SignatureAudio\\formation\\signature.wav",
+        "seconds": 0.14401360544217687,
+        "peak": 0.350006103515625,
+        "sha256": "ca88d09e087abe331ce3ae0ca70639b9b047321c470cf8eea08c94e90a5de1df",
+        "bytes": 25448
+      }
+    ]
+  },
+  "settings_and_playback": {
+    "passed": true,
+    "groups": 10,
+    "themes": 10,
+    "nativePlaybacks": 20,
+    "volume": 0.001,
+    "completeClipsFinishedNaturally": true,
+    "installedHashesMatchVerifiedCatalog": true,
+    "userOverridesUnchanged": true,
+    "realTaskAndTerminalSettingsUnchanged": true,
+    "protectedSettingsHashes": [
+      {
+        "index": 0,
+        "sha256": "F409B905835C09E309BD9739264D95FF6C83AFF5AD48D06B3182F913EB4535D4"
+      },
+      {
+        "index": 1,
+        "sha256": null
+      },
+      {
+        "index": 2,
+        "sha256": "301093D7916E0C4251741C92C944EA11F1432BF5D5A1967172416CB100C16D34"
+      },
+      {
+        "index": 3,
+        "sha256": null
+      },
+      {
+        "index": 4,
+        "sha256": null
+      }
+    ],
+    "productAssemblySha256": "F9E4FB23D8E9498EC1E9DB594D1A26930723B80CC0A43A8196A883D15C741DDA",
+    "maxNativeActiveVsNominal": 0.9904897465894428,
+    "allTimingBoundsPassed": true,
+    "byTheme": [
+      {
+        "skin": "Hextech",
+        "followsInterface": false,
+        "nominalMs": 1592.0181405895692,
+        "nativeActiveMs": 1560.9871,
+        "frames": 70208
+      },
+      {
+        "skin": "Hextech",
+        "followsInterface": true,
+        "nominalMs": 1592.0181405895692,
+        "nativeActiveMs": 1546.1838,
+        "frames": 70208
+      },
+      {
+        "skin": "Tactical",
+        "followsInterface": false,
+        "nominalMs": 683.3786848072563,
+        "nativeActiveMs": 642.1477,
+        "frames": 30137
+      },
+      {
+        "skin": "Tactical",
+        "followsInterface": true,
+        "nominalMs": 683.3786848072563,
+        "nativeActiveMs": 637.0884,
+        "frames": 30137
+      },
+      {
+        "skin": "Protocol",
+        "followsInterface": false,
+        "nominalMs": 2800.0,
+        "nativeActiveMs": 2760.2989,
+        "frames": 123480
+      },
+      {
+        "skin": "Protocol",
+        "followsInterface": true,
+        "nominalMs": 2800.0,
+        "nativeActiveMs": 2762.6013000000003,
+        "frames": 123480
+      },
+      {
+        "skin": "Adventure",
+        "followsInterface": false,
+        "nominalMs": 893.968253968254,
+        "nativeActiveMs": 840.5669,
+        "frames": 39424
+      },
+      {
+        "skin": "Adventure",
+        "followsInterface": true,
+        "nominalMs": 893.968253968254,
+        "nativeActiveMs": 860.9871999999999,
+        "frames": 39424
+      },
+      {
+        "skin": "Arsenal",
+        "followsInterface": false,
+        "nominalMs": 640.0,
+        "nativeActiveMs": 602.9354,
+        "frames": 28224
+      },
+      {
+        "skin": "Arsenal",
+        "followsInterface": true,
+        "nominalMs": 640.0,
+        "nativeActiveMs": 591.9376,
+        "frames": 28224
+      },
+      {
+        "skin": "Relic",
+        "followsInterface": false,
+        "nominalMs": 3000,
+        "nativeActiveMs": 2970.8430999999996,
+        "frames": 132300
+      },
+      {
+        "skin": "Relic",
+        "followsInterface": true,
+        "nominalMs": 3000,
+        "nativeActiveMs": 2966.7947,
+        "frames": 132300
+      },
+      {
+        "skin": "Starlight",
+        "followsInterface": false,
+        "nominalMs": 1490.045351473923,
+        "nativeActiveMs": 1453.1468,
+        "frames": 65711
+      },
+      {
+        "skin": "Starlight",
+        "followsInterface": true,
+        "nominalMs": 1490.045351473923,
+        "nativeActiveMs": 1450.8468,
+        "frames": 65711
+      },
+      {
+        "skin": "Formation",
+        "followsInterface": false,
+        "nominalMs": 144.01360544217687,
+        "nativeActiveMs": 124.3867,
+        "frames": 6351
+      },
+      {
+        "skin": "Formation",
+        "followsInterface": true,
+        "nominalMs": 144.01360544217687,
+        "nativeActiveMs": 107.76500000000001,
+        "frames": 6351
+      },
+      {
+        "skin": "Astral",
+        "followsInterface": false,
+        "nominalMs": 2800.0,
+        "nativeActiveMs": 2762.6362999999997,
+        "frames": 123480
+      },
+      {
+        "skin": "Astral",
+        "followsInterface": true,
+        "nominalMs": 2800.0,
+        "nativeActiveMs": 2760.5185,
+        "frames": 123480
+      },
+      {
+        "skin": "Wonderland",
+        "followsInterface": false,
+        "nominalMs": 2952.018140589569,
+        "nativeActiveMs": 2923.9437000000003,
+        "frames": 130184
+      },
+      {
+        "skin": "Wonderland",
+        "followsInterface": true,
+        "nominalMs": 2952.018140589569,
+        "nativeActiveMs": 2918.2297,
+        "frames": 130184
+      }
+    ]
+  },
+  "settings_evidence": "artifacts/signature-settings-validation/report.json",
+  "playback_timelines": "artifacts/signature-settings-validation/playback-all/",
+  "audio_engine": {
+    "passed": true,
+    "groups": 10,
+    "evidence": "artifacts/signature-completion/engine/engine-validation.json"
+  },
+  "working_tree_core_regression": {
+    "passed": 45,
+    "total": 45,
+    "evidence": "artifacts/signature-completion/self-test.json",
+    "note": "Includes other concurrent working-tree changes; this delivery only commits signature audio, its documentation and validation tool."
+  },
+  "buffer_fix": {
+    "rate": 44100,
+    "frames_per_buffer": 1024,
+    "buffers": 3,
+    "queued_pcm_ms_max": 69.65986394557824,
+    "callback": "manual-reset CALLBACK_EVENT, separate control wake",
+    "old_timing_evidence": "artifacts/signature-settings-validation/before-native-callback/report.json",
+    "callback_only_failure_evidence": "artifacts/signature-settings-validation/callback-256frames/report.json",
+    "measurement_limit": "Mixer sample consumption and endpoint lifetime, not microphone or loopback recording."
+  },
+  "live_refresh": {
+    "at": "2026-10-20T03:54:22.0801931+00:00",
+    "occupied_task_identities_preserved": true,
+    "occupied_count": 0,
+    "recent_task_identities_preserved": true,
+    "recent_count": 5,
+    "preferences_preserved": true,
+    "terminal_configuration_unchanged": true,
+    "terminal_processes_unchanged": true,
+    "terminal_pids": [
+      2900
+    ],
+    "previous_manager_pids": [
+      30128
+    ],
+    "current_manager_pids": [
+      30616
+    ],
+    "manager_path": [
+      "D:\\tools\\OmniVibe\\src\\CodeManager\\bin\\Debug\\net10.0-windows\\CodeManager.exe"
+    ],
+    "one_debug_process_running": true,
+    "deployed_catalog_matches_source": true,
+    "packaged": false,
+    "cli_sessions_restarted": false,
+    "visible_windows": [
+      {
+        "title": "OmniVibe · 灵蕴法宝匣",
+        "topmost": true,
+        "left": 2301,
+        "top": 1139,
+        "width": 116,
+        "height": 116
+      }
+    ],
+    "evidence": "artifacts/signature-completion/live-refresh.json"
+  },
+  "staged_source_build": {
+    "passed": true,
+    "warnings": 0,
+    "errors": 0,
+    "source": "artifacts/signature-completion/staged-source",
+    "core_groups_passed": 39,
+    "core_evidence": "artifacts/signature-completion/staged-self-test.json",
+    "unrelated_working_tree_changes_excluded": true
+  }
+}

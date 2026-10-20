@@ -22,7 +22,9 @@ never plays through the speakers. Downloads are capped at 2 MB per clip and
 validated against exact source SHA-256. Original game dynamics, pitch and timbre
 are retained: conversion only resamples to PCM16 stereo 44.1 kHz, trims to at
 most three seconds, applies a tiny edge fade, and **attenuates only if needed**
-to avoid decoder overshoot. No RMS/loudness normalization, compression, layering,
+to avoid decoder overshoot. The exceptionally quiet Golden Spatula activity click
+uses a documented constant gain to a 0.35 peak; no synthesis or timbre changes.
+No RMS/loudness normalization, compression, layering,
 EQ, or re-synthesis is applied.
 
 An existing differing signature is preserved unless `--replace` is explicitly
@@ -39,8 +41,13 @@ community hosting and public download are not claims of CC0 or blanket
 redistribution rights. The catalog distinguishes wiki game assets, official
 promotional game assets and community game recordings.
 
-Current delivery: eight installed signatures and two explicitly missing games
-(Dungeon Fighter Online and Golden Spatula). The Fantasy Westward Journey cue
+Current delivery: ten installed signatures, covering every game theme. DNF's
+Phantom Slash voice is community-attributed through DFQ's README, named skill
+configuration and actual voice playback call; it is not independently compared
+with a retail client bank. Golden Spatula uses its official Little Penguin
+Adventure activity's standalone click, not a claim of a client star-up or
+character sound. It is a complete 144 ms cue, raised by constant gain because
+the original peak is only 0.0898. The Fantasy Westward Journey cue
 is the official **web game** battle-victory sound (`BATTLE_WIN` / `ui_shengli`),
 verified against its public game configuration and CDN resource table; it is
 not claimed to come from the desktop client. The Naraka
@@ -52,7 +59,7 @@ bank manifest.
 
 A fresh-download check currently gets HTTP 403 for the two Fandom CDN sources
 (Heartsteel and VALORANT). Their earlier downloaded, checksum-verified copies
-and installed WAVs work locally. The other six sources were downloaded again
+and installed WAVs work locally. The other eight sources were downloaded again
 and converted identically. The installer records each failed source and continues
 the remaining games, then exits with code 1 if any download/conversion failed.
 It does not report a partial reinstall as success or attempt to bypass access

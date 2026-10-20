@@ -41,6 +41,110 @@ internal static class Program
         var frame = new DispatcherFrame(); Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => frame.Continue = false)); Dispatcher.PushFrame(frame);
     }
     private static string Hash(byte[] data) => Convert.ToHexString(SHA256.HashData(data));
+    private static string ProtectedSettingsSnapshot()
+    {
+        string local = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        string[] files = {
+            Path.Combine(local, "CodeManager", "tasks.json"),
+            Path.Combine(local, "OmniVibe", "tasks.json"),
+            Path.Combine(local, "Packages", "Microsoft.WindowsTerminal_8wekyb3d8bbwe", "LocalState", "settings.json"),
+            Path.Combine(local, "Packages", "Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe", "LocalState", "settings.json"),
+            Path.Combine(local, "Microsoft", "Windows Terminal", "settings.json")
+        };
+        // Store hashes only: never copy commands, sessions or other private settings into evidence.
+        return JsonSerializer.Serialize(files.Select((path, index) => new { index, sha256 = File.Exists(path) ? Hash(File.ReadAllBytes(path)) : null }));
+    }
+    private sealed record WaveEvidence(string Sha256, int SourceRate, int SourceFrames, int PlaybackFrames, double Seconds);
+    private static WaveEvidence InspectWave(string path)
+    {
+        Require(GameAudio.ValidateWave(path, out string error), "Invalid installed signature: " + path + ": " + error);
+        byte[] bytes = File.ReadAllBytes(path);
+        using var reader = new BinaryReader(new MemoryStream(bytes));
+        reader.BaseStream.Position = 12;
+        int channels = 0, rate = 0, dataBytes = 0;
+        while (reader.BaseStream.Position + 8 <= bytes.Length)
+        {
+            string id = new(reader.ReadChars(4)); uint length = reader.ReadUInt32(); long start = reader.BaseStream.Position;
+            Require(length <= bytes.Length - start, "Truncated signature chunk");
+            if (id == "fmt ") { _ = reader.ReadUInt16(); channels = reader.ReadUInt16(); rate = reader.ReadInt32(); }
+            else if (id == "data") dataBytes = checked((int)length);
+            reader.BaseStream.Position = start + length + (length & 1);
+        }
+        Require(channels > 0 && rate > 0 && dataBytes > 0, "Signature has no PCM frames");
+        int frames = dataBytes / (channels * 2);
+        return new WaveEvidence(Hash(bytes), rate, frames, (int)((long)frames * 44100 / rate), frames / (double)rate);
+    }
+    private static Manager PlaybackManager(AppState state)
+    {
+        var manager = (Manager)RuntimeHelpers.GetUninitializedObject(typeof(Manager));
+        typeof(Manager).GetField("<State>k__BackingField", Private)!.SetValue(manager, state);
+        return manager;
+    }
+    private static object PlayCompleteSignature(Manager manager, Skin expected, WaveEvidence wave, bool followsInterface, string evidenceDirectory)
+    {
+        string path = SignatureAudio.GetPath(expected);
+        var watch = Stopwatch.StartNew();
+        Require(!GameAudio.Diagnostics.OutputOpen, "Previous native output did not release");
+        Require(SignatureAudio.ResolveTheme(manager.State.Preferences) == expected, "Saved preferences resolved the wrong theme");
+        var timeline = new List<object>(); bool completed = false;
+        double? openedAtMilliseconds = null;
+        double? voiceCompletedAfterMilliseconds = null;
+        double expectedDeadlineSeconds = wave.Seconds + 4;
+        double observationDeadlineSeconds = Math.Max(16, wave.Seconds * 5 + 4);
+        void Sample()
+        {
+            var d = GameAudio.Diagnostics;
+            timeline.Add(new { elapsedMilliseconds = watch.Elapsed.TotalMilliseconds, activeVoices = d.ActiveVoices,
+                pendingRequests = d.PendingRequests, outputOpen = d.OutputOpen, cachedSounds = d.CachedSounds,
+                actualPath = GameAudio.LastSourcePath, frames = GameAudio.LastSourceFrames, error = GameAudio.LastError });
+        }
+        try
+        {
+            GameAudio.Configure(true, .001); watch.Restart(); Call(manager, "PlayCue", AudioCue.Switch, null);
+            while (watch.ElapsedMilliseconds < 2000 && (GameAudio.LastSourcePath != path || !GameAudio.Diagnostics.OutputOpen)) Thread.Sleep(2);
+            Sample();
+            Require(GameAudio.LastSourcePath == path && GameAudio.Diagnostics.OutputOpen && GameAudio.LastError == null,
+                "Manager signature did not reach native output for " + expected + ": " + GameAudio.LastError);
+            Require(GameAudio.LastSourceFrames == wave.PlaybackFrames, "Native voice did not load the complete signature for " + expected);
+            openedAtMilliseconds = watch.Elapsed.TotalMilliseconds;
+            double nextSample = 200;
+            // Observe beyond the original deadline only to diagnose the actual duration.
+            // The original deadline below still fails; no timeout relaxation or Stop.
+            while (GameAudio.Diagnostics.OutputOpen && watch.Elapsed.TotalSeconds < observationDeadlineSeconds)
+            {
+                if (voiceCompletedAfterMilliseconds == null && GameAudio.Diagnostics.ActiveVoices == 0)
+                    voiceCompletedAfterMilliseconds = watch.Elapsed.TotalMilliseconds;
+                if (watch.Elapsed.TotalMilliseconds >= nextSample) { Sample(); nextSample += 200; }
+                Thread.Sleep(2);
+            }
+            Sample();
+            Require(GameAudio.LastError == null && !GameAudio.Diagnostics.OutputOpen && GameAudio.Diagnostics.ActiveVoices == 0 && GameAudio.Diagnostics.PendingRequests == 0,
+                "Native playback did not finish and release cleanly for " + expected + "; elapsed " + watch.Elapsed.TotalSeconds.ToString("F3") + " s; voices " + GameAudio.Diagnostics.ActiveVoices + "; pending " + GameAudio.Diagnostics.PendingRequests + "; output " + GameAudio.Diagnostics.OutputOpen + ": " + GameAudio.LastError);
+            Require(watch.Elapsed.TotalSeconds <= expectedDeadlineSeconds,
+                "Native playback exceeded its original deadline for " + expected + "; WAV " + wave.Seconds.ToString("F3") + " s, voice completed " + voiceCompletedAfterMilliseconds + " ms, endpoint released " + watch.Elapsed.TotalMilliseconds.ToString("F1") + " ms");
+            Require(voiceCompletedAfterMilliseconds.HasValue && voiceCompletedAfterMilliseconds.Value >= Math.Max(0, wave.Seconds * 1000 - 80),
+                "Native voice ended before the complete signature duration for " + expected);
+            double nativeActiveMilliseconds = voiceCompletedAfterMilliseconds!.Value - openedAtMilliseconds!.Value;
+            Require(nativeActiveMilliseconds <= wave.Seconds * 1250 + 100,
+                "Native playback ran slower than the WAV for " + expected + "; WAV " + wave.Seconds.ToString("F3") + " s, output-open to voice-end " + nativeActiveMilliseconds.ToString("F1") + " ms");
+            Require(Hash(File.ReadAllBytes(path)) == wave.Sha256, "Signature changed during playback");
+            completed = true;
+            return new { skin = expected.ToString(), slug = SkinCatalog.Get(expected).Slug, followsInterface, actualPath = GameAudio.LastSourcePath,
+                sha256 = wave.Sha256, sourceRate = wave.SourceRate, sourceFrames = wave.SourceFrames, frames = GameAudio.LastSourceFrames,
+                sourceSeconds = wave.Seconds, outputOpenedAfterMilliseconds = openedAtMilliseconds, voiceCompletedAfterMilliseconds, nativeActiveMilliseconds,
+                maxNativeActiveMilliseconds = wave.Seconds * 1250 + 100, completedAfterMilliseconds = watch.Elapsed.TotalMilliseconds,
+                outputOpened = true, outputReleasedNaturally = true, noPlaybackError = true };
+        }
+        finally
+        {
+            Directory.CreateDirectory(evidenceDirectory);
+            File.WriteAllText(Path.Combine(evidenceDirectory, SkinCatalog.Get(expected).Slug + (followsInterface ? "-follow.json" : "-explicit.json")),
+                JsonSerializer.Serialize(new { passed = completed, skin = expected.ToString(), followsInterface, sha256 = wave.Sha256, expectedFrames = wave.PlaybackFrames,
+                    sourceSeconds = wave.Seconds, expectedDeadlineSeconds, observationDeadlineSeconds, openedAtMilliseconds, voiceCompletedAfterMilliseconds,
+                    nativeActiveMilliseconds = voiceCompletedAfterMilliseconds - openedAtMilliseconds, maxNativeActiveMilliseconds = wave.Seconds * 1250 + 100,
+                    observedAfterMilliseconds = watch.Elapsed.TotalMilliseconds, timeline }, new JsonSerializerOptions { WriteIndented = true }));
+        }
+    }
     private static Dictionary<string, string?> Overrides() => Enum.GetValues<Skin>().ToDictionary(s => s.ToString(), s => {
         string path = Path.Combine(GameAudio.OverrideDirectory(s), "switch.wav"); return File.Exists(path) ? Hash(File.ReadAllBytes(path)) : null;
     });
@@ -66,6 +170,7 @@ internal static class Program
         app.Resources = (ResourceDictionary)XamlReader.Parse(new XElement(ns + "ResourceDictionary", new XAttribute("xmlns", ns.NamespaceName), new XAttribute(XNamespace.Xmlns + "x", "http://schemas.microsoft.com/winfx/2006/xaml"), xaml.Root!.Element(ns + "Application.Resources")!.Elements()).ToString());
         WuxiaTheme.Apply(Skin.Arsenal, false);
         string beforeOverrides = OverrideSnapshot();
+        string beforeSettings = ProtectedSettingsSnapshot();
         var source = new Preferences { Skin = Skin.Arsenal, SoundEffects = false, SoundVolume = .35 };
         string before = JsonSerializer.Serialize(source, StateStore.Json);
         Skin previewSkin = Skin.Arsenal;
@@ -167,8 +272,52 @@ internal static class Program
                 }
                 return new { managerConstructorInvoked = false, hooksInstalled = false, playback = heard, volume = .001 };
             });
+            if (args.Contains("--playback-all")) Test("all-ten-real-signatures-persist-and-play-completely-through-manager", () => {
+                var games = SkinCatalog.All.Where(s => (int)s.Id >= (int)Skin.Hextech).ToArray();
+                Require(games.Length == 10, "The all-game fixture must cover exactly ten game themes");
+                using var catalog = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(AppContext.BaseDirectory, "skins", "signature-audio", "catalog.json")));
+                var entries = catalog.RootElement.GetProperty("sounds").EnumerateArray().ToDictionary(x => x.GetProperty("slug").GetString()!, x => x);
+                var waves = new Dictionary<Skin, WaveEvidence>();
+                // No skips and no synthesized substitute. Preflight every clip before playing any.
+                foreach (var game in games)
+                {
+                    Require(entries.TryGetValue(game.Slug, out var entry) && entry.GetProperty("status").GetString() == "verified", "Missing verified catalog entry for " + game.Slug);
+                    string path = SignatureAudio.DefaultPath(game.Id);
+                    Require(File.Exists(path), "Missing real installed signature for " + game.Slug + ": " + path);
+                    Require(string.Equals(SignatureAudio.GetPath(game.Id), path, StringComparison.OrdinalIgnoreCase), "A user override shadows the real signature for " + game.Slug + "; leave it intact and run this verification on an unshadowed install");
+                    var wave = InspectWave(path);
+                    Require(string.Equals(wave.Sha256, entry.GetProperty("output_sha256").GetString(), StringComparison.OrdinalIgnoreCase), "Installed signature differs from the verified catalog for " + game.Slug);
+                    waves.Add(game.Id, wave);
+                }
+                var playback = new List<object>();
+                foreach (var game in games)
+                {
+                    var edited = new AudioSettingsPanel(source, () => Skin.InkJade); Select(edited, game.Id);
+                    Field<CheckBox>(edited, "_enabled").IsChecked = true;
+                    var explicitPreferences = source.Copy(); Require(edited.TryCommit(explicitPreferences, out string error), error);
+                    explicitPreferences.Skin = Skin.InkJade; explicitPreferences.SoundVolume = .001;
+                    var store = new StateStore(Path.Combine(isolated, "all-playback", game.Slug));
+                    store.Save(new AppState { Preferences = explicitPreferences });
+                    var state = store.Load(); Require(state.Preferences.SoundTheme == game.Id, "Explicit game selection failed to persist for " + game.Slug);
+                    var manager = PlaybackManager(state);
+                    playback.Add(PlayCompleteSignature(manager, game.Id, waves[game.Id], false, Path.Combine(output, "playback-all")));
+
+                    var follow = new AudioSettingsPanel(state.Preferences, () => game.Id); Select(follow, null);
+                    var followPreferences = state.Preferences.Copy(); Require(follow.TryCommit(followPreferences, out error), error);
+                    followPreferences.Skin = game.Id;
+                    store.Save(new AppState { Preferences = followPreferences });
+                    state = store.Load(); Require(state.Preferences.SoundTheme == null && state.Preferences.Skin == game.Id, "Follow selection failed to persist for " + game.Slug);
+                    manager = PlaybackManager(state);
+                    playback.Add(PlayCompleteSignature(manager, game.Id, waves[game.Id], true, Path.Combine(output, "playback-all")));
+                    Console.WriteLine("PLAYED " + game.Slug + " explicit + follow; SHA256 " + waves[game.Id].Sha256 + "; frames " + waves[game.Id].PlaybackFrames);
+                }
+                Require(OverrideSnapshot() == beforeOverrides && ProtectedSettingsSnapshot() == beforeSettings, "All-game playback changed real user configuration");
+                return new { themes = games.Length, nativePlaybacks = playback.Count, managerConstructorInvoked = false, hooksInstalled = false, volume = .001,
+                    installedHashesMatchVerifiedCatalog = true, completeClipsFinishedNaturally = true, playback };
+            });
             Require(OverrideSnapshot() == beforeOverrides, "Validation altered a real theme override");
-            File.WriteAllText(Path.Combine(output, "report.json"), JsonSerializer.Serialize(new { passed = Failures == 0, failures = Failures, groups = Results.Count, at = DateTimeOffset.UtcNow, noManagerOrInputHooks = true, noTerminalWindowsTouched = true, userOverridesUnchanged = true, isolatedStateRoot = isolated, results = Results }, new JsonSerializerOptions { WriteIndented = true }));
+            Require(ProtectedSettingsSnapshot() == beforeSettings, "Validation altered real task or Terminal settings");
+            File.WriteAllText(Path.Combine(output, "report.json"), JsonSerializer.Serialize(new { passed = Failures == 0, failures = Failures, groups = Results.Count, at = DateTimeOffset.UtcNow, noManagerOrInputHooks = true, noTerminalWindowsTouched = true, userOverridesUnchanged = true, realTaskAndTerminalSettingsUnchanged = true, protectedSettingsHashes = JsonDocument.Parse(beforeSettings).RootElement, productAssemblySha256 = Hash(File.ReadAllBytes(typeof(GameAudio).Assembly.Location)), playbackAllRequested = args.Contains("--playback-all"), isolatedStateRoot = isolated, results = Results }, new JsonSerializerOptions { WriteIndented = true }));
             return Failures == 0 ? 0 : 1;
         }
         finally { host.Close(); GameAudio.Shutdown(); }

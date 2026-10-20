@@ -25,12 +25,18 @@ Each semantic operation is RMS-matched across all themes (validated spread below
 They deliberately have no music loop, spoken official line or copied game sample.
 
 Production playback lives in `src/CodeManager/GameAudio.cs`. It uses a bounded
-four-voice stereo mixer, 3 × 256-frame WinMM buffers, notification ducking,
+four-voice stereo mixer, 3 × 1024-frame WinMM buffers, notification ducking,
 per-action debounce and no deferred navigation playback. API calls never read
 audio files or wait for audio playback on the UI thread. Warm sample cache is
 bounded, custom files are revalidated on timestamp/length changes. Stop/mute
 cancels requests and wakes the worker to reset and release native output.
 An idle endpoint is released after 800 ms; the worker then sleeps on an event.
+Buffer completion also uses a separate native manual-reset event. The former
+256-frame blocks repeatedly underrun on the measured Windows output path,
+stretching clip consumption to about 2.38 times its nominal length. The larger
+23.2 ms blocks hold at most 69.7 ms across three buffers; no global timer
+resolution is changed. Full game-signature playback verifies consumption speed,
+natural completion and endpoint release rather than merely opening the device.
 
 `Configure(false)` is authoritative: per-action `Play(..., enabled: true)` cannot
 undo master mute. Explicit `Preview` can audition while ordinary audio is muted.

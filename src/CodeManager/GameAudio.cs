@@ -15,11 +15,12 @@ public enum AudioCue { Switch, Capture, Remove, Expand, Collapse, InventoryOpen,
 /// <summary>
 /// PCM signatures and legacy test cues, mixed on a private background thread. No UI dispatch,
 /// player process, blocking playback, or deferred playback queue. Public calls only
-/// replace a bounded pending request. Output latency is three 256-frame buffers.
+/// replace a bounded pending request. Three device buffers hold at most 70 ms
+/// of PCM; no synchronous playback or global timer-resolution changes are used.
 /// </summary>
 public static class GameAudio
 {
-    private const int Rate = 44100, Frames = 256, MaxVoices = 4, MaxWaveBytes = 1_200_000;
+    private const int Rate = 44100, Frames = 1024, MaxVoices = 4, MaxWaveBytes = 1_200_000;
     private static readonly object Gate = new();
     private static readonly AutoResetEvent Wake = new(false);
     private static readonly List<Request> Pending = new();
@@ -37,6 +38,7 @@ public static class GameAudio
     public static string? LastError => Volatile.Read(ref _lastError);
     public static string? LastSourcePath => Volatile.Read(ref _lastSourcePath);
     public static int LastSourceFrames => Volatile.Read(ref _lastSourceFrames);
+    public static double OutputBufferMilliseconds => 3000d * Frames / Rate;
     public static (int ActiveVoices, int PendingRequests, bool OutputOpen, int CachedSounds) Diagnostics
     { get { lock (Gate) return (Volatile.Read(ref _activeVoices), Pending.Count, Volatile.Read(ref _outputOpen), Cache.Count); } }
     public static string CustomRoot => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CodeManager", "Audio");
@@ -259,6 +261,8 @@ public static class GameAudio
 
     private static void Worker()
     {
+        using var completed = new ManualResetEvent(false);
+        WaitHandle[] signals = { Wake, completed };
         IntPtr device = IntPtr.Zero;
         var buffers = new List<OutputBuffer>(); var voices = new List<Voice>(); int generation = -1; long idleSince = 0;
         try
@@ -296,7 +300,7 @@ public static class GameAudio
                     if (device != IntPtr.Zero)
                     {
                         if (idleSince == 0) idleSince = Stopwatch.GetTimestamp();
-                        // Let the final 17 ms drain, then release the endpoint.
+                        // Let the final device buffers drain, then release the endpoint.
                         // After release the worker blocks, with no silent buffer loop.
                         if (Stopwatch.GetElapsedTime(idleSince).TotalMilliseconds >= 800) CloseOutput(ref device, buffers);
                     }
@@ -306,12 +310,19 @@ public static class GameAudio
                 if (device == IntPtr.Zero)
                 {
                     var format = new WaveFormat { FormatTag = 1, Channels = 2, SamplesPerSec = Rate, AvgBytesPerSec = Rate * 4, BlockAlign = 4, BitsPerSample = 16 };
-                    int result = waveOutOpen(out device, unchecked((uint)-1), ref format, IntPtr.Zero, IntPtr.Zero, 0);
+                    // Refill on the driver's buffer-completion event. A 3 ms
+                    // polling timeout can be rounded to a much longer Windows
+                    // timer tick and starve these short buffers between writes.
+                    int result = waveOutOpen(out device, unchecked((uint)-1), ref format, completed.SafeWaitHandle.DangerousGetHandle(), IntPtr.Zero, 0x00050000 /* CALLBACK_EVENT */);
                     if (result != 0) { device = IntPtr.Zero; voices.Clear(); Volatile.Write(ref _lastError, "Audio output unavailable (waveOut " + result + ")."); continue; }
                     for (int i = 0; i < 3; i++) buffers.Add(new OutputBuffer(device));
                     Volatile.Write(ref _outputOpen, true);
                     Volatile.Write(ref _lastError, null);
                 }
+                // Reset before inspecting flags, so a completion racing with the
+                // refill remains signaled. The separate control event preserves
+                // pending Stop/mute/navigation requests during native resets.
+                completed.Reset();
                 foreach (OutputBuffer buffer in buffers)
                 {
                     if (buffer.Busy || voices.Count == 0) continue;
@@ -342,7 +353,7 @@ public static class GameAudio
                 }
                 Volatile.Write(ref _activeVoices, voices.Count);
                 // Keep checking reset even during long imported cues. No STA/UI waits.
-                Wake.WaitOne(3);
+                WaitHandle.WaitAny(signals, 20);
             }
         }
         catch (Exception error) { Volatile.Write(ref _lastError, error.Message); }

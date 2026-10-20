@@ -63,8 +63,8 @@
       "evidence": "artifacts/experience-audit/report-after.json"
     },
     "source_clips": {
-      "verified_count": 8,
-      "missing_count": 2,
+      "verified_count": 10,
+      "missing_count": 0,
       "evidence": "artifacts/signature-audio/validation.json"
     },
     "offline_existing_cache": {
@@ -76,5 +76,6 @@
       "saved_task_identities_preserved": true,
       "terminal_pid_unchanged": 2900
     }
-  }
+  },
+  "followup_completion": "docs/signature-completion/validation.json"
 }
