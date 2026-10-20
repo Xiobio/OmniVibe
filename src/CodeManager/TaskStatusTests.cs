@@ -94,6 +94,51 @@ public static class TaskStatusTests
             var missing=new WheelStatusSummary(0,0,0,0,2);
             Check(WheelTaskStatus.CoreVisible(missing) && WheelTaskStatus.CoreCount(missing)==0,"Unknown state should not masquerade as a notification count");
         });
+        Test("OS reminders merge simultaneous outcomes, refresh task ordering and never include terminal message content",()=>{
+            var broker=new TaskNotifications();
+            var one=new Slot{Id="one",Number=1,Name="Login\nfeature",Window=new(){Handle=11},Connected=true,Unread=true,State=AgentState.Ready,UpdatedAt=now,Message="PRIVATE OUTPUT"};
+            var two=new Slot{Id="two",Number=2,Name="Build",Window=new(){Handle=12},Connected=true,Unread=true,State=AgentState.Waiting,UpdatedAt=now};
+            Check(broker.Queue(one,true,now,99) && broker.Queue(two,true,now,99),"Outcomes not queued");
+            Check(broker.Flush(new[]{one,two},true,now.AddMilliseconds(500),99).Length==0,"Merge window skipped");
+            one.Number=5;var batch=broker.Flush(new[]{one,two},true,now.AddSeconds(1),99);
+            Check(batch.Length==2 && batch[1].Number==5 && batch[1].Task.Id=="one","Batch or live order wrong");
+            Check(!broker.HasPending && TaskNotifications.SafeName(one.Name)=="Loginfeature","Unbounded timer or unsafe caption");
+            Check(!JsonSerializer.Serialize(batch).Contains("PRIVATE OUTPUT"),"Terminal content leaked into notification");
+        });
+        Test("OS reminders deduplicate changed messages, while a genuinely new turn can notify again",()=>{
+            var broker=new TaskNotifications();var s=new Slot{Window=new(){Handle=11},Connected=true,Unread=true,State=AgentState.Ready,UpdatedAt=now};
+            Check(broker.Queue(s,true,now,99),"First outcome missing");broker.Flush(new[]{s},true,now.AddSeconds(1),99);
+            s.Message="different message";s.UpdatedAt=now.AddSeconds(2);Check(!broker.Queue(s,true,now.AddSeconds(2),99),"Repeated outcome spammed");
+            s.State=AgentState.Running;s.Unread=false;broker.Observe(s);
+            s.State=AgentState.Ready;s.Unread=true;Check(broker.Queue(s,true,now.AddSeconds(3),99),"Next turn was suppressed");
+            s.State=AgentState.Running;s.Unread=false;broker.Observe(s);
+            s.State=AgentState.Ready;s.Unread=true;s.UpdatedAt=now.AddSeconds(8);broker.Queue(s,true,now.AddSeconds(8),99);
+            Check(broker.Flush(new[]{s},true,now.AddSeconds(8.4),99).Length==0,"Cancelled batch leaked its deadline into a new turn");
+            Check(broker.Flush(new[]{s},true,now.AddSeconds(9),99).Length==1,"New batch did not flush after its own merge window");
+        });
+        Test("OS reminders respect disabled, foreground and historical states without clearing the wheel's unread flag",()=>{
+            var broker=new TaskNotifications();var s=new Slot{Window=new(){Handle=11},Connected=true,Unread=true,State=AgentState.Ready,UpdatedAt=now.AddMinutes(-4)};
+            Check(!broker.Queue(s,true,now,99),"Historical startup burst");broker.Clear();s.UpdatedAt=now;
+            Check(!broker.Queue(s,true,now,11),"Foreground task generated OS popup");broker.Clear();
+            Check(broker.Queue(s,true,now,99),"Background outcome missing");
+            Check(broker.Flush(new[]{s},false,now.AddSeconds(1),99).Length==0 && !broker.HasPending,"Disabled reminders still delivered");
+            Check(s.Unread,"Disabling OS reminders erased visual attention");
+            Check(!broker.Queue(s,false,now,99),"Disabled queue accepted notification");
+        });
+        Test("Pending reminders cannot outlive acknowledgement, removal, session rebind or a new running turn",()=>{
+            for(int scenario=0;scenario<5;scenario++) {
+                var broker=new TaskNotifications();var s=new Slot{Id="same-slot",Window=new(){Handle=11},SessionId="old",Connected=true,Unread=true,State=AgentState.Ready,UpdatedAt=now};
+                broker.Queue(s,true,now,99);
+                if(scenario==0)s.Unread=false;else if(scenario==1)s.Window=null;else if(scenario==2)s.SessionId="new";else if(scenario==3)s.Window!.Handle=22;else{s.State=AgentState.Running;broker.Observe(s);}
+                Check(broker.Flush(new[]{s},true,now.AddSeconds(1),99).Length==0,"Stale target notification: "+scenario);
+            }
+        });
+        Test("System notification preference defaults on, persists off and copies independently of audio",()=>{
+            var p=JsonSerializer.Deserialize<Preferences>("{}")!;Check(p.SystemNotifications,"Existing profiles did not get default reminders");
+            p.SystemNotifications=false;var copy=JsonSerializer.Deserialize<Preferences>(JsonSerializer.Serialize(p.Copy()))!;
+            Check(!copy.SystemNotifications && copy.SoundEffects,"Notification preference not independent or not persisted");
+            Check(WheelTaskStatus.ShortCaption(AgentState.Ready)!=WheelTaskStatus.ShortCaption(AgentState.Waiting),"Ready and permission visually indistinguishable");
+        });
         Test("Dock teardown: a late MouseLeave without a presentation source closes hints safely",()=>{
             var dock=new DockWindow(interactionTest:true);
             try {

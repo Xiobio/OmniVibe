@@ -47,6 +47,7 @@ public sealed class Preferences
     public double SoundVolume { get; set; } = .45;
     public bool ImmersiveAudio { get; set; } = true;
     public bool SoundNotifications { get; set; } = true;
+    public bool SystemNotifications { get; set; } = true;
     public bool ShowRecoveryOnStartup { get; set; } = true;
     public bool AutoReconnectExisting { get; set; } = true;
     public bool AutoRestoreOnStartup { get; set; }

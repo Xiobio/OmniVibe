@@ -1,0 +1,61 @@
+{
+  "updated_at": "2026-10-20T10:30:39.814861+00:00",
+  "passed": true,
+  "build": {
+    "staged_source_isolated": true,
+    "warnings": 0,
+    "errors": 0
+  },
+  "tests": {
+    "status_groups": 17,
+    "skin_groups": 24,
+    "self_test_groups": 42,
+    "all_passed": true
+  },
+  "visual": {
+    "themes": 13,
+    "native_surfaces": 39,
+    "static_and_animated_variants": true,
+    "short_state_captions": true,
+    "contrast_plates": true,
+    "compact_aggregate": true,
+    "weapon_enclosing_ring": false,
+    "calibration": "docs/task-status/readable-hud-themes.png",
+    "comparison": "docs/task-status/readable-hud-comparison.png"
+  },
+  "notifications": {
+    "native_api": "System.Windows.Forms.NotifyIcon.ShowBalloonTip",
+    "native_shell_shown_event": true,
+    "production_click_navigation_manually_tested": false,
+    "click_target": "Current task overview (native callback has no task-specific payload)",
+    "default_enabled": true,
+    "settings": "General / Task reminders",
+    "merge_ms": 900,
+    "deduplicate": "Per task identity and outcome until next running/unknown state",
+    "historical_event_cutoff_seconds": 45,
+    "foreground_popups_suppressed": true,
+    "visual_unread_preserved": true,
+    "terminal_output_included": false,
+    "idle_notification_timer_stops": true
+  },
+  "live": {
+    "occupied": 4,
+    "linked": 4,
+    "recent": 5,
+    "identities_preserved": true,
+    "preferences_preserved": true,
+    "terminal_processes_and_configuration_preserved": true,
+    "dock_visible_and_topmost": true
+  },
+  "validation_note": "The first skin run overlapped other native UI tests and failed its focus check. An isolated rerun passed all 24 groups; both reports are retained.",
+  "evidence": [
+    "artifacts/status-notifications/validation/report.json",
+    "artifacts/status-notifications/skins-isolated/report.json",
+    "artifacts/status-notifications/skins/parallel-run-report.json",
+    "artifacts/status-notifications/self/report.json",
+    "artifacts/status-notifications/native-notification.json",
+    "artifacts/status-notifications/live-refresh.json"
+  ],
+  "packaged": false,
+  "cli_sessions_restarted": false
+}

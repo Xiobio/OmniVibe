@@ -26,8 +26,8 @@ internal readonly record struct WheelStatusSummary(int Running, int Waiting, int
     }
 }
 
-/// <summary>Quiet equipment HUD: one glyph per socket, one aggregate seal on the
-/// core. State names belong in the immediate hover hint, never around the artwork.</summary>
+/// <summary>Readable equipment HUD: high-contrast state tickets and one compact
+/// aggregate. Short captions and distinct shapes work without color or motion.</summary>
 internal static class WheelTaskStatus
 {
     private static readonly Dictionary<string,Brush> Brushes=new();
@@ -59,7 +59,7 @@ internal static class WheelTaskStatus
     private static Brush Glow(string color)
     {
         if(Glows.TryGetValue(color,out var cached))return cached;
-        var c=(Color)ColorConverter.ConvertFromString(color);c.A=65;
+        var c=(Color)ColorConverter.ConvertFromString(color);c.A=115;
         var brush=new RadialGradientBrush(c,Colors.Transparent);brush.Freeze();Glows[color]=brush;return brush;
     }
     private static Brush SealGlass(SkinDefinition skin)
@@ -118,29 +118,54 @@ internal static class WheelTaskStatus
         bool stale=Stale(slot),attention=slot.Unread && slot.Connected && slot.State is AgentState.Ready or AgentState.Waiting or AgentState.Error;
         string color=stale?skin.Unknown:slot.StateColor;
         var state=slot.Connected && !stale?slot.State:AgentState.Unknown;
-        dc.PushTransform(new TranslateTransform(-w/2+22,h/2-3));
-        Glyph(dc,skin,state,color,flow+slot.Number*.13,motion && !stale,attention);dc.Pop();
+        // Keep the weapon silhouette free: its foot carries a readable status
+        // ticket, independently of desktop wallpaper and the portrait's colors.
+        double scale=Math.Clamp(w/88,.75,1.1);
+        dc.PushTransform(new TranslateTransform(6,h/2-2));dc.PushTransform(new ScaleTransform(scale,scale));
+        double width=state==AgentState.Unknown?22:56;
+        var plate=Seal(width,skin.Family is "mechanical" or "tactical" or "protocol" or "formation");
+        string ink=attention?ContrastInk(color):color;
+        dc.DrawGeometry(attention?B(color):SealGlass(skin),P(attention?ink:color,.8),plate);
+        if(attention && motion) {
+            dc.PushOpacity(.2+.45*Math.Pow(Math.Sin(flow*Math.PI*3),2));
+            dc.DrawLine(P(color,2.2),new Point(-width/2+5,-12),new Point(width/2-5,-12));dc.Pop();
+        }
+        dc.PushTransform(new TranslateTransform(state==AgentState.Unknown?0:-17,0));
+        dc.PushTransform(new ScaleTransform(1.35,1.35));Glyph(dc,skin,state,ink,flow+slot.Number*.13,motion && !stale,false);dc.Pop();dc.Pop();
+        if(state!=AgentState.Unknown)Label(dc,state==AgentState.Ready && !slot.Unread?"已看":ShortCaption(state),ink,10.5,31,9,0);
+        dc.Pop();dc.Pop();
     }
+    internal static string ShortCaption(AgentState state) => state switch { AgentState.Ready=>"待看",AgentState.Waiting=>"确认",AgentState.Error=>"异常",AgentState.Running=>"运行",_=>"未连" };
+    private static string ContrastInk(string color) => SkinCatalog.Luminance(color)>.35?"#101B20":"#FFFFFF";
     internal static void DrawCore(DrawingContext dc,SkinDefinition skin,IReadOnlyList<Slot> slots,Slot? current,double flow,bool motion,double reveal=1)
     {
         var summary=WheelStatusSummary.From(slots);if(!CoreVisible(summary))return;
         int count=CoreCount(summary);string color=summary.Color(skin);var state=CoreState(summary);
-        double width=count>0?32:19;
-        // One small equipment seal, tucked into the lower-right corner. The only
-        // persistent text is a meaningful aggregate count; artwork remains open.
-        dc.PushTransform(new TranslateTransform(36,43));
+        bool attention=summary.Attention>0;
+        double width=count>0?84:26;
+        // A clear bottom seal fits inside the 116 px compact host. It never
+        // encloses the character or adds a second ring around the equipment.
+        dc.PushTransform(new TranslateTransform(0,41));dc.PushTransform(new ScaleTransform(1,1.4));
         var plate=Seal(width,skin.Family is "mechanical" or "tactical" or "protocol" or "formation");
-        dc.DrawGeometry(SealGlass(skin),null,plate);
-        dc.PushOpacity(.32);dc.DrawGeometry(null,P(skin.Border,.6),plate);dc.Pop();
-        dc.PushOpacity(.22);dc.DrawLine(P(skin.Accent,.6),new Point(-width/2+5,-7),new Point(width/2-5,-7));dc.Pop();
-        double glyphX=count>0?-6:0;
-        dc.PushTransform(new TranslateTransform(glyphX,0));Glyph(dc,skin,state,color,flow,motion,summary.Attention>0);dc.Pop();
-        if(count>0)Label(dc,count.ToString(CultureInfo.InvariantCulture),skin.Text,10,14,7.5,0);
-        if(motion && summary.Attention>0 && reveal<1) {
-            dc.PushOpacity((1-reveal)*.65);
-            double spread=9+reveal*10;
-            dc.DrawEllipse(B(color),null,new Point(-spread,-7-reveal*5),1.1,1.1);
-            dc.DrawEllipse(B(color),null,new Point(6+reveal*9,-11-reveal*7),.8,.8);
+        dc.DrawGeometry(SealGlass(skin),P(color,1.15),plate);
+        if(attention) {
+            double pulse=motion?.5+.5*Math.Pow(Math.Sin(flow*Math.PI*3),2):1;
+            dc.PushOpacity(pulse);dc.DrawLine(P(color,2),new Point(-width/2+7,-8),new Point(width/2-7,-8));dc.Pop();
+        }
+        dc.Pop();
+        double glyphX=count>0?-27:0;
+        dc.PushTransform(new TranslateTransform(glyphX,0));
+        dc.DrawRoundedRectangle(B(color),null,new Rect(-9,-9,18,18),4,4);
+        dc.PushTransform(new ScaleTransform(1.4,1.4));Glyph(dc,skin,state,ContrastInk(color),flow,motion,false);dc.Pop();dc.Pop();
+        if(count>0) {
+            Label(dc,count.ToString(CultureInfo.InvariantCulture),color,16,18,-7,0);
+            Label(dc,attention?"待办":"运行",skin.Text,11,28,19,0);
+        }
+        if(motion && attention && reveal<1) {
+            dc.PushOpacity((1-reveal)*.8);
+            double spread=20+reveal*32;
+            dc.DrawLine(P(color,2),new Point(-spread,-17),new Point(-spread+7,-22));
+            dc.DrawLine(P(color,2),new Point(spread-7,-22),new Point(spread,-17));
             dc.Pop();
         }
         dc.Pop();

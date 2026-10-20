@@ -84,6 +84,7 @@ public sealed partial class Manager : IDisposable
         _dragTimer.Tick += (_, _) => DragTick();
         _trayIcon = ProductIcon.CreateTrayIcon();
         _tray = new Forms.NotifyIcon { Icon = _trayIcon, Text = "OmniVibe · AI 任务武器栏", Visible = true };
+        InitializeNotifications();
         var menu = new Forms.ContextMenuStrip { BackColor = System.Drawing.Color.FromArgb(22, 30, 27), ForeColor = System.Drawing.Color.FromArgb(250, 234, 203), Font = new System.Drawing.Font("Microsoft YaHei UI", 10), Renderer = new TrayMenuRenderer() };
         menu.Items.Add("显示 / 隐藏悬浮入口", null, (_, _) => Dock.Dispatcher.Invoke(ToggleVisibility));
         menu.Items.Add(InventoryMenuLabel, null, (_, _) => Dock.Dispatcher.Invoke(ToggleInventory));
@@ -633,6 +634,7 @@ public sealed partial class Manager : IDisposable
         slot.UpdatedAt = timestamp;
         slot.Unread = (state is AgentState.Waiting or AgentState.Ready or AgentState.Error) && (changed || slot.Unread);
         slot.Refresh();
+        _notifications?.Observe(slot);
         if (_processingStatusBatch)
         {
             _statusBatchDirty = true;
@@ -645,6 +647,7 @@ public sealed partial class Manager : IDisposable
     }
     private void NotifyStatus(Slot slot)
     {
+        QueueNotification(slot);
         Dock.Pulse(slot); Hint(slot.Number + " · " + slot.DisplayName + "：" + slot.StateLabel);
         if (slot.State == AgentState.Waiting) PlayCue(AudioCue.Waiting, slot);
         else if (slot.State == AgentState.Ready) PlayCue(AudioCue.Ready, slot);
@@ -979,7 +982,7 @@ public sealed partial class Manager : IDisposable
     public void Dispose()
     {
         if (_disposed) return; _disposed = true; Exiting = true;
-        _heartbeat.Stop(); _dragTimer.Stop();
+        _heartbeat.Stop(); _dragTimer.Stop(); _notificationTimer?.Stop(); _notifications.Clear();
         CheckpointWindows();
         _input.Dispose(); CancelInteraction(); Dock.ClosePreview(); InkEffects.CancelVisuals();
         GameAudio.Stop();

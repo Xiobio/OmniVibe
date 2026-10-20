@@ -141,6 +141,8 @@ public sealed class SettingsWindow : Window
         var startup = Options(new[] { "只显示悬浮入口", "重连仍在运行的窗口", "重连窗口，并显示待恢复任务", "重连窗口，并自动打开已配置任务" }, source.AutoRestoreOnStartup ? 3 : source.ShowRecoveryOnStartup ? 2 : source.AutoReconnectExisting ? 1 : 0); general.Children.Add(startup);
         var pause = Check("本次运行暂停全局快捷键（鼠标仍可用）", shortcutsPaused); general.Children.Add(pause);
         var audio = new AudioSettingsPanel(source, () => skin.SelectedSkin); generalPage.Children.Add(audio);
+        var reminders = Section(generalPage, "任务提醒", "后台任务回复、等待确认或出错时提醒；同一状态不重复，点击通知打开总览。");
+        var systemNotifications = Check("启用 Windows 系统通知", source.SystemNotifications); reminders.Children.Add(systemNotifications);
         var maintenance = new StackPanel();
         var history = new Button { Content = "查看最近任务 / 恢复工作现场", HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(0, 6, 0, 6) }; history.Click += (_, _) => RecoveryRequested?.Invoke(); maintenance.Children.Add(history);
         var data = new Button { Content = "打开配置目录", HorizontalAlignment = HorizontalAlignment.Left }; data.Click += (_, _) => DataDirectoryRequested?.Invoke(); maintenance.Children.Add(data);
@@ -176,6 +178,7 @@ public sealed class SettingsWindow : Window
             candidate.Animate = quality.SelectedIndex == 0; candidate.DecorationsEnabled = quality.SelectedIndex != 2;
             candidate.ShowRecoveryOnStartup = startup.SelectedIndex >= 2; candidate.AutoReconnectExisting = startup.SelectedIndex >= 1; candidate.AutoRestoreOnStartup = startup.SelectedIndex == 3;
             if (!audio.TryCommit(candidate, out string audioError)) { Fail(audioError); return; }
+            candidate.SystemNotifications = systemNotifications.IsChecked == true;
             await CommitAsync(candidate, mini.IsChecked == true, pause.IsChecked == true);
         };
         Content = root;
