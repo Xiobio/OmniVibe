@@ -337,14 +337,21 @@ public sealed class DockWeaponWheel : FrameworkElement
     {
         var skin = SkinCatalog.Current;
         // The idle core identifies the game, independently of any empty slot's saved equipment.
-        var bounds = deployment > .9 ? new Rect(-55, -64, 110, 100) : new Rect(-55, -55, 110, 110);
+        var bounds = new Rect(-55, -57, 110, 92);
         if (!ThemeIdentityArt.DrawCached(dc, skin.Id, bounds))
             NativeSkinArt.Core(dc, skin, new Point(0, -8), 84);
-        dc.DrawRoundedRectangle(B(skin.Background), new Pen(B(skin.Border), .7), new Rect(30, 16, 18, 18), 5, 5);
-        var plus = new Pen(B(skin.Accent), 1.2) { StartLineCap = PenLineCap.Round, EndLineCap = PenLineCap.Round };
-        dc.DrawLine(plus, new Point(35, 25), new Point(43, 25));
-        dc.DrawLine(plus, new Point(39, 21), new Point(39, 29));
-        if (deployment > .9) Text(dc, "点击空槽添加", 0, 44, 10, skin.Text, 108);
+        bool receiving = _slots.Any(slot => slot.IsDropTarget);
+        // A persistent, integrated drag cue replaces the detached square plus badge.
+        // Keep the entire cue within the 116px idle host, including on light desktops.
+        dc.PushOpacity(receiving ? .96 : .86);
+        dc.DrawRoundedRectangle(B(skin.Background), new Pen(B(receiving ? skin.Accent : skin.Border), receiving ? 1 : .6), new Rect(-45, 33, 90, 21), 10, 10);
+        dc.Pop();
+        var arrow = new Pen(B(skin.Accent), 1.1) { StartLineCap = PenLineCap.Round, EndLineCap = PenLineCap.Round };
+        dc.DrawLine(arrow, new Point(-30, 38), new Point(-30, 46));
+        dc.DrawLine(arrow, new Point(-34, 43), new Point(-30, 47));
+        dc.DrawLine(arrow, new Point(-30, 47), new Point(-26, 43));
+        Text(dc, receiving ? "松手收纳" : "拖入窗口", 8, 43, 10, skin.Text, 65);
+        if (deployment > .9) Text(dc, "或点击空槽添加", 0, 65, 9, skin.Muted, 108);
     }
     private void DrawEmptyTarget(DrawingContext dc, Slot slot, bool selected, double f)
     {
