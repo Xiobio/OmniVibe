@@ -2,6 +2,7 @@
   <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net10.0-windows</TargetFramework><Nullable>enable</Nullable><ImplicitUsings>disable</ImplicitUsings></PropertyGroup>
   <ItemGroup><Compile Include="../../src/CodeManager/GameAudio.cs" Link="GameAudio.cs" /></ItemGroup>
   <ItemGroup><Compile Include="../../src/CodeManager/SignatureAudio.cs" Link="SignatureAudio.cs" /></ItemGroup>
+  <ItemGroup><Compile Include="../../src/CodeManager/CompletionAudio.cs" Link="CompletionAudio.cs" /></ItemGroup>
   <ItemGroup><Content Include="../../skins/signature-audio/catalog.json" Link="skins/signature-audio/catalog.json" CopyToOutputDirectory="PreserveNewest" Condition="Exists('../../skins/signature-audio/catalog.json')" /></ItemGroup>
   <ItemGroup><Content Include="../../skins/audio/**/*" Link="skins/audio/%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" /></ItemGroup>
 </Project>

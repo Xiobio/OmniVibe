@@ -1,0 +1,73 @@
+{
+  "updated_at": "2026-10-20T10:53:48.156012+00:00",
+  "passed": true,
+  "build": {
+    "isolated_staged_source": true,
+    "warnings": 0,
+    "errors": 0
+  },
+  "tests": {
+    "status_and_reminder_groups": 19,
+    "skin_groups": 24,
+    "base_groups": 42,
+    "all_passed": true
+  },
+  "audio": {
+    "themes": 13,
+    "min_seconds": 0.32,
+    "max_seconds": 0.55,
+    "sources": "Pinned VCSL CC0 acoustic recordings",
+    "distinct_hashes": 13,
+    "reproducible_build": true,
+    "bundled_offline": true,
+    "deployed_hashes_match": true,
+    "playback_gain": "Half shared volume",
+    "theme": "Current visual skin, independent of window-switch override",
+    "native_playback_themes": 13,
+    "idle_endpoints_released": true,
+    "manager_sound_only_dispatch_verified": true,
+    "master_mute_and_audition_verified": true
+  },
+  "notifications": {
+    "merged": true,
+    "deduplicated": true,
+    "foreground_and_historical_events_silent": true,
+    "only_ready_plays_completion": true,
+    "independent_of_system_notification_toggle": true,
+    "native_silent_flag": "NIIF_NOSOUND",
+    "native_shell_shown": true,
+    "native_click_message_callback_verified": true,
+    "tray_click_message_callback_verified": true,
+    "callback_test_method": "SendMessage to the production native window; OS display acknowledged via NIN_BALLOONSHOW",
+    "no_focus_steal": true,
+    "disposed_native_window_released": true
+  },
+  "markers": {
+    "themes": 13,
+    "existing_layout_and_glyph_sizes_preserved": true,
+    "small_core_seal_size": "32 x 18 DIPs",
+    "new_text_labels": false,
+    "themed_edges_and_trim": true,
+    "decorations_off_supported": true,
+    "native_compact_and_expanded_surfaces": 39,
+    "preview": "docs/task-status/themed-status-marks.png"
+  },
+  "live": {
+    "tasks": 4,
+    "linked": 4,
+    "recent_records": 5,
+    "identities_preserved": true,
+    "preferences_preserved": true,
+    "terminal_configuration_and_processes_preserved": true,
+    "completion_enabled": true
+  },
+  "evidence": [
+    "artifacts/completion-audio/validation/report.json",
+    "artifacts/completion-audio/skins/report.json",
+    "artifacts/completion-audio/self/report.json",
+    "artifacts/completion-audio/native-clean/report.json",
+    "artifacts/completion-audio/live-refresh.json"
+  ],
+  "packaged": false,
+  "cli_sessions_restarted": false
+}

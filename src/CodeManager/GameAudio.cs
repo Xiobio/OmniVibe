@@ -72,6 +72,19 @@ public static class GameAudio
         Submit(skin, AudioCue.Switch, false, volume, true, null, signature: true);
     }
 
+    /// <summary>One quiet completion cue per merged batch, independent of the
+    /// navigation toggle. Uses the same bounded worker and half the global gain.</summary>
+    public static void PlayCompletion(Skin skin, bool enabled, double volume = .45)
+    {
+        if (!enabled || SafeVolume(volume)==0) return;
+        lock (Gate) { if (!_enabled) return; _volume=SafeVolume(volume); }
+        Submit(skin,AudioCue.Ready,false,volume,true,null,completion:true,gain:.5);
+    }
+    public static void PreviewCompletion(Skin skin,double volume=.45)
+    {
+        if (SafeVolume(volume)>0) Submit(skin,AudioCue.Ready,true,volume*.5,true,null,completion:true);
+    }
+
     /// <summary>Explicit audition; works while normal feedback is disabled. New preview replaces the previous preview.</summary>
     public static void Preview(Skin skin, AudioCue cue, double volume = .45, bool immersive = true, string? identity = null)
     {
@@ -167,14 +180,14 @@ public static class GameAudio
     private static double SafeVolume(double volume) => double.IsFinite(volume) ? Math.Clamp(volume, 0, 1) : .45;
     private static bool QuietCue(AudioCue cue) => cue is AudioCue.Switch or AudioCue.Capture or AudioCue.Remove or AudioCue.Waiting or AudioCue.Ready or AudioCue.Error;
     private static int Priority(AudioCue cue) => cue is AudioCue.Waiting or AudioCue.Ready or AudioCue.Error ? 3 : cue == AudioCue.Detent ? 0 : 1;
-    private sealed record Request(Skin Skin, AudioCue Cue, bool Preview, double Volume, bool Immersive, string? Identity, int Generation, long Submitted, string? SourcePath, bool Signature);
+    private sealed record Request(Skin Skin, AudioCue Cue, bool Preview, double Volume, bool Immersive, string? Identity, int Generation, long Submitted, string? SourcePath, bool Signature, bool Completion, double Gain);
     private sealed record Sample(float[] Data, DateTime Changed, long Length, string Path);
     private sealed class Voice
     {
         public required float[] Data; public int Position, Limit; public double Volume; public bool Preview; public int Priority;
     }
 
-    private static void Submit(Skin skin, AudioCue cue, bool preview, double volume, bool immersive, string? identity, string? sourcePath = null, bool signature = false)
+    private static void Submit(Skin skin, AudioCue cue, bool preview, double volume, bool immersive, string? identity, string? sourcePath = null, bool signature = false, bool completion = false, double gain = 1)
     {
         lock (Gate)
         {
@@ -188,7 +201,7 @@ public static class GameAudio
             // notification replaces the same item, leaving at most two priorities.
             Pending.RemoveAll(r => preview ? r.Preview : !r.Preview && (Priority(r.Cue) <= Priority(cue) || (Priority(cue) == 3 && Priority(r.Cue) == 3 && r.Identity == identity)));
             if (Pending.Count >= 4) Pending.RemoveAt(0);
-            Pending.Add(new(skin, cue, preview, SafeVolume(volume), immersive, identity, _generation, now, sourcePath, signature));
+            Pending.Add(new(skin, cue, preview, SafeVolume(volume), immersive, identity, _generation, now, sourcePath, signature,completion,gain));
             if (_thread == null)
             {
                 _thread = new Thread(Worker) { IsBackground = true, Name = "OmniVibe themed audio" };
@@ -200,13 +213,13 @@ public static class GameAudio
 
     private static Sample Load(Request request)
     {
-        string path = request.SourcePath ?? (request.Signature ? SignatureAudio.GetPath(request.Skin) : GetPath(request.Skin, request.Cue, request.Identity));
+        string path = request.SourcePath ?? (request.Completion ? CompletionAudio.GetPath(request.Skin) : request.Signature ? SignatureAudio.GetPath(request.Skin) : GetPath(request.Skin, request.Cue, request.Identity));
         Sample? sample;
         var file = new FileInfo(path);
         lock (Gate) if (Cache.TryGetValue(path, out sample) && sample.Changed == file.LastWriteTimeUtc && sample.Length == file.Length) return sample;
         float[] data;
         try { data = Decode(ReadFile(path)); }
-        catch (Exception) when (!request.Signature && request.SourcePath == null && !string.Equals(path, BuiltInPath(request.Skin, request.Cue), StringComparison.OrdinalIgnoreCase))
+        catch (Exception) when (!request.Completion && !request.Signature && request.SourcePath == null && !string.Equals(path, BuiltInPath(request.Skin, request.Cue), StringComparison.OrdinalIgnoreCase))
         { path = BuiltInPath(request.Skin, request.Cue); file = new FileInfo(path); data = Decode(ReadFile(path)); }
         sample = new(data, file.LastWriteTimeUtc, file.Length, path);
         lock (Gate) { if (Cache.Count > 100) Cache.Clear(); Cache[path] = sample; }
@@ -290,7 +303,7 @@ public static class GameAudio
                         else if (Priority(request.Cue) >= 1) voices.RemoveAll(v => !v.Preview && v.Priority < 3);
                         if (voices.Count >= MaxVoices) voices.RemoveAt(0);
                         int maxFrames = request.Immersive ? sample.Data.Length / 2 : (int)(Rate * (Priority(request.Cue) == 3 ? .6 : request.Cue == AudioCue.Switch ? .14 : .20));
-                        voices.Add(new Voice { Data = sample.Data, Limit = Math.Min(sample.Data.Length, maxFrames * 2), Volume = request.Preview ? request.Volume : 1, Preview = request.Preview, Priority = Priority(request.Cue) });
+                        voices.Add(new Voice { Data = sample.Data, Limit = Math.Min(sample.Data.Length, maxFrames * 2), Volume = request.Preview ? request.Volume : request.Gain, Preview = request.Preview, Priority = Priority(request.Cue) });
                     }
                     catch (Exception error) { Volatile.Write(ref _lastError, error.Message); }
                 }

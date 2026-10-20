@@ -35,7 +35,7 @@ internal static class WheelTaskStatus
     private static readonly Dictionary<(string,string,double,double),DrawingGroup> Labels=new();
     private static readonly Dictionary<(string,string),Brush> Glass=new();
     private static readonly Dictionary<string,Brush> Glows=new();
-    private static readonly Dictionary<(double,bool),Geometry> Seals=new();
+    private static readonly Dictionary<(double,Skin),Geometry> Seals=new();
     private static readonly Typeface Typeface=new(new FontFamily("Microsoft YaHei UI"),FontStyles.Normal,FontWeights.SemiBold,FontStretches.Normal);
     private static Brush B(string color) { if(Brushes.TryGetValue(color,out var b))return b;var brush=new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));brush.Freeze();Brushes[color]=brush;return brush; }
     private static Pen P(string color,double width) { if(Pens.TryGetValue((color,width),out var p))return p; p=new Pen(B(color),width){StartLineCap=PenLineCap.Round,EndLineCap=PenLineCap.Round};p.Freeze();Pens[(color,width)]=p;return p; }
@@ -68,18 +68,60 @@ internal static class WheelTaskStatus
         Color top=(Color)ColorConverter.ConvertFromString(skin.Elevated),bottom=(Color)ColorConverter.ConvertFromString(skin.Background);top.A=244;bottom.A=230;
         var brush=new LinearGradientBrush(top,bottom,90);brush.Freeze();Glass[key]=brush;return brush;
     }
-    private static Geometry Seal(double width,bool angular)
+    private static Geometry Seal(double width,SkinDefinition skin)
     {
-        if(Seals.TryGetValue((width,angular),out var cached))return cached;
+        if(Seals.TryGetValue((width,skin.Id),out var cached))return cached;
         Geometry result;
-        if(angular) {
+        if(skin.Family is "mechanical" or "tactical" or "protocol" or "formation" or "arsenal") {
+            double cut=skin.Id==Skin.Protocol?5:skin.Id==Skin.Tactical?2:4;
             var g=new StreamGeometry();using(var c=g.Open()) {
-                c.BeginFigure(new Point(-width/2+4,-9),true,true);
-                c.PolyLineTo(new[]{new Point(width/2-3,-9),new Point(width/2,-6),new Point(width/2,5),new Point(width/2-4,9),new Point(-width/2+3,9),new Point(-width/2,6),new Point(-width/2,-5)},true,false);
+                c.BeginFigure(new Point(-width/2+cut,-9),true,true);
+                c.PolyLineTo(new[]{new Point(width/2-cut,-9),new Point(width/2,-9+cut),new Point(width/2,9-cut),new Point(width/2-cut,9),new Point(-width/2+cut,9),new Point(-width/2,9-cut),new Point(-width/2,-9+cut)},true,false);
             }
             result=g;
-        } else result=new RectangleGeometry(new Rect(-width/2,-9,width,18),6,6);
-        result.Freeze();Seals[(width,angular)]=result;return result;
+        } else {
+            double radius=skin.Id switch { Skin.Cinnabar=>2,Skin.InkJade=>4,Skin.Adventure=>3,Skin.Relic=>5,Skin.Starlight=>7,Skin.Wonderland=>8,_=>6 };
+            result=new RectangleGeometry(new Rect(-width/2,-9,width,18),radius,radius);
+        }
+        result.Freeze();Seals[(width,skin.Id)]=result;return result;
+    }
+    // Theme workmanship stays in the existing 32 x 18 seal. All state glyphs
+    // retain their common meaning, position and size; no extra labels or plates.
+    private static void ThemeTrim(DrawingContext dc,SkinDefinition skin,double width,double flow,bool motion,bool attention)
+    {
+        double left=-width/2+2,right=width/2-2;
+        var accent=P(skin.Accent,.65);var secondary=P(skin.Secondary,.6);
+        dc.PushOpacity(attention && motion?.35+.25*Math.Pow(Math.Sin(flow*Math.PI*3),2):.44);
+        switch(skin.Id) {
+            case Skin.InkJade:
+                dc.DrawLine(accent,new(left,-3),new(left,-6));dc.DrawLine(accent,new(left,-6),new(left+3,-6));
+                dc.DrawLine(secondary,new(right,3),new(right,6));dc.DrawLine(secondary,new(right,6),new(right-3,6));break;
+            case Skin.Midnight:
+                dc.DrawEllipse(null,secondary,new(left+2,-4),1.5,2);dc.DrawEllipse(B(skin.Accent),null,new(right-2,5),.7,.7);break;
+            case Skin.Cinnabar:
+                dc.DrawLine(accent,new(left+2,-6),new(right-2,-6));dc.DrawLine(accent,new(left+2,6),new(right-2,6));break;
+            case Skin.Hextech:
+                dc.DrawLine(secondary,new(left,-3),new(left+2,-5));dc.DrawEllipse(B(skin.Secondary),null,new(right-2,5),1,1);break;
+            case Skin.Tactical:
+                for(int i=0;i<3;i++)dc.DrawLine(accent,new(left+i*2,5),new(left+i*2,7));break;
+            case Skin.Protocol:
+                dc.DrawLine(accent,new(right-5,-7),new(right,-2));dc.DrawLine(secondary,new(left,2),new(left+4,6));break;
+            case Skin.Adventure:
+                dc.DrawEllipse(B(skin.Accent),null,new(left+2,-5),.8,.8);dc.DrawEllipse(B(skin.Accent),null,new(right-2,5),.8,.8);break;
+            case Skin.Arsenal:
+                dc.DrawLine(accent,new(left,-4),new(left+4,-7));dc.DrawLine(accent,new(right-4,7),new(right,4));break;
+            case Skin.Relic:
+                dc.DrawLine(accent,new(left,-4),new(left,4));dc.DrawLine(secondary,new(right,-4),new(right,4));break;
+            case Skin.Starlight:
+                dc.DrawLine(accent,new(-3,-7),new(0,-5));dc.DrawLine(accent,new(0,-5),new(3,-7));break;
+            case Skin.Formation:
+                dc.DrawLine(secondary,new(left+1,-5),new(left+3,-7));dc.DrawLine(secondary,new(left+3,-7),new(left+5,-5));break;
+            case Skin.Astral:
+                dc.DrawEllipse(B(skin.Accent),null,new(left+2,-5),.8,.8);dc.DrawLine(secondary,new(right-4,6),new(right,6));break;
+            case Skin.Wonderland:
+                dc.DrawEllipse(null,secondary,new(left+2,-5),1.5,1);dc.DrawEllipse(null,accent,new(right-2,5),1.5,1);break;
+        }
+        dc.Pop();
     }
     private static void Glyph(DrawingContext dc,SkinDefinition skin,AgentState state,string color,double flow,bool motion,bool unread)
     {
@@ -119,6 +161,7 @@ internal static class WheelTaskStatus
         string color=stale?skin.Unknown:slot.StateColor;
         var state=slot.Connected && !stale?slot.State:AgentState.Unknown;
         dc.PushTransform(new TranslateTransform(-w/2+22,h/2-3));
+        if(SkinCatalog.DecorationsEnabled && attention)ThemeTrim(dc,skin,18,flow+slot.Number*.13,motion && !stale,true);
         Glyph(dc,skin,state,color,flow+slot.Number*.13,motion && !stale,attention);dc.Pop();
     }
     internal static void DrawCore(DrawingContext dc,SkinDefinition skin,IReadOnlyList<Slot> slots,Slot? current,double flow,bool motion,double reveal=1)
@@ -129,10 +172,11 @@ internal static class WheelTaskStatus
         // One small equipment seal, tucked into the lower-right corner. The only
         // persistent text is a meaningful aggregate count; artwork remains open.
         dc.PushTransform(new TranslateTransform(36,43));
-        var plate=Seal(width,skin.Family is "mechanical" or "tactical" or "protocol" or "formation");
+        var plate=Seal(width,skin);
         dc.DrawGeometry(SealGlass(skin),null,plate);
         dc.PushOpacity(.32);dc.DrawGeometry(null,P(skin.Border,.6),plate);dc.Pop();
         dc.PushOpacity(.22);dc.DrawLine(P(skin.Accent,.6),new Point(-width/2+5,-7),new Point(width/2-5,-7));dc.Pop();
+        if(SkinCatalog.DecorationsEnabled)ThemeTrim(dc,skin,width,flow,motion,summary.Attention>0);
         double glyphX=count>0?-6:0;
         dc.PushTransform(new TranslateTransform(glyphX,0));Glyph(dc,skin,state,color,flow,motion,summary.Attention>0);dc.Pop();
         if(count>0)Label(dc,count.ToString(CultureInfo.InvariantCulture),skin.Text,10,14,7.5,0);

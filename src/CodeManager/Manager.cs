@@ -20,7 +20,7 @@ public sealed partial class Manager : IDisposable
     private double _scale;
     private readonly InputService _input;
     private readonly DispatcherTimer _heartbeat, _dragTimer;
-    private readonly Forms.NotifyIcon _tray;
+    private readonly TaskTrayIcon _tray;
     private readonly System.Drawing.Icon _trayIcon;
     private readonly WheelSelection _wheel = new();
     private WindowIdentity? _dragWindow;
@@ -83,7 +83,7 @@ public sealed partial class Manager : IDisposable
         _dragTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(30) };
         _dragTimer.Tick += (_, _) => DragTick();
         _trayIcon = ProductIcon.CreateTrayIcon();
-        _tray = new Forms.NotifyIcon { Icon = _trayIcon, Text = "OmniVibe · AI 任务武器栏", Visible = true };
+        _tray = new TaskTrayIcon { Icon = _trayIcon, Text = "OmniVibe · AI 任务武器栏", Visible = true };
         InitializeNotifications();
         var menu = new Forms.ContextMenuStrip { BackColor = System.Drawing.Color.FromArgb(22, 30, 27), ForeColor = System.Drawing.Color.FromArgb(250, 234, 203), Font = new System.Drawing.Font("Microsoft YaHei UI", 10), Renderer = new TrayMenuRenderer() };
         menu.Items.Add("显示 / 隐藏悬浮入口", null, (_, _) => Dock.Dispatcher.Invoke(ToggleVisibility));
@@ -118,11 +118,11 @@ public sealed partial class Manager : IDisposable
         { Hint("配置保存失败：" + ex.Message); Store.Log(ex.ToString()); return false; }
     }
     private void Hint(string message) { Dock.SetHint(message); _lastHint = DateTime.UtcNow; }
-    private void ApplyAudioPreferences() => GameAudio.Configure(State.Preferences.SoundEffects, State.Preferences.SoundVolume, State.Preferences.ImmersiveAudio);
+    private void ApplyAudioPreferences() => GameAudio.Configure(State.Preferences.SoundEffects || State.Preferences.SoundNotifications, State.Preferences.SoundVolume, State.Preferences.ImmersiveAudio);
     internal void PlayCue(AudioCue cue, Slot? slot = null)
     {
         var p = State.Preferences;
-        if (_disposed || Exiting || ShortcutsPaused || cue != AudioCue.Switch) return;
+        if (_disposed || Exiting || ShortcutsPaused || !p.SoundEffects || cue != AudioCue.Switch) return;
         GameAudio.PlaySignature(SignatureAudio.ResolveTheme(p), p.SoundEffects, p.SoundVolume);
     }
     public void StartupRecovery()

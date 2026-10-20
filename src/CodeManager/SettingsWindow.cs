@@ -143,6 +143,10 @@ public sealed class SettingsWindow : Window
         var audio = new AudioSettingsPanel(source, () => skin.SelectedSkin); generalPage.Children.Add(audio);
         var reminders = Section(generalPage, "任务提醒", "后台任务回复、等待确认或出错时提醒；同一状态不重复，点击通知打开总览。");
         var systemNotifications = Check("启用 Windows 系统通知", source.SystemNotifications); reminders.Children.Add(systemNotifications);
+        var completionSound = Check("后台任务完成时播放轻提示音", source.SoundNotifications); reminders.Children.Add(completionSound);
+        var previewComplete = new Button { Content="试听完成音", HorizontalAlignment=HorizontalAlignment.Left, Margin=new Thickness(0,4,0,6) };
+        previewComplete.Click += (_,_) => GameAudio.PreviewCompletion(skin.SelectedSkin,audio.DraftVolume);
+        reminders.Children.Add(previewComplete);
         var maintenance = new StackPanel();
         var history = new Button { Content = "查看最近任务 / 恢复工作现场", HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(0, 6, 0, 6) }; history.Click += (_, _) => RecoveryRequested?.Invoke(); maintenance.Children.Add(history);
         var data = new Button { Content = "打开配置目录", HorizontalAlignment = HorizontalAlignment.Left }; data.Click += (_, _) => DataDirectoryRequested?.Invoke(); maintenance.Children.Add(data);
@@ -179,6 +183,7 @@ public sealed class SettingsWindow : Window
             candidate.ShowRecoveryOnStartup = startup.SelectedIndex >= 2; candidate.AutoReconnectExisting = startup.SelectedIndex >= 1; candidate.AutoRestoreOnStartup = startup.SelectedIndex == 3;
             if (!audio.TryCommit(candidate, out string audioError)) { Fail(audioError); return; }
             candidate.SystemNotifications = systemNotifications.IsChecked == true;
+            candidate.SoundNotifications = completionSound.IsChecked == true;
             await CommitAsync(candidate, mini.IsChecked == true, pause.IsChecked == true);
         };
         Content = root;

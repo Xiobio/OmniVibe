@@ -23,7 +23,7 @@ public sealed class AudioSettingsPanel : StackPanel
     public AudioSettingsPanel(Preferences source, Func<Skin> previewSkin)
     {
         _previewSkin = previewSkin;
-        var controls = Section("窗口切换音", "切换到终端时播放一声主题标志音；其他操作保持安静。");
+        var controls = Section("窗口切换音", "切换到终端时播放主题标志音；完成提示在「任务提醒」中设置。");
         _enabled = new CheckBox { Content = "启用窗口切换音", IsChecked = source.SoundEffects, Margin = new Thickness(0, 3, 0, 12) };
         controls.Children.Add(_enabled);
         _enabled.Click += (_, _) => { if (_enabled.IsChecked != true) GameAudio.Stop(); };
@@ -68,6 +68,7 @@ public sealed class AudioSettingsPanel : StackPanel
     }
 
     private Skin? ThemeOverride => _theme.SelectedItem is ComboBoxItem { Tag: Skin skin } ? skin : null;
+    internal double DraftVolume => _volume.Value / 100;
     private Skin SelectedSkin => ThemeOverride ?? _previewSkin();
     private void UpdateDescription()
     {

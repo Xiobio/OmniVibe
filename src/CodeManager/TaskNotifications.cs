@@ -20,6 +20,7 @@ internal sealed class TaskNotifications
     private DateTimeOffset? _flushAt;
     internal bool HasPending => _pending.Count > 0;
     internal static bool Attention(AgentState state) => state is AgentState.Ready or AgentState.Waiting or AgentState.Error;
+    internal static bool PlayCompletion(IEnumerable<TaskNotice> notices,bool enabled,bool paused) => enabled && !paused && notices.Any(n=>n.State==AgentState.Ready);
     internal void Observe(Slot slot)
     {
         var key = NotificationTask.From(slot);

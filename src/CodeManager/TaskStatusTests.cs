@@ -139,6 +139,32 @@ public static class TaskStatusTests
             Check(!copy.SystemNotifications && copy.SoundEffects,"Notification preference not independent or not persisted");
             Check(TaskNotifications.Caption(AgentState.Ready)!=TaskNotifications.Caption(AgentState.Waiting),"Ready and permission notifications indistinguishable");
         });
+        Test("Completion audio is independent of OS balloons and navigation, merges ready tasks once, and ignores wait/error",()=>{
+            var broker=new TaskNotifications();var p=new Preferences{SoundEffects=false,SystemNotifications=false,SoundNotifications=true};
+            var slots=new[]{new Slot{Number=1,Window=new(){Handle=11},Connected=true,Unread=true,State=AgentState.Ready,UpdatedAt=now},new Slot{Number=2,Window=new(){Handle=12},Connected=true,Unread=true,State=AgentState.Ready,UpdatedAt=now}};
+            foreach(var s in slots)Check(broker.Queue(s,p.SystemNotifications || p.SoundNotifications,now,99),"Sound-only reminder was not queued");
+            var batch=broker.Flush(slots,p.SystemNotifications || p.SoundNotifications,now.AddSeconds(1),99);
+            Check(batch.Length==2 && TaskNotifications.PlayCompletion(batch,p.SoundNotifications,false),"Merged batch did not request one sound");
+            Check(!TaskNotifications.PlayCompletion(batch,false,false) && !TaskNotifications.PlayCompletion(batch,true,true),"Disabled/paused completion sound escaped");
+            Check(!TaskNotifications.PlayCompletion(batch.Select(n=>n with{State=AgentState.Waiting}),true,false),"Waiting mistaken for completion");
+            Check(!TaskNotifications.PlayCompletion(batch.Select(n=>n with{State=AgentState.Error}),true,false),"Error mistaken for completion");
+            var clone=JsonSerializer.Deserialize<Preferences>(JsonSerializer.Serialize(p.Copy()))!;
+            Check(clone.SoundNotifications && !clone.SoundEffects && !clone.SystemNotifications,"Independent sound preference not persisted");
+            Check((TaskTrayIcon.InfoFlags(System.Windows.Forms.ToolTipIcon.Info,true)&0x10)!=0,"Native toast not silent alongside completion cue");
+        });
+        Test("All thirteen completion clips are short, distinct, valid PCM with smooth boundaries and acoustic provenance",()=>{
+            var hashes=new HashSet<string>();
+            using var catalog=JsonDocument.Parse(File.ReadAllBytes(Path.Combine(AppContext.BaseDirectory,"skins","completion-audio","catalog.json")));
+            Check(catalog.RootElement.GetProperty("sounds").GetArrayLength()==13,"Missing acoustic provenance");
+            foreach(var skin in SkinCatalog.All) {
+                string file=CompletionAudio.GetPath(skin.Id);Check(GameAudio.ValidateWave(file,out var error),error);
+                byte[] bytes=File.ReadAllBytes(file);Check(hashes.Add(Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(bytes))),"Repeated completion clip");
+                using var reader=new BinaryReader(new MemoryStream(bytes));reader.BaseStream.Position=12;int dataOffset=0,dataLength=0,rate=0,channels=0;
+                while(reader.BaseStream.Position+8<=bytes.Length) {string tag=Encoding.ASCII.GetString(reader.ReadBytes(4));int length=reader.ReadInt32();long end=reader.BaseStream.Position+length;if(tag=="fmt "){Check(reader.ReadInt16()==1,"Non PCM");channels=reader.ReadInt16();rate=reader.ReadInt32();}if(tag=="data"){dataOffset=(int)reader.BaseStream.Position;dataLength=length;break;}reader.BaseStream.Position=end+(length&1);}
+                double seconds=dataLength/(rate*channels*2d);Check(seconds is >=.3 and <=.6,"Completion cue too long/short: "+skin.Slug);
+                Check(Math.Abs((int)BitConverter.ToInt16(bytes,dataOffset))<64 && Math.Abs((int)BitConverter.ToInt16(bytes,dataOffset+dataLength-2))<64,"Click-prone clip edges");
+            }
+        });
         Test("Dock teardown: a late MouseLeave without a presentation source closes hints safely",()=>{
             var dock=new DockWindow(interactionTest:true);
             try {
