@@ -37,6 +37,7 @@ public sealed class StateStore
             if (!Enum.IsDefined(result.Preferences.MouseModifiers)) result.Preferences.MouseModifiers = ShortcutModifiers.Alt;
             if (!Enum.IsDefined(result.Preferences.Arrangement)) result.Preferences.Arrangement = ArrangementMode.Balanced;
             if (!Enum.IsDefined(result.Preferences.Skin)) result.Preferences.Skin = Skin.InkJade;
+            if (result.Preferences.SoundTheme is Skin soundTheme && !Enum.IsDefined(soundTheme)) result.Preferences.SoundTheme = null;
             result.Preferences.SoundVolume = double.IsFinite(result.Preferences.SoundVolume) ? Math.Clamp(result.Preferences.SoundVolume, 0, 1) : .45;
             result.Preferences.DockWidth = double.IsFinite(result.Preferences.DockWidth) ? Math.Clamp(result.Preferences.DockWidth, 210, 620) : 460;
             result.Preferences.DockHeight = double.IsFinite(result.Preferences.DockHeight) ? Math.Clamp(result.Preferences.DockHeight, 0, 1800) : 0;

@@ -1,0 +1,80 @@
+{
+  "updated_at": "2026-10-20T03:08:01.477089+00:00",
+  "packaged": false,
+  "third_party_audio_binaries_committed": false,
+  "validation": {
+    "core": {
+      "passed": 39,
+      "total": 39,
+      "evidence": "artifacts/signature-refinement/self-test.json"
+    },
+    "settings": {
+      "passed": true,
+      "groups": 10,
+      "evidence": "artifacts/signature-settings-validation/report.json",
+      "actual_manager_playback": {
+        "name": "saved-theme-reaches-real-manager-and-native-output",
+        "passed": true,
+        "evidence": {
+          "managerConstructorInvoked": false,
+          "hooksInstalled": false,
+          "playback": [
+            {
+              "followsInterface": false,
+              "skin": "Hextech",
+              "actualPath": "C:\\Users\\Win11\\AppData\\Local\\CodeManager\\SignatureAudio\\hextech\\signature.wav",
+              "frames": 70208
+            },
+            {
+              "followsInterface": true,
+              "skin": "Protocol",
+              "actualPath": "C:\\Users\\Win11\\AppData\\Local\\CodeManager\\SignatureAudio\\protocol\\signature.wav",
+              "frames": 123480
+            }
+          ],
+          "volume": 0.001
+        }
+      }
+    },
+    "audio_engine": {
+      "passed": true,
+      "groups": 10,
+      "signatures": [
+        {
+          "skin": "Hextech",
+          "path": "C:\\Users\\Win11\\AppData\\Local\\CodeManager\\SignatureAudio\\hextech\\signature.wav",
+          "frames": 70208,
+          "sha256": "f2c5178c1d077a58863b99875aa58d762f5539ccb27712db02b87ca404a19c0f",
+          "volume": 0.001
+        },
+        {
+          "skin": "Tactical",
+          "path": "C:\\Users\\Win11\\AppData\\Local\\CodeManager\\SignatureAudio\\tactical\\signature.wav",
+          "frames": 30137,
+          "sha256": "6050f6a6a054ee2925916d1fe7391b6d72d869b124bb629a4ed35556c0ad9ff9",
+          "volume": 0.001
+        }
+      ],
+      "evidence": "artifacts/signature-refinement/audio-engine/engine-validation.json"
+    },
+    "experience": {
+      "passed": true,
+      "groups": 10,
+      "evidence": "artifacts/experience-audit/report-after.json"
+    },
+    "source_clips": {
+      "verified_count": 8,
+      "missing_count": 2,
+      "evidence": "artifacts/signature-audio/validation.json"
+    },
+    "offline_existing_cache": {
+      "passed": true,
+      "evidence": "artifacts/signature-refinement/offline-installer/report.json"
+    },
+    "live_refresh": {
+      "evidence": "artifacts/signature-refinement/live-refresh.json",
+      "saved_task_identities_preserved": true,
+      "terminal_pid_unchanged": 2900
+    }
+  }
+}

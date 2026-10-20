@@ -19,8 +19,8 @@ a fresh random, unreferenced entity directory and deletes it afterwards.
 Current output: `artifacts/experience-audit/report-after.json`. Each run creates a
 fresh UUID state directory. The original `report.json` and `Program.cs` are
 preserved as historical before evidence; `Program.cs` is excluded from the build.
-`AfterAudit.cs` now asserts the corrected behavior, including real batch files
-and native almost-silent audio output.
+`AfterAudit.cs` asserts the corrected behavior, including real batch files,
+atomic override rollback, and silence for every operation except window switch.
 
 All ten current groups pass:
 
@@ -32,7 +32,7 @@ All ten current groups pass:
 6. A second override locked exclusively leaves the first untouched.
 7. A read-only second override rolls back a newly created first override.
 8. A read-only second override restores an existing first override byte for byte.
-9. Capture feedback works while the picker transaction is active; background notification remains suppressed.
+9. Capture, notifications and every other non-switch operation stay silent, both inside and outside a picker transaction.
 10. Move and reorder preserve functional identity, uniqueness and event routing.
 
 Override failure cases also assert no abandoned staging files. Every audio target
@@ -42,7 +42,7 @@ changed. `FileSystemWatcher` counts the actual unique `tasks.json.tmp-*` creatio
 from `StateStore.AtomicWrite`; state content and source event deletion are checked
 separately so a write count alone cannot masquerade as successful processing.
 
-Latest warm-burst result: median 10.98 ms, maximum 16.37 ms for 24 real events in a
+Latest warm-burst result: median 10.42 ms, maximum 13.92 ms for 24 real events in a
 102 KB valid state, one atomic write per batch. These timings are evidence from
 this machine, not cross-device performance limits. The before benchmark below
 excluded event reads/deletion, so compare the write count directly rather than

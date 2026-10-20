@@ -37,9 +37,18 @@ internal static class AfterAudit
         public int Settle(){Thread.Sleep(70);return Count;}
         public void Dispose()=>_watcher.Dispose();
     }
-    private static void Queue(AudioSettingsPanel panel,AudioCue cue,string source)
+    private static bool ApplyOverrideBatch(Skin skin,string identity,string source,out string error)
     {
-        var cues=Field<ComboBox>(panel,"_cue");cues.SelectedItem=cues.Items.OfType<ComboBoxItem>().First(x=>x.Tag is AudioCue c&&c==cue);Call(panel,"QueueOverride",source);
+        // Test the atomic file transaction directly: the simplified settings UI
+        // intentionally exposes only one per-theme window-switch sound.
+        var assembly=typeof(AudioSettingsPanel).Assembly;
+        var change=assembly.GetType("CodeManager.AudioOverrideChange")!;
+        var values=Array.CreateInstance(change,2);
+        values.SetValue(Activator.CreateInstance(change,skin,AudioCue.Switch,identity,source),0);
+        values.SetValue(Activator.CreateInstance(change,skin,AudioCue.Capture,identity,source),1);
+        object?[] args={values,null};
+        bool result=(bool)assembly.GetType("CodeManager.AudioOverrideTransaction")!.GetMethod("TryApply",BindingFlags.Static|BindingFlags.NonPublic)!.Invoke(null,args)!;
+        error=(string)args[1]!;return result;
     }
     private static object AudioFailure(bool readOnly,bool existingFirst)
     {
@@ -47,12 +56,9 @@ internal static class AfterAudit
         string original=GameAudio.GetPath(Skin.Arsenal,AudioCue.Switch),replacement=GameAudio.GetPath(Skin.Arsenal,AudioCue.Ready);
         string first=Path.Combine(custom,"switch.wav"),second=Path.Combine(custom,"capture.wav");
         if(existingFirst)File.Copy(original,first);File.Copy(original,second);byte[] secondBefore=File.ReadAllBytes(second);byte[]? firstBefore=existingFirst?File.ReadAllBytes(first):null;
-        var panel=new AudioSettingsPanel(new Preferences{Skin=Skin.Arsenal,SoundEffects=false,Animate=false},()=>Skin.Arsenal);
-        var identities=Field<ComboBox>(panel,"_identity");var item=new ComboBoxItem{Content="Isolated audit entity",Tag=identity};identities.Items.Add(item);identities.SelectedItem=item;
-        Queue(panel,AudioCue.Switch,replacement);Queue(panel,AudioCue.Capture,replacement);
         bool success;string error;
-        if(readOnly){File.SetAttributes(second,File.GetAttributes(second)|FileAttributes.ReadOnly);try{success=panel.TryCommit(new Preferences(),out error);}finally{File.SetAttributes(second,FileAttributes.Normal);}}
-        else{using(var locked=new FileStream(second,FileMode.Open,FileAccess.ReadWrite,FileShare.None))success=panel.TryCommit(new Preferences(),out error);}
+        if(readOnly){File.SetAttributes(second,File.GetAttributes(second)|FileAttributes.ReadOnly);try{success=ApplyOverrideBatch(Skin.Arsenal,identity,replacement,out error);}finally{File.SetAttributes(second,FileAttributes.Normal);}}
+        else{using(var locked=new FileStream(second,FileMode.Open,FileAccess.ReadWrite,FileShare.None))success=ApplyOverrideBatch(Skin.Arsenal,identity,replacement,out error);}
         Require(!success,"Injected override failure was accepted");
         bool firstPreserved=existingFirst?File.Exists(first)&&File.ReadAllBytes(first).SequenceEqual(firstBefore!):!File.Exists(first);
         Require(firstPreserved,"Failed batch changed first override");Require(File.ReadAllBytes(second).SequenceEqual(secondBefore),"Failed batch changed second override");
@@ -92,9 +98,10 @@ internal static class AfterAudit
             Test("override-second-file-exclusive-lock",()=>AudioFailure(false,false));
             Test("override-second-file-readonly-new-first",()=>AudioFailure(true,false));
             Test("override-second-file-readonly-preserves-existing-first",()=>AudioFailure(true,true));
-            Test("capture-dialog-audio-enabled-notifications-suppressed",()=>{
-                state.Preferences.SoundEffects=true;state.Preferences.ImmersiveAudio=true;state.Preferences.SoundVolume=.001;GameAudio.Configure(true,.001,true);Set(manager,"_dialog",true);Call(manager,"PlayCue",AudioCue.Capture,slot);Until(()=>GameAudio.Diagnostics.ActiveVoices>0&&GameAudio.Diagnostics.OutputOpen,"Dialog capture silent");GameAudio.Stop();Until(()=>GameAudio.Diagnostics.ActiveVoices==0&&!GameAudio.Diagnostics.OutputOpen&&GameAudio.Diagnostics.PendingRequests==0,"Capture did not stop");
-                Call(manager,"PlayCue",AudioCue.Error,slot);Thread.Sleep(30);var after=GameAudio.Diagnostics;Require(after.ActiveVoices==0&&after.PendingRequests==0,"Dialog emitted background notification: "+after);Set(manager,"_dialog",false);state.Preferences.SoundEffects=false;return new{captureAudible=true,dialogNotificationSuppressed=true};});
+            Test("only-window-switch-signature-other-actions-silent",()=>{
+                state.Preferences.SoundEffects=true;state.Preferences.SoundVolume=.001;GameAudio.Configure(true,.001,true);GameAudio.Stop();Until(()=>GameAudio.Diagnostics.ActiveVoices==0&&!GameAudio.Diagnostics.OutputOpen&&GameAudio.Diagnostics.PendingRequests==0,"Audio did not stop");
+                foreach(bool dialog in new[]{true,false}) {Set(manager,"_dialog",dialog);foreach(AudioCue cue in Enum.GetValues<AudioCue>().Where(c=>c!=AudioCue.Switch))Call(manager,"PlayCue",cue,slot);}
+                Thread.Sleep(30);var after=GameAudio.Diagnostics;Require(after.ActiveVoices==0&&after.PendingRequests==0&&!after.OutputOpen,"Non-switch action emitted audio: "+after);Set(manager,"_dialog",false);state.Preferences.SoundEffects=false;return new{captureSilent=true,notificationsSilent=true,allNonSwitchActionsSilent=true};});
             Test("move-reorder-stable-task-identity-and-routing",()=>{
                 string old=slot.Id;var target=state.Slots[4];manager.MoveSlot(slot,target);manager.ReorderSlot(target,state.Slots[1]);bool routed=(bool)Call(manager,"ApplyStatusEvent",target,new StatusEvent{TaskId=old,State=AgentState.Waiting,At=DateTimeOffset.UtcNow})!;Require(target.Id==old&&routed,"Task ID/routing lost");Require(state.Slots.Select(x=>x.Id).Distinct().Count()==9,"Duplicate task IDs");return new{preserved=true,eventRouted=routed,number=target.Number};});
             File.WriteAllText(Path.Combine(output,"report-after.json"),JsonSerializer.Serialize(new{passed=Failures==0,generatedAt=DateTimeOffset.UtcNow,assembly=typeof(Manager).Assembly.Location,productionManagerConstructed=false,foregroundOrTerminalTouched=false,isolatedStateRoot=run,suites=Results.Count,failures=Failures,results=Results},new JsonSerializerOptions{WriteIndented=true}));return Failures==0?0:1;

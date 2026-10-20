@@ -44,7 +44,7 @@ internal static class AudioOverrideTransaction
             }
             return true;
         }
-        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException or ArgumentException or InvalidOperationException)
+        catch (Exception exception) when (exception is IOException or InvalidDataException or UnauthorizedAccessException or ArgumentException or InvalidOperationException)
         {
             string rollbackError = "";
             for (int i = applied.Count - 1; i >= 0; i--)

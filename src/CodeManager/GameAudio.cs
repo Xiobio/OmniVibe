@@ -13,7 +13,7 @@ namespace CodeManager;
 public enum AudioCue { Switch, Capture, Remove, Expand, Collapse, InventoryOpen, InventoryClose, Arrange, Restore, Reorder, Waiting, Ready, Error, Detent }
 
 /// <summary>
-/// Original themed PCM cues, mixed on a private background thread. No UI dispatch,
+/// PCM signatures and legacy test cues, mixed on a private background thread. No UI dispatch,
 /// player process, blocking playback, or deferred playback queue. Public calls only
 /// replace a bounded pending request. Output latency is three 256-frame buffers.
 /// </summary>
@@ -30,9 +30,13 @@ public static class GameAudio
     private static double _volume = .45;
     private static int _generation;
     private static string? _lastError;
+    private static string? _lastSourcePath;
+    private static int _lastSourceFrames;
     private static int _activeVoices;
     private static bool _outputOpen;
     public static string? LastError => Volatile.Read(ref _lastError);
+    public static string? LastSourcePath => Volatile.Read(ref _lastSourcePath);
+    public static int LastSourceFrames => Volatile.Read(ref _lastSourceFrames);
     public static (int ActiveVoices, int PendingRequests, bool OutputOpen, int CachedSounds) Diagnostics
     { get { lock (Gate) return (Volatile.Read(ref _activeVoices), Pending.Count, Volatile.Read(ref _outputOpen), Cache.Count); } }
     public static string CustomRoot => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CodeManager", "Audio");
@@ -55,6 +59,15 @@ public static class GameAudio
         lock (Gate) { if (!_enabled) return; _volume = SafeVolume(volume); }
         if (!immersive && !QuietCue(cue)) return;
         Submit(skin, cue, false, volume, immersive, identity);
+    }
+
+    /// <summary>Normal window feedback uses a single complete signature, resolved
+    /// on the worker. Never truncates the identifying impact to the old 140 ms mode.</summary>
+    public static void PlaySignature(Skin skin, bool enabled, double volume = .45)
+    {
+        if (!enabled || SafeVolume(volume) == 0) { Stop(); return; }
+        lock (Gate) { if (!_enabled) return; _volume = SafeVolume(volume); }
+        Submit(skin, AudioCue.Switch, false, volume, true, null, signature: true);
     }
 
     /// <summary>Explicit audition; works while normal feedback is disabled. New preview replaces the previous preview.</summary>
@@ -152,14 +165,14 @@ public static class GameAudio
     private static double SafeVolume(double volume) => double.IsFinite(volume) ? Math.Clamp(volume, 0, 1) : .45;
     private static bool QuietCue(AudioCue cue) => cue is AudioCue.Switch or AudioCue.Capture or AudioCue.Remove or AudioCue.Waiting or AudioCue.Ready or AudioCue.Error;
     private static int Priority(AudioCue cue) => cue is AudioCue.Waiting or AudioCue.Ready or AudioCue.Error ? 3 : cue == AudioCue.Detent ? 0 : 1;
-    private sealed record Request(Skin Skin, AudioCue Cue, bool Preview, double Volume, bool Immersive, string? Identity, int Generation, long Submitted, string? SourcePath);
-    private sealed record Sample(float[] Data, DateTime Changed, long Length);
+    private sealed record Request(Skin Skin, AudioCue Cue, bool Preview, double Volume, bool Immersive, string? Identity, int Generation, long Submitted, string? SourcePath, bool Signature);
+    private sealed record Sample(float[] Data, DateTime Changed, long Length, string Path);
     private sealed class Voice
     {
         public required float[] Data; public int Position, Limit; public double Volume; public bool Preview; public int Priority;
     }
 
-    private static void Submit(Skin skin, AudioCue cue, bool preview, double volume, bool immersive, string? identity, string? sourcePath = null)
+    private static void Submit(Skin skin, AudioCue cue, bool preview, double volume, bool immersive, string? identity, string? sourcePath = null, bool signature = false)
     {
         lock (Gate)
         {
@@ -173,7 +186,7 @@ public static class GameAudio
             // notification replaces the same item, leaving at most two priorities.
             Pending.RemoveAll(r => preview ? r.Preview : !r.Preview && (Priority(r.Cue) <= Priority(cue) || (Priority(cue) == 3 && Priority(r.Cue) == 3 && r.Identity == identity)));
             if (Pending.Count >= 4) Pending.RemoveAt(0);
-            Pending.Add(new(skin, cue, preview, SafeVolume(volume), immersive, identity, _generation, now, sourcePath));
+            Pending.Add(new(skin, cue, preview, SafeVolume(volume), immersive, identity, _generation, now, sourcePath, signature));
             if (_thread == null)
             {
                 _thread = new Thread(Worker) { IsBackground = true, Name = "OmniVibe themed audio" };
@@ -185,15 +198,15 @@ public static class GameAudio
 
     private static Sample Load(Request request)
     {
-        string path = request.SourcePath ?? GetPath(request.Skin, request.Cue, request.Identity);
+        string path = request.SourcePath ?? (request.Signature ? SignatureAudio.GetPath(request.Skin) : GetPath(request.Skin, request.Cue, request.Identity));
         Sample? sample;
         var file = new FileInfo(path);
         lock (Gate) if (Cache.TryGetValue(path, out sample) && sample.Changed == file.LastWriteTimeUtc && sample.Length == file.Length) return sample;
         float[] data;
         try { data = Decode(ReadFile(path)); }
-        catch (Exception) when (request.SourcePath == null && !string.Equals(path, BuiltInPath(request.Skin, request.Cue), StringComparison.OrdinalIgnoreCase))
+        catch (Exception) when (!request.Signature && request.SourcePath == null && !string.Equals(path, BuiltInPath(request.Skin, request.Cue), StringComparison.OrdinalIgnoreCase))
         { path = BuiltInPath(request.Skin, request.Cue); file = new FileInfo(path); data = Decode(ReadFile(path)); }
-        sample = new(data, file.LastWriteTimeUtc, file.Length);
+        sample = new(data, file.LastWriteTimeUtc, file.Length, path);
         lock (Gate) { if (Cache.Count > 100) Cache.Clear(); Cache[path] = sample; }
         return sample;
     }
@@ -266,6 +279,9 @@ public static class GameAudio
                     {
                         Sample sample = Load(request);
                         lock (Gate) if (request.Generation != _generation || (!request.Preview && !_enabled)) continue;
+                        Volatile.Write(ref _lastSourcePath, sample.Path);
+                        Volatile.Write(ref _lastSourceFrames, sample.Data.Length / 2);
+                        Volatile.Write(ref _lastError, null);
                         if (request.Preview) voices.RemoveAll(v => v.Preview);
                         else if (Priority(request.Cue) >= 1) voices.RemoveAll(v => !v.Preview && v.Priority < 3);
                         if (voices.Count >= MaxVoices) voices.RemoveAt(0);
@@ -313,9 +329,15 @@ public static class GameAudio
                         voice.Position += count;
                     }
                     voices.RemoveAll(v => v.Position >= v.Limit);
-                    // Smooth soft limiter protects imported WAV overlap; no hard clipping.
+                    // Preserve the source dynamics at ordinary levels. Only the
+                    // top 10% uses a soft knee to protect overlapping auditions.
                     var pcm = new short[mix.Length];
-                    for (int i = 0; i < mix.Length; i++) pcm[i] = (short)Math.Round(Math.Tanh(mix[i]) * 30000);
+                    for (int i = 0; i < mix.Length; i++)
+                    {
+                        double amplitude = Math.Abs(mix[i]);
+                        double limited = amplitude <= .9 ? amplitude : .9 + .1 * Math.Tanh((amplitude - .9) / .1);
+                        pcm[i] = (short)Math.Round(Math.CopySign(limited, mix[i]) * 32767);
+                    }
                     buffer.Write(device, pcm);
                 }
                 Volatile.Write(ref _activeVoices, voices.Count);

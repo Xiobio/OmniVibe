@@ -89,8 +89,8 @@ public sealed class SettingsWindow : Window
         var feedback = Section(appearance, "视听反馈", "预览会跟随动效与材质开关。音效在实际任务操作中播放。");
         var animate = Check("启用皮肤动效、任务入场与切换反馈", source.Animate); feedback.Children.Add(animate);
         var decorations = Check("启用材质、插画与装饰（关闭后保留状态和操作）", source.DecorationsEnabled); feedback.Children.Add(decorations);
-        Label(feedback, "各主题的操作声音、音量与角色语音可在「声音与反馈」中试听和设置。", 12);
-        var audioPage = Page("声音与反馈", "切换、收容、背包与状态提醒各有声音。跟随预览主题试听，保存后应用。");
+        Label(feedback, "窗口切换标志音、声音主题与音量可在「声音与反馈」中试听和设置。", 12);
+        var audioPage = Page("声音与反馈", "每套游戏保留一个窗口切换标志音。声音主题可跟随界面或单独选择，保存后应用。");
         var audio = new AudioSettingsPanel(source, () => skin.SelectedSkin); audioPage.Children.Add(audio);
         skin.EffectsEnabled = () => animate.IsChecked == true;
         skin.DecorationsEnabled = () => decorations.IsChecked == true;

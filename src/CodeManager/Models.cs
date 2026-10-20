@@ -37,6 +37,7 @@ public sealed class Preferences
     public bool Animate { get; set; } = true;
     public bool DecorationsEnabled { get; set; } = true;
     public bool SoundEffects { get; set; } = true;
+    public Skin? SoundTheme { get; set; }
     public double SoundVolume { get; set; } = .45;
     public bool ImmersiveAudio { get; set; } = true;
     public bool SoundNotifications { get; set; } = true;

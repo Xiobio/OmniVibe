@@ -123,10 +123,8 @@ public sealed class Manager : IDisposable
     internal void PlayCue(AudioCue cue, Slot? slot = null)
     {
         var p = State.Preferences;
-        if (_disposed || Exiting || ShortcutsPaused) return;
-        if (_dialog && cue is AudioCue.Waiting or AudioCue.Ready or AudioCue.Error or AudioCue.Detent or AudioCue.Expand or AudioCue.Collapse) return;
-        if (cue is AudioCue.Waiting or AudioCue.Ready or AudioCue.Error && !p.SoundNotifications) return;
-        GameAudio.Play(p.Skin, cue, p.SoundEffects, p.SoundVolume, p.ImmersiveAudio, slot == null ? null : EquipmentCatalog.Item(slot, p.Skin).Id);
+        if (_disposed || Exiting || ShortcutsPaused || cue != AudioCue.Switch) return;
+        GameAudio.PlaySignature(SignatureAudio.ResolveTheme(p), p.SoundEffects, p.SoundVolume);
     }
     public void StartupRecovery()
     {

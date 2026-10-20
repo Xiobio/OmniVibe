@@ -11,6 +11,7 @@ using CodeManager;
 internal static class Program
 {
     private static readonly List<object> Results = new();
+    private static readonly List<object> SignaturePlayback = new();
     private static void Require(bool ok, string message) { if (!ok) throw new InvalidOperationException(message); }
     private static void Until(Func<bool> done, string message, int milliseconds = 1200)
     { var timer = Stopwatch.StartNew(); while (!done() && timer.ElapsedMilliseconds < milliseconds) Thread.Sleep(2); Require(done(), message); }
@@ -98,12 +99,43 @@ internal static class Program
                 GameAudio.Stop(); Until(() => !GameAudio.Diagnostics.OutputOpen, "Built-in audition did not stop", 80);
                 File.Delete(draft);
             });
+            Test("Missing signature stays silent instead of playing a synthesized substitute", () =>
+            {
+                var missing = Enum.GetValues<Skin>().Where(s => !File.Exists(SignatureAudio.GetPath(s))).ToArray();
+                Require(missing.Length > 0, "Missing-signature fixture unavailable");
+                GameAudio.Configure(true, .001);
+                GameAudio.PlaySignature(missing[0], true, .001);
+                Until(() => GameAudio.LastError != null, "Missing signature did not report unavailable");
+                Require(GameAudio.Diagnostics.ActiveVoices == 0 && !GameAudio.Diagnostics.OutputOpen, "Missing signature played legacy audio");
+            });
+            Test("Actual signature path changes with theme and plays beyond the former 140 ms truncation", () =>
+            {
+                var installed = Enum.GetValues<Skin>().Where(s => File.Exists(SignatureAudio.GetPath(s))).Take(2).ToArray();
+                Require(installed.Length == 2 && installed.Contains(Skin.Hextech), "Install Heartsteel and at least one other signature before this integration test");
+                bool verifiedLong = false;
+                foreach (Skin skin in installed)
+                {
+                    string expected = SignatureAudio.GetPath(skin);
+                    Require(GameAudio.ValidateWave(expected, out string error), error);
+                    GameAudio.PlaySignature(skin, true, .001);
+                    Until(() => GameAudio.LastSourcePath == expected && GameAudio.Diagnostics.OutputOpen, "Wrong signature selected: " + skin);
+                    SignaturePlayback.Add(new { skin = skin.ToString(), path = GameAudio.LastSourcePath, frames = GameAudio.LastSourceFrames, sha256 = Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(expected))).ToLowerInvariant(), volume = .001 });
+                    if (GameAudio.LastSourceFrames > 44100 * .3)
+                    {
+                        Thread.Sleep(180);
+                        Require(GameAudio.Diagnostics.ActiveVoices > 0, "Signature was truncated to legacy quiet mode");
+                        verifiedLong = true;
+                    }
+                    GameAudio.Stop(); Until(() => !GameAudio.Diagnostics.OutputOpen && GameAudio.Diagnostics.ActiveVoices == 0, "Signature did not stop", 100);
+                }
+                Require(verifiedLong, "No signature was long enough to verify removal of quiet-mode truncation");
+            });
             Test("Shutdown releases native audio output", () =>
             {
                 GameAudio.Shutdown(); Until(() => !GameAudio.Diagnostics.OutputOpen, "Output device leaked on shutdown");
                 Require(GameAudio.LastError == null, "Audio output error: " + GameAudio.LastError);
             });
-            var report = new { passed = true, suites = Results.Count, files = 182, nativeOutputExercised = true, tests = Results };
+            var report = new { passed = true, suites = Results.Count, legacyDecoderFixtureFiles = 182, nativeOutputExercised = true, signatures = SignaturePlayback, tests = Results };
             File.WriteAllText(Path.Combine(output, "engine-validation.json"), JsonSerializer.Serialize(report, new JsonSerializerOptions { WriteIndented = true }));
             Console.WriteLine(JsonSerializer.Serialize(report)); return 0;
         }

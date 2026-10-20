@@ -1,5 +1,12 @@
 # Theme audio production
 
+Historical synthesis experiment. The daily app no longer plays this 14-event
+matrix. Current window feedback is one authentic signature per game; see
+[signature packs](../../skins/signature-audio/README.md). `GameAudio` remains the
+shared asynchronous PCM playback engine and this material remains useful as
+isolated decoder/mixer test fixtures. Legacy quiet/immersive and per-item APIs
+below describe that experiment, not the current settings UI.
+
 `python tools/game-audio/generate.py --validate` produces all 182 original,
 stereo 44.1 kHz / PCM16 WAV files, the distributed `skins/audio/manifest.json`,
 and ignored evidence under `artifacts/game-audio/`. Requires NumPy and SciPy.
