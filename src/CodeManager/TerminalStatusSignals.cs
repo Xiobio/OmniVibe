@@ -49,9 +49,16 @@ internal sealed class TerminalStatusSignals
         bool bell=false,progress=false;
             try {
                 var root=AutomationElement.FromHandle(new IntPtr(handle));
-                var tabs=root.FindAll(TreeScope.Descendants,new PropertyCondition(AutomationElement.ControlTypeProperty,ControlType.TabItem));
+                // Search the header first. A global FindAll walks the terminal's
+                // document provider even though only one tab header is needed.
+                var strip=root.FindFirst(TreeScope.Descendants,new PropertyCondition(AutomationElement.ControlTypeProperty,ControlType.Tab));
                 AutomationElement? selected=null;
-                foreach(AutomationElement tab in tabs) if(tab.TryGetCurrentPattern(SelectionItemPattern.Pattern,out var pattern) && ((SelectionItemPattern)pattern).Current.IsSelected) { selected=tab;break; }
+                if(strip!=null && strip.TryGetCurrentPattern(SelectionPattern.Pattern,out var selection))selected=((SelectionPattern)selection).Current.GetSelection().FirstOrDefault();
+                if(selected==null) {
+                    var tab=strip?.FindFirst(TreeScope.Children,new PropertyCondition(AutomationElement.ControlTypeProperty,ControlType.TabItem)) ?? root.FindFirst(TreeScope.Descendants,new PropertyCondition(AutomationElement.ControlTypeProperty,ControlType.TabItem));
+                    for(int visited=0;tab!=null && visited<64;visited++,tab=TreeWalker.ControlViewWalker.GetNextSibling(tab))
+                        if(tab.Current.ControlType==ControlType.TabItem && tab.TryGetCurrentPattern(SelectionItemPattern.Pattern,out var pattern) && ((SelectionItemPattern)pattern).Current.IsSelected) {selected=tab;break;}
+                }
                 if(selected!=null) foreach(var pair in new[]{("HeaderProgressRing",true),("HeaderBellIndicator",false)}) {
                     var icon=selected.FindFirst(TreeScope.Descendants,new PropertyCondition(AutomationElement.AutomationIdProperty,pair.Item1));
                     bool visible=icon!=null && !icon.Current.IsOffscreen && !icon.Current.BoundingRectangle.IsEmpty;

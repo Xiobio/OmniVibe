@@ -1,12 +1,12 @@
 {
   "frames": 96,
-  "durationMs": 100,
+  "durationMs": 150,
   "uniqueDecodedFrames": 96,
   "protectedCenterStatic": true,
   "fixedBackgroundDither": true,
   "maximumChangedPixels": 27479,
   "bytes": 2507277,
-  "sha256": "cb01c15c3a96be269c6ec05fa0cf25441f6a1bd35e4e8486b9a498c41158fc06",
+  "sha256": "2b87f7e193b9bf80d446cc8dcc36fe473ea62bb7e005d98760d1ff5d63807cbe",
   "file": "themes\\windows-terminal\\assets\\refined-v1\\adventure-c-v1.gif",
   "slug": "adventure",
   "name": "地下城与勇士 · 冒险装备栏",
@@ -52,13 +52,13 @@
   "pixelShaderRequired": false,
   "frameOnlyAnimation": {
     "frames": 96,
-    "durationMs": 100,
+    "durationMs": 150,
     "uniqueDecodedFrames": 96,
     "protectedCenterStatic": true,
     "fixedBackgroundDither": true,
     "maximumChangedPixels": 29425,
     "bytes": 1972465,
-    "sha256": "a7e536e12d00f202e76c36c9c3d02a363a674a01f87106eb0cae0c8e54d059eb",
+    "sha256": "97117d4a8ee8b012b429666590cb7617a74a09be18d9d2c8e35ad6bb0b05d612",
     "file": "themes\\windows-terminal\\assets\\refined-v1\\adventure-frame-only-v1.gif"
   }
 }

@@ -1,0 +1,239 @@
+{
+  "updated_at": "2026-10-20T11:43:53.695393+00:00",
+  "passed": true,
+  "baseline": "Current development code before this performance work, including pre-existing bilingual/reliability changes.",
+  "build": {
+    "isolated_staged_source": true,
+    "warnings": 0,
+    "errors": 0
+  },
+  "benchmarks": [
+    {
+      "name": "Exact native window identity validation",
+      "metric": "mean_ms",
+      "before": 0.007141333333333333,
+      "after": 0.0011350000000000002,
+      "reduction_percent": 84.10660941000747,
+      "allocated_bytes_before": 547688,
+      "allocated_bytes_after": 40
+    },
+    {
+      "name": "Unchanged shortcut configuration",
+      "metric": "mean_ms",
+      "before": 0.0030390833333333333,
+      "after": 7.8e-05,
+      "reduction_percent": 97.43343661740109,
+      "allocated_bytes_before": 4570696,
+      "allocated_bytes_after": 28840
+    },
+    {
+      "name": "Ordinary mouse-move hook",
+      "metric": "mean_ms",
+      "before": 0.0010053666666666667,
+      "after": 0.00019243333333333334,
+      "reduction_percent": 80.85938795132786,
+      "allocated_bytes_before": 554552,
+      "allocated_bytes_after": 554552
+    },
+    {
+      "name": "Ordinary mouse-move gesture evaluations",
+      "metric": "count",
+      "before": 3001,
+      "after": 0,
+      "reduction_percent": 100.0
+    },
+    {
+      "name": "Unchanged session metadata discovery",
+      "metric": "mean_ms",
+      "before": 30.19105,
+      "after": 0.30935,
+      "reduction_percent": 98.97535859137062,
+      "allocated_bytes_before": 133079264,
+      "allocated_bytes_after": 300352
+    },
+    {
+      "name": "Unchanged four bound transcript polls",
+      "metric": "mean_ms",
+      "before": 0.108624,
+      "after": 0.06758499999999999,
+      "reduction_percent": 37.780785093533666,
+      "allocated_bytes_before": 2486072,
+      "allocated_bytes_after": 1251416
+    },
+    {
+      "name": "Settled nine-slot status animation drawing",
+      "metric": "p95_ms",
+      "before": 0.1267,
+      "after": 0.1009,
+      "reduction_percent": 20.36306235201263,
+      "bytes_per_frame_before": 24522,
+      "bytes_per_frame_after": 12514
+    }
+  ],
+  "suites": {
+    "status_and_performance": {
+      "passed": 23,
+      "total": 23
+    },
+    "skins": {
+      "passed": 24,
+      "total": 24
+    },
+    "full_self_test": {
+      "passed": 48,
+      "total": 48
+    },
+    "english": {
+      "passed": 4,
+      "total": 4
+    },
+    "theme_application": {
+      "passed": 6,
+      "total": 6
+    }
+  },
+  "suite_counts_overlap": true,
+  "native_audio": {
+    "themes": 13,
+    "playback_passed": true,
+    "endpoint_release_passed": true,
+    "mute_and_preview_passed": true,
+    "native_notification_callback_passed": true
+  },
+  "visual": {
+    "themes": 13,
+    "pixel_identical_native_surfaces": 39,
+    "layout_unchanged": true,
+    "hover_and_deployment_remain_live": true,
+    "dpi_in_cache_key": true
+  },
+  "terminal_animation": {
+    "variants": 26,
+    "all_compressed_frame_payloads_unchanged": true,
+    "frames_per_variant": 96,
+    "dimensions": [
+      1280,
+      754
+    ],
+    "frame_duration_before_ms": 100,
+    "frame_duration_after_ms": 150,
+    "loop_before_seconds": 9.6,
+    "loop_after_seconds": 14.4,
+    "theoretical_repaint_frequency_reduction_percent": 33.333333333333336
+  },
+  "live": {
+    "tasks": 4,
+    "recent": 5,
+    "task_identities_and_preferences_preserved": true,
+    "terminal_pid_preserved": true,
+    "terminal_update_only_background_image_paths": true,
+    "debug_running": true
+  },
+  "process_samples": {
+    "before": [
+      {
+        "name": "CodeManager",
+        "pid": 38488,
+        "duration_ms": 15029.5431,
+        "cpu_ms": 640.625,
+        "one_core_percent": 4.261587790211883,
+        "private_before": 150097920,
+        "private_after": 143507456,
+        "working_before": 214806528,
+        "working_after": 207409152,
+        "handles_before": 807,
+        "handles_after": 804
+      },
+      {
+        "name": "WindowsTerminal",
+        "pid": 2900,
+        "duration_ms": 15045.4858,
+        "cpu_ms": 7406.25,
+        "one_core_percent": 49.225606846634705,
+        "private_before": 312561664,
+        "private_after": 318525440,
+        "working_before": 258838528,
+        "working_after": 263700480,
+        "handles_before": 1479,
+        "handles_after": 1479
+      }
+    ],
+    "after_initial": [
+      {
+        "name": "CodeManager",
+        "pid": 936,
+        "duration_ms": 15025.6677,
+        "cpu_ms": 953.125,
+        "one_core_percent": 6.341893242952867,
+        "private_before": 105680896,
+        "private_after": 101629952,
+        "working_before": 170958848,
+        "working_after": 167600128,
+        "handles_before": 707,
+        "handles_after": 713
+      },
+      {
+        "name": "WindowsTerminal",
+        "pid": 2900,
+        "duration_ms": 15038.76,
+        "cpu_ms": 4281.25,
+        "one_core_percent": 28.46804924026631,
+        "private_before": 315068416,
+        "private_after": 313372672,
+        "working_before": 262127616,
+        "working_after": 261287936,
+        "handles_before": 1496,
+        "handles_after": 1496
+      }
+    ],
+    "after_warm": [
+      {
+        "name": "CodeManager",
+        "pid": 936,
+        "duration_ms": 15019.031,
+        "cpu_ms": 1296.875,
+        "one_core_percent": 8.633372269134954,
+        "private_before": 106037248,
+        "private_after": 108027904,
+        "working_before": 173760512,
+        "working_after": 175779840,
+        "handles_before": 701,
+        "handles_after": 701
+      },
+      {
+        "name": "WindowsTerminal",
+        "pid": 2900,
+        "duration_ms": 15041.231300000001,
+        "cpu_ms": 4375,
+        "one_core_percent": 29.086647554046632,
+        "private_before": 314101760,
+        "private_after": 315424768,
+        "working_before": 260034560,
+        "working_after": 261226496,
+        "handles_before": 1482,
+        "handles_after": 1482
+      }
+    ]
+  },
+  "limits": [
+    "Microbenchmarks cover identical synthetic fixtures and warm unchanged files; changed files still need parsing.",
+    "Drawing time excludes native window activation and DWM/GPU composition.",
+    "Live process samples use different moments/workloads and a restarted manager; they are observations, not causal CPU or memory guarantees.",
+    "Sampling profiler includes waiting thread stacks; it was not treated as CPU percentages.",
+    "Cross-monitor real DPI, remote desktop and long-duration soak were not exercised."
+  ],
+  "evidence": [
+    "artifacts/performance/before/report.json",
+    "artifacts/performance/after/report.json",
+    "artifacts/performance/verified-status/report.json",
+    "artifacts/performance/verified-skins/report.json",
+    "artifacts/performance/verified-self/report.json",
+    "artifacts/performance/verified-language/report.json",
+    "artifacts/performance/verified-themes/report.json",
+    "artifacts/performance/verified-audio/report.json",
+    "artifacts/performance/live-refresh.json",
+    "artifacts/performance/terminal-live-update.json"
+  ],
+  "packaged": false,
+  "cli_sessions_restarted": false
+}

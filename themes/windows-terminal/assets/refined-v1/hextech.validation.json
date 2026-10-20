@@ -1,12 +1,12 @@
 {
   "frames": 96,
-  "durationMs": 100,
+  "durationMs": 150,
   "uniqueDecodedFrames": 96,
   "protectedCenterStatic": true,
   "fixedBackgroundDither": true,
   "maximumChangedPixels": 13887,
   "bytes": 1601578,
-  "sha256": "ea756ff9eda3040931b5a95f86fdd70e911b145a19a33f103ed6a7f28617870f",
+  "sha256": "5accff0a300a39e9ab041d9861c9a93b83ed75790abaa3850c4d305922f61328",
   "file": "themes\\windows-terminal\\assets\\refined-v1\\hextech-c-v1.gif",
   "slug": "hextech",
   "name": "英雄联盟 · 海克斯枢纽",
@@ -52,13 +52,13 @@
   "pixelShaderRequired": false,
   "frameOnlyAnimation": {
     "frames": 96,
-    "durationMs": 100,
+    "durationMs": 150,
     "uniqueDecodedFrames": 96,
     "protectedCenterStatic": true,
     "fixedBackgroundDither": true,
     "maximumChangedPixels": 14573,
     "bytes": 1077485,
-    "sha256": "cc461482f2720da8bcf941cbbf526578bd4df62c2a336cd5794df8c5b5427479",
+    "sha256": "a39c3f308d76795ddb2e19c0120574766731a2ce812cb3f7df927fc185c4345a",
     "file": "themes\\windows-terminal\\assets\\refined-v1\\hextech-frame-only-v1.gif"
   }
 }

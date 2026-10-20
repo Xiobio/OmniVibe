@@ -278,6 +278,7 @@ public static class GameAudio
         WaitHandle[] signals = { Wake, completed };
         IntPtr device = IntPtr.Zero;
         var buffers = new List<OutputBuffer>(); var voices = new List<Voice>(); int generation = -1; long idleSince = 0;
+        var mix = new float[Frames * 2];var pcm = new short[Frames * 2];
         try
         {
             while (true)
@@ -339,11 +340,12 @@ public static class GameAudio
                 foreach (OutputBuffer buffer in buffers)
                 {
                     if (buffer.Busy || voices.Count == 0) continue;
-                    var mix = new float[Frames * 2];
+                    Array.Clear(mix);
+                    bool hasNotification=voices.Any(v=>v.Priority==3);
                     foreach (Voice voice in voices)
                     {
                         double gain = voice.Volume * (voice.Preview ? 1 : master);
-                        if (voice.Priority < 3 && voices.Any(v => v.Priority == 3)) gain *= .38;
+                        if (voice.Priority < 3 && hasNotification) gain *= .38;
                         int count = Math.Min(mix.Length, voice.Limit - voice.Position);
                         for (int i = 0; i < count; i++)
                         {
@@ -355,7 +357,6 @@ public static class GameAudio
                     voices.RemoveAll(v => v.Position >= v.Limit);
                     // Preserve the source dynamics at ordinary levels. Only the
                     // top 10% uses a soft knee to protect overlapping auditions.
-                    var pcm = new short[mix.Length];
                     for (int i = 0; i < mix.Length; i++)
                     {
                         double amplitude = Math.Abs(mix[i]);

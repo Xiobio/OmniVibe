@@ -1,12 +1,12 @@
 {
   "frames": 96,
-  "durationMs": 100,
+  "durationMs": 150,
   "uniqueDecodedFrames": 96,
   "protectedCenterStatic": true,
   "fixedBackgroundDither": true,
   "maximumChangedPixels": 6629,
   "bytes": 1313697,
-  "sha256": "f7e458f1b1fecffb2d2158f80b3874b7420e2785eea671ec1f5d8758cbce39f6",
+  "sha256": "8627d3d2b61e8336cc1ea5d57350366f1755ef4d9891ea804be52c5945b1a486",
   "file": "themes\\windows-terminal\\assets\\refined-v1\\astral-c-v1.gif",
   "slug": "astral",
   "name": "原神 · 星旅背包",
@@ -52,13 +52,13 @@
   "pixelShaderRequired": false,
   "frameOnlyAnimation": {
     "frames": 96,
-    "durationMs": 100,
+    "durationMs": 150,
     "uniqueDecodedFrames": 96,
     "protectedCenterStatic": true,
     "fixedBackgroundDither": true,
     "maximumChangedPixels": 9077,
     "bytes": 713811,
-    "sha256": "e48acdb626d0e9554ca30df9e7ce520a0de2538b98361b6e0c9d0c8469723c83",
+    "sha256": "f8f3f7450cbf00eeb3665808e963b3bd68db459680a86d163231885b76492aa5",
     "file": "themes\\windows-terminal\\assets\\refined-v1\\astral-frame-only-v1.gif"
   }
 }

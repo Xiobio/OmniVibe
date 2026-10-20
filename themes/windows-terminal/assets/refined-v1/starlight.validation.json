@@ -1,12 +1,12 @@
 {
   "frames": 96,
-  "durationMs": 100,
+  "durationMs": 150,
   "uniqueDecodedFrames": 96,
   "protectedCenterStatic": true,
   "fixedBackgroundDither": true,
   "maximumChangedPixels": 13291,
   "bytes": 1669661,
-  "sha256": "5c04dd3598a1958cc0211512eb81a188befbfbc06497fab6860aa6e5686b79da",
+  "sha256": "bb1b81b03724a8be7e9aae9cb77ce51b64e2a678bcdb92741235eeb3d9a809c4",
   "file": "themes\\windows-terminal\\assets\\refined-v1\\starlight-c-v1.gif",
   "slug": "starlight",
   "name": "王者荣耀 · 星曜指挥台",
@@ -52,13 +52,13 @@
   "pixelShaderRequired": false,
   "frameOnlyAnimation": {
     "frames": 96,
-    "durationMs": 100,
+    "durationMs": 150,
     "uniqueDecodedFrames": 96,
     "protectedCenterStatic": true,
     "fixedBackgroundDither": true,
     "maximumChangedPixels": 13892,
     "bytes": 1063467,
-    "sha256": "22925b424f00560f0c6f41de86507dad754ade42eb82ecf2418ae550080194b3",
+    "sha256": "2050f8beb3550b19428f1ac31259058340e2ccc3cb01da7800be101eacb493ec",
     "file": "themes\\windows-terminal\\assets\\refined-v1\\starlight-frame-only-v1.gif"
   }
 }

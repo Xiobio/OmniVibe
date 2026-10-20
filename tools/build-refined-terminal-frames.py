@@ -22,7 +22,7 @@ ROOT=Path(__file__).resolve().parents[1]
 ASSETS=ROOT/'themes/windows-terminal/assets/refined-v1'
 GALLERY=ROOT/'docs/terminal-frame-refinement'
 WIDTH,HEIGHT=1280,754
-FRAMES,DURATION=96,100
+FRAMES,DURATION=96,150
 spec=importlib.util.spec_from_file_location('comparison',ROOT/'tools/build-terminal-frame-comparison.py')
 comparison=importlib.util.module_from_spec(spec);spec.loader.exec_module(comparison)
 

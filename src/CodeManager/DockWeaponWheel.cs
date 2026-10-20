@@ -66,6 +66,11 @@ public sealed class DockWeaponWheel : FrameworkElement
     private Skin? _portraitSkin;
     private CancellationTokenSource? _portraitWarmup;
     private Task? _portraitTask;
+    private DrawingGroup? _sceneCache;
+    private SceneKey _sceneKey;
+    private int _sceneRevision;
+    private bool _staticScene;
+    private readonly record struct SceneKey(double Width,double Height,double Dpi,double Deployment,Skin Skin,string Language,bool Decorations,bool Aiming,int? Hover,bool Targets,string? Current,int Revision,double H1,double H2,double H3,double H4,double H5,double H6,double H7,double H8,double H9);
     internal bool Aiming { get; private set; }
     internal bool IsDeployed { get; private set; }
     private bool _captureTargetsVisible;
@@ -101,10 +106,11 @@ public sealed class DockWeaponWheel : FrameworkElement
         Loaded += (_, _) => { Subscribe(); UpdateFlow(); ScheduleWarmup(); };
         IsVisibleChanged += (_, _) => UpdateFlow();
         SizeChanged += (_, _) => ScheduleWarmup();
-        Unloaded += (_, _) => { Unsubscribe(); _portraitWarmup?.Cancel(); _portraitKey = null; foreach (var dp in new[] { PhaseProperty, DeploymentProperty, LiftProperty, FlowProperty }.Concat(HoverWeights)) BeginAnimation(dp, null); };
+        Unloaded += (_, _) => { Unsubscribe(); _sceneCache=null;_portraitWarmup?.Cancel(); _portraitKey = null; foreach (var dp in new[] { PhaseProperty, DeploymentProperty, LiftProperty, FlowProperty }.Concat(HoverWeights)) BeginAnimation(dp, null); };
     }
     internal void SetSlots(IEnumerable<Slot> slots)
     {
+        _sceneRevision++;_sceneCache=null;
         Unsubscribe(); _slots = slots.OrderBy(s => s.Number).ToArray();
         ThemeIdentityArt.Image(SkinCatalog.Current.Id);
         if (IsLoaded) Subscribe(); UpdateFlow(); InvalidateVisual(); ScheduleWarmup();
@@ -125,7 +131,7 @@ public sealed class DockWeaponWheel : FrameworkElement
     }
     private void Subscribe() { if (_subscribed) return; foreach (var slot in _slots) slot.PropertyChanged += Changed; _subscribed = true; }
     private void Unsubscribe() { if (!_subscribed) return; foreach (var slot in _slots) slot.PropertyChanged -= Changed; _subscribed = false; }
-    private void Changed(object? sender, PropertyChangedEventArgs e) { UpdateFlow(); WarmPortraits(); InvalidateVisual(); }
+    private void Changed(object? sender, PropertyChangedEventArgs e) { _sceneRevision++;_sceneCache=null;UpdateFlow(); WarmPortraits(); InvalidateVisual(); }
     private void WarmPortraits(bool force = false)
     {
         if (!IsLoaded) return;
@@ -141,7 +147,7 @@ public sealed class DockWeaponWheel : FrameworkElement
         try {
             await EquipmentCatalog.PrewarmAsync(_slots.OrderByDescending(s => s == CurrentSlot), skin, () => {
                 if (!cancellation.IsCancellationRequested && !Dispatcher.HasShutdownStarted)
-                    Dispatcher.BeginInvoke(() => { if (IsLoaded && !cancellation.IsCancellationRequested) InvalidateVisual(); }, DispatcherPriority.Render);
+                    Dispatcher.BeginInvoke(() => { if (IsLoaded && !cancellation.IsCancellationRequested) { _sceneRevision++;_sceneCache=null;InvalidateVisual(); } }, DispatcherPriority.Render);
             }, cancellation);
         }
         catch (OperationCanceledException) when (cancellation.IsCancellationRequested) { }
@@ -311,6 +317,36 @@ public sealed class DockWeaponWheel : FrameworkElement
     }
     private void DrawWeaponLoadout(DrawingContext dc)
     {
+        // Flow animates small status glyphs. Retain the unchanged equipment
+        // drawing while settled; deployment/hover transitions still draw live.
+        if(DeploymentInMotion || _warming) { DrawWeaponScene(dc);return; }
+        var skin=SkinCatalog.Current;
+        var key=new SceneKey(ActualWidth,ActualHeight,VisualTreeHelper.GetDpi(this).PixelsPerDip,Deployment,skin.Id,skin.Name,SkinCatalog.DecorationsEnabled,Aiming,_hover,CaptureTargetsVisible,CurrentSlot?.Id,_sceneRevision,
+            (double)GetValue(HoverWeights[0]),(double)GetValue(HoverWeights[1]),(double)GetValue(HoverWeights[2]),(double)GetValue(HoverWeights[3]),(double)GetValue(HoverWeights[4]),(double)GetValue(HoverWeights[5]),(double)GetValue(HoverWeights[6]),(double)GetValue(HoverWeights[7]),(double)GetValue(HoverWeights[8]));
+        static bool Moving(double value)=>value>.001 && value<.999;
+        if(Moving(key.H1)||Moving(key.H2)||Moving(key.H3)||Moving(key.H4)||Moving(key.H5)||Moving(key.H6)||Moving(key.H7)||Moving(key.H8)||Moving(key.H9)){DrawWeaponScene(dc);return;}
+        if(_sceneCache==null || _sceneKey!=key) {
+            var drawing=new DrawingGroup();_staticScene=true;
+            try {using var context=drawing.Open();DrawWeaponScene(context);}
+            finally {_staticScene=false;}
+            drawing.Freeze();_sceneCache=drawing;_sceneKey=key;
+        }
+        dc.DrawDrawing(_sceneCache);
+        double d=Math.Clamp(Deployment,0,1),f=Math.Clamp(Radius/202,.5,1.12);
+        dc.PushTransform(new TranslateTransform(Centre.X,Centre.Y));
+        if(d>.001) {
+            dc.PushOpacity(d);
+            foreach(var slot in _slots)if(slot.Occupied) {
+                var point=Polar(60+(Radius*.8-60)*d,(slot.Number-1)*40);
+                dc.PushTransform(new TranslateTransform(point.X,point.Y));
+                WheelTaskStatus.DrawSlot(dc,skin,slot,88*f,78*f,Flow,_motionEnabled && SkinCatalog.DecorationsEnabled);dc.Pop();
+            }
+            dc.Pop();
+        }
+        WheelTaskStatus.DrawCore(dc,skin,_slots,CurrentSlot,Flow,_motionEnabled && SkinCatalog.DecorationsEnabled,Phase);dc.Pop();
+    }
+    private void DrawWeaponScene(DrawingContext dc)
+    {
         if (_portraitSkin != SkinCatalog.Current.Id) WarmPortraits();
         var skin = SkinCatalog.Current;
         double d = _warming ? 1 : Math.Clamp(Deployment, 0, 1), f = Math.Clamp(Radius / 202, .5, 1.12);
@@ -340,7 +376,7 @@ public sealed class DockWeaponWheel : FrameworkElement
                 }
                 DrawPortrait(dc, slot, new Rect(-w*zoom/2, -h*zoom/2, w*zoom, h*zoom), slot.Connected ? selected || active ? 1 : .94 : .55);
                 Text(dc, slot.Number.ToString(), -w/2 + 5, h/2 - 3, 11, selected || active ? skin.Accent : skin.Text, 18, true);
-                WheelTaskStatus.DrawSlot(dc,skin,slot,w,h,Flow,_motionEnabled && SkinCatalog.DecorationsEnabled);
+                if(!_staticScene)WheelTaskStatus.DrawSlot(dc,skin,slot,w,h,Flow,_motionEnabled && SkinCatalog.DecorationsEnabled);
                 dc.Pop();
             }
             dc.Pop();
@@ -356,7 +392,7 @@ public sealed class DockWeaponWheel : FrameworkElement
             DrawPortrait(dc, current, new Rect(-55, -55, 110, 110));
         }
         else DrawEmptyCore(dc, d);
-        WheelTaskStatus.DrawCore(dc,skin,_slots,current,Flow,_motionEnabled && SkinCatalog.DecorationsEnabled,Phase);
+        if(!_staticScene)WheelTaskStatus.DrawCore(dc,skin,_slots,current,Flow,_motionEnabled && SkinCatalog.DecorationsEnabled,Phase);
         dc.Pop();
     }
     private void DrawEmptyCore(DrawingContext dc, double deployment)

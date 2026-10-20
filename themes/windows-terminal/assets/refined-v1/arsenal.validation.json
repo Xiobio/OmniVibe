@@ -1,12 +1,12 @@
 {
   "frames": 96,
-  "durationMs": 100,
+  "durationMs": 150,
   "uniqueDecodedFrames": 96,
   "protectedCenterStatic": true,
   "fixedBackgroundDither": true,
   "maximumChangedPixels": 10952,
   "bytes": 1686089,
-  "sha256": "0c2a1a6d61f758e5d17655e9ed6f75b15508a1fb8a2098bd85d15ba3092e9d69",
+  "sha256": "db519e28cc644b037ebc196fc9bb8e9aec86cd048afb3213935e24a2f65d4292",
   "file": "themes\\windows-terminal\\assets\\refined-v1\\arsenal-c-v1.gif",
   "slug": "arsenal",
   "name": "永劫无间 · 无间兵器匣",
@@ -52,13 +52,13 @@
   "pixelShaderRequired": false,
   "frameOnlyAnimation": {
     "frames": 96,
-    "durationMs": 100,
+    "durationMs": 150,
     "uniqueDecodedFrames": 96,
     "protectedCenterStatic": true,
     "fixedBackgroundDither": true,
     "maximumChangedPixels": 11541,
     "bytes": 1221968,
-    "sha256": "2f5a2816f0a6242925a85ddc1c6b8a0d856312d172f0a878e1e0277e4be41512",
+    "sha256": "99daa09800758756eb538f2a652560e7bf0721ee2092048e8ae8512d362e871d",
     "file": "themes\\windows-terminal\\assets\\refined-v1\\arsenal-frame-only-v1.gif"
   }
 }

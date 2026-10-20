@@ -67,6 +67,9 @@ public static class Native
     [DllImport("user32.dll", EntryPoint = "SetWindowLongPtrW")] private static extern IntPtr SetWindowLongPtr(IntPtr hwnd, int index, IntPtr value);
     [DllImport("user32.dll")] private static extern bool AttachThreadInput(uint attach, uint to, bool yes);
     [DllImport("kernel32.dll")] private static extern uint GetCurrentThreadId();
+    [DllImport("kernel32.dll")] private static extern IntPtr OpenProcess(uint access,bool inherit,uint processId);
+    [DllImport("kernel32.dll")] private static extern bool GetProcessTimes(IntPtr process,out long created,out long exited,out long kernel,out long user);
+    [DllImport("kernel32.dll")] private static extern bool CloseHandle(IntPtr handle);
     [DllImport("kernel32.dll", CharSet = CharSet.Unicode)] public static extern IntPtr GetModuleHandle(string? name);
     [DllImport("user32.dll", SetLastError = true)] public static extern bool RegisterHotKey(IntPtr hwnd, int id, uint modifiers, uint key);
     [DllImport("user32.dll")] public static extern bool UnregisterHotKey(IntPtr hwnd, int id);
@@ -181,8 +184,12 @@ public static class Native
         GetWindowThreadProcessId(new(identity.Handle), out uint pid);
         if (pid != identity.ProcessId) return false;
         if (identity.ProcessStartedUtcTicks == 0) return true;
-        try { using var process = Process.GetProcessById((int)pid); return process.StartTime.ToUniversalTime().Ticks == identity.ProcessStartedUtcTicks; }
-        catch (Exception ex) when (ex is ArgumentException or InvalidOperationException or System.ComponentModel.Win32Exception) { return false; }
+        // Validate every time, including process creation time, without creating
+        // Process objects or caching an identity across process/handle reuse.
+        IntPtr process=OpenProcess(0x1000,false,pid);
+        if(process==IntPtr.Zero)return false;
+        try { return GetProcessTimes(process,out long created,out _,out _,out _) && DateTime.FromFileTimeUtc(created).Ticks==identity.ProcessStartedUtcTicks; }
+        finally { CloseHandle(process); }
     }
     public static bool Activate(WindowIdentity identity)
     {

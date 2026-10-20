@@ -1,12 +1,12 @@
 {
   "frames": 96,
-  "durationMs": 100,
+  "durationMs": 150,
   "uniqueDecodedFrames": 96,
   "protectedCenterStatic": true,
   "fixedBackgroundDither": true,
   "maximumChangedPixels": 13036,
   "bytes": 1592677,
-  "sha256": "d68097d4d43c51ab8e8559f33ef6db261366e20593fb1296b04844a4d89f907e",
+  "sha256": "608412cad168f94bfdfaab8fdd788d7b88c9e5fdda1df58263e599f29b9c0764",
   "file": "themes\\windows-terminal\\assets\\refined-v1\\cinnabar-c-v1.gif",
   "slug": "cinnabar",
   "name": "朱砂藏锋",
@@ -52,13 +52,13 @@
   "pixelShaderRequired": false,
   "frameOnlyAnimation": {
     "frames": 96,
-    "durationMs": 100,
+    "durationMs": 150,
     "uniqueDecodedFrames": 96,
     "protectedCenterStatic": true,
     "fixedBackgroundDither": true,
     "maximumChangedPixels": 14286,
     "bytes": 1005768,
-    "sha256": "4c6eacde9a72d67372611f6ed8e1c751805b665d151fcdee50ee8f413052a56f",
+    "sha256": "b4a102cd402001af7e920b7005d7e21d81e5b30eb697a6d74f0a5c32967af051",
     "file": "themes\\windows-terminal\\assets\\refined-v1\\cinnabar-frame-only-v1.gif"
   }
 }

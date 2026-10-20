@@ -1,12 +1,12 @@
 {
   "frames": 96,
-  "durationMs": 100,
+  "durationMs": 150,
   "uniqueDecodedFrames": 96,
   "protectedCenterStatic": true,
   "fixedBackgroundDither": true,
   "maximumChangedPixels": 7921,
   "bytes": 1430214,
-  "sha256": "cc3d91ff3b2223663306d9c1d20df9e63c9032caca112ef04702bf6907cc1dac",
+  "sha256": "56ae02ebff14eca0c7db2e0210c8c786e8c1c5e0c71873c2b46b588dbf75eb5c",
   "file": "themes\\windows-terminal\\assets\\refined-v1\\tactical-c-v1.gif",
   "slug": "tactical",
   "name": "三角洲行动 · 战术终端",
@@ -52,13 +52,13 @@
   "pixelShaderRequired": false,
   "frameOnlyAnimation": {
     "frames": 96,
-    "durationMs": 100,
+    "durationMs": 150,
     "uniqueDecodedFrames": 96,
     "protectedCenterStatic": true,
     "fixedBackgroundDither": true,
     "maximumChangedPixels": 8314,
     "bytes": 899147,
-    "sha256": "6bcf3c0dc105cd007860a1635226d2f62a5f2f41a08c1a63d28d568855141f4b",
+    "sha256": "f29067a698de392d20c89b3d0fd208cd59f7a235b19eabd4d08ca08d8e4b7060",
     "file": "themes\\windows-terminal\\assets\\refined-v1\\tactical-frame-only-v1.gif"
   }
 }

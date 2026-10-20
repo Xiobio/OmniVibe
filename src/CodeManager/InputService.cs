@@ -19,6 +19,9 @@ public sealed class InputService : IDisposable
     private readonly List<string> _hookWarnings = new();
     private IntPtr _mouse, _keyboard, _events;
     private string _signature = "", _toggleSetting = "", _toggleWarning = "";
+    private Preferences? _bindingSnapshot;
+    private int _connectedMask;
+    private bool _bindingSuspended;
     private ShortcutModifiers _mouseModifiers = ShortcutModifiers.Alt;
     private bool _wheelEnabled = true;
     public event Action<int>? Hotkey;
@@ -53,7 +56,11 @@ public sealed class InputService : IDisposable
     }
     public void Configure(Preferences preferences, IEnumerable<int> connectedNumbers, bool suspended)
     {
-        int[] numbers = suspended ? Array.Empty<int>() : connectedNumbers.Distinct().OrderBy(n => n).ToArray();
+        int mask=0;
+        if(!suspended)foreach(int number in connectedNumbers)if(number is >=1 and <=9)mask|=1<<number;
+        if(_bindingSnapshot != null && mask==_connectedMask && suspended==_bindingSuspended && SameBindings(_bindingSnapshot,preferences))return;
+        _bindingSnapshot=preferences.Copy();_connectedMask=mask;_bindingSuspended=suspended;
+        int[] numbers = suspended ? Array.Empty<int>() : Enumerable.Range(1,9).Where(n=>(mask & (1<<n))!=0).ToArray();
         string signature = string.Join("|", ShortcutBindings.All(preferences).Select(b => b.Id + ":" + b.Gesture)) + ":" + preferences.MouseModifiers + ":" + preferences.WheelSwitchEnabled + ":" + suspended + ":" + string.Join(",", numbers);
         if (signature == _signature) return;
         _signature = signature; _mouseModifiers = preferences.MouseModifiers; _wheelEnabled = preferences.WheelSwitchEnabled;
@@ -145,6 +152,9 @@ public sealed class InputService : IDisposable
                 var point = Marshal.PtrToStructure<Native.MouseData>(data).Point;
                 _dispatcher.BeginInvoke(() => PointerDown?.Invoke(point), DispatcherPriority.Input);
             }
+            // Ordinary movement can arrive at 1000 Hz. Only vertical wheel
+            // messages participate in our gesture router; leave all others alone.
+            if(msg!=0x20A)return Native.CallNextHookEx(_mouse,code,message,data);
             int delta = msg == 0x20A ? unchecked((short)(Marshal.PtrToStructure<Native.MouseData>(data).Data >> 16)) : 0;
             if (delta != 0 && IsInventoryOpen?.Invoke() == true && !Native.Down(0x12) && !Native.Down(0x11) && !Native.Down(0x10) && !Native.Down(0x5B) && !Native.Down(0x5C))
             {
@@ -165,12 +175,12 @@ public sealed class InputService : IDisposable
     {
         if (code >= 0)
         {
-            uint key = Marshal.PtrToStructure<Native.KeyboardData>(data).Key;
+            uint key = unchecked((uint)Marshal.ReadInt32(data));
             int msg = message.ToInt32();
             if ((msg == 0x100 || msg == 0x104) && key == 0x1B && IsSelecting?.Invoke() == true)
             { _dispatcher.BeginInvoke(() => Cancel?.Invoke()); return new IntPtr(1); }
             if ((msg == 0x101 || msg == 0x105) && IsRequiredRelease(key))
-            { _mouseGestures.AltReleased(); _dispatcher.BeginInvoke(() => Release?.Invoke()); }
+            { _mouseGestures.AltReleased(); if(IsSelecting?.Invoke()==true)_dispatcher.BeginInvoke(() => Release?.Invoke()); }
         }
         return Native.CallNextHookEx(_keyboard, code, message, data);
     }
@@ -179,6 +189,13 @@ public sealed class InputService : IDisposable
         (((int)_mouseModifiers & 2) != 0 && key is 0x11 or 0xA2 or 0xA3) ||
         (((int)_mouseModifiers & 4) != 0 && key is 0x10 or 0xA0 or 0xA1) ||
         (((int)_mouseModifiers & 8) != 0 && key is 0x5B or 0x5C);
+    private static bool SameBindings(Preferences a,Preferences b)
+    {
+        if(a.TaskModifiers!=b.TaskModifiers || a.MouseModifiers!=b.MouseModifiers || a.WheelSwitchEnabled!=b.WheelSwitchEnabled || a.TabTogglesInventory!=b.TabTogglesInventory || a.ToggleGesture!=b.ToggleGesture || a.InventoryGesture!=b.InventoryGesture || a.ArrangeGesture!=b.ArrangeGesture || a.RadialGesture!=b.RadialGesture)return false;
+        int count=a.TaskGestures?.Count ?? 0;if(count!=(b.TaskGestures?.Count ?? 0))return false;
+        if(a.TaskGestures!=null)foreach(var pair in a.TaskGestures)if(b.TaskGestures==null || !b.TaskGestures.TryGetValue(pair.Key,out var value) || value!=pair.Value)return false;
+        return true;
+    }
     public static string? RegistrationConflict(Preferences preferences, Preferences? baseline = null)
     {
         using var probe = new HwndSource(new HwndSourceParameters("OmniVibe.ShortcutProbe") { ParentWindow = new IntPtr(-3), Width = 0, Height = 0 });

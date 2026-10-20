@@ -1,12 +1,12 @@
 {
   "frames": 96,
-  "durationMs": 100,
+  "durationMs": 150,
   "uniqueDecodedFrames": 96,
   "protectedCenterStatic": true,
   "fixedBackgroundDither": true,
   "maximumChangedPixels": 7562,
   "bytes": 1414199,
-  "sha256": "e7a57f08b7d1ee3b1dadbfa79d224db554851fe58cf7ff838db0da659f62df86",
+  "sha256": "14b81e23272c6aff3045d0da9c85c72def4e7e42283adcf50d4e55f005b39f1f",
   "file": "themes\\windows-terminal\\assets\\refined-v1\\formation-c-v1.gif",
   "slug": "formation",
   "name": "金铲铲之战 · Agent 备战席",
@@ -52,13 +52,13 @@
   "pixelShaderRequired": false,
   "frameOnlyAnimation": {
     "frames": 96,
-    "durationMs": 100,
+    "durationMs": 150,
     "uniqueDecodedFrames": 96,
     "protectedCenterStatic": true,
     "fixedBackgroundDither": true,
     "maximumChangedPixels": 7573,
     "bytes": 855922,
-    "sha256": "c165b559daeac2badb8fe537cea7aad09a1b5e900247e6746e108c3c4a9a1116",
+    "sha256": "b16e91f9dd789728ca4a689a661eae1651432bab3f637fa06220eac555d5c8fb",
     "file": "themes\\windows-terminal\\assets\\refined-v1\\formation-frame-only-v1.gif"
   }
 }

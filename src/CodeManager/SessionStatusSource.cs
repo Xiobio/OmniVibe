@@ -26,8 +26,10 @@ public sealed class SessionStatusSource
     private DateTime _scanAfter;
     private readonly Dictionary<string, Cursor> _cursors = new(StringComparer.OrdinalIgnoreCase);
     private readonly ConcurrentQueue<string> _resets = new();
+    private readonly ConcurrentDictionary<string,Metadata> _metadata = new(StringComparer.OrdinalIgnoreCase);
+    private sealed record Metadata(long Length,DateTime Written,DateTime Created,AgentSession? Session);
     internal void Reset(string taskId) => _resets.Enqueue(taskId);
-    private sealed class Cursor { internal long Offset; internal byte[] Pending = Array.Empty<byte>(); internal bool Started; }
+    private sealed class Cursor { internal long Offset; internal byte[] Pending = Array.Empty<byte>(); internal bool Started; internal AgentSession? Session; internal DateTime Written,Created; }
     public SessionStatusSource(string? codexRoot = null, string? claudeRoot = null)
     {
         string home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
@@ -47,8 +49,15 @@ public sealed class SessionStatusSource
     }
     private AgentSession? Inspect(string file, string provider, IReadOnlyDictionary<string, string> titles)
     {
+        var info=new FileInfo(file);string key=provider+"|"+info.FullName;
+        if(_metadata.TryGetValue(key,out var cached) && cached.Length==info.Length && cached.Written==info.LastWriteTimeUtc && cached.Created==info.CreationTimeUtc) {
+            var value=cached.Session;
+            return value!=null && titles.TryGetValue(value.Id,out var renamed)?value with{Title=renamed}:value;
+        }
         string id = "", cwd = "", title = "";
-        foreach (string line in ReadPart(file, false, 65536).Concat(ReadPart(file, true, 65536)))
+        var lines=ReadPart(file,false,65536);
+        if(info.Length>65536)lines=lines.Concat(ReadPart(file,true,65536));
+        foreach (string line in lines)
         {
             try {
                 using var json = JsonDocument.Parse(line); var e = json.RootElement;
@@ -64,9 +73,11 @@ public sealed class SessionStatusSource
             } catch (JsonException) { }
         }
         if (!Guid.TryParse(id, out _)) return null;
-        if (titles.TryGetValue(id, out var indexed)) title = indexed;
         if (title == "") title = Path.GetFileName(cwd.TrimEnd('\\','/')) + " · " + id[..8];
-        return new(id, provider, file, cwd, title, File.GetLastWriteTimeUtc(file));
+        var session=new AgentSession(id,provider,file,cwd,title,info.LastWriteTimeUtc);
+        if(_metadata.Count>=128)foreach(string old in _metadata.Keys.Take(32))_metadata.TryRemove(old,out _);
+        _metadata[key]=new(info.Length,info.LastWriteTimeUtc,info.CreationTimeUtc,session);
+        return titles.TryGetValue(id,out var indexed)?session with{Title=indexed}:session;
     }
     public Task<IReadOnlyList<AgentSession>> DiscoverAsync() => Task.Run(Discover);
     private IReadOnlyList<AgentSession> Discover()
@@ -94,11 +105,20 @@ public sealed class SessionStatusSource
     }
     internal Task<IReadOnlyList<SessionUpdate>> PollAsync(IReadOnlyList<SessionTarget> targets) => Task.Run<IReadOnlyList<SessionUpdate>>(() => {
         while(_resets.TryDequeue(out string? reset)) foreach(string key in _cursors.Keys.Where(k=>k.StartsWith(reset+"|",StringComparison.Ordinal)).ToArray()) _cursors.Remove(key);
-        if (DateTime.UtcNow >= _scanAfter) { _sessions = Discover(); _scanAfter = DateTime.UtcNow.AddSeconds(8); }
+        // Bound sessions already have an exact file and ID. A global discovery
+        // scan is only needed to resolve an unbound/missing session.
+        if (targets.Any(t=>t.File=="" || !Allowed(t.File) || !File.Exists(t.File)) && DateTime.UtcNow >= _scanAfter) { _sessions = Discover(); _scanAfter = DateTime.UtcNow.AddSeconds(8); }
         var updates = new List<SessionUpdate>();
         foreach (var target in targets) try {
             AgentSession? session = null;
-            if (target.File != "" && Allowed(target.File) && File.Exists(target.File)) session = _sessions.FirstOrDefault(s => s.File.Equals(target.File,StringComparison.OrdinalIgnoreCase)) ?? Inspect(target.File,target.File.StartsWith(_codex,StringComparison.OrdinalIgnoreCase) ? "codex" : "claude",new Dictionary<string,string>());
+            if (target.File != "" && Allowed(target.File) && File.Exists(target.File)) {
+                var info=new FileInfo(target.File);
+                _cursors.TryGetValue(target.TaskId+"|"+target.File,out var previous);
+                // Appended records do not invalidate the already verified session
+                // header. File replacement/truncation or same-size rewrite does.
+                bool retained=previous is {Started:true,Session:not null} && previous.Created==info.CreationTimeUtc && info.Length>=previous.Offset && (info.Length>previous.Offset || previous.Written==info.LastWriteTimeUtc);
+                session=retained?previous!.Session:Inspect(target.File,target.File.StartsWith(_codex,StringComparison.OrdinalIgnoreCase)?"codex":"claude",new Dictionary<string,string>());
+            }
             if (session == null && target.SessionId != "") session = _sessions.SingleOrDefault(s => s.Id == target.SessionId);
             if (session == null && target.SessionId == "" && target.File == "") {
                 var matches = _sessions.Where(s => MatchesTitle(target.Title,s.Title)).ToArray();
@@ -107,6 +127,9 @@ public sealed class SessionStatusSource
             if (session == null || (target.SessionId != "" && target.SessionId != session.Id)) continue;
             string key = target.TaskId + "|" + session.File;
             if (!_cursors.TryGetValue(key,out var cursor)) _cursors[key] = cursor = new();
+            var stamp=new FileInfo(session.File);
+            if(cursor.Started && cursor.Created==stamp.CreationTimeUtc && cursor.Offset==stamp.Length && cursor.Written==stamp.LastWriteTimeUtc)continue;
+            if(cursor.Started && (cursor.Created!=stamp.CreationTimeUtc || cursor.Offset==stamp.Length && cursor.Written!=stamp.LastWriteTimeUtc)) { cursor.Offset=0;cursor.Pending=Array.Empty<byte>();cursor.Started=false; }
             bool initial = !cursor.Started;
             StatusEvent? latest = null;
             using var stream = new FileStream(session.File,FileMode.Open,FileAccess.Read,FileShare.ReadWrite | FileShare.Delete);
@@ -121,6 +144,7 @@ public sealed class SessionStatusSource
                 if (status != null && (latest == null || status.At >= latest.At)) latest = status;
             }
             cursor.Pending = data.Length-from <= 262144 ? data[from..] : Array.Empty<byte>(); cursor.Started = true;
+            stamp.Refresh();cursor.Session=session;cursor.Created=stamp.CreationTimeUtc;cursor.Written=stamp.LastWriteTimeUtc;
             if (initial || latest != null) updates.Add(new(target,session,latest,initial));
         } catch (Exception e) when (e is IOException or UnauthorizedAccessException or InvalidOperationException) { }
         var active = targets.Select(t => t.TaskId).ToHashSet(); foreach (string key in _cursors.Keys.Where(k => !active.Contains(k.Split('|')[0])).ToArray()) _cursors.Remove(key);

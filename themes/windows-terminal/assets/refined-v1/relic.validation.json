@@ -1,12 +1,12 @@
 {
   "frames": 96,
-  "durationMs": 100,
+  "durationMs": 150,
   "uniqueDecodedFrames": 96,
   "protectedCenterStatic": true,
   "fixedBackgroundDither": true,
   "maximumChangedPixels": 30814,
   "bytes": 2676980,
-  "sha256": "7257df8abd19f11342ef8dbce1e4b3719b0d8eba001a2534680bbaf48cea91ca",
+  "sha256": "697a2439e1c8129dce94399343b2b5736e913d0cda4cfaf792bba3ec032f62ee",
   "file": "themes\\windows-terminal\\assets\\refined-v1\\relic-c-v1.gif",
   "slug": "relic",
   "name": "黑神话：悟空 · 灵蕴法宝匣",
@@ -52,13 +52,13 @@
   "pixelShaderRequired": false,
   "frameOnlyAnimation": {
     "frames": 96,
-    "durationMs": 100,
+    "durationMs": 150,
     "uniqueDecodedFrames": 96,
     "protectedCenterStatic": true,
     "fixedBackgroundDither": true,
     "maximumChangedPixels": 32287,
     "bytes": 2174970,
-    "sha256": "15b77fb62cd6fbc55a8bb1eb869c263cec852ee90a16b4d7c9783320a0da81fe",
+    "sha256": "5893d652d442c36393f83232c4d379df91adab07ddd495b78587993d0cefd0ff",
     "file": "themes\\windows-terminal\\assets\\refined-v1\\relic-frame-only-v1.gif"
   }
 }

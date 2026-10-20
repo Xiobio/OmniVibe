@@ -1,12 +1,12 @@
 {
   "frames": 96,
-  "durationMs": 100,
+  "durationMs": 150,
   "uniqueDecodedFrames": 96,
   "protectedCenterStatic": true,
   "fixedBackgroundDither": true,
   "maximumChangedPixels": 14328,
   "bytes": 1750656,
-  "sha256": "7fba75125602eb51727993ed65380fce49e15163b9be03278d51026b8937391c",
+  "sha256": "afa5c3c20a5be04e0920bca86f75d2e9c3dc98beb3ffaaba006a55ee93b977f9",
   "file": "themes\\windows-terminal\\assets\\refined-v1\\midnight-c-v1.gif",
   "slug": "midnight",
   "name": "玄夜青金",
@@ -52,13 +52,13 @@
   "pixelShaderRequired": false,
   "frameOnlyAnimation": {
     "frames": 96,
-    "durationMs": 100,
+    "durationMs": 150,
     "uniqueDecodedFrames": 96,
     "protectedCenterStatic": true,
     "fixedBackgroundDither": true,
     "maximumChangedPixels": 14874,
     "bytes": 1030045,
-    "sha256": "d208990f64a705f3121cb236a24460699a71185e5a53890c5ea87fb9d0dcbc35",
+    "sha256": "cffcc501d097cce7cdfdab89465d8c7a1b90372a2362f9f37f9f8d38ad90ab71",
     "file": "themes\\windows-terminal\\assets\\refined-v1\\midnight-frame-only-v1.gif"
   }
 }

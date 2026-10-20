@@ -1,12 +1,12 @@
 {
   "frames": 96,
-  "durationMs": 100,
+  "durationMs": 150,
   "uniqueDecodedFrames": 96,
   "protectedCenterStatic": true,
   "fixedBackgroundDither": true,
   "maximumChangedPixels": 25127,
   "bytes": 1746922,
-  "sha256": "81f039104f0db13d4461d472d97eb13e81ffca683c96a822869e9c43fbb819af",
+  "sha256": "e0e7c47ed25bf37eba7d8a4ba63eb2fbf74b98375bd13a4c1c2a1a0d4e954e76",
   "file": "themes\\windows-terminal\\assets\\refined-v1\\wonderland-c-v1.gif",
   "slug": "wonderland",
   "name": "梦幻西游 · 三界百宝袋",
@@ -52,13 +52,13 @@
   "pixelShaderRequired": false,
   "frameOnlyAnimation": {
     "frames": 96,
-    "durationMs": 100,
+    "durationMs": 150,
     "uniqueDecodedFrames": 96,
     "protectedCenterStatic": true,
     "fixedBackgroundDither": true,
     "maximumChangedPixels": 25324,
     "bytes": 1182193,
-    "sha256": "5c3b6ee2610713d18ec4ab35ffaeac756b4b4af2226fd32859873a7548a53143",
+    "sha256": "6d2f5df7f8b1243f719fa800f73c422fd9e2d34a4da799e39edd7ac675db6b8d",
     "file": "themes\\windows-terminal\\assets\\refined-v1\\wonderland-frame-only-v1.gif"
   }
 }

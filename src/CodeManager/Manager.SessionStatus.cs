@@ -23,6 +23,7 @@ public sealed partial class Manager
         try {
             var signals = await Task.Run(() => { _terminalSignals.Retain(targets); return targets.Select(t=>(Target:t,Status:_terminalSignals.Read(t))).Where(s=>s.Status!=null).ToArray(); });
             if(_disposed)return;
+            ApplySessionBatch(()=>{
             foreach(var signal in signals) {
                 var slot=State.Slots.FirstOrDefault(s=>s.Id==signal.Target.TaskId && s.Window?.Handle==signal.Target.Handle);
                 if(slot==null)continue;
@@ -33,8 +34,11 @@ public sealed partial class Manager
                 if(signal.Status.State==AgentState.Running && slot.State==AgentState.Running && slot.StateSource!="终端状态信号")continue;
                 SetStatus(slot,signal.Status.State,"终端状态信号",signal.Status.Message,signal.Status.At);
             }
+            return false;
+            });
             var updates = await _sessionStatus.PollAsync(targets);
             if (_disposed) return;
+            ApplySessionBatch(()=>{
             bool bound = false;
             foreach (var update in updates) {
                 var slot = State.Slots.FirstOrDefault(s => s.Id == update.Target.TaskId && s.Occupied && s.Window!.Handle == update.Target.Handle);
@@ -60,7 +64,8 @@ public sealed partial class Manager
                     SetStatus(slot,status.State,source,status.Message,receivedAt);
                 }
             }
-            if (bound) { Save(); Dock.UpdateSummary(); }
+            return bound;
+            });
         } catch (Exception e) when (e is System.IO.IOException or UnauthorizedAccessException or InvalidOperationException) { Store.Log("Session status: " + e.Message); }
     }
     private static void BindSession(Slot slot, AgentSession session)

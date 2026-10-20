@@ -1,12 +1,12 @@
 {
   "frames": 96,
-  "durationMs": 100,
+  "durationMs": 150,
   "uniqueDecodedFrames": 96,
   "protectedCenterStatic": true,
   "fixedBackgroundDither": true,
   "maximumChangedPixels": 4697,
   "bytes": 1072492,
-  "sha256": "06ad34cc196308d85126ff01b31bae180f85b5b3ba3fe6366b471ac4eeae5bd3",
+  "sha256": "b456ce57d762763ab51e47e6bf2a8f281a20ead888419335adfcf5f6a4658ea8",
   "file": "themes\\windows-terminal\\assets\\refined-v1\\protocol-c-v1.gif",
   "slug": "protocol",
   "name": "无畏契约 · 行动协议",
@@ -52,13 +52,13 @@
   "pixelShaderRequired": false,
   "frameOnlyAnimation": {
     "frames": 96,
-    "durationMs": 100,
+    "durationMs": 150,
     "uniqueDecodedFrames": 96,
     "protectedCenterStatic": true,
     "fixedBackgroundDither": true,
     "maximumChangedPixels": 4173,
     "bytes": 555784,
-    "sha256": "24ccfabacded8fac7fd24bb2fab5029dd29920cca9e640472dad739896d636bb",
+    "sha256": "cb174987f4b62497ddb213feb25303a75d0c965304ab242b4693924efb32db55",
     "file": "themes\\windows-terminal\\assets\\refined-v1\\protocol-frame-only-v1.gif"
   }
 }

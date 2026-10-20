@@ -1,12 +1,12 @@
 {
   "frames": 96,
-  "durationMs": 100,
+  "durationMs": 150,
   "uniqueDecodedFrames": 96,
   "protectedCenterStatic": true,
   "fixedBackgroundDither": true,
   "maximumChangedPixels": 13553,
   "bytes": 1756859,
-  "sha256": "dcab08c7e4af496cedab8957b7cd1c4d1e4f39c4d2774f183753925a5ac5551c",
+  "sha256": "54d8df9f143aa732ca99e53f1498c2cfa77f93fb8c2d6d104be92fb8d12c975b",
   "file": "themes\\windows-terminal\\assets\\refined-v1\\ink-jade-c-v1.gif",
   "slug": "ink-jade",
   "name": "墨玉机关",
@@ -52,13 +52,13 @@
   "pixelShaderRequired": false,
   "frameOnlyAnimation": {
     "frames": 96,
-    "durationMs": 100,
+    "durationMs": 150,
     "uniqueDecodedFrames": 96,
     "protectedCenterStatic": true,
     "fixedBackgroundDither": true,
     "maximumChangedPixels": 15283,
     "bytes": 1107635,
-    "sha256": "b46db16d929db11d92f4d6e7e069d71901f01e03ae85376e32eb659928782dd5",
+    "sha256": "bd427d4d2a4f086bddbb58b6607519beac9884f6149a06b48e5fda996b9ec1ee",
     "file": "themes\\windows-terminal\\assets\\refined-v1\\ink-jade-frame-only-v1.gif"
   }
 }

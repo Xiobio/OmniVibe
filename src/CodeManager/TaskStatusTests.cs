@@ -20,6 +20,7 @@ public static class TaskStatusTests
     public static List<SelfTests.Result> Run(string output)
     {
         Directory.CreateDirectory(output);var results=new List<SelfTests.Result>();
+        results.AddRange(PerformanceTests.Run(output));
         void Test(string name,Action action) { try { action();results.Add(new(name,true,"OK")); }catch(Exception e){results.Add(new(name,false,e.ToString()));} }
         static void Check(bool condition,string reason) { if(!condition)throw new Exception(reason); }
         string id=Guid.NewGuid().ToString(),task=Guid.NewGuid().ToString("N");var now=DateTimeOffset.UtcNow;
