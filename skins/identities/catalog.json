@@ -1,0 +1,102 @@
+{
+  "hextech": {
+    "file": "hextech.jpg",
+    "page": "https://www.leagueoflegends.com/en-us/",
+    "source": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/news/565197caf987af4e4da307df6e2b235a28714736-837x469.jpg",
+    "sha256": "beb71c03516656f469eacaa4b086b4fd7c283ad1cfed7cd5cbf43efbd114e702",
+    "width": 837,
+    "height": 469,
+    "kind": "Official website identity artwork",
+    "attribution": "Game artwork and trademarks belong to their respective rights holders; not covered by OmniVibe source license."
+  },
+  "protocol": {
+    "file": "protocol.png",
+    "page": "https://playvalorant.com/en-us/",
+    "source": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/news/cbf4460132cdfeb2a97fad5f9dd25ba0bc058f76-128x128.png",
+    "sha256": "d947a1f3afddaa19a0405cd900ec63efeb813dea4993f30a2153fed4dbc5e364",
+    "width": 128,
+    "height": 128,
+    "kind": "Official website identity artwork",
+    "attribution": "Game artwork and trademarks belong to their respective rights holders; not covered by OmniVibe source license."
+  },
+  "tactical": {
+    "file": "tactical-cover.jpg",
+    "page": "https://store.steampowered.com/app/2507950/Delta_Force/",
+    "source": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2507950/library_600x900.jpg",
+    "sha256": "b34a0641d5a39159385b1af2d6fc0e8009e95e8b024e691cbc81a4e2628a6e11",
+    "width": 300,
+    "height": 450,
+    "kind": "Official website identity artwork",
+    "attribution": "Game artwork and trademarks belong to their respective rights holders; not covered by OmniVibe source license."
+  },
+  "formation": {
+    "file": "formation.png",
+    "page": "https://jcc.qq.com/",
+    "source": "https://game.gtimg.cn/images/jk/logo-jcc.png",
+    "sha256": "ff4cc8e980021bef0dbd61b322920a40375f378e56dd3d2eb600d5c4023be82f",
+    "width": 92,
+    "height": 92,
+    "kind": "Official website identity artwork",
+    "attribution": "Game artwork and trademarks belong to their respective rights holders; not covered by OmniVibe source license."
+  },
+  "starlight": {
+    "file": "starlight.png",
+    "page": "https://pvp.qq.com/",
+    "source": "https://game.gtimg.cn/images/yxzj/pvpcommonimage/header/logo.png",
+    "sha256": "630e325a0dbc81047eb2fd77da298db8996c3c15f35d12a619caf787730d9350",
+    "width": 192,
+    "height": 51,
+    "kind": "Official website identity artwork",
+    "attribution": "Game artwork and trademarks belong to their respective rights holders; not covered by OmniVibe source license."
+  },
+  "adventure": {
+    "file": "adventure.png",
+    "page": "https://dnf.qq.com/",
+    "source": "https://game.gtimg.cn/images/dnf/web202511/main/logo.png",
+    "sha256": "798dd39686304460778cadb974e7b8d3037f12ae9ab1563cfdae2b1d9db7cbcf",
+    "width": 185,
+    "height": 75,
+    "kind": "Official website identity artwork",
+    "attribution": "Game artwork and trademarks belong to their respective rights holders; not covered by OmniVibe source license."
+  },
+  "wonderland": {
+    "file": "wonderland.png",
+    "page": "https://xyq.163.com/",
+    "source": "https://xyq.res.netease.com/pc/gw/20170118103441/img/share_a29c4a3.png",
+    "sha256": "67f94ced73a9376cad22804b1f3dd6e74e016deb5172b2d045464cc9bc2598c7",
+    "width": 575,
+    "height": 384,
+    "kind": "Official website identity artwork",
+    "attribution": "Game artwork and trademarks belong to their respective rights holders; not covered by OmniVibe source license."
+  },
+  "astral": {
+    "file": "astral.jpg",
+    "page": "https://genshin.hoyoverse.com/",
+    "source": "https://upload-static.hoyoverse.com/hk4e/upload/fb/common.jpg",
+    "sha256": "c5b3a80867f069809b47545fa7cfc55b0a31d57fa6f1b0960521f658f7cd6f17",
+    "width": 1200,
+    "height": 630,
+    "kind": "Official website identity artwork",
+    "attribution": "Game artwork and trademarks belong to their respective rights holders; not covered by OmniVibe source license."
+  },
+  "relic": {
+    "file": "relic-cover.jpg",
+    "page": "https://store.steampowered.com/app/2358720/Black_Myth_Wukong/",
+    "source": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2358720/library_600x900.jpg",
+    "sha256": "96be3e787368a762a5728135ace06a4b465537265f7b4d4b9d507258f55e8333",
+    "width": 300,
+    "height": 450,
+    "kind": "Official website identity artwork",
+    "attribution": "Game artwork and trademarks belong to their respective rights holders; not covered by OmniVibe source license."
+  },
+  "arsenal": {
+    "file": "arsenal.jpg",
+    "page": "https://www.narakathegame.com/",
+    "source": "https://www.narakathegame.com/pc/gw/20191211140100/img/share_6c8fe685.jpg",
+    "sha256": "87402c6923927c02586c12ae5c2af309c622e8c97e7b479497cadc0cfd26236f",
+    "width": 400,
+    "height": 400,
+    "kind": "Official website identity artwork",
+    "attribution": "Game artwork and trademarks belong to their respective rights holders; not covered by OmniVibe source license."
+  }
+}

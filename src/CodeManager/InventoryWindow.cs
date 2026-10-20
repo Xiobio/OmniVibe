@@ -31,7 +31,7 @@ public sealed class InventoryWindow : Window
     public event Action<int>? Remove;
     public event Action? Dismiss;
 
-    public InventoryWindow(IReadOnlyList<Slot> slots, Native.Rect area, double scale, int? selected, bool animate, bool duringDrag = false, bool presentationPreview = false)
+    public InventoryWindow(IReadOnlyList<Slot> slots, Native.Rect area, double scale, int? selected, bool animate, bool duringDrag = false, bool presentationPreview = false, OverviewSize size = OverviewSize.Large)
     {
         var ordered = slots.OrderBy(s => s.Number).ToList();
         var occupied = ordered.Where(s => s.Occupied).ToList();
@@ -44,8 +44,7 @@ public sealed class InventoryWindow : Window
         ShowInTaskbar = false; Topmost = true; Background = WuxiaTheme.Brush(skin.Background); ShowActivated = !duringDrag;
         scale = double.IsFinite(scale) && scale > 0 ? scale : 1;
         double availableWidth = (area.Right - area.Left) / scale, availableHeight = (area.Bottom - area.Top) / scale;
-        Width = Math.Max(1, Math.Min(_columns == 1 ? 520 : _columns == 2 ? 900 : 1180, Math.Min(availableWidth - 48, availableWidth * .84)));
-        Height = Math.Max(1, Math.Min(146 + rows * 250, Math.Min(availableHeight - 48, availableHeight * .84)));
+        (Width, Height) = OverviewSizing.Measure(_columns, rows, availableWidth, availableHeight, size);
         bool scrollingLayout = Height < 128 + rows * 155;
         Left = (area.Left + (area.Right - area.Left) / 2d) / scale - Width / 2;
         Top = (area.Top + (area.Bottom - area.Top) / 2d) / scale - Height / 2;

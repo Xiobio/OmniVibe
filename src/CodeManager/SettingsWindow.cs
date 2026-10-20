@@ -119,6 +119,9 @@ public sealed class SettingsWindow : Window
         UpdateKeyNotice();
 
         var layoutPage = Page("窗口与布局", "调整多个窗口怎么排、单个窗口怎么唤出，以及桌面入口的位置。");
+        var overview = Section(layoutPage, "任务总览大小", "按总览快捷键查看任务。档位越大，终端预览越清楚；会按屏幕大小自动限制，并保留桌面边距。");
+        var overviewSize = Options(OverviewSizing.Labels, (int)OverviewSizing.Normalize(source.OverviewSize));
+        overviewSize.Name = "OverviewSizePicker"; overview.Children.Add(overviewSize);
         var layout = Section(layoutPage, "全部排列", "按「排列 / 恢复」快捷键铺开窗口，再按一次恢复。");
         var arrangement = Options(new[] { "均衡网格 · 铺满屏幕", "纵向分栏", "横向分行", "主窗居左 · 其余居右" }, (int)source.Arrangement); layout.Children.Add(arrangement);
         Label(layout, "窗口间距"); var gap = Slider(0, 32, source.LayoutGap, layout);
@@ -149,6 +152,7 @@ public sealed class SettingsWindow : Window
             if (!ShortcutBindings.Validate(candidate, out string problem)) { Fail(problem); navButtons[2].RaiseEvent(new RoutedEventArgs(Button.ClickEvent)); return; }
             if (ShortcutAvailabilityCheck?.Invoke(candidate) is string occupied) { Fail(occupied); navButtons[2].RaiseEvent(new RoutedEventArgs(Button.ClickEvent)); return; }
             candidate.Arrangement = (ArrangementMode)arrangement.SelectedIndex; candidate.LayoutGap = (int)gap.Value; candidate.HideDockOnArrange = false; candidate.WakeMode = (WakeMode)wake.SelectedIndex;
+            candidate.OverviewSize = (OverviewSize)overviewSize.SelectedIndex;
             candidate.Skin = skin.SelectedSkin; candidate.DockWidth = width.Value; candidate.DockHeight = 0;
             candidate.Animate = quality.SelectedIndex == 0; candidate.DecorationsEnabled = quality.SelectedIndex != 2;
             candidate.ShowRecoveryOnStartup = startup.SelectedIndex >= 2; candidate.AutoReconnectExisting = startup.SelectedIndex >= 1; candidate.AutoRestoreOnStartup = startup.SelectedIndex == 3;

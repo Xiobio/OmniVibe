@@ -355,7 +355,7 @@ public sealed class Manager : IDisposable
         _inventoryPreviousFocus = Native.GetForegroundWindow();
         CancelInteraction(); Dock.ClosePreview(); RefreshConnections();
         int? selected = State.Slots.FirstOrDefault(s => s.IsActive)?.Number;
-        var window = new InventoryWindow(State.Slots, WorkArea, _scale, selected, State.Preferences.Animate && !ShortcutsPaused, duringDrag: Dragging);
+        var window = new InventoryWindow(State.Slots, WorkArea, _scale, selected, State.Preferences.Animate && !ShortcutsPaused, duringDrag: Dragging, size: State.Preferences.OverviewSize);
         _inventory = window;
         window.Remove += number => { var slot = State.Slots.Single(s => s.Number == number); CloseInventory(restoreFocus: false); Remove(slot); };
         window.Choose += number => { CloseInventory(restoreFocus: false); var slot = State.Slots.Single(s => s.Number == number); if (!slot.Occupied) PickWindow(slot); else ActivateSlot(number); };

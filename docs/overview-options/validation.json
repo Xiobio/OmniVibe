@@ -1,0 +1,88 @@
+{
+  "updated_at": "2026-10-20T07:03:10.791037+00:00",
+  "settings_path": "?? ? ????? ? ??????",
+  "sizes": [
+    "??",
+    "??",
+    "??",
+    "??",
+    "???"
+  ],
+  "default": "??",
+  "sizes_at_1920x1040_with_six_tasks": {
+    "compact": {
+      "path": "artifacts/overview-options/inventory-size-compact-relic.png",
+      "width": 1004,
+      "height": 550
+    },
+    "standard": {
+      "path": "artifacts/overview-options/inventory-size-standard-relic.png",
+      "width": 1180,
+      "height": 646
+    },
+    "spacious": {
+      "path": "artifacts/overview-options/inventory-size-spacious-relic.png",
+      "width": 1476,
+      "height": 808
+    },
+    "large": {
+      "path": "artifacts/overview-options/inventory-size-large-relic.png",
+      "width": 1728,
+      "height": 936
+    },
+    "panoramic": {
+      "path": "artifacts/overview-options/inventory-size-panoramic-relic.png",
+      "width": 1824,
+      "height": 988
+    }
+  },
+  "regression": {
+    "path": "artifacts/overview-options/staged-self-test.json",
+    "passed": 42,
+    "failed": 0
+  },
+  "working_tree_regression": {
+    "path": "artifacts/overview-options/working-self-test.json",
+    "passed": 48,
+    "failed": 0
+  },
+  "final_skin_checks": {
+    "path": "artifacts/overview-options/final-skin-test.json",
+    "passed": 24,
+    "failed": 0
+  },
+  "official_identity_assets": 10,
+  "original_theme_fallbacks": 3,
+  "source_manifest": "skins/identities/catalog.json",
+  "empty_previews": [
+    "artifacts/overview-options/dock-empty-ink-jade.png",
+    "artifacts/overview-options/inventory-empty-ink-jade.png",
+    "artifacts/overview-options/dock-empty-midnight.png",
+    "artifacts/overview-options/inventory-empty-midnight.png",
+    "artifacts/overview-options/dock-empty-cinnabar.png",
+    "artifacts/overview-options/inventory-empty-cinnabar.png",
+    "artifacts/overview-options/dock-empty-hextech.png",
+    "artifacts/overview-options/inventory-empty-hextech.png",
+    "artifacts/overview-options/dock-empty-tactical.png",
+    "artifacts/overview-options/inventory-empty-tactical.png",
+    "artifacts/overview-options/dock-empty-protocol.png",
+    "artifacts/overview-options/inventory-empty-protocol.png",
+    "artifacts/overview-options/dock-empty-adventure.png",
+    "artifacts/overview-options/inventory-empty-adventure.png",
+    "artifacts/overview-options/dock-empty-arsenal.png",
+    "artifacts/overview-options/inventory-empty-arsenal.png",
+    "artifacts/overview-options/dock-empty-relic.png",
+    "artifacts/overview-options/inventory-empty-relic.png",
+    "artifacts/overview-options/dock-empty-starlight.png",
+    "artifacts/overview-options/inventory-empty-starlight.png",
+    "artifacts/overview-options/dock-empty-formation.png",
+    "artifacts/overview-options/inventory-empty-formation.png",
+    "artifacts/overview-options/dock-empty-astral.png",
+    "artifacts/overview-options/inventory-empty-astral.png",
+    "artifacts/overview-options/dock-empty-wonderland.png",
+    "artifacts/overview-options/inventory-empty-wonderland.png"
+  ],
+  "live_refresh": "artifacts/overview-options/live-refresh.json",
+  "settings_preview": "artifacts/overview-options/settings-layout-relic.png",
+  "packaged": false
+}

@@ -27,6 +27,7 @@ public sealed class Preferences
     public string InventoryGesture { get; set; } = "Tab";
     public string RadialGesture { get; set; } = "Alt+Q";
     public ArrangementMode Arrangement { get; set; }
+    public OverviewSize OverviewSize { get; set; } = OverviewSize.Large;
     public int LayoutGap { get; set; }
     public bool HideDockOnArrange { get; set; }
     public Skin Skin { get; set; }

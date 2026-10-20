@@ -120,6 +120,8 @@ public partial class App : Application
         // Match the complete suffix first: ink-jade and settings-skin both contain hyphens.
         var skin = SkinCatalog.All.OrderByDescending(s => s.Slug.Length).FirstOrDefault(s => mode.EndsWith("-" + s.Slug, StringComparison.OrdinalIgnoreCase));
         if (skin != null) mode = mode[..^(skin.Slug.Length + 1)];
+        var overviewSize = OverviewSize.Large;
+        if (mode.StartsWith("inventory-size-", StringComparison.OrdinalIgnoreCase) && Enum.TryParse<OverviewSize>(mode[15..], true, out var requestedSize)) { overviewSize = OverviewSizing.Normalize(requestedSize); mode = "inventory"; }
         WuxiaTheme.Apply(skin?.Id ?? (mode.Contains("midnight") ? Skin.Midnight : mode.Contains("cinnabar") ? Skin.Cinnabar : Skin.InkJade));
         var slots = Enumerable.Range(1, 9).Select(n => new Slot { Number = n, Id = "preview-slot-" + n }).ToList();
         string[] names = { "商城 · 修复登录与多语言账户验证", "OmniVibe · Permission required / 等待确认", "API gateway · Response ready", "数据脚本 · 状态未知", "CI / Build failed · 构建错误", "昨日任务 · 窗口已断开" };
@@ -130,6 +132,7 @@ public partial class App : Application
             slots[i].Connected = i != 5; slots[i].State = states[i]; slots[i].Unread = i is 1 or 2 or 4;
         }
         slots[0].IsActive = true; slots[2].IsSelected = true;
+        if (mode is "inventory-empty" or "dock-empty" or "dock-empty-rest") foreach (var slot in slots) { slot.Window = null; slot.Connected = slot.IsActive = slot.IsSelected = slot.Unread = false; }
         EquipmentCatalog.EnsureDefaults(slots);
         slots[1].TagColor = "#A8A0F5"; slots[2].TagColor = "#F2BC78"; slots[3].TagColor = "#EE97B6";
         if (mode.StartsWith("nexus"))
@@ -171,7 +174,7 @@ public partial class App : Application
             var radial = new RadialInventoryWindow(slots, mode == "radial-small" ? new Native.Rect(0, 0, 640, 540) : new Native.Rect(0, 0, 940, 760), 1, false, "Alt+Q", () => true, preview: true);
             radial.Surface.Select(3); radial.Surface.SetPhase(.23); window = radial;
         }
-        else if (mode is "inventory" or "inventory-small" or "inventory-hidpi" or "inventory-short") window = new InventoryWindow(slots, mode == "inventory-small" ? new Native.Rect(0, 0, 836, 698) : mode == "inventory-short" ? new Native.Rect(0, 0, 1920, 698) : new Native.Rect(0, 0, 1920, 1040), mode is "inventory-hidpi" or "inventory-short" ? 2 : 1, 3, false, presentationPreview: true);
+        else if (mode is "inventory" or "inventory-empty" or "inventory-small" or "inventory-hidpi" or "inventory-short") window = new InventoryWindow(slots, mode == "inventory-small" ? new Native.Rect(0, 0, 836, 698) : mode == "inventory-short" ? new Native.Rect(0, 0, 1920, 698) : new Native.Rect(0, 0, 1920, 1040), mode is "inventory-hidpi" or "inventory-short" ? 2 : 1, 3, false, presentationPreview: true, size: overviewSize);
         else if (mode.StartsWith("settings")) window = new SettingsWindow(new() { Skin = SkinCatalog.Current.Id, Animate = false, SoundEffects = false }, new Native.Rect(0, 0, 1920, 1040), "", page: mode.Contains("guide") ? 4 : mode.Contains("audio") ? 5 : mode.Contains("layout") ? 1 : mode.Contains("skin") ? 2 : mode.Contains("general") ? 3 : 0);
         else if (mode == "menu")
         {
@@ -192,7 +195,7 @@ public partial class App : Application
             var dock = new DockWindow(); dock.SetSlots(slots); dock.SetPreviewLabel(mode == "expanded");
             if (mode == "mini") dock.SetCollapsed(true);
             dock.Width = mode == "narrow" ? 440 : 460; dock.Height = dock.DesiredDockHeight; window = dock;
-            if (mode is not ("mini" or "nexus-idle" or "nexus-motion" or "nexus-rest")) dock.SetEquipmentDeployment(true, false);
+            if (mode is not ("mini" or "dock-empty-rest" or "nexus-idle" or "nexus-motion" or "nexus-rest")) dock.SetEquipmentDeployment(true, false);
             if (mode == "nexus-aim") { var wheel = (DockWeaponWheel)dock.FindName("WeaponWheel"); wheel.BeginAim(false); wheel.AimAt(wheel.SlotPoint(2)); }
         }
         if (mode == "duo-motion") { window.Left = -8000; window.Top = -8000; }

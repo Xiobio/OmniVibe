@@ -91,6 +91,7 @@ public sealed class DockWeaponWheel : FrameworkElement
     {
         RenderOptions.SetBitmapScalingMode(this, BitmapScalingMode.HighQuality);
         NativeSkinArt.Warm(SkinCatalog.Current);
+        ThemeIdentityArt.Image(SkinCatalog.Current.Id);
         Loaded += (_, _) => { Subscribe(); UpdateFlow(); ScheduleWarmup(); };
         SizeChanged += (_, _) => ScheduleWarmup();
         Unloaded += (_, _) => { Unsubscribe(); foreach (var dp in new[] { PhaseProperty, DeploymentProperty, LiftProperty, FlowProperty }.Concat(HoverWeights)) BeginAnimation(dp, null); };
@@ -98,6 +99,7 @@ public sealed class DockWeaponWheel : FrameworkElement
     internal void SetSlots(IEnumerable<Slot> slots)
     {
         Unsubscribe(); _slots = slots.OrderBy(s => s.Number).ToArray();
+        ThemeIdentityArt.Image(SkinCatalog.Current.Id);
         if (IsLoaded) Subscribe(); UpdateFlow(); InvalidateVisual(); ScheduleWarmup();
     }
     private void ScheduleWarmup()
@@ -334,9 +336,9 @@ public sealed class DockWeaponWheel : FrameworkElement
     private void DrawEmptyCore(DrawingContext dc, double deployment)
     {
         var skin = SkinCatalog.Current;
-        // A theme representative is an idle entrance, not an occupied task.
-        // Reuse the equipment renderer; an empty collection starts no animation.
-        EquipmentCatalog.Draw(dc, _slots[0], new Rect(-48, -52, 96, 86), .78);
+        // The idle core identifies the game, independently of any empty slot's saved equipment.
+        if (!ThemeIdentityArt.DrawCached(dc, skin.Id, new Rect(-51, -52, 102, 88)))
+            NativeSkinArt.Core(dc, skin, new Point(0, -8), 84);
         dc.DrawRoundedRectangle(B(skin.Background), new Pen(B(skin.Border), .7), new Rect(30, 16, 18, 18), 5, 5);
         var plus = new Pen(B(skin.Accent), 1.2) { StartLineCap = PenLineCap.Round, EndLineCap = PenLineCap.Round };
         dc.DrawLine(plus, new Point(35, 25), new Point(43, 25));

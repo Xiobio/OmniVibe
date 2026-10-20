@@ -149,6 +149,7 @@ public partial class DockWindow : Window
     public void RefreshTheme()
     {
         NativeSkinArt.Warm(SkinCatalog.Current);
+        ThemeIdentityArt.Image(SkinCatalog.Current.Id);
         var skin = SkinCatalog.Current;
         Title = "OmniVibe · " + skin.DockTitle;
         Background = Brushes.Transparent;

@@ -428,6 +428,7 @@ public static class SkinTests
                     var picker = Descendants(dialog.Content).OfType<SkinPicker>().Single();
                     picker.SelectSkin(Skin.Wonderland);
                     var quality = Descendants(dialog.Content).OfType<ComboBox>().Single(c => c.Items.OfType<ComboBoxItem>().Any(i => i.Content as string == "简洁外观 · 保留任务与状态")); quality.SelectedIndex = 2;
+                    Descendants(dialog.Content).OfType<ComboBox>().Single(c => c.Name == "OverviewSizePicker").SelectedIndex = (int)OverviewSize.Panoramic;
                     Descendants(dialog.Content).OfType<Button>().Single(b => b.Content as string == "保存并应用").RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                 }, DispatcherPriority.ApplicationIdle);
                 Check(dialog.ShowDialog() == true, "Settings save failed");
@@ -435,6 +436,42 @@ public static class SkinTests
                 Check(preferences.Skin == Skin.Tactical && preferences.DecorationsEnabled && WuxiaTheme.CurrentSkin == active, "Settings commit mutated caller preferences or applied before manager accepted");
                 var roundtrip = JsonSerializer.Deserialize<Preferences>(JsonSerializer.Serialize(dialog.Result, StateStore.Json), StateStore.Json)!;
                 Check(roundtrip.Skin == Skin.Wonderland && !roundtrip.DecorationsEnabled, "Skin/decorations did not round-trip");
+                Check(roundtrip.OverviewSize == OverviewSize.Panoramic && preferences.OverviewSize == OverviewSize.Large, "Overview size did not save independently of the caller's draft");
+            });
+            Test("Overview: five sizes scale monotonically, retain margins and survive preference round-trip", () =>
+            {
+                foreach (var area in new[] { new Size(1920,1040), new Size(2560,1400), new Size(960,349) }) {
+                    double width = 0, height = 0;
+                    foreach (var size in Enum.GetValues<OverviewSize>()) {
+                        var measured = OverviewSizing.Measure(2, 2, area.Width, area.Height, size);
+                        Check(measured.Width >= width && measured.Height >= height && measured.Width <= area.Width-48 && measured.Height <= area.Height-48, "Size presets reversed or escaped the work area");
+                        width = measured.Width; height = measured.Height;
+                        var source = new Preferences { OverviewSize = size };
+                        var saved = JsonSerializer.Deserialize<Preferences>(JsonSerializer.Serialize(source.Copy(), StateStore.Json), StateStore.Json)!;
+                        Check(saved.OverviewSize == size, "Overview size lost during copy or restart");
+                    }
+                }
+                Check(JsonSerializer.Deserialize<Preferences>("{}",StateStore.Json)!.OverviewSize == OverviewSize.Large && OverviewSizing.Normalize((OverviewSize)999) == OverviewSize.Large, "Legacy or invalid sizes did not fall back to Large");
+                var standard = OverviewSizing.Measure(2,2,2560,1400,OverviewSize.Standard);
+                var large = OverviewSizing.Measure(2,2,2560,1400,OverviewSize.Large);
+                Check(large.Width >= standard.Width*1.4 && large.Height >= standard.Height*1.4, "Recommended size is indistinguishable from the rejected small version");
+            });
+            Test("Empty identity: every theme decodes frozen art, ignores saved task equipment and preserves add hit targets", () =>
+            {
+                foreach (var skin in SkinCatalog.All) {
+                    WuxiaTheme.Apply(skin.Id);
+                    var identity = ThemeIdentityArt.Image(skin.Id);
+                    Check(identity != null && identity.IsFrozen && identity.PixelWidth <= 512 && identity.PixelHeight <= 512, skin.Slug + ": missing or unbounded identity artwork");
+                    var slots = Enumerable.Range(1,9).Select(n => new Slot { Number = n }).ToList();
+                    EquipmentCatalog.EnsureDefaults(slots);
+                    var wheel = new DockWeaponWheel(); wheel.SetSlots(slots); Render(wheel);
+                    slots[0].EquipmentId = EquipmentCatalog.ForSkin(skin.Id)[8].Id;
+                    Check(ReferenceEquals(identity,ThemeIdentityArt.Image(skin.Id)), "Empty core inherited a task's equipment choice");
+                    var card = new SkinTaskCard(slots[0], false); card.Measure(new Size(380,290)); card.Arrange(new Rect(0,0,380,290)); card.Update(false);
+                    Check(Descendants(card).OfType<Image>().Any(i => ReferenceEquals(i.Source,identity) && i.Visibility == Visibility.Visible), skin.Slug + ": empty card did not show theme identity");
+                    Check(!slots.Any(s => s.Occupied) && wheel.HitSlot(wheel.Centre,duringCapture:true) == slots[0], "Identity decoration consumed the capture target");
+                    card.StopAnimations();
+                }
             });
             Test("Skins: nine-card overview remains readable at 780x650 and 200-percent display scaling", () =>
             {
@@ -471,7 +508,7 @@ public static class SkinTests
                 {
                     var slots = Enumerable.Range(1, 9).Select(n => new Slot { Number = n, Window = n > 9-count ? new() { Title = "task " + n } : null, Connected = n > 9-count }).ToList();
                     var area = new Native.Rect(-1920, 0, 0, 1080);
-                    var window = new InventoryWindow(slots, area, 1, null, false, presentationPreview: true);
+                    var window = new InventoryWindow(slots, area, 1, null, false, presentationPreview: true, size: OverviewSize.Standard);
                     try {
                         var content = (FrameworkElement)window.Content; content.Measure(new Size(window.Width,window.Height)); content.Arrange(new Rect(0,0,window.Width,window.Height)); content.UpdateLayout();
                         var cards = Descendants(content).OfType<SkinTaskCard>().ToArray();

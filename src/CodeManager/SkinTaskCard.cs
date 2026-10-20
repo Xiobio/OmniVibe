@@ -51,7 +51,7 @@ public sealed class SkinTaskCard : Grid
         {
             var emblem = new StackPanel { Orientation = Orientation.Horizontal };
             top.Children.Remove(number); emblem.Children.Add(number);
-            _weaponImage = new Image { Source = EquipmentCatalog.Image(slot, _skin.Id), Width = 27, Height = 28, Stretch = Stretch.Uniform, Margin = new Thickness(7, 0, 1, 0), ToolTip = EquipmentCatalog.Name(slot, _skin.Id) };
+            _weaponImage = new Image { Source = slot.Occupied ? EquipmentCatalog.Image(slot, _skin.Id) : ThemeIdentityArt.Image(_skin.Id), Width = 27, Height = 28, Stretch = Stretch.Uniform, Margin = new Thickness(7, 0, 1, 0), ToolTip = slot.Occupied ? EquipmentCatalog.Name(slot, _skin.Id) : _skin.Name };
             emblem.Children.Add(_weaponImage); top.Children.Add(emblem);
         }
         var stateGroup = new StackPanel { VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(9, 0, 4, 0) };
@@ -212,9 +212,9 @@ public sealed class SkinTaskCard : Grid
     public void Update(bool selected)
     {
         _remove.Visibility = _slot.Occupied ? Visibility.Visible : Visibility.Collapsed;
-        _previewEntity.Source = _slot.Occupied ? EquipmentCatalog.Image(_slot, _skin.Id) : null;
+        _previewEntity.Source = _slot.Occupied ? EquipmentCatalog.Image(_slot, _skin.Id) : ThemeIdentityArt.Image(_skin.Id);
         UpdatePreviewEntity(PreviewRegion.ActualWidth, PreviewRegion.ActualHeight);
-        if (_weaponImage != null) { _weaponImage.Source = EquipmentCatalog.Image(_slot, _skin.Id); _weaponImage.ToolTip = EquipmentCatalog.Name(_slot, _skin.Id); _weaponImage.Visibility = _slot.Occupied ? Visibility.Visible : Visibility.Collapsed; ToolTip = EquipmentCatalog.Detail(_slot); }
+        if (_weaponImage != null) { _weaponImage.Source = _slot.Occupied ? EquipmentCatalog.Image(_slot, _skin.Id) : ThemeIdentityArt.Image(_skin.Id); _weaponImage.ToolTip = _slot.Occupied ? EquipmentCatalog.Name(_slot, _skin.Id) : _skin.Name; _weaponImage.Visibility = Visibility.Visible; ToolTip = _slot.Occupied ? EquipmentCatalog.Detail(_slot) : _skin.Name + " · 空槽位\n拖入窗口，或点击选择已有窗口"; }
         string statusColor = SkinUi.StateColor(_slot, _skin);
         var status = WuxiaTheme.Brush(statusColor);
         _state.Text = SkinUi.StateSymbol(_slot) + "  " + (_slot.Occupied ? _slot.StateLabel : "空槽位 · 等待接入");
@@ -258,6 +258,14 @@ public sealed class SkinTaskCard : Grid
     }
     private void UpdatePreviewEntity(double width, double height)
     {
+        if (!_slot.Occupied && _previewEntity.Source != null) {
+            _previewEntity.Visibility = height >= 30 && width >= 50 ? Visibility.Visible : Visibility.Collapsed;
+            _previewEntity.Width = Math.Max(1, Math.Min(320, width - 20)); _previewEntity.Height = Math.Max(1, height - 12);
+            Canvas.SetLeft(_previewEntity, (width - _previewEntity.Width) / 2); Canvas.SetTop(_previewEntity, 6);
+            _previewEntity.Opacity = 1; _previewMessage.Visibility = Visibility.Collapsed;
+            return;
+        }
+        _previewEntity.Opacity = .72; _previewMessage.Visibility = Visibility.Visible;
         bool visible = _slot.Occupied && height >= 80 && width >= 180;
         _previewEntity.Visibility = visible ? Visibility.Visible : Visibility.Collapsed;
         _previewEntity.Width = Math.Max(1, width * .35); _previewEntity.Height = Math.Max(1, height - 8);
