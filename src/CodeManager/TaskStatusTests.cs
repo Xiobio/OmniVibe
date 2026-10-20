@@ -137,7 +137,7 @@ public static class TaskStatusTests
             var p=JsonSerializer.Deserialize<Preferences>("{}")!;Check(p.SystemNotifications,"Existing profiles did not get default reminders");
             p.SystemNotifications=false;var copy=JsonSerializer.Deserialize<Preferences>(JsonSerializer.Serialize(p.Copy()))!;
             Check(!copy.SystemNotifications && copy.SoundEffects,"Notification preference not independent or not persisted");
-            Check(WheelTaskStatus.ShortCaption(AgentState.Ready)!=WheelTaskStatus.ShortCaption(AgentState.Waiting),"Ready and permission visually indistinguishable");
+            Check(TaskNotifications.Caption(AgentState.Ready)!=TaskNotifications.Caption(AgentState.Waiting),"Ready and permission notifications indistinguishable");
         });
         Test("Dock teardown: a late MouseLeave without a presentation source closes hints safely",()=>{
             var dock=new DockWindow(interactionTest:true);

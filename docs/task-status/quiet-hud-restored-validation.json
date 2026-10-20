@@ -1,0 +1,19 @@
+{
+  "updated_at": "2026-10-20T10:35:50.280855+00:00",
+  "passed": true,
+  "reason": "User prefers the previous quiet glyph HUD; restore visuals while keeping native notifications.",
+  "visual_source_identical_to": "dbe4b79",
+  "status_groups": 17,
+  "native_theme_surfaces": 39,
+  "notifications_retained": true,
+  "settings_retained": true,
+  "occupied_tasks": 4,
+  "recent_tasks": 5,
+  "task_identities_and_preferences_preserved": true,
+  "terminal_processes_and_configuration_preserved": true,
+  "evidence": [
+    "artifacts/status-restore/validation/report.json",
+    "artifacts/status-restore/live-refresh.json"
+  ],
+  "packaged": false
+}
