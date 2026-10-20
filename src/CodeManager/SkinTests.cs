@@ -445,7 +445,7 @@ public static class SkinTests
                     foreach (var viewport in new[] { (Area: new Native.Rect(0, 0, 836, 698), Scale: 1d), (Area: new Native.Rect(0, 0, 1920, 1040), Scale: 2d) })
                     {
                         var slots = Enumerable.Range(1, 9).Select(n => new Slot { Number = n, Window = n <= 6 ? new() { Title = "Mixed 中英文任务 " + n } : null, Connected = n <= 5, State = (AgentState)((n - 1) % 5) }).ToList();
-                        var window = new InventoryWindow(slots, viewport.Area, viewport.Scale, 3, false, presentationPreview: true);
+                        var window = new InventoryWindow(slots, viewport.Area, viewport.Scale, 3, false, duringDrag: true, presentationPreview: true);
                         try
                         {
                             var content = (FrameworkElement)window.Content;
@@ -463,6 +463,31 @@ public static class SkinTests
                         }
                         finally { window.Close(); }
                     }
+                }
+            });
+            Test("Overview: task count controls compact layout; sparse slots, add and capture keep their identities", () =>
+            {
+                foreach (int count in new[] { 0, 1, 2, 4, 6, 9 })
+                {
+                    var slots = Enumerable.Range(1, 9).Select(n => new Slot { Number = n, Window = n > 9-count ? new() { Title = "task " + n } : null, Connected = n > 9-count }).ToList();
+                    var area = new Native.Rect(-1920, 0, 0, 1080);
+                    var window = new InventoryWindow(slots, area, 1, null, false, presentationPreview: true);
+                    try {
+                        var content = (FrameworkElement)window.Content; content.Measure(new Size(window.Width,window.Height)); content.Arrange(new Rect(0,0,window.Width,window.Height)); content.UpdateLayout();
+                        var cards = Descendants(content).OfType<SkinTaskCard>().ToArray();
+                        Check(cards.Length == Math.Max(1,count), "Empty slots inflated the ordinary overview");
+                        Check(window.Width <= 920 && window.Height <= 704 && window.Left > area.Left && window.Left+window.Width < area.Right && window.Top > area.Top && window.Top+window.Height < area.Bottom, "Overview became a full-screen surface or escaped the work area");
+                        Check(window.SelectedNumber == (count == 0 ? 1 : 10-count), "Sparse slot selection fell back to a hidden slot");
+                        if (count is > 0 and < 9) {
+                            int added = 0; window.Choose += n => added = n;
+                            Descendants(content).OfType<Button>().Single(b => b.Content as string == "＋ 添加").RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                            Check(added == 1, "Compact add did not route to the first empty slot");
+                        }
+                    }
+                    finally { window.Close(); }
+                    var capture = new InventoryWindow(slots, area, 1, null, false, duringDrag:true, presentationPreview:true);
+                    try { Check(Descendants(capture.Content).OfType<SkinTaskCard>().Count() == 9, "Dragging lost an explicit capture destination"); }
+                    finally { capture.Close(); }
                 }
             });
             Test("Skins: themed settings scroll viewer retains vertical and horizontal scrolling", () =>

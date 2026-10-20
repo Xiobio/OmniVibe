@@ -275,13 +275,13 @@ public static class SelfTests
                 Check(manager.Inventory != null && manager.State.Layout.Count == 0 && Native.IsIconic(new(firstIdentity.Handle)) && Native.IsIconic(new(secondIdentity.Handle)), "Tab moved windows instead of showing inventory");
                 var inventory = manager.Inventory!;
                 Check(inventory.ThumbnailCount == 2, "Wuxia scrolls did not register the real fixture thumbnails");
-                Check(Application.Current.Windows.Count == windowsBeforeInventory + 2, "Ink mask was not opened together with the inventory");
-                inventory.Select(6); Check(inventory.SelectedNumber == 6, "Empty scroll cannot be selected for capture");
+                Check(Application.Current.Windows.Count == windowsBeforeInventory + 1, "Compact overview opened an extra full-screen surface");
+                inventory.Select(9); Check(inventory.SelectedNumber == 9, "Compact overview lost a sparse occupied slot");
                 inventory.Browse(-120); Pump();
                 Check(manager.Inventory != null && Native.IsIconic(new(firstIdentity.Handle)) && Native.IsIconic(new(secondIdentity.Handle)), "Inventory wheel activated without confirmation");
                 int chosen = inventory.SelectedNumber!.Value;
                 inventory.Enter(); Pump();
-                Check(Application.Current.Windows.Count == windowsBeforeInventory, "Closing inventory left an ink mask or thumbnail window behind");
+                Check(Application.Current.Windows.Count == windowsBeforeInventory, "Closing inventory left an overview or thumbnail window behind");
                 Check(manager.Inventory == null && !Native.IsIconic(new(manager.State.Slots[chosen - 1].Window!.Handle)), "Inventory selection did not close and enter its window");
                 manager.ParkAll();
                 manager.ToggleInventory(); Pump(); manager.ToggleInventory(); Pump();
