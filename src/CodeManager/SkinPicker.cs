@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Text.Json;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
@@ -14,7 +11,7 @@ using System.Windows.Media.Imaging;
 
 namespace CodeManager;
 
-/// <summary>Suite browsing is a draft; only the explicit Terminal button writes its appearance.</summary>
+/// <summary>All browsing is a draft; the settings save applies the complete suite.</summary>
 public sealed class SkinPicker : StackPanel
 {
     private readonly ComboBox _choices = new() { FontSize = 14, MinHeight = 36 };
@@ -23,13 +20,11 @@ public sealed class SkinPicker : StackPanel
     private readonly TextBlock _description = new() { FontSize = 12, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 6, 0, 0) };
     private readonly TextBlock _assetStatus = new() { FontSize = 11, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 8, 0, 12) };
     private readonly TextBlock _feedback = new() { FontSize = 12, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 8, 0, 0) };
-    private readonly Button _terminal = new() { Content = "应用配套 Terminal 外观", HorizontalAlignment = HorizontalAlignment.Left, MinHeight = 36 };
     private readonly CheckBox _terminalAnimation = new() { Content = "Terminal 背景动画（较高资源占用）", IsChecked = false, Margin = new Thickness(0, 0, 0, 10) };
     private readonly UniformGrid _tiles = new() { Columns = 3, Margin = new Thickness(-4, 6, -4, 0) };
     private readonly Dictionary<Skin, Button> _tileButtons = new();
     private readonly Dictionary<string, Button> _tabs = new();
     private Func<bool>? _effectsEnabled, _decorationsEnabled;
-    private bool _applyingTerminal;
     public Skin SelectedSkin => (_choices.SelectedItem as ComboBoxItem)?.Tag is Skin s ? s : Skin.InkJade;
     public SkinSuitePreview Scene => _scene;
     public void SelectSkin(Skin skin) => _choices.SelectedIndex = Math.Max(0, SkinCatalog.All.ToList().FindIndex(s => s.Id == skin));
@@ -37,7 +32,7 @@ public sealed class SkinPicker : StackPanel
     public event Action? LoadoutRequested;
     public Func<bool>? EffectsEnabled { get => _effectsEnabled; set { _effectsEnabled = value; RefreshOptions(); } }
     public Func<bool>? DecorationsEnabled { get => _decorationsEnabled; set { _decorationsEnabled = value; RefreshOptions(); } }
-    public SkinPicker(Skin selected)
+    public SkinPicker(Skin selected, bool terminalAnimation = false)
     {
         var host = SkinCatalog.Current;
         foreach (var s in SkinCatalog.All) _choices.Items.Add(new ComboBoxItem { Content = s.Name, ToolTip = s.Subtitle, Tag = s.Id });
@@ -65,17 +60,19 @@ public sealed class SkinPicker : StackPanel
             window.ShowDialog();
         };
         tabs.Children.Add(enlarge);
+        Children.Add(_terminalAnimation);
         Children.Add(new Border { BorderBrush = WuxiaTheme.Brush(host.Border), BorderThickness = new Thickness(1), CornerRadius = new CornerRadius(10), ClipToBounds = true, Child = _scene });
         _scene.AssetStatusChanged += () => _assetStatus.Text = _scene.AssetStatus;
         _assetStatus.Foreground = WuxiaTheme.Brush(host.Muted); Children.Add(_assetStatus);
         var apply = new Border { Background = WuxiaTheme.Brush(host.Surface), CornerRadius = new CornerRadius(9), Padding = new Thickness(16), Margin = new Thickness(0, 0, 0, 24) };
         var applyBody = new StackPanel();
-        applyBody.Children.Add(new TextBlock { Text = "此按钮只应用 Terminal 外观，并自动备份其配置。默认使用静态插画和边框，动画需单独开启。", FontSize = 11, Foreground = WuxiaTheme.Brush(host.Muted), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 9) });
+        applyBody.Children.Add(new TextBlock { Text = "保存并应用将同步 Terminal、圆环、槽位、总览与菜单。Terminal 配置会自动备份，正在运行的任务继续保留。", FontSize = 11, Foreground = WuxiaTheme.Brush(host.Muted), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 9) });
+        _terminalAnimation.IsChecked = terminalAnimation;
         AutomationProperties.SetName(_terminalAnimation, "Terminal 背景动画");
         _terminalAnimation.Checked += (_, _) => RefreshOptions();
         _terminalAnimation.Unchecked += (_, _) => RefreshOptions();
-        applyBody.Children.Add(_terminalAnimation); applyBody.Children.Add(_terminal); applyBody.Children.Add(_feedback); apply.Child = applyBody;
-        Children.Add(new Expander { Header = "配套 Terminal 外观 · 单独应用", Content = apply, Margin = new Thickness(0, 8, 0, 14) });
+        applyBody.Children.Add(_feedback); apply.Child = applyBody;
+        Children.Add(apply);
         foreach (var s in SkinCatalog.All.OrderBy(s => (int)s.Id >= (int)Skin.Hextech ? 0 : 1))
         {
             var tile = new Grid { Height = 78, ClipToBounds = true, Background = WuxiaTheme.Brush(s.Background) };
@@ -118,36 +115,11 @@ public sealed class SkinPicker : StackPanel
         }
         SizeChanged += (_, _) => ResizePreview(); Loaded += (_, _) => ResizePreview();
         _choices.SelectionChanged += (_, _) => RefreshPreview();
-        _terminal.Click += async (_, _) =>
-        {
-            var skin = SkinCatalog.Get(SelectedSkin); _applyingTerminal = true; _terminal.IsEnabled = false; _feedback.Text = "正在备份并应用 " + skin.Name + "…";
-            try
-            {
-                string script = Path.Combine(AppContext.BaseDirectory, "themes", "windows-terminal", "Apply-Skin.ps1");
-                var start = new ProcessStartInfo("powershell.exe") { UseShellExecute = false, CreateNoWindow = true, RedirectStandardOutput = true, RedirectStandardError = true, StandardOutputEncoding = Encoding.UTF8, StandardErrorEncoding = Encoding.UTF8 };
-                foreach (string arg in new[] { "-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass", "-File", script }) start.ArgumentList.Add(arg);
-                foreach (string arg in TerminalAppearanceArguments()) start.ArgumentList.Add(arg);
-                using var process = Process.Start(start) ?? throw new IOException("无法启动外观应用器");
-                var output = process.StandardOutput.ReadToEndAsync(); var error = process.StandardError.ReadToEndAsync();
-                await process.WaitForExitAsync(); string result = await output; string problem = await error;
-                if (process.ExitCode != 0) throw new IOException(problem.Length > 0 ? problem.Trim() : "应用失败，退出代码 " + process.ExitCode);
-                using var json = JsonDocument.Parse(result); string backup = json.RootElement.GetProperty("BackupPath").GetString() ?? "";
-                _feedback.Text = "Terminal 已应用「" + skin.Name + "」" + ((int)skin.Id < (int)Skin.Hextech ? "顶部配色" : "") + "；配置备份：" + backup; _feedback.ToolTip = _feedback.Text;
-            }
-            catch (Exception ex) { _feedback.Text = "Terminal 外观未应用：" + ex.Message; }
-            finally { _applyingTerminal = false; _terminal.IsEnabled = true; }
-        };
         ShowPart("suite"); RefreshPreview();
     }
     internal IReadOnlyList<string> TerminalAppearanceArguments()
     {
-        var arguments = new List<string> { "-Skin", SkinCatalog.Get(SelectedSkin).Slug };
-        if ((int)SelectedSkin < (int)Skin.Hextech) arguments.Add("-ChromeOnly");
-        else {
-            if (_terminalAnimation.IsChecked == true) arguments.Add("-EnableAnimation");
-            if (DecorationsEnabled?.Invoke() == false) arguments.Add("-DisableArtwork");
-        }
-        return arguments;
+        return TerminalThemeService.Arguments(SelectedSkin, TerminalAnimationEnabled, DecorationsEnabled?.Invoke() ?? true);
     }
     private static BitmapSource? Thumbnail(SkinDefinition skin)
     {
@@ -162,16 +134,14 @@ public sealed class SkinPicker : StackPanel
         _scene.Mode = id; var host = SkinCatalog.Current;
         foreach (var pair in _tabs) { pair.Value.Background = WuxiaTheme.Brush(pair.Key == id ? host.Elevated : host.Surface); pair.Value.BorderBrush = WuxiaTheme.Brush(pair.Key == id ? host.Accent : host.Border); }
     }
-    private bool TerminalAnimationEnabled => _terminalAnimation.IsEnabled && _terminalAnimation.IsChecked == true;
+    public bool TerminalAnimationEnabled => _terminalAnimation.IsChecked == true;
     public void RefreshOptions() => _scene.SetSkin(SelectedSkin, TerminalAnimationEnabled, DecorationsEnabled?.Invoke() ?? true);
     private void RefreshPreview()
     {
         var s = SkinCatalog.Get(SelectedSkin); _name.Text = s.Name; _description.Text = s.Subtitle + " · 圆环 / 总览 / Terminal / 菜单与状态";
         foreach (var pair in _tileButtons) { pair.Value.BorderBrush = WuxiaTheme.Brush(pair.Key == s.Id ? SkinCatalog.Current.Accent : SkinCatalog.Current.Border); pair.Value.BorderThickness = new Thickness(pair.Key == s.Id ? 2 : 1); }
-        _terminal.IsEnabled = !_applyingTerminal;
-        _terminal.Content = (int)s.Id >= (int)Skin.Hextech ? "应用配套 Terminal 外观" : "应用 Terminal 顶部配色";
-        _terminalAnimation.IsEnabled = (int)s.Id >= (int)Skin.Hextech;
-        if (!_applyingTerminal) _feedback.Text = (int)s.Id >= (int)Skin.Hextech ? "浏览主题不会自动改动 Terminal。" : "经典主题支持原生顶部配色；应用时保留当前终端背景与正文设置。";
+        _terminalAnimation.IsEnabled = true;
+        _feedback.Text = "动画选项会保存；默认静态，多窗口时更省资源。";
         RefreshOptions(); SelectionChanged?.Invoke();
     }
 }

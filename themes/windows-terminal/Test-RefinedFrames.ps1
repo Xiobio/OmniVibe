@@ -19,7 +19,8 @@ foreach($file in (Get-ChildItem -LiteralPath $root -Filter '*.gif')) {
         $reports += [ordered]@{file=$file.Name;frames=$count;centerStatic=$true;rimAnimation=$true;rimSampleColors=$samples.Count}
     } finally {$image.Dispose()}
 }
-if($reports.Count -ne 20){throw 'Expected ten artwork animations and ten independent frame-only animations.'}
+$expected = 2 * @(([IO.File]::ReadAllText((Join-Path $PSScriptRoot 'skins.json')) | ConvertFrom-Json).skins).Count
+if($reports.Count -ne $expected){throw ('Expected '+$expected+' artwork/frame-only animations.')}
 if(-not ('OmniVibeFrameLayout' -as [type])){Add-Type -Path (Join-Path $PSScriptRoot 'FrameLayout.cs')}
 $dimensions=[OmniVibeFrameLayout]::MaximumLogicalScreen()
 $report=[ordered]@{passed=$true;nativeGifCount=$reports.Count;nativeDecodedFrames=($reports.Count*96);files=$reports;logicalScreen=$dimensions;padding=[OmniVibeFrameLayout]::Padding($dimensions[0],$dimensions[1]);actualTerminalPlaybackVisuallyVerified=$false}

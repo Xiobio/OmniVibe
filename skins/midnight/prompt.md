@@ -1,0 +1,7 @@
+# midnight full environment scene
+
+Built-in imagegen, new original illustration, opaque background. Used by the native skin and Terminal background composer. Original PNG preserved unchanged.
+
+Prompt:
+
+Production high quality environment illustration for OmniVibe Windows Terminal and native desktop UI, landscape widescreen composition. Full cohesive environment across the ENTIRE canvas, atmospheric detail on left, upper and lower margins, primary focal subject on RIGHT third. Left two thirds calm darker legible negative space for terminal text but still subtle scenery. No text, no logo, no lettering, no UI, no window, no border, no decorative frame, no inner rectangle, no collage, no flat vector. Rich premium painterly realistic game environment, intricate culturally coherent details, crisp materials and elegant light. Theme 玄夜青金: profound midnight indigo and lapis lazuli Chinese mythic seacoast and mountain observatory under a large silver moon. On right an ancient bronze star chart armillary with lapis cabochons, an elegant moonlit dragon silhouette curling among clouds behind a cliff pavilion, blue aurora reflected in dark tidal water. Across left quiet misty blue mountain ranges and sparse silver stars. Upper edge delicate hanging celestial instruments and ink clouds; lower edge dark jade terrace and silver grasses. Deep blue, aged gold, silver and subtle cyan, sophisticated dramatic nocturnal mood. Unique astronomical nautical setting, no jade crane.

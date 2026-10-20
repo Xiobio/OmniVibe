@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -18,6 +19,8 @@ public sealed class SettingsWindow : Window
     public bool PauseShortcuts { get; private set; }
     public bool ResetDockPositionRequested { get; private set; }
     public Func<Preferences, string?>? ShortcutAvailabilityCheck { get; set; }
+    public Func<Preferences, Task<TerminalThemeReceipt>>? ApplyThemeAsync { get; set; }
+    public string TerminalApplyMessage { get; private set; } = "";
     public SettingsWindow(Preferences source, Native.Rect workArea, string warnings, bool autoHide = false, bool minimize = true, int page = 2, bool shortcutsPaused = false)
     {
         Result = source.Copy(); AutoHide = autoHide; MinimizeOnCapture = minimize;
@@ -40,7 +43,7 @@ public sealed class SettingsWindow : Window
         var bottom = new StackPanel { Margin = new Thickness(24, 8, 24, 16) }; var footer = new Border { Child = bottom, Background = WuxiaTheme.Brush(host.Surface), BorderBrush = WuxiaTheme.Brush(host.Border), BorderThickness = new Thickness(0, .5, 0, 0) }; DockPanel.SetDock(footer, Dock.Bottom); root.Children.Add(footer);
         var error = new TextBlock { Foreground = WuxiaTheme.Cinnabar, TextWrapping = TextWrapping.Wrap, Visibility = Visibility.Collapsed, Margin = new Thickness(0, 8, 0, 8) }; bottom.Children.Add(error);
         void Fail(string message) { error.Text = message; error.Visibility = Visibility.Visible; }
-        var actionRow = new DockPanel(); var draft = new TextBlock { Text = "保存后应用 · Terminal 外观单独应用", Foreground = WuxiaTheme.Brush(host.Muted), FontSize = 11, VerticalAlignment = VerticalAlignment.Center, TextWrapping = TextWrapping.Wrap, MaxWidth = 330 }; DockPanel.SetDock(draft, Dock.Left); actionRow.Children.Add(draft);
+        var actionRow = new DockPanel(); var draft = new TextBlock { Text = "保存后同步 Terminal 与 OmniVibe 整套外观", Foreground = WuxiaTheme.Brush(host.Muted), FontSize = 11, VerticalAlignment = VerticalAlignment.Center, TextWrapping = TextWrapping.Wrap, MaxWidth = 330 }; DockPanel.SetDock(draft, Dock.Left); actionRow.Children.Add(draft);
         var actions = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right };
         var reset = new Button { Content = "恢复默认", Margin = new Thickness(0, 0, 16, 0) }; var cancel = new Button { Content = "取消", IsCancel = true, Margin = new Thickness(0, 0, 10, 0) }; var save = new Button { Content = "保存并应用", IsDefault = true, Background = WuxiaTheme.Brush("#354730") };
         save.Background = WuxiaTheme.Brush(host.Accent); save.Foreground = WuxiaTheme.Brush(host.Background); save.FontWeight = FontWeights.SemiBold;
@@ -68,10 +71,10 @@ public sealed class SettingsWindow : Window
         guidePage.Children.Add(guide);
 
         var appearance = Page("主题与换装", "所有主题直接陈列。先点图片选风格，再调整这套主题的角色和武器。");
-        var skin = new SkinPicker(source.Skin); appearance.Children.Add(skin);
-        skin.SelectionChanged += () => { LoadoutSkin = skin.SelectedSkin; draft.Text = skin.SelectedSkin == source.Skin ? "保存后应用 · Terminal 外观单独应用" : "正在预览新主题 · 保存后应用"; };
+        var skin = new SkinPicker(source.Skin, source.TerminalAnimation); appearance.Children.Add(skin);
+        skin.SelectionChanged += () => { LoadoutSkin = skin.SelectedSkin; draft.Text = "保存后同步 Terminal 与 OmniVibe 整套外观"; };
         skin.LoadoutRequested += () => LoadoutRequested?.Invoke();
-        var qualitySection = Section(appearance, "界面效果", "影响 OmniVibe；Terminal 动画在主题预览里单独开启。");
+        var qualitySection = Section(appearance, "界面效果", "插画与装饰随整套主题应用；Terminal 动画使用上方独立开关。");
         var quality = Options(new[] { "完整效果 · 插画、装饰与动画", "静态外观 · 保留插画和装饰", "简洁外观 · 保留任务与状态" }, source.DecorationsEnabled ? source.Animate ? 0 : 1 : 2);
         qualitySection.Children.Add(quality);
         skin.EffectsEnabled = () => quality.SelectedIndex == 0;
@@ -143,8 +146,23 @@ public sealed class SettingsWindow : Window
         var data = new Button { Content = "打开配置目录", HorizontalAlignment = HorizontalAlignment.Left }; data.Click += (_, _) => DataDirectoryRequested?.Invoke(); maintenance.Children.Add(data);
         if (warnings != "") Label(maintenance, "当前快捷键 / 监听提示\n" + warnings, 12);
         generalPage.Children.Add(new Expander { Header = "维护与诊断", Content = maintenance, Margin = new Thickness(0, 10, 0, 16) });
-        reset.Click += (_, _) => { Result = new(); AutoHide = false; MinimizeOnCapture = true; PauseShortcuts = false; DialogResult = true; };
-        save.Click += (_, _) =>
+        bool applying = false;
+        Closing += (_, e) => { if (applying) e.Cancel = true; };
+        async Task CommitAsync(Preferences candidate, bool minimizeAfter, bool pausedAfter, bool resetDefaults = false)
+        {
+            if (applying) return;
+            applying = true; root.IsEnabled = false; save.Content = "正在应用整套主题…";
+            try {
+                if (ApplyThemeAsync != null) TerminalApplyMessage = (await ApplyThemeAsync(candidate)).Message;
+                Result = candidate; MinimizeOnCapture = minimizeAfter; PauseShortcuts = pausedAfter;
+                if (resetDefaults) AutoHide = false;
+                applying = false; DialogResult = true;
+            }
+            catch (Exception ex) { Fail("整套主题尚未应用：" + ex.Message); }
+            finally { applying = false; root.IsEnabled = true; save.Content = "保存并应用"; }
+        }
+        reset.Click += async (_, _) => await CommitAsync(new(), true, false, resetDefaults:true);
+        save.Click += async (_, _) =>
         {
             error.Visibility = Visibility.Collapsed;
             if (recorders.Values.Any(r => r.IsCapturing) || wheelEditor.IsCapturing) { Fail("请先完成按键录入，或按 Esc 取消本次录入。"); return; }
@@ -154,10 +172,11 @@ public sealed class SettingsWindow : Window
             candidate.Arrangement = (ArrangementMode)arrangement.SelectedIndex; candidate.LayoutGap = (int)gap.Value; candidate.HideDockOnArrange = false; candidate.WakeMode = (WakeMode)wake.SelectedIndex;
             candidate.OverviewSize = (OverviewSize)overviewSize.SelectedIndex;
             candidate.Skin = skin.SelectedSkin; candidate.DockWidth = width.Value; candidate.DockHeight = 0;
+            candidate.TerminalAnimation = skin.TerminalAnimationEnabled;
             candidate.Animate = quality.SelectedIndex == 0; candidate.DecorationsEnabled = quality.SelectedIndex != 2;
             candidate.ShowRecoveryOnStartup = startup.SelectedIndex >= 2; candidate.AutoReconnectExisting = startup.SelectedIndex >= 1; candidate.AutoRestoreOnStartup = startup.SelectedIndex == 3;
             if (!audio.TryCommit(candidate, out string audioError)) { Fail(audioError); return; }
-            Result = candidate; MinimizeOnCapture = mini.IsChecked == true; PauseShortcuts = pause.IsChecked == true; DialogResult = true;
+            await CommitAsync(candidate, mini.IsChecked == true, pause.IsChecked == true);
         };
         Content = root;
         SizeChanged += (_, _) => { sidebar.Width = ActualWidth < 880 ? 144 : 184; pages.Margin = new Thickness(ActualWidth < 880 ? 16 : 26, 20, 12, 0); draft.Visibility = ActualWidth < 820 ? Visibility.Collapsed : Visibility.Visible; };

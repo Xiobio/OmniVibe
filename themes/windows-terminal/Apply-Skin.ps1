@@ -18,7 +18,6 @@ if ($Skin -and $RestoreFrom) { throw '-Skin and -RestoreFrom cannot be combined.
 if ($EnableAnimation -and ($DisableEffects -or $RestoreFrom)) { throw '-EnableAnimation cannot be combined with -DisableEffects or -RestoreFrom.' }
 if ($RegisterAllChrome -and ($Skin -or $RestoreFrom -or $ChromeOnly -or $DisableEffects -or $EnableAnimation -or $DisableArtwork -or $AllProfiles)) { throw '-RegisterAllChrome only registers native presets and preserves the selected theme; do not combine it with other appearance options.' }
 if ($ChromeOnly -and ($RestoreFrom -or $DisableEffects -or $EnableAnimation -or $DisableArtwork -or $AllProfiles)) { throw '-ChromeOnly changes native theme colors only; do not combine it with restore or profile options.' }
-if ($Skin -in @('ink-jade','midnight','cinnabar') -and -not $ChromeOnly) { throw 'Classic themes support native chrome via -ChromeOnly; illustrated game backgrounds are separate presets.' }
 if (-not (Test-Path -LiteralPath $SettingsPath -PathType Leaf)) { throw 'Windows Terminal settings.json was not found.' }
 if (-not ('OmniVibeJsonc' -as [type])) { Add-Type -Path (Join-Path $PSScriptRoot 'Jsonc.cs') }
 . (Join-Path $PSScriptRoot 'TerminalChrome.ps1')
@@ -114,7 +113,7 @@ if ($RestoreFrom) {
         Set-Property $target 'colorScheme' $entry.scheme.name
         # Explicit per-profile colors override colorScheme in Terminal. Remove
         # them only on profiles selected above so light/dark switching is safe.
-        foreach ($field in @('foreground','background','cursorColor','selectionBackground')) { $target.PSObject.Properties.Remove($field) }
+        foreach ($field in @('foreground','background','cursorColor','selectionBackground','tabColor')) { $target.PSObject.Properties.Remove($field) }
         Set-Property $target 'padding' $safePadding
         Set-Property $target 'antialiasingMode' 'grayscale'
         Set-Property $target 'opacity' 100

@@ -900,6 +900,7 @@ public sealed class Manager : IDisposable
         {
             var settings = new SettingsWindow(State.Preferences, WorkArea, warnings, State.AutoHide, State.MinimizeOnCapture, page, ShortcutsPaused);
             settings.ShortcutAvailabilityCheck = p => InputService.RegistrationConflict(p, State.Preferences);
+            settings.ApplyThemeAsync = p => TerminalThemeService.ApplyAsync(p);
             IReadOnlyDictionary<string, EquipmentAssignment>? equipmentDraft = null;
             settings.LoadoutRequested += () => {
                 var draft = LoadoutWindow.CreateDraft(State.Slots, equipmentDraft);
@@ -922,7 +923,7 @@ public sealed class Manager : IDisposable
                 foreach (var slot in State.Slots) slot.Refresh();
                 Dock.RefreshTheme(); RefreshTrayTheme(); SetAutoHide(settings.AutoHide); Save(); UpdateSlotsVisibility();
                 _tray.ContextMenuStrip!.Items[1].Text = InventoryMenuLabel;
-                Hint("设置已保存，快捷键在关闭设置后生效");
+                Hint("设置已保存 · " + settings.TerminalApplyMessage);
             }
         }
         finally { EndDialog(); }

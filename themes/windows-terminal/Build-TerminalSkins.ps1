@@ -67,12 +67,15 @@ foreach ($skin in $catalog) {
         tabRow = @{ background = $skin.background; unfocusedBackground = $skin.background }
     }
     $theme = Get-OmniVibeTerminalChrome ([pscustomobject]$theme) $skin.background $skin.accent $skin.surface
-    $design = [IO.File]::ReadAllText((Join-Path $PSScriptRoot ('shaders/designs/' + $skin.slug + '.hlsl')))
-    $shader = $template.Replace('__SLUG__',$skin.slug).Replace('__DESIGN__',$design).Replace('__ACCENT__',(HlslColor $skin.accent)).Replace('__SECONDARY__',(HlslColor $skin.secondary))
-    $relativeShader = 'shaders/' + $skin.slug + '.hlsl'
-    [IO.File]::WriteAllText((Join-Path $PSScriptRoot $relativeShader),$shader,$utf8)
-    $bytes = 0
-    if ($Validate) { $bytes = [OmniVibeShaderCompiler]::Validate($shader) }
+    $designPath = Join-Path $PSScriptRoot ('shaders/designs/' + $skin.slug + '.hlsl')
+    $relativeShader = ''; $bytes = 0
+    if (Test-Path -LiteralPath $designPath -PathType Leaf) {
+        $design = [IO.File]::ReadAllText($designPath)
+        $shader = $template.Replace('__SLUG__',$skin.slug).Replace('__DESIGN__',$design).Replace('__ACCENT__',(HlslColor $skin.accent)).Replace('__SECONDARY__',(HlslColor $skin.secondary))
+        $relativeShader = 'shaders/' + $skin.slug + '.hlsl'
+        [IO.File]::WriteAllText((Join-Path $PSScriptRoot $relativeShader),$shader,$utf8)
+        if ($Validate) { $bytes = [OmniVibeShaderCompiler]::Validate($shader) }
+    }
     $artworkExists = Test-Path -LiteralPath (Join-Path $repoRoot $skin.artwork) -PathType Leaf
     if ($RequireArtwork -and -not $artworkExists) { throw "Missing illustration: $($skin.artwork)" }
     $artWidth = 0; $artHeight = 0

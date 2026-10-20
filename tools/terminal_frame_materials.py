@@ -82,7 +82,26 @@ def corner(row):
     slug=row['slug'];p=Pen(174,52)
     a=rgb(row['accent']);b=rgb(row['secondary']);dark=blend(rgb(row['background']),(0,0,0),.35)
     metal=rgb(row['border']);hi=blend(a,(255,244,210),.45)
-    if slug=='hextech':
+    if slug=='ink-jade':
+        p.poly([(3,3),(108,3),(119,10),(104,19),(34,19),(21,30),(3,30)],blend(metal,dark,.55),a)
+        p.line([(7,27),(7,7),(103,7)],hi,.7)
+        for x in range(40,104,16):
+            p.line([(x,9),(x+9,9),(x+9,15),(x+3,15),(x+3,12)],metal,.9)
+        p.ellipse((10,9,28,27),dark,a,.8);gem(p,19,18,6,b)
+        p.arc((25,7,58,20),170,345,b,.7)
+    elif slug=='midnight':
+        p.poly([(3,3),(105,3),(119,12),(99,20),(35,20),(20,31),(3,31)],blend((23,40,73),dark,.4),metal)
+        p.arc((28,-3,116,26),15,170,a,.8);p.arc((40,1,102,24),190,350,b,.6)
+        p.ellipse((5,4,31,30),dark,a,.8);p.arc((9,7,28,27),65,298,hi,1.2)
+        star(p,19,17,6,b,inner=.22)
+        for x,y in [(45,11),(62,8),(80,14),(100,10)]:star(p,x,y,2,hi,inner=.2)
+    elif slug=='cinnabar':
+        p.poly([(2,2),(111,2),(136,9),(108,18),(34,18),(18,31),(2,31)],blend((102,29,35),dark,.35),a)
+        p.poly([(9,24),(17,12),(38,6),(34,11),(20,18),(17,29)],metal,hi)
+        for i,x in enumerate(range(44,112,13)):
+            p.line([(x,7),(x+8,10),(x+2,14)],hi if i%2 else metal,.8)
+        gem(p,18,15,4,b);p.line([(36,16),(107,16),(124,10)],a,.6)
+    elif slug=='hextech':
         p.poly([(3,3),(97,3),(111,11),(93,18),(37,18),(26,25),(3,25)],blend(metal,dark,.55),a)
         p.line([(31,7),(91,7),(101,11),(90,14),(37,14)],hi,.65)
         for x in (49,62,75):p.poly([(x,8),(x+7,8),(x+10,11),(x+7,14),(x,14),(x-3,11)],dark,b)

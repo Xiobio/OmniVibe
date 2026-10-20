@@ -40,6 +40,7 @@ public sealed class Preferences
     public WakeMode WakeMode { get; set; } = WakeMode.LastPosition;
     public bool Compact { get; set; } = true;
     public bool Animate { get; set; } = true;
+    public bool TerminalAnimation { get; set; }
     public bool DecorationsEnabled { get; set; } = true;
     public bool SoundEffects { get; set; } = true;
     public Skin? SoundTheme { get; set; }

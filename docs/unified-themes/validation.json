@@ -1,0 +1,99 @@
+{
+  "updated_at": "2026-10-20T08:07:28.085143+00:00",
+  "passed": true,
+  "theme_count": 13,
+  "completed_classic_suites": [
+    "ink-jade",
+    "midnight",
+    "cinnabar"
+  ],
+  "original_empty_companions": 13,
+  "asset_generation": "Built-in imagegen, original generation without reference images; complete prompts saved alongside artwork.",
+  "asset_locations": [
+    "skins/identities/original-v3.prompts.md",
+    "skins/identities/catalog.json",
+    "skins/ink-jade/prompt.md",
+    "skins/midnight/prompt.md",
+    "skins/cinnabar/prompt.md"
+  ],
+  "checks": [
+    {
+      "name": "Clean staged-source regression",
+      "passed": true,
+      "groups": 42,
+      "evidence": "artifacts/unified-themes/staged-self-test.json"
+    },
+    {
+      "name": "Native skin contracts",
+      "passed": true,
+      "groups": 24,
+      "evidence": "artifacts/unified-themes/final-skin-test.json"
+    },
+    {
+      "name": "Actual unified application and failure handling",
+      "passed": true,
+      "groups": 6,
+      "evidence": "artifacts/unified-themes/final-theme-test/report.json"
+    },
+    {
+      "name": "Settings and interaction studio",
+      "passed": true,
+      "groups": 12,
+      "evidence": "artifacts/unified-themes/final-settings-studio/report.json"
+    },
+    {
+      "name": "Animation preview lifecycle",
+      "passed": true,
+      "groups": 4,
+      "evidence": "artifacts/unified-themes/animation-ui/report.json"
+    },
+    {
+      "name": "Native Terminal chrome and application",
+      "passed": true,
+      "groups": 15,
+      "evidence": "artifacts/unified-themes/chrome-tests/report.json"
+    },
+    {
+      "name": "Native GIF decoding and static reading area",
+      "passed": true,
+      "animations": 26,
+      "frames": 2496,
+      "evidence": "artifacts/unified-themes/native-gif-report.json"
+    },
+    {
+      "name": "All thirteen PowerShell application and restore fixtures",
+      "passed": true,
+      "evidence": "artifacts/unified-themes/script-tests.log"
+    }
+  ],
+  "visual_review": {
+    "native_empty_docks": "artifacts/unified-themes/dock-empty-rest-*.png",
+    "native_classic_settings": "artifacts/unified-themes/settings-skin-*.png",
+    "native_classic_overviews": "artifacts/unified-themes/inventory-*.png",
+    "terminal_text_fixtures": "docs/terminal-frame-refinement/{ink-jade,midnight,cinnabar}-{regular,compact,hidpi}.png",
+    "final_settings": "artifacts/unified-themes/final-settings-studio/settings-theme.png"
+  },
+  "live_refresh": {
+    "passed": true,
+    "occupied_tasks": 4,
+    "recovery_records": 5,
+    "saved_dock_centre_preserved": true,
+    "derived_host_top_left_recalculated": true,
+    "terminal_sessions_preserved": true,
+    "evidence": "artifacts/unified-themes/live-refresh.json"
+  },
+  "live_terminal": {
+    "skin": "relic",
+    "animation": false,
+    "profiles_checked": 11,
+    "appearance_only": true,
+    "byte_exact_backup": true,
+    "terminal_sessions_preserved": true,
+    "evidence": "artifacts/unified-themes/live-terminal-sync.json"
+  },
+  "limitations": [
+    "Native GIF frames and preview lifecycle verified; live Terminal is intentionally static, so visual live GIF playback is not claimed.",
+    "Detailed machine-local artifacts and private configuration backups are ignored; private task and Terminal settings are not committed."
+  ],
+  "packaged": false
+}

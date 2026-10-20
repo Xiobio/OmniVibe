@@ -55,11 +55,9 @@ public sealed class SkinSuitePreview : FrameworkElement
         _brushes.Clear(); _texts.Clear(); _cardMaterial = decorations ? SkinMaterials.Create(_skin, true) : null;
         DisposeAnimation();
         _art = decorations ? Bitmap(_skin.Artwork) : null;
-        if (skin == Skin.InkJade && decorations) _art ??= Bitmap("themes/windows-terminal/assets/ink-jade-ornate-v2.png");
         string suffix = decorations ? "c-v1" : "frame-only-v1";
         _terminal = Bitmap($"themes/windows-terminal/assets/refined-v1/{_skin.Slug}-{suffix}.png");
-        if (skin == Skin.InkJade && decorations) _terminal ??= Bitmap("themes/windows-terminal/assets/ink-jade-ornate-v2.png");
-        AssetStatus = skin == Skin.InkJade ? "墨玉使用已有插画资源 · 场景文字为示例" : (int)skin < (int)Skin.Hextech ? "经典主题暂未提供独立 Terminal 套装" : _terminal == null ? "Terminal 资源未找到，显示配色回退" : "Terminal 使用实际背景资源 · 原生组件为布局示意";
+        AssetStatus = _terminal == null ? "Terminal 资源未找到，显示配色回退" : "Terminal 使用实际背景资源 · 保存后同步整套外观";
         if (IsLoaded) LoadAnimation();
         UpdatePlayback(); InvalidateVisual(); AssetStatusChanged?.Invoke();
     }
@@ -69,10 +67,9 @@ public sealed class SkinSuitePreview : FrameworkElement
     }
     private void LoadAnimation()
     {
-        if (!IsLoaded || _mode is not ("suite" or "terminal") || _gif != null || !_effects || ((int)_skin.Id < (int)Skin.Hextech && _skin.Id != Skin.InkJade) || (_skin.Id == Skin.InkJade && !_decorations)) return;
+        if (!IsLoaded || _mode is not ("suite" or "terminal") || _gif != null || !_effects) return;
         string suffix = _decorations ? "c-v1" : "frame-only-v1";
         string path = Path.Combine(AppContext.BaseDirectory, $"themes/windows-terminal/assets/refined-v1/{_skin.Slug}-{suffix}.gif");
-        if (_skin.Id == Skin.InkJade) path = Path.Combine(AppContext.BaseDirectory, "themes/windows-terminal/assets/ink-jade-background-v5.gif");
         if (!File.Exists(path)) return;
         try
         {
@@ -163,12 +160,6 @@ public sealed class SkinSuitePreview : FrameworkElement
         dc.DrawRectangle(B(_skin.Surface), null, new Rect(r.X, r.Y, r.Width, 27));
         Text(dc, "●  OmniVibe / 示例 Terminal", r.X + 12, r.Y + 6, 11, _skin.Text, r.Width - 70);
         Text(dc, "−  □  ×", r.Right - 57, r.Y + 6, 11, _skin.Muted, 55);
-        if ((int)_skin.Id < (int)Skin.Hextech && _skin.Id != Skin.InkJade)
-        {
-            Text(dc, "此经典主题暂无独立 Terminal 套装", body.X + 28, body.Y + 45, 18, _skin.Text, body.Width - 56, true);
-            Text(dc, "原生圆环、任务总览与菜单仍可在其他页预览。", body.X + 28, body.Y + 83, 13, _skin.Muted, body.Width - 56);
-        }
-        else
         {
             double font = r.Width > 700 ? 19 : 13, step = font * 1.85;
             double x = body.X + body.Width * .045, y = body.Y + 25;

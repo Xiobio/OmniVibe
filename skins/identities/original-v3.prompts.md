@@ -79,4 +79,3 @@ Create ONE original premium miniature character/object emblem for the EMPTY stat
 Output: `wonderland-original-v3.png`
 
 Create ONE original premium miniature character/object emblem for the EMPTY state of a desktop task dock. Square composition. Fully isolated on genuine transparent alpha background. Rich finely detailed stylized 3D collectible craft, clear readable silhouette at 110 pixels, controlled material highlights, centered subject occupying 85 percent with safe transparent margins. No text, no letters, no official logos, no game trademarks, no rectangular picture, no circle/frame/backplate, no pedestal, no scenic background, no solid color behind subject, no drop shadow plane. All shapes and characters original, no replicas of existing game characters or mascots. Subject: an original playful porcelain cloud rabbit emerging from an embroidered pale turquoise silk treasure pouch, warm gold clasps, jade carrot charm and soft coral accents.
-

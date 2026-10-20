@@ -551,6 +551,171 @@
                       "imageOpacity":  0.12,
                       "decorationWidthDip":  24,
                       "padding":  "36, 32, 36, 32"
+                  },
+                  {
+                      "slug":  "ink-jade",
+                      "name":  "墨玉机关",
+                      "scheme":  {
+                                     "name":  "OmniVibe / 墨玉机关",
+                                     "background":  "#111714",
+                                     "foreground":  "#E7D8B6",
+                                     "cursorColor":  "#BFA76C",
+                                     "selectionBackground":  "#3B3A29",
+                                     "black":  "#B9AE94",
+                                     "red":  "#F38E7C",
+                                     "green":  "#82B89B",
+                                     "yellow":  "#E6C279",
+                                     "blue":  "#81B6EF",
+                                     "purple":  "#D1ACEB",
+                                     "cyan":  "#82B89B",
+                                     "white":  "#E7D8B6",
+                                     "brightBlack":  "#C7BB9E",
+                                     "brightRed":  "#F19D88",
+                                     "brightGreen":  "#96BEA0",
+                                     "brightYellow":  "#E6C685",
+                                     "brightBlue":  "#ADD1FF",
+                                     "brightPurple":  "#E6C8FF",
+                                     "brightCyan":  "#96BEA0",
+                                     "brightWhite":  "#E7D8B6"
+                                 },
+                      "theme":  {
+                                    "name":  "OmniVibe / 墨玉机关",
+                                    "window":  {
+                                                   "applicationTheme":  "dark",
+                                                   "frame":  "#716644",
+                                                   "unfocusedFrame":  "#343426",
+                                                   "experimental.rainbowFrame":  false
+                                               },
+                                    "tab":  {
+                                                "showCloseButton":  "hover",
+                                                "background":  "#111714",
+                                                "unfocusedBackground":  "#212019"
+                                            },
+                                    "tabRow":  {
+                                                   "background":  "#212019",
+                                                   "unfocusedBackground":  "#1A1C17"
+                                               }
+                                },
+                      "chromePalette":  {
+                                            "surface":  "#241F18",
+                                            "background":  "#111714",
+                                            "accent":  "#BFA76C"
+                                        },
+                      "artwork":  "skins/ink-jade/illustration.png",
+                      "shader":  "",
+                      "imageOpacity":  0.12,
+                      "decorationWidthDip":  24,
+                      "padding":  "36, 32, 36, 32"
+                  },
+                  {
+                      "slug":  "midnight",
+                      "name":  "玄夜青金",
+                      "scheme":  {
+                                     "name":  "OmniVibe / 玄夜青金",
+                                     "background":  "#111827",
+                                     "foreground":  "#E8E5D8",
+                                     "cursorColor":  "#BDB27D",
+                                     "selectionBackground":  "#3A3D3C",
+                                     "black":  "#B1BDCE",
+                                     "red":  "#FF9E99",
+                                     "green":  "#85D5C7",
+                                     "yellow":  "#EFCE81",
+                                     "blue":  "#81B6EF",
+                                     "purple":  "#D1ACEB",
+                                     "cyan":  "#76BBC8",
+                                     "white":  "#E8E5D8",
+                                     "brightBlack":  "#C2C9D1",
+                                     "brightRed":  "#FAACA6",
+                                     "brightGreen":  "#99D8CA",
+                                     "brightYellow":  "#EED392",
+                                     "brightBlue":  "#ADD1FF",
+                                     "brightPurple":  "#E6C8FF",
+                                     "brightCyan":  "#8DC3CB",
+                                     "brightWhite":  "#E8E5D8"
+                                 },
+                      "theme":  {
+                                    "name":  "OmniVibe / 玄夜青金",
+                                    "window":  {
+                                                   "applicationTheme":  "dark",
+                                                   "frame":  "#706D56",
+                                                   "unfocusedFrame":  "#333738",
+                                                   "experimental.rainbowFrame":  false
+                                               },
+                                    "tab":  {
+                                                "showCloseButton":  "hover",
+                                                "background":  "#111827",
+                                                "unfocusedBackground":  "#1B2637"
+                                            },
+                                    "tabRow":  {
+                                                   "background":  "#1B2637",
+                                                   "unfocusedBackground":  "#162030"
+                                               }
+                                },
+                      "chromePalette":  {
+                                            "surface":  "#18283F",
+                                            "background":  "#111827",
+                                            "accent":  "#BDB27D"
+                                        },
+                      "artwork":  "skins/midnight/illustration.png",
+                      "shader":  "",
+                      "imageOpacity":  0.12,
+                      "decorationWidthDip":  24,
+                      "padding":  "36, 32, 36, 32"
+                  },
+                  {
+                      "slug":  "cinnabar",
+                      "name":  "朱砂藏锋",
+                      "scheme":  {
+                                     "name":  "OmniVibe / 朱砂藏锋",
+                                     "background":  "#211516",
+                                     "foreground":  "#F1DDCD",
+                                     "cursorColor":  "#DAAA78",
+                                     "selectionBackground":  "#4D392E",
+                                     "black":  "#CCB4A6",
+                                     "red":  "#FFA08D",
+                                     "green":  "#B6D5AC",
+                                     "yellow":  "#F0CA7C",
+                                     "blue":  "#81B6EF",
+                                     "purple":  "#D1ACEB",
+                                     "cyan":  "#D98B7B",
+                                     "white":  "#F1DDCD",
+                                     "brightBlack":  "#D7C0B2",
+                                     "brightRed":  "#FCAC9A",
+                                     "brightGreen":  "#C2D7B3",
+                                     "brightYellow":  "#F0CE8C",
+                                     "brightBlue":  "#ADD1FF",
+                                     "brightPurple":  "#E6C8FF",
+                                     "brightCyan":  "#DE9B8B",
+                                     "brightWhite":  "#F1DDCD"
+                                 },
+                      "theme":  {
+                                    "name":  "OmniVibe / 朱砂藏锋",
+                                    "window":  {
+                                                   "applicationTheme":  "dark",
+                                                   "frame":  "#87674C",
+                                                   "unfocusedFrame":  "#46332A",
+                                                   "experimental.rainbowFrame":  false
+                                               },
+                                    "tab":  {
+                                                "showCloseButton":  "hover",
+                                                "background":  "#211516",
+                                                "unfocusedBackground":  "#322020"
+                                            },
+                                    "tabRow":  {
+                                                   "background":  "#322020",
+                                                   "unfocusedBackground":  "#2A1B1C"
+                                               }
+                                },
+                      "chromePalette":  {
+                                            "surface":  "#352023",
+                                            "background":  "#211516",
+                                            "accent":  "#DAAA78"
+                                        },
+                      "artwork":  "skins/cinnabar/illustration.png",
+                      "shader":  "",
+                      "imageOpacity":  0.12,
+                      "decorationWidthDip":  24,
+                      "padding":  "36, 32, 36, 32"
                   }
               ]
 }

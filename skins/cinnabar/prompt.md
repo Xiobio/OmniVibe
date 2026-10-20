@@ -1,0 +1,7 @@
+# cinnabar full environment scene
+
+Built-in imagegen, new original illustration, opaque background. Used by the native skin and Terminal background composer. Original PNG preserved unchanged.
+
+Prompt:
+
+Production high quality environment illustration for OmniVibe Windows Terminal and native desktop UI, landscape widescreen composition. Full cohesive environment across the ENTIRE canvas, atmospheric detail on left, upper and lower margins, primary focal subject on RIGHT third. Left two thirds calm darker legible negative space for terminal text but still subtle scenery. No text, no logo, no lettering, no UI, no window, no border, no decorative frame, no inner rectangle, no collage, no flat vector. Rich premium painterly realistic game environment, intricate culturally coherent details, crisp materials and elegant light. Theme 朱砂藏锋: deep oxblood lacquer and smoked black Chinese imperial martial sanctuary at dusk, monumental red lacquer pillars, antique bronze incense vessel and ornate closed sword casket with phoenix relief on the RIGHT foreground, a carved bronze phoenix perched above it, long courtyard and sweeping palace eaves receding through red incense mist. Left quiet charcoal courtyard stone and distant crimson palace silhouettes; upper margin cloud-scroll carved red eaves, lower edge dark carved wood and scattered bronze-red ginkgo leaves. Cinnabar vermilion, dark lacquer, rose copper, aged warm gold. Rich precise lacquer texture and restrained warm illumination, dignified and sharp, distinct from green landscape and blue moon observatory.

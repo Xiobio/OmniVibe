@@ -25,7 +25,19 @@ def band(row, length):
         # Small separated groups: no continuous inner rectangle or bright rail.
         p.line([(x - 19, 7), (x - 7, 7)], shade, .55)
         p.line([(x + 36, 7), (x + 57, 7)], shade, .55)
-        if slug == 'relic':
+        if slug == 'ink-jade':
+            p.line([(x-6,19),(x-6,6),(x+26,6),(x+26,17),(x+7,17),(x+7,11),(x+17,11)],ink,.7)
+            p.arc((x+26,5,x+48,21),170,355,secondary,.7)
+        elif slug == 'midnight':
+            p.arc((x-7,3,x+24,23),35,295,ink,.7)
+            points=[(x+22,17),(x+35,7),(x+49,16)]
+            p.line(points,shade,.6)
+            for cx,cy in points:star(p,cx,cy,2,secondary,inner=.2)
+        elif slug == 'cinnabar':
+            for j in range(4):
+                q=x+j*12;p.line([(q,6),(q+8,12),(q,20)],ink if j%2 else secondary,.8)
+            p.line([(x-8,22),(x+50,22)],shade,.6)
+        elif slug == 'relic':
             # Recessed key frets, worn seal facets and scattered stone tooling.
             p.line([(x-4, 5), (x+23, 5), (x+23, 17), (x+6, 17),
                     (x+6, 10), (x+15, 10)], ink, .85)

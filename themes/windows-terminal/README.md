@@ -1,6 +1,6 @@
 # Windows Terminal · 墨玉
 
-新增十套完整游戏风格配套外观，见[十套皮肤说明](../../docs/terminal-skins.md)。通过 `Apply-Skin.ps1 -Skin <标识>` 明确选择；原有墨玉与插画版保持可用。
+全部 13 套主题均提供完整 Terminal 套装，包括墨玉机关、玄夜青金、朱砂藏锋。设置中选择图片后点「保存并应用」，会同步 Terminal、圆环、槽位、总览与菜单；正在运行的 Terminal/CLI 会话继续保留。也可通过 `Apply-Skin.ps1 -Skin <标识> -AllProfiles` 单独调用应用器。
 
 **默认使用精修静态 PNG，保留完整插画与外框。** 背景动画仅在显式传入 `-EnableAnimation` 时启用；设置界面也有独立且默认关闭的 Terminal 背景动画选项，不随 OmniVibe 的界面动画自动开启。多窗口 GIF 背景会持续解码与重绘，性能排查及实测见[终端性能修复记录](../../docs/terminal-performance/README.md)。
 
@@ -16,7 +16,7 @@
 powershell -NoProfile -ExecutionPolicy Bypass -File .\themes\windows-terminal\Apply-Skin.ps1 -Skin arsenal -ChromeOnly
 ```
 
-顶部配色覆盖全部 **13 套主题**：十套游戏主题，以及 `ink-jade` 墨玉机关、`midnight` 玄夜青金、`cinnabar` 朱砂藏锋。经典主题使用 `-ChromeOnly`；设置界面的经典主题按钮也会明确显示“应用 Terminal 顶部配色”，保留现有正文和背景。
+顶部配色覆盖全部 **13 套主题**：十套游戏主题，以及 `ink-jade` 墨玉机关、`midnight` 玄夜青金、`cinnabar` 朱砂藏锋。三套经典主题现在也支持完整正文配色、独立插画、精修外框、静态 PNG 和可选动态 GIF。`-ChromeOnly` 仅作为手动只改顶部的兼容选项；设置保存始终应用整套。
 
 一次注册或更新全部 13 套原生顶部配色，并保留当前选中的主题：
 
@@ -40,7 +40,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\themes\windows-terminal\Ap
 powershell -NoProfile -ExecutionPolicy Bypass -File .\themes\windows-terminal\Apply-InkJade.ps1
 ```
 
-脚本先备份现有 Windows Terminal 配置，再添加 `OmniVibe Ink Jade` 配色和窗口主题，并应用到默认外观。已有的终端配置、启动命令和快捷键保留。单独配置过外观的 profile 可能覆盖默认值。当前通过脚本单独应用，尚未与 OmniVibe 的皮肤选择自动联动。
+下方 `Apply-InkJade.ps1` 保留旧版墨玉背景的兼容入口。新的统一套装使用 `Apply-Skin.ps1 -Skin ink-jade -AllProfiles`。应用前自动备份，保留启动命令、工作目录、环境变量、字体与快捷键。设置保存会同步所有 profile 及其失焦外观，清除会压住所选配色的独立颜色覆盖；应用失败会在设置中显示错误并保留草稿。
 
 ## 插画与可选动态边饰版
 

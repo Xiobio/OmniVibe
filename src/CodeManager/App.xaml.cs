@@ -41,10 +41,10 @@ public partial class App : Application
                 }
                 Shutdown(); return;
             }
-            if (e.Args.FirstOrDefault() is "--self-test" or "--skin-test" or "--loadout-test")
+            if (e.Args.FirstOrDefault() is "--self-test" or "--skin-test" or "--loadout-test" or "--theme-test")
             {
                 string path = e.Args.Length > 1 ? Path.GetFullPath(e.Args[1]) : Path.Combine(AppContext.BaseDirectory, "self-test.json");
-                var results = e.Args[0] == "--loadout-test" ? EquipmentTests.Run(Path.GetDirectoryName(path)!).ToList() : e.Args[0] == "--skin-test" ? SkinTests.Run().ToList() : SelfTests.Run();
+                var results = e.Args[0] == "--theme-test" ? UnifiedThemeTests.Run(Path.GetDirectoryName(path)!) : e.Args[0] == "--loadout-test" ? EquipmentTests.Run(Path.GetDirectoryName(path)!).ToList() : e.Args[0] == "--skin-test" ? SkinTests.Run().ToList() : SelfTests.Run();
                 Directory.CreateDirectory(Path.GetDirectoryName(path)!);
                 File.WriteAllText(path, JsonSerializer.Serialize(results, StateStore.Json));
                 Shutdown(results.All(r => r.Passed) ? 0 : 1); return;

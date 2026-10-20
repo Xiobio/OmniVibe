@@ -1,7 +1,7 @@
 {
   "ink-jade": {
     "file": "ink-jade-original-v3.png",
-    "name": "????",
+    "name": "玉羽星仪",
     "kind": "Original theme companion / transparent collectible",
     "source": "built-in imagegen: original generation, no reference image",
     "prompt": "original-v3.prompts.md#ink-jade",
@@ -12,7 +12,7 @@
   },
   "midnight": {
     "file": "midnight-original-v3.png",
-    "name": "????",
+    "name": "望月灵狐",
     "kind": "Original theme companion / transparent collectible",
     "source": "built-in imagegen: original generation, no reference image",
     "prompt": "original-v3.prompts.md#midnight",
@@ -23,7 +23,7 @@
   },
   "cinnabar": {
     "file": "cinnabar-original-v3.png",
-    "name": "????",
+    "name": "赤翎藏锋",
     "kind": "Original theme companion / transparent collectible",
     "source": "built-in imagegen: original generation, no reference image",
     "prompt": "original-v3.prompts.md#cinnabar",
@@ -34,7 +34,7 @@
   },
   "hextech": {
     "file": "hextech-original-v3.png",
-    "name": "????",
+    "name": "晶核机枭",
     "kind": "Original theme companion / transparent collectible",
     "source": "built-in imagegen: original generation, no reference image",
     "prompt": "original-v3.prompts.md#hextech",
@@ -45,7 +45,7 @@
   },
   "tactical": {
     "file": "tactical-original-v3.png",
-    "name": "?????",
+    "name": "萤哨侦察机",
     "kind": "Original theme companion / transparent collectible",
     "source": "built-in imagegen: original generation, no reference image",
     "prompt": "original-v3.prompts.md#tactical",
@@ -56,7 +56,7 @@
   },
   "protocol": {
     "file": "protocol-original-v3.png",
-    "name": "????",
+    "name": "折光游隼",
     "kind": "Original theme companion / transparent collectible",
     "source": "built-in imagegen: original generation, no reference image",
     "prompt": "original-v3.prompts.md#protocol",
@@ -67,7 +67,7 @@
   },
   "adventure": {
     "file": "adventure-original-v3.png",
-    "name": "????",
+    "name": "炉心旅匠",
     "kind": "Original theme companion / transparent collectible",
     "source": "built-in imagegen: original generation, no reference image",
     "prompt": "original-v3.prompts.md#adventure",
@@ -78,7 +78,7 @@
   },
   "arsenal": {
     "file": "arsenal-original-v3.png",
-    "name": "?????",
+    "name": "绯羽机关燕",
     "kind": "Original theme companion / transparent collectible",
     "source": "built-in imagegen: original generation, no reference image",
     "prompt": "original-v3.prompts.md#arsenal",
@@ -89,7 +89,7 @@
   },
   "relic": {
     "file": "relic-original-v3.png",
-    "name": "????",
+    "name": "山魄铜狮",
     "kind": "Original theme companion / transparent collectible",
     "source": "built-in imagegen: original generation, no reference image",
     "prompt": "original-v3.prompts.md#relic",
@@ -100,7 +100,7 @@
   },
   "starlight": {
     "file": "starlight-original-v3.png",
-    "name": "????",
+    "name": "星冕玉麟",
     "kind": "Original theme companion / transparent collectible",
     "source": "built-in imagegen: original generation, no reference image",
     "prompt": "original-v3.prompts.md#starlight",
@@ -111,7 +111,7 @@
   },
   "formation": {
     "file": "formation-original-v3.png",
-    "name": "????",
+    "name": "方晶信使",
     "kind": "Original theme companion / transparent collectible",
     "source": "built-in imagegen: original generation, no reference image",
     "prompt": "original-v3.prompts.md#formation",
@@ -122,7 +122,7 @@
   },
   "astral": {
     "file": "astral-original-v3.png",
-    "name": "????",
+    "name": "旅星灵狐",
     "kind": "Original theme companion / transparent collectible",
     "source": "built-in imagegen: original generation, no reference image",
     "prompt": "original-v3.prompts.md#astral",
@@ -133,7 +133,7 @@
   },
   "wonderland": {
     "file": "wonderland-original-v3.png",
-    "name": "????",
+    "name": "云绣玉兔",
     "kind": "Original theme companion / transparent collectible",
     "source": "built-in imagegen: original generation, no reference image",
     "prompt": "original-v3.prompts.md#wonderland",

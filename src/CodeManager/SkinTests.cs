@@ -329,7 +329,7 @@ public static class SkinTests
             Test("Skins: terminal/native JSON palette contract matches every new skin", () =>
             {
                 using var document = JsonDocument.Parse(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "skins", "catalog.json")));
-                Check(document.RootElement.GetArrayLength() == 10, "Published palette count differs");
+                Check(document.RootElement.GetArrayLength() == SkinCatalog.All.Count, "Published palette count differs");
                 foreach (var row in document.RootElement.EnumerateArray())
                 {
                     var s = SkinCatalog.All.Single(s => s.Slug == row.GetProperty("slug").GetString());
@@ -463,6 +463,7 @@ public static class SkinTests
                     var identity = ThemeIdentityArt.Image(skin.Id);
                     Check(identity != null && identity.IsFrozen && identity.PixelWidth <= 512 && identity.PixelHeight <= 512, skin.Slug + ": missing or unbounded identity artwork");
                     Check(ThemeIdentityArt.HasTransparentSilhouette(identity!), skin.Slug + ": opaque poster replaced the floating identity");
+                    Check(!ThemeIdentityArt.Name(skin.Id).Contains('?') && ThemeIdentityArt.Name(skin.Id) != skin.Name, skin.Slug + ": original companion name is corrupted or still a game title");
                     var slots = Enumerable.Range(1,9).Select(n => new Slot { Number = n }).ToList();
                     EquipmentCatalog.EnsureDefaults(slots);
                     var wheel = new DockWeaponWheel(); wheel.SetSlots(slots); Render(wheel);

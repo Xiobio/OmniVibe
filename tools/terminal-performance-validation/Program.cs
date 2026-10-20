@@ -43,7 +43,6 @@ internal static class Program
         Test("Explicit Terminal animation is independent and routes the opt-in flag for every game theme", () => {
             picker.EffectsEnabled = () => false; animation.IsChecked = true;
             for (int i = 0; i < SkinCatalog.All.Count; i++) {
-                if ((int)SkinCatalog.All[i].Id < (int)Skin.Hextech) continue;
                 choices.SelectedIndex = i; var flags = Options();
                 Require(animation.IsEnabled && flags.Contains("-EnableAnimation") && !flags.Contains("-DisableEffects"), "Explicit opt-in did not reach the script");
                 Require(flags[0] == "-Skin" && flags[1] == SkinCatalog.All[i].Slug, "Selected theme was not routed");
@@ -51,11 +50,11 @@ internal static class Program
             picker.DecorationsEnabled = () => false;
             Require(Options().Contains("-DisableArtwork"), "Artwork option stopped routing independently");
         });
-        Test("Classic themes disable animation and route native chrome only", () => {
+        Test("Classic themes support complete artwork, all profiles and explicit animation", () => {
             for (int i = 0; i < SkinCatalog.All.Count; i++) {
                 if ((int)SkinCatalog.All[i].Id >= (int)Skin.Hextech) continue;
                 choices.SelectedIndex = i; var flags = Options();
-                Require(!animation.IsEnabled && flags.Contains("-ChromeOnly") && !flags.Contains("-EnableAnimation") && !flags.Contains("-DisableArtwork"), "Classic theme passed incompatible background flags");
+                Require(animation.IsEnabled && flags.Contains("-AllProfiles") && !flags.Contains("-ChromeOnly") && flags.Contains("-EnableAnimation") && flags.Contains("-DisableArtwork"), "Classic theme failed to route the complete saved suite");
             }
         });
         Test("Validation never starts an applier or modifies live Terminal settings", () => Require(Hash() == original, "Live Terminal settings changed"));

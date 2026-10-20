@@ -42,7 +42,7 @@ function Get-OmniVibeTerminalChromePresets {
         if ($null -eq $palette) { throw "Native chrome palette missing: $($entry.slug)" }
         [pscustomobject]@{slug=$entry.slug; theme=$entry.theme; background=$palette.background; accent=$palette.accent; surface=$palette.surface}
     }
-    foreach ($entry in $classic) {
+    foreach ($entry in @($classic | Where-Object { $_.slug -notin @($manifest.skins.slug) })) {
         $theme = [pscustomobject]@{
             name=('OmniVibe / ' + $entry.name)
             window=[pscustomobject]@{applicationTheme='dark'}
