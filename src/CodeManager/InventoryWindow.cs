@@ -44,8 +44,8 @@ public sealed class InventoryWindow : Window
         ShowInTaskbar = false; Topmost = true; Background = WuxiaTheme.Brush(skin.Background); ShowActivated = !duringDrag;
         scale = double.IsFinite(scale) && scale > 0 ? scale : 1;
         double availableWidth = (area.Right - area.Left) / scale, availableHeight = (area.Bottom - area.Top) / scale;
-        Width = Math.Max(1, Math.Min(_columns == 1 ? 400 : _columns == 2 ? 664 : 920, Math.Min(availableWidth - 48, availableWidth * .84)));
-        Height = Math.Max(1, Math.Min(134 + rows * 190, Math.Min(availableHeight - 48, availableHeight * .84)));
+        Width = Math.Max(1, Math.Min(_columns == 1 ? 520 : _columns == 2 ? 900 : 1180, Math.Min(availableWidth - 48, availableWidth * .84)));
+        Height = Math.Max(1, Math.Min(146 + rows * 250, Math.Min(availableHeight - 48, availableHeight * .84)));
         bool scrollingLayout = Height < 128 + rows * 155;
         Left = (area.Left + (area.Right - area.Left) / 2d) / scale - Width / 2;
         Top = (area.Top + (area.Bottom - area.Top) / 2d) / scale - Height / 2;

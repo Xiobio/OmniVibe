@@ -476,7 +476,8 @@ public static class SkinTests
                         var content = (FrameworkElement)window.Content; content.Measure(new Size(window.Width,window.Height)); content.Arrange(new Rect(0,0,window.Width,window.Height)); content.UpdateLayout();
                         var cards = Descendants(content).OfType<SkinTaskCard>().ToArray();
                         Check(cards.Length == Math.Max(1,count), "Empty slots inflated the ordinary overview");
-                        Check(window.Width <= 920 && window.Height <= 704 && window.Left > area.Left && window.Left+window.Width < area.Right && window.Top > area.Top && window.Top+window.Height < area.Bottom, "Overview became a full-screen surface or escaped the work area");
+                        Check(window.Width <= 1180 && window.Height <= 896 && window.Left > area.Left && window.Left+window.Width < area.Right && window.Top > area.Top && window.Top+window.Height < area.Bottom, "Overview became a full-screen surface or escaped the work area");
+                        if (count == 4) Check(window.Width == 900 && window.Height == 646, "Four-task overview shrank below the comfortable preview size");
                         Check(window.SelectedNumber == (count == 0 ? 1 : 10-count), "Sparse slot selection fell back to a hidden slot");
                         if (count is > 0 and < 9) {
                             int added = 0; window.Choose += n => added = n;
