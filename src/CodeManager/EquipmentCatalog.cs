@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Media;
@@ -39,6 +41,8 @@ public static class EquipmentCatalog
     private static readonly Dictionary<string, LinkedListNode<string>> ImageNodes = new(StringComparer.OrdinalIgnoreCase);
     private static readonly LinkedList<string> ImageOrder = new();
     private static readonly Dictionary<string, long> FailedImages = new(StringComparer.OrdinalIgnoreCase);
+    private static readonly object ImageLock = new();
+    private static readonly SemaphoreSlim WarmGate = new(1, 1);
     private const int RuntimeEdge = 512, MaxCachedImages = 72;
     private const long PixelBudget = 48L * 1024 * 1024;
     private static long _pixelBytes;
@@ -81,7 +85,16 @@ public static class EquipmentCatalog
     }
     public static bool HasPack(Skin skin) => Packs.ContainsKey(skin.ToString());
     public static IReadOnlyList<EquipmentItem> ForSkin(Skin skin) => Pack(skin).Items;
-    public static EquipmentPack Pack(Skin skin) => Packs.TryGetValue(skin.ToString(), out var pack) ? pack : FallbackPacks.TryGetValue(skin, out var fallback) ? fallback : FallbackPacks[Skin.InkJade];
+    private static EquipmentPack OriginalPack(Skin skin) => Packs.TryGetValue(skin.ToString(), out var pack) ? pack : FallbackPacks.TryGetValue(skin, out var fallback) ? fallback : FallbackPacks[Skin.InkJade];
+    private static readonly Dictionary<Skin, EquipmentPack> EnglishPacks = new();
+    public static EquipmentPack Pack(Skin skin)
+    {
+        var pack = OriginalPack(skin);
+        if (!L.IsEnglish) return pack;
+        if (EnglishPacks.TryGetValue(skin, out var cached)) return cached;
+        string Label(EquipmentItem item) => System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(item.Id.Replace(pack.Slug + "-", "", StringComparison.Ordinal).Replace('-', ' '));
+        return EnglishPacks[skin] = pack with { Title = SkinCatalog.Get(skin).Name, Subtitle = "Choose a task portrait, or import your own image", Items = pack.Items.Select(item => item with { Name = Label(item), Kind = "Task portrait" }).ToArray() };
+    }
     public static string CustomRoot => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CodeManager", "Loadout");
     public static EquipmentItem Default(int number) => Legacy[Math.Clamp(number - 1, 0, 8)];
     public static EquipmentItem Item(Slot slot, Skin? skin = null)
@@ -109,29 +122,48 @@ public static class EquipmentCatalog
         if (string.IsNullOrWhiteSpace(file) || file != Path.GetFileName(file) || file.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0) return null;
         return Path.Combine(CustomRoot, file);
     }
-    private static BitmapSource? Decode(string path)
+    private static BitmapSource? Decode(string path) => DecodeCore(path, false);
+    private static BitmapSource? DecodeCore(string path, bool cachedOnly)
     {
-        if (Images.TryGetValue(path, out var image)) {
-            if (ImageNodes.TryGetValue(path, out var node)) { ImageOrder.Remove(node); ImageOrder.AddLast(node); }
-            return image;
+        lock (ImageLock)
+        {
+            if (Images.TryGetValue(path, out var image)) {
+                if (ImageNodes.TryGetValue(path, out var node)) { ImageOrder.Remove(node); ImageOrder.AddLast(node); }
+                return image;
+            }
+            if (cachedOnly) return null;
+            long now = System.Diagnostics.Stopwatch.GetTimestamp();
+            if (FailedImages.TryGetValue(path, out long failed) && System.Diagnostics.Stopwatch.GetElapsedTime(failed, now).TotalSeconds < 5) return null;
         }
-        long now = System.Diagnostics.Stopwatch.GetTimestamp();
-        if (FailedImages.TryGetValue(path, out long failed) && System.Diagnostics.Stopwatch.GetElapsedTime(failed, now).TotalSeconds < 5) return null;
+        // WIC decoding/materialization never holds the cache lock needed by rendering.
         var result = DecodeFile(path, RuntimeEdge);
-        if (result == null) {
-            if (FailedImages.Count >= 96) FailedImages.Clear(); FailedImages[path] = now; return null;
+        if (result != null) {
+            int stride = (result.PixelWidth * result.Format.BitsPerPixel + 7) / 8;
+            var pixels = System.Buffers.ArrayPool<byte>.Shared.Rent(stride * result.PixelHeight);
+            try { result.CopyPixels(pixels, stride, 0); }
+            finally { System.Buffers.ArrayPool<byte>.Shared.Return(pixels); }
         }
-        FailedImages.Remove(path);
-        long bytes = (long)result.PixelWidth * result.PixelHeight * 4;
-        while (ImageOrder.First is { } oldest && (Images.Count >= MaxCachedImages || _pixelBytes + bytes > PixelBudget)) Forget(oldest.Value);
-        Images[path] = result; ImageNodes[path] = ImageOrder.AddLast(path); _pixelBytes += bytes;
-        return result;
+        lock (ImageLock)
+        {
+            if (Images.TryGetValue(path, out var existing)) return existing;
+            if (result == null) {
+                if (FailedImages.Count >= 96) FailedImages.Clear(); FailedImages[path] = System.Diagnostics.Stopwatch.GetTimestamp(); return null;
+            }
+            FailedImages.Remove(path);
+            long bytes = (long)result.PixelWidth * result.PixelHeight * 4;
+            while (ImageOrder.First is { } oldest && (Images.Count >= MaxCachedImages || _pixelBytes + bytes > PixelBudget)) Forget(oldest.Value);
+            Images[path] = result; ImageNodes[path] = ImageOrder.AddLast(path); _pixelBytes += bytes;
+            return result;
+        }
     }
     private static void Forget(string path)
     {
-        if (Images.Remove(path, out var image) && image != null) _pixelBytes -= (long)image.PixelWidth * image.PixelHeight * 4;
-        if (ImageNodes.Remove(path, out var node)) ImageOrder.Remove(node);
-        FailedImages.Remove(path);
+        lock (ImageLock)
+        {
+            if (Images.Remove(path, out var image) && image != null) _pixelBytes -= (long)image.PixelWidth * image.PixelHeight * 4;
+            if (ImageNodes.Remove(path, out var node)) ImageOrder.Remove(node);
+            FailedImages.Remove(path);
+        }
     }
     private static BitmapSource? DecodeFile(string path, int edge)
     {
@@ -153,15 +185,38 @@ public static class EquipmentCatalog
         } catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or NotSupportedException or System.IO.FileFormatException or ArgumentException or InvalidOperationException) { return null; }
     }
     public static BitmapSource? Image(Slot slot) => Image(slot, SkinCatalog.Current.Id);
-    public static BitmapSource? Image(Slot slot, Skin skin)
+    public static BitmapSource? Image(Slot slot, Skin skin) => Image(slot, skin, false);
+    internal static BitmapSource? Image(Slot slot, Skin skin, bool cachedOnly)
     {
         var custom = CustomPath(slot.EquipmentImage);
         var item = Item(slot, skin);
         var fallback = EntityIndexes.TryGetValue(item.Id, out int index) ? Legacy[index] : Default(slot.Number);
-        return (custom == null ? null : Decode(custom))
-            ?? (SuitePath(item.Portrait) is string path ? Decode(path) : null)
-            ?? Decode(Path.Combine(AppContext.BaseDirectory, "skins", "loadouts", "naraka", "characters-v2", fallback.Portrait + ".png"))
-            ?? Decode(Path.Combine(AppContext.BaseDirectory, "skins", "loadouts", "naraka", "assets", fallback.Id + ".png"));
+        return (custom == null ? null : DecodeCore(custom, cachedOnly))
+            ?? (SuitePath(item.Portrait) is string path ? DecodeCore(path, cachedOnly) : null)
+            ?? DecodeCore(Path.Combine(AppContext.BaseDirectory, "skins", "loadouts", "naraka", "characters-v2", fallback.Portrait + ".png"), cachedOnly)
+            ?? DecodeCore(Path.Combine(AppContext.BaseDirectory, "skins", "loadouts", "naraka", "assets", fallback.Id + ".png"), cachedOnly);
+    }
+    internal static Task PrewarmAsync(IEnumerable<Slot> slots, Skin skin, Action? imageReady = null, CancellationToken cancellation = default)
+    {
+        // Snapshot UI-owned task fields before entering the worker; only paths cross threads.
+        var paths = slots.Select(slot => {
+            var item = Item(slot, skin);
+            var fallback = EntityIndexes.TryGetValue(item.Id, out int index) ? Legacy[index] : Default(slot.Number);
+            return new[] { CustomPath(slot.EquipmentImage), SuitePath(item.Portrait),
+                Path.Combine(AppContext.BaseDirectory, "skins", "loadouts", "naraka", "characters-v2", fallback.Portrait + ".png"),
+                Path.Combine(AppContext.BaseDirectory, "skins", "loadouts", "naraka", "assets", fallback.Id + ".png") };
+        }).ToArray();
+        return Task.Run(async () => {
+            await WarmGate.WaitAsync(cancellation).ConfigureAwait(false);
+            try {
+                foreach (var choices in paths) {
+                    cancellation.ThrowIfCancellationRequested();
+                    foreach (var path in choices) if (path != null && Decode(path) != null) break;
+                    imageReady?.Invoke();
+                }
+            }
+            finally { WarmGate.Release(); }
+        }, cancellation);
     }
     public static bool CustomMissing(Slot slot) => slot.EquipmentImage != "" && (CustomPath(slot.EquipmentImage) is not string path || !File.Exists(path) || Decode(path) == null);
     public static bool BuiltInMissing(Slot slot, Skin? skin = null)
@@ -187,9 +242,19 @@ public static class EquipmentCatalog
     public static string Detail(Slot slot) => Name(slot) + " · " + slot.Number + "\n" + (slot.Occupied ? slot.Tooltip : "空槽位 · 拖入窗口即可绑定") +
         (CustomMissing(slot) ? "\n自定义图片不可用，已显示内置藏品" : "") +
         (BuiltInMissing(slot) && (slot.EquipmentImage == "" || CustomMissing(slot)) ? "\n主题素材缺失或损坏，暂时显示兼容藏品" : "");
-    public static void Draw(DrawingContext dc, Slot slot, Rect bounds, double opacity = 1, Skin? skin = null)
+    public static void Draw(DrawingContext dc, Slot slot, Rect bounds, double opacity = 1, Skin? skin = null, bool cachedOnly = false)
     {
-        var image = Image(slot, skin ?? SkinCatalog.Current.Id); if (image == null) return;
+        var image = Image(slot, skin ?? SkinCatalog.Current.Id, cachedOnly); if (image == null) return;
+        DrawImage(dc, image, bounds, opacity);
+    }
+    internal static bool TryDrawCached(DrawingContext dc, Slot slot, Rect bounds, double opacity = 1)
+    {
+        var image = Image(slot, SkinCatalog.Current.Id, true);
+        if (image == null) return false;
+        DrawImage(dc, image, bounds, opacity); return true;
+    }
+    private static void DrawImage(DrawingContext dc, BitmapSource image, Rect bounds, double opacity)
+    {
         double scale = Math.Min(bounds.Width / image.PixelWidth, bounds.Height / image.PixelHeight);
         var rect = new Rect(bounds.X + (bounds.Width - image.PixelWidth * scale) / 2, bounds.Y + (bounds.Height - image.PixelHeight * scale) / 2, image.PixelWidth * scale, image.PixelHeight * scale);
         dc.PushOpacity(opacity); dc.DrawImage(image, rect); dc.Pop();

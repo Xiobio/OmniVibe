@@ -7,7 +7,7 @@ public enum OverviewSize { Compact, Standard, Spacious, Large, Panoramic }
 internal static class OverviewSizing
 {
     internal static readonly string[] Labels = {
-        "紧凑 · 少占桌面", "标准 · 中等卡片", "宽敞 · 放大预览", "超大 · 推荐", "近全屏 · 保留桌面边距"
+        L.T("紧凑 · 少占桌面"), L.T("标准 · 中等卡片"), L.T("宽敞 · 放大预览"), L.T("超大 · 推荐"), L.T("近全屏 · 保留桌面边距")
     };
     internal static OverviewSize Normalize(OverviewSize size) => Enum.IsDefined(size) ? size : OverviewSize.Large;
     internal static (double Width, double Height) Measure(int columns, int rows, double availableWidth, double availableHeight, OverviewSize size)

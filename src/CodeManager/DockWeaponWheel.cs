@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -60,6 +62,10 @@ public sealed class DockWeaponWheel : FrameworkElement
     private string? _lastEquippedId;
     private bool _subscribed, _motionEnabled;
     private bool _warming, _warmScheduled;
+    private string? _portraitKey;
+    private Skin? _portraitSkin;
+    private CancellationTokenSource? _portraitWarmup;
+    private Task? _portraitTask;
     internal bool Aiming { get; private set; }
     internal bool IsDeployed { get; private set; }
     private bool _captureTargetsVisible;
@@ -95,7 +101,7 @@ public sealed class DockWeaponWheel : FrameworkElement
         Loaded += (_, _) => { Subscribe(); UpdateFlow(); ScheduleWarmup(); };
         IsVisibleChanged += (_, _) => UpdateFlow();
         SizeChanged += (_, _) => ScheduleWarmup();
-        Unloaded += (_, _) => { Unsubscribe(); foreach (var dp in new[] { PhaseProperty, DeploymentProperty, LiftProperty, FlowProperty }.Concat(HoverWeights)) BeginAnimation(dp, null); };
+        Unloaded += (_, _) => { Unsubscribe(); _portraitWarmup?.Cancel(); _portraitKey = null; foreach (var dp in new[] { PhaseProperty, DeploymentProperty, LiftProperty, FlowProperty }.Concat(HoverWeights)) BeginAnimation(dp, null); };
     }
     internal void SetSlots(IEnumerable<Slot> slots)
     {
@@ -105,6 +111,7 @@ public sealed class DockWeaponWheel : FrameworkElement
     }
     private void ScheduleWarmup()
     {
+        WarmPortraits();
         if (!IsLoaded || _warmScheduled) return;
         _warmScheduled = true;
         Dispatcher.BeginInvoke(() =>
@@ -118,7 +125,34 @@ public sealed class DockWeaponWheel : FrameworkElement
     }
     private void Subscribe() { if (_subscribed) return; foreach (var slot in _slots) slot.PropertyChanged += Changed; _subscribed = true; }
     private void Unsubscribe() { if (!_subscribed) return; foreach (var slot in _slots) slot.PropertyChanged -= Changed; _subscribed = false; }
-    private void Changed(object? sender, PropertyChangedEventArgs e) { UpdateFlow(); InvalidateVisual(); }
+    private void Changed(object? sender, PropertyChangedEventArgs e) { UpdateFlow(); WarmPortraits(); InvalidateVisual(); }
+    private void WarmPortraits(bool force = false)
+    {
+        if (!IsLoaded) return;
+        var skin = SkinCatalog.Current.Id;
+        string key = skin + ":" + string.Join("|", _slots.Select(s => s.Number + ":" + s.EquipmentImage + ":" + EquipmentCatalog.Item(s, skin).Id));
+        if (key == _portraitKey && (!force || _portraitTask is { IsCompleted: false })) return;
+        _portraitKey = key; _portraitSkin = skin; _portraitWarmup?.Cancel(); _portraitWarmup?.Dispose();
+        _portraitWarmup = new();
+        _portraitTask = WarmPortraitsAsync(skin, _portraitWarmup.Token);
+    }
+    private async Task WarmPortraitsAsync(Skin skin, CancellationToken cancellation)
+    {
+        try {
+            await EquipmentCatalog.PrewarmAsync(_slots.OrderByDescending(s => s == CurrentSlot), skin, () => {
+                if (!cancellation.IsCancellationRequested && !Dispatcher.HasShutdownStarted)
+                    Dispatcher.BeginInvoke(() => { if (IsLoaded && !cancellation.IsCancellationRequested) InvalidateVisual(); }, DispatcherPriority.Render);
+            }, cancellation);
+        }
+        catch (OperationCanceledException) when (cancellation.IsCancellationRequested) { }
+        catch (Exception ex) when (ex is System.IO.IOException or InvalidOperationException or NotSupportedException) { _portraitKey = null; }
+    }
+    private void DrawPortrait(DrawingContext dc, Slot slot, Rect bounds, double opacity = 1)
+    {
+        if (!IsLoaded) { EquipmentCatalog.Draw(dc, slot, bounds, opacity); return; }
+        // Settings previews can evict the current theme. Refill asynchronously on a miss.
+        if (!EquipmentCatalog.TryDrawCached(dc, slot, bounds, opacity)) WarmPortraits(force: true);
+    }
     private bool _flowing;
     private void UpdateFlow()
     {
@@ -277,6 +311,7 @@ public sealed class DockWeaponWheel : FrameworkElement
     }
     private void DrawWeaponLoadout(DrawingContext dc)
     {
+        if (_portraitSkin != SkinCatalog.Current.Id) WarmPortraits();
         var skin = SkinCatalog.Current;
         double d = _warming ? 1 : Math.Clamp(Deployment, 0, 1), f = Math.Clamp(Radius / 202, .5, 1.12);
         dc.PushTransform(new TranslateTransform(Centre.X, Centre.Y));
@@ -303,7 +338,7 @@ public sealed class DockWeaponWheel : FrameworkElement
                     dc.DrawLine(new Pen(B(skin.Accent), 1.2), new Point(-w*.24, h/2+3), new Point(w*.24, h/2+3));
                     dc.Pop();
                 }
-                EquipmentCatalog.Draw(dc, slot, new Rect(-w*zoom/2, -h*zoom/2, w*zoom, h*zoom), slot.Connected ? selected || active ? 1 : .94 : .55);
+                DrawPortrait(dc, slot, new Rect(-w*zoom/2, -h*zoom/2, w*zoom, h*zoom), slot.Connected ? selected || active ? 1 : .94 : .55);
                 Text(dc, slot.Number.ToString(), -w/2 + 5, h/2 - 3, 11, selected || active ? skin.Accent : skin.Text, 18, true);
                 WheelTaskStatus.DrawSlot(dc,skin,slot,w,h,Flow,_motionEnabled && SkinCatalog.DecorationsEnabled);
                 dc.Pop();
@@ -318,7 +353,7 @@ public sealed class DockWeaponWheel : FrameworkElement
                 EquipmentPedestal.Draw(dc, skin, new Rect(-43, 46, 86, 8));
                 dc.Pop();
             }
-            EquipmentCatalog.Draw(dc, current, new Rect(-55, -55, 110, 110));
+            DrawPortrait(dc, current, new Rect(-55, -55, 110, 110));
         }
         else DrawEmptyCore(dc, d);
         WheelTaskStatus.DrawCore(dc,skin,_slots,current,Flow,_motionEnabled && SkinCatalog.DecorationsEnabled,Phase);
@@ -341,8 +376,8 @@ public sealed class DockWeaponWheel : FrameworkElement
         dc.DrawLine(arrow, new Point(-30, 38), new Point(-30, 46));
         dc.DrawLine(arrow, new Point(-34, 43), new Point(-30, 47));
         dc.DrawLine(arrow, new Point(-30, 47), new Point(-26, 43));
-        Text(dc, receiving ? "松手收纳" : "拖入窗口", 8, 43, 10, skin.Text, 65);
-        if (deployment > .9) Text(dc, "或点击空槽添加", 0, 65, 9, skin.Muted, 108);
+        Text(dc, receiving ? L.T("松手收纳") : L.T("拖入窗口"), 8, 43, 10, skin.Text, 65);
+        if (deployment > .9) Text(dc, L.T("或点击空槽添加"), 0, 65, 9, skin.Muted, 108);
     }
     private void DrawEmptyTarget(DrawingContext dc, Slot slot, bool selected, double f)
     {

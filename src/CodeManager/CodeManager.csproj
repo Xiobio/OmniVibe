@@ -7,12 +7,20 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <ApplicationIcon>../../assets/brand/v2/icons/omnivibe.ico</ApplicationIcon>
+    <ApplicationIcon>../../assets/brand/v4/icons/omnivibe.ico</ApplicationIcon>
     <AssemblyName>CodeManager</AssemblyName>
     <Version>0.1.1</Version>
   </PropertyGroup>
-  <ItemGroup><EmbeddedResource Include="../../assets/brand/v2/icons/omnivibe.ico" LogicalName="OmniVibe.Brand.Icon" /></ItemGroup>
+  <ItemGroup><EmbeddedResource Include="../../assets/brand/v4/icons/omnivibe.ico" LogicalName="OmniVibe.Brand.Icon" /></ItemGroup>
+  <ItemGroup><EmbeddedResource Include="Localization/en.tsv" LogicalName="OmniVibe.Localization.English" /></ItemGroup>
+  <ItemGroup><Content Include="../../LICENSE;../../THIRD_PARTY_NOTICES.md" Link="%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" /></ItemGroup>
   <ItemGroup><Content Include="../../scripts/*.ps1" Link="scripts/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" /></ItemGroup>
   <ItemGroup><Content Include="../../skins/**/*" Link="skins/%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" /></ItemGroup>
   <ItemGroup><Content Include="../../themes/windows-terminal/**/*" Link="themes/windows-terminal/%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" /></ItemGroup>
+  <!-- Opt-in distribution filter. Development builds retain all fixtures and source art. -->
+  <ItemGroup Condition="'$(RuntimeAssetsOnly)' == 'true'">
+    <Content Remove="../../skins/**/terminal-scene-v2.png;../../skins/**/*.prompt.md;../../skins/**/prompt.md;../../skins/**/*validation*.json;../../skins/*test-results.json" />
+    <Content Remove="../../themes/windows-terminal/Test-*.ps1;../../themes/windows-terminal/Build-TerminalSkins.ps1;../../themes/windows-terminal/**/*validation*;../../themes/windows-terminal/**/*.md;../../themes/windows-terminal/assets/ink-jade-background-v3*;../../themes/windows-terminal/assets/ink-jade-background-v4*" />
+    <Content Remove="../../scripts/Validate.ps1" />
+  </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,7 +25,7 @@ public sealed class SettingsWindow : Window
     {
         Result = source.Copy(); AutoHide = autoHide; MinimizeOnCapture = minimize;
         LoadoutSkin = source.Skin;
-        Title = "OmniVibe · 设置"; Width = 1180; Height = 900; MinWidth = 700; MinHeight = 470;
+        Title = L.T("OmniVibe · 设置"); Width = 1180; Height = 900; MinWidth = 700; MinHeight = 470;
         Background = WuxiaTheme.Ink; Foreground = WuxiaTheme.Ivory; Topmost = true; ShowInTaskbar = false;
         SourceInitialized += (_, _) => Native.Decorate(this, noActivate: false);
         double scale = Native.ScreenAtCursor().Scale;
@@ -37,15 +37,15 @@ public sealed class SettingsWindow : Window
         Resources[typeof(Button)] = SettingsButtonStyle(host);
         var root = new DockPanel();
         var title = new StackPanel { Margin = new Thickness(24, 10, 24, 9) };
-        title.Children.Add(new TextBlock { Text = "OMNIVIBE / 工作台", FontSize = 10, Foreground = WuxiaTheme.Brush(host.Muted), Margin = new Thickness(0, 0, 0, 6) });
-        title.Children.Add(new TextBlock { Text = "设置", FontSize = 22, FontWeight = FontWeights.SemiBold });
+        title.Children.Add(new TextBlock { Text = L.T("OMNIVIBE / 工作台"), FontSize = 10, Foreground = WuxiaTheme.Brush(host.Muted), Margin = new Thickness(0, 0, 0, 6) });
+        title.Children.Add(new TextBlock { Text = L.T("设置"), FontSize = 22, FontWeight = FontWeights.SemiBold });
         var header = new Border { Child = title, BorderBrush = WuxiaTheme.Brush(host.Border), BorderThickness = new Thickness(0, 0, 0, .5) }; DockPanel.SetDock(header, Dock.Top); root.Children.Add(header);
         var bottom = new StackPanel { Margin = new Thickness(24, 8, 24, 16) }; var footer = new Border { Child = bottom, Background = WuxiaTheme.Brush(host.Surface), BorderBrush = WuxiaTheme.Brush(host.Border), BorderThickness = new Thickness(0, .5, 0, 0) }; DockPanel.SetDock(footer, Dock.Bottom); root.Children.Add(footer);
         var error = new TextBlock { Foreground = WuxiaTheme.Cinnabar, TextWrapping = TextWrapping.Wrap, Visibility = Visibility.Collapsed, Margin = new Thickness(0, 8, 0, 8) }; bottom.Children.Add(error);
         void Fail(string message) { error.Text = message; error.Visibility = Visibility.Visible; }
-        var actionRow = new DockPanel(); var draft = new TextBlock { Text = "保存后同步 Terminal 与 OmniVibe 整套外观", Foreground = WuxiaTheme.Brush(host.Muted), FontSize = 11, VerticalAlignment = VerticalAlignment.Center, TextWrapping = TextWrapping.Wrap, MaxWidth = 330 }; DockPanel.SetDock(draft, Dock.Left); actionRow.Children.Add(draft);
+        var actionRow = new DockPanel(); var draft = new TextBlock { Text = L.T("保存后同步 Terminal 与 OmniVibe 整套外观"), Foreground = WuxiaTheme.Brush(host.Muted), FontSize = 11, VerticalAlignment = VerticalAlignment.Center, TextWrapping = TextWrapping.Wrap, MaxWidth = 330 }; DockPanel.SetDock(draft, Dock.Left); actionRow.Children.Add(draft);
         var actions = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right };
-        var reset = new Button { Content = "恢复默认", Margin = new Thickness(0, 0, 16, 0) }; var cancel = new Button { Content = "取消", IsCancel = true, Margin = new Thickness(0, 0, 10, 0) }; var save = new Button { Content = "保存并应用", IsDefault = true, Background = WuxiaTheme.Brush("#354730") };
+        var reset = new Button { Content = L.T("恢复默认"), Margin = new Thickness(0, 0, 16, 0) }; var cancel = new Button { Content = L.T("取消"), IsCancel = true, Margin = new Thickness(0, 0, 10, 0) }; var save = new Button { Content = L.T("保存并应用"), IsDefault = true, Background = WuxiaTheme.Brush("#354730") };
         save.Background = WuxiaTheme.Brush(host.Accent); save.Foreground = WuxiaTheme.Brush(host.Background); save.FontWeight = FontWeights.SemiBold;
         var saveCaption = new FrameworkElementFactory(typeof(TextBlock)); saveCaption.SetBinding(TextBlock.TextProperty, new Binding()); saveCaption.SetValue(TextBlock.ForegroundProperty, WuxiaTheme.Brush(host.Background)); saveCaption.SetValue(TextBlock.FontWeightProperty, FontWeights.SemiBold); save.ContentTemplate = new DataTemplate { VisualTree = saveCaption };
         foreach (var button in new[] { reset, cancel, save }) { button.MinHeight = 38; button.Padding = new Thickness(17, 8, 17, 8); button.FontSize = 12; }
@@ -63,28 +63,28 @@ public sealed class SettingsWindow : Window
             b.Click += (_, _) => { foreach (UIElement item in pages.Children) item.Visibility = item == scroll ? Visibility.Visible : Visibility.Collapsed; foreach (Button button in navButtons) { button.Background = WuxiaTheme.Brush(button == b ? host.Elevated : host.Surface); button.BorderBrush = WuxiaTheme.Brush(button == b ? host.Accent : host.Surface); } };
             nav.Children.Add(b); navButtons.Add(b); return panel;
         }
-        var guidePage = Page("快速上手", "把窗口收进来，用形象认任务，用快捷键找回窗口。");
+        var guidePage = Page(L.T("快速上手"), L.T("把窗口收进来，用形象认任务，用快捷键找回窗口。"));
         var guide = new GettingStartedPanel(source, warnings, shortcutsPaused);
         guide.AddWindowRequested += () => AddWindowRequested?.Invoke();
         guide.ConfigureShortcutsRequested += () => navButtons[2].RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
         guide.RecoveryRequested += () => RecoveryRequested?.Invoke();
         guidePage.Children.Add(guide);
 
-        var appearance = Page("主题与换装", "所有主题直接陈列。先点图片选风格，再调整这套主题的角色和武器。");
+        var appearance = Page(L.T("主题与换装"), L.T("所有主题直接陈列。先点图片选风格，再调整这套主题的角色和武器。"));
         var skin = new SkinPicker(source.Skin, source.TerminalAnimation); appearance.Children.Add(skin);
-        skin.SelectionChanged += () => { LoadoutSkin = skin.SelectedSkin; draft.Text = "保存后同步 Terminal 与 OmniVibe 整套外观"; };
+        skin.SelectionChanged += () => { LoadoutSkin = skin.SelectedSkin; draft.Text = L.T("保存后同步 Terminal 与 OmniVibe 整套外观"); };
         skin.LoadoutRequested += () => LoadoutRequested?.Invoke();
-        var qualitySection = Section(appearance, "界面效果", "插画与装饰随整套主题应用；Terminal 动画使用上方独立开关。");
-        var quality = Options(new[] { "完整效果 · 插画、装饰与动画", "静态外观 · 保留插画和装饰", "简洁外观 · 保留任务与状态" }, source.DecorationsEnabled ? source.Animate ? 0 : 1 : 2);
+        var qualitySection = Section(appearance, L.T("界面效果"), L.T("插画与装饰随整套主题应用；Terminal 动画使用上方独立开关。"));
+        var quality = Options(new[] { L.T("完整效果 · 插画、装饰与动画"), L.T("静态外观 · 保留插画和装饰"), L.T("简洁外观 · 保留任务与状态") }, source.DecorationsEnabled ? source.Animate ? 0 : 1 : 2);
         qualitySection.Children.Add(quality);
         skin.EffectsEnabled = () => quality.SelectedIndex == 0;
         skin.DecorationsEnabled = () => quality.SelectedIndex != 2;
         quality.SelectionChanged += (_, _) => skin.RefreshOptions();
 
-        var keyPage = Page("快捷键", "点击右侧按键后直接录入，保存后全局生效。× 清除，↺ 恢复默认，Esc 取消录入。Windows 保留组合无法接管。");
+        var keyPage = Page(L.T("快捷键"), L.T("点击右侧按键后直接录入，保存后全局生效。× 清除，↺ 恢复默认，Esc 取消录入。Windows 保留组合无法接管。"));
         var recorders = new Dictionary<int, ShortcutRecorder>();
         var defaults = new Preferences();
-        var wheelEditor = new ShortcutRecorder("滚轮切换", source.WheelSwitchEnabled ? Preferences.ModifierLabel(source.MouseModifiers) + "+Wheel" : "", "Alt+Wheel", wheel: true);
+        var wheelEditor = new ShortcutRecorder(L.T("滚轮切换"), source.WheelSwitchEnabled ? Preferences.ModifierLabel(source.MouseModifiers) + "+Wheel" : "", "Alt+Wheel", wheel: true);
         var keyNotice = new TextBlock { FontSize = 11, TextWrapping = TextWrapping.Wrap, Foreground = WuxiaTheme.Brush(host.Waiting), Margin = new Thickness(0, 0, 0, 12) }; keyPage.Children.Add(keyNotice);
         void KeyRow(Panel parent, ShortcutBinding binding)
         {
@@ -96,13 +96,13 @@ public sealed class SettingsWindow : Window
             var editor = new ShortcutRecorder(binding.Name, binding.Gesture, ShortcutBindings.All(defaults).First(b => b.Id == binding.Id).Gesture);
             editor.Changed += () => UpdateKeyNotice(); recorders[binding.Id] = editor; Grid.SetColumn(editor, 1); row.Children.Add(editor); parent.Children.Add(row);
         }
-        var commonKeys = Section(keyPage, "常用操作", "总览看全部任务，轮盘用指向选择；选你顺手的一种即可。");
+        var commonKeys = Section(keyPage, L.T("常用操作"), L.T("总览看全部任务，轮盘用指向选择；选你顺手的一种即可。"));
         foreach (var binding in ShortcutBindings.All(source).Where(b => b.Id >= 10)) KeyRow(commonKeys, binding);
-        var wheelSection = Section(keyPage, "滚轮切换", "不用打开总览，按住修饰键并滚动即可切换已收纳的窗口。");
+        var wheelSection = Section(keyPage, L.T("滚轮切换"), L.T("不用打开总览，按住修饰键并滚动即可切换已收纳的窗口。"));
         wheelEditor.Changed += () => UpdateKeyNotice(); wheelSection.Children.Add(wheelEditor);
         var slotsBody = new StackPanel();
         foreach (var binding in ShortcutBindings.All(source).Where(b => b.Id < 10)) KeyRow(slotsBody, binding);
-        var taskKeys = new Expander { Header = "窗口 1–9 · 展开后逐个自定义", Content = slotsBody, Margin = new Thickness(0, 4, 0, 16), IsExpanded = true }; keyPage.Children.Add(taskKeys);
+        var taskKeys = new Expander { Header = L.T("窗口 1–9 · 展开后逐个自定义"), Content = slotsBody, Margin = new Thickness(0, 4, 0, 16), IsExpanded = true }; keyPage.Children.Add(taskKeys);
         Preferences KeyDraft()
         {
             var candidate = Result.Copy();
@@ -117,29 +117,32 @@ public sealed class SettingsWindow : Window
         {
             if (recorders.Count != 13) return;
             var candidate = KeyDraft();
-            keyNotice.Text = !ShortcutBindings.Validate(candidate, out string problem) ? problem : string.Join("、", ShortcutBindings.All(candidate).Where(b => ShortcutBindings.IsTypingKey(b.Gesture)).Select(b => b.Name + "（" + ShortcutBindings.Display(b.Gesture) + "）")) is string typing && typing.Length > 0 ? typing + " 会全局接管原应用的这个键；清除或加修饰键即可交还。" : "";
+            keyNotice.Text = !ShortcutBindings.Validate(candidate, out string problem) ? problem : string.Join("、", ShortcutBindings.All(candidate).Where(b => ShortcutBindings.IsTypingKey(b.Gesture)).Select(b => b.Name + "（" + ShortcutBindings.Display(b.Gesture) + "）")) is string typing && typing.Length > 0 ? typing + L.T(" 会全局接管原应用的这个键；清除或加修饰键即可交还。") : "";
         }
         UpdateKeyNotice();
 
-        var layoutPage = Page("窗口与布局", "调整多个窗口怎么排、单个窗口怎么唤出，以及桌面入口的位置。");
-        var overview = Section(layoutPage, "任务总览大小", "按总览快捷键查看任务。档位越大，终端预览越清楚；会按屏幕大小自动限制，并保留桌面边距。");
+        var layoutPage = Page(L.T("窗口与布局"), L.T("调整多个窗口怎么排、单个窗口怎么唤出，以及桌面入口的位置。"));
+        var overview = Section(layoutPage, L.T("任务总览大小"), L.T("按总览快捷键查看任务。档位越大，终端预览越清楚；会按屏幕大小自动限制，并保留桌面边距。"));
         var overviewSize = Options(OverviewSizing.Labels, (int)OverviewSizing.Normalize(source.OverviewSize));
         overviewSize.Name = "OverviewSizePicker"; overview.Children.Add(overviewSize);
-        var layout = Section(layoutPage, "全部排列", "按「排列 / 恢复」快捷键铺开窗口，再按一次恢复。");
-        var arrangement = Options(new[] { "均衡网格 · 铺满屏幕", "纵向分栏", "横向分行", "主窗居左 · 其余居右" }, (int)source.Arrangement); layout.Children.Add(arrangement);
-        Label(layout, "窗口间距"); var gap = Slider(0, 32, source.LayoutGap, layout);
-        layout = Section(layoutPage, "切换窗口", "同一个窗口的快捷键再按一次，会恢复唤出之前的样子。");
-        var wake = Options(new[] { "保留窗口最近的大小和位置", "唤出时铺满当前屏幕工作区" }, (int)source.WakeMode); layout.Children.Add(wake);
-        var mini = Check("收纳后最小化原窗口", minimize); layout.Children.Add(mini);
-        var ring = Section(layoutPage, "悬浮入口", "鼠标移入展开任务，移开收回；长按入口可直接拖动位置。");
-        Label(ring, "展开范围"); var width = Slider(320, 480, source.DockWidth, ring);
-        var resetPosition = new Button { Content = "恢复右侧默认位置", HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(0, 8, 0, 0) };
-        resetPosition.Click += (_, _) => { ResetDockPositionRequested = true; resetPosition.Content = "保存后恢复右侧位置"; }; ring.Children.Add(resetPosition);
+        var layout = Section(layoutPage, L.T("全部排列"), L.T("按「排列 / 恢复」快捷键铺开窗口，再按一次恢复。"));
+        var arrangement = Options(new[] { L.T("均衡网格 · 铺满屏幕"), L.T("纵向分栏"), L.T("横向分行"), L.T("主窗居左 · 其余居右") }, (int)source.Arrangement); layout.Children.Add(arrangement);
+        Label(layout, L.T("窗口间距")); var gap = Slider(0, 32, source.LayoutGap, layout);
+        layout = Section(layoutPage, L.T("切换窗口"), L.T("同一个窗口的快捷键再按一次，会恢复唤出之前的样子。"));
+        var wake = Options(new[] { L.T("保留窗口最近的大小和位置"), L.T("唤出时铺满当前屏幕工作区") }, (int)source.WakeMode); layout.Children.Add(wake);
+        var mini = Check(L.T("收纳后最小化原窗口"), minimize); layout.Children.Add(mini);
+        var ring = Section(layoutPage, L.T("悬浮入口"), L.T("鼠标移入展开任务，移开收回；长按入口可直接拖动位置。"));
+        Label(ring, L.T("展开范围")); var width = Slider(320, 480, source.DockWidth, ring);
+        var resetPosition = new Button { Content = L.T("恢复右侧默认位置"), HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(0, 8, 0, 0) };
+        resetPosition.Click += (_, _) => { ResetDockPositionRequested = true; resetPosition.Content = L.T("保存后恢复右侧位置"); }; ring.Children.Add(resetPosition);
 
-        var generalPage = Page("常规", "管理启动恢复和声音。少用的维护工具收在页面底部。");
-        var general = Section(generalPage, "启动与输入", "选择打开 OmniVibe 后如何继续上次的工作。");
-        var startup = Options(new[] { "只显示悬浮入口", "重连仍在运行的窗口", "重连窗口，并显示待恢复任务", "重连窗口，并自动打开已配置任务" }, source.AutoRestoreOnStartup ? 3 : source.ShowRecoveryOnStartup ? 2 : source.AutoReconnectExisting ? 1 : 0); general.Children.Add(startup);
-        var pause = Check("本次运行暂停全局快捷键（鼠标仍可用）", shortcutsPaused); general.Children.Add(pause);
+        var generalPage = Page(L.T("常规"), L.T("管理启动恢复和声音。少用的维护工具收在页面底部。"));
+        var languageSection = Section(generalPage, L.T("界面语言 / Language"), L.T("保存后重启 OmniVibe 生效；终端任务不受影响。"));
+        var language = Options(new[] { L.T("跟随系统 / System"), L.T("简体中文"), "English" }, source.Language == "en" ? 2 : source.Language == "zh-CN" ? 1 : 0);
+        languageSection.Children.Add(language);
+        var general = Section(generalPage, L.T("启动与输入"), L.T("选择打开 OmniVibe 后如何继续上次的工作。"));
+        var startup = Options(new[] { L.T("只显示悬浮入口"), L.T("重连仍在运行的窗口"), L.T("重连窗口，并显示待恢复任务"), L.T("重连窗口，并自动打开已配置任务") }, source.AutoRestoreOnStartup ? 3 : source.ShowRecoveryOnStartup ? 2 : source.AutoReconnectExisting ? 1 : 0); general.Children.Add(startup);
+        var pause = Check(L.T("本次运行暂停全局快捷键（鼠标仍可用）"), shortcutsPaused); general.Children.Add(pause);
         var audio = new AudioSettingsPanel(source, () => skin.SelectedSkin); generalPage.Children.Add(audio);
         var reminders = Section(generalPage, "任务提醒", "后台任务回复、等待确认或出错时提醒；同一状态不重复，点击通知打开总览。");
         var systemNotifications = Check("启用 Windows 系统通知", source.SystemNotifications); reminders.Children.Add(systemNotifications);
@@ -148,34 +151,35 @@ public sealed class SettingsWindow : Window
         previewComplete.Click += (_,_) => GameAudio.PreviewCompletion(skin.SelectedSkin,audio.DraftVolume);
         reminders.Children.Add(previewComplete);
         var maintenance = new StackPanel();
-        var history = new Button { Content = "查看最近任务 / 恢复工作现场", HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(0, 6, 0, 6) }; history.Click += (_, _) => RecoveryRequested?.Invoke(); maintenance.Children.Add(history);
-        var data = new Button { Content = "打开配置目录", HorizontalAlignment = HorizontalAlignment.Left }; data.Click += (_, _) => DataDirectoryRequested?.Invoke(); maintenance.Children.Add(data);
-        if (warnings != "") Label(maintenance, "当前快捷键 / 监听提示\n" + warnings, 12);
-        generalPage.Children.Add(new Expander { Header = "维护与诊断", Content = maintenance, Margin = new Thickness(0, 10, 0, 16) });
+        var history = new Button { Content = L.T("查看最近任务 / 恢复工作现场"), HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(0, 6, 0, 6) }; history.Click += (_, _) => RecoveryRequested?.Invoke(); maintenance.Children.Add(history);
+        var data = new Button { Content = L.T("打开配置目录"), HorizontalAlignment = HorizontalAlignment.Left }; data.Click += (_, _) => DataDirectoryRequested?.Invoke(); maintenance.Children.Add(data);
+        if (warnings != "") Label(maintenance, L.T("当前快捷键 / 监听提示\n") + warnings, 12);
+        generalPage.Children.Add(new Expander { Header = L.T("维护与诊断"), Content = maintenance, Margin = new Thickness(0, 10, 0, 16) });
         bool applying = false;
         Closing += (_, e) => { if (applying) e.Cancel = true; };
         async Task CommitAsync(Preferences candidate, bool minimizeAfter, bool pausedAfter, bool resetDefaults = false)
         {
             if (applying) return;
-            applying = true; root.IsEnabled = false; save.Content = "正在应用整套主题…";
+            applying = true; root.IsEnabled = false; save.Content = L.T("正在应用整套主题…");
             try {
                 if (ApplyThemeAsync != null) TerminalApplyMessage = (await ApplyThemeAsync(candidate)).Message;
                 Result = candidate; MinimizeOnCapture = minimizeAfter; PauseShortcuts = pausedAfter;
                 if (resetDefaults) AutoHide = false;
                 applying = false; DialogResult = true;
             }
-            catch (Exception ex) { Fail("整套主题尚未应用：" + ex.Message); }
-            finally { applying = false; root.IsEnabled = true; save.Content = "保存并应用"; }
+            catch (Exception ex) { Fail(L.T("整套主题尚未应用：") + ex.Message); }
+            finally { applying = false; root.IsEnabled = true; save.Content = L.T("保存并应用"); }
         }
         reset.Click += async (_, _) => await CommitAsync(new(), true, false, resetDefaults:true);
         save.Click += async (_, _) =>
         {
             error.Visibility = Visibility.Collapsed;
-            if (recorders.Values.Any(r => r.IsCapturing) || wheelEditor.IsCapturing) { Fail("请先完成按键录入，或按 Esc 取消本次录入。"); return; }
+            if (recorders.Values.Any(r => r.IsCapturing) || wheelEditor.IsCapturing) { Fail(L.T("请先完成按键录入，或按 Esc 取消本次录入。")); return; }
             var candidate = KeyDraft();
             if (!ShortcutBindings.Validate(candidate, out string problem)) { Fail(problem); navButtons[2].RaiseEvent(new RoutedEventArgs(Button.ClickEvent)); return; }
             if (ShortcutAvailabilityCheck?.Invoke(candidate) is string occupied) { Fail(occupied); navButtons[2].RaiseEvent(new RoutedEventArgs(Button.ClickEvent)); return; }
             candidate.Arrangement = (ArrangementMode)arrangement.SelectedIndex; candidate.LayoutGap = (int)gap.Value; candidate.HideDockOnArrange = false; candidate.WakeMode = (WakeMode)wake.SelectedIndex;
+            candidate.Language = language.SelectedIndex == 2 ? "en" : language.SelectedIndex == 1 ? "zh-CN" : "auto";
             candidate.OverviewSize = (OverviewSize)overviewSize.SelectedIndex;
             candidate.Skin = skin.SelectedSkin; candidate.DockWidth = width.Value; candidate.DockHeight = 0;
             candidate.TerminalAnimation = skin.TerminalAnimationEnabled;

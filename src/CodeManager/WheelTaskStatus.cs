@@ -10,7 +10,7 @@ namespace CodeManager;
 internal readonly record struct WheelStatusSummary(int Running, int Waiting, int Ready, int Errors, int Unlinked)
 {
     internal int Attention => Waiting+Ready+Errors;
-    internal string Label => Attention>0 ? Attention+" 项待处理" : Running>0 ? Running+" 个任务执行中" : Unlinked>0 ? "未接入自动状态" : "已查看 · 等待任务";
+    internal string Label => Attention>0 ? Attention+L.T(" 项待处理") : Running>0 ? Running+L.T(" 个任务执行中") : Unlinked>0 ? L.T("未接入自动状态") : L.T("已查看 · 等待任务");
     internal string Color(SkinDefinition skin) => Errors>0 ? skin.Error : Waiting>0 ? skin.Waiting : Ready>0 ? skin.Ready : Running>0 ? skin.Running : skin.Muted;
     internal static WheelStatusSummary From(IEnumerable<Slot> slots)
     {
@@ -43,15 +43,15 @@ internal static class WheelTaskStatus
     {
         var key=(text,color,size,width);
         if(!Labels.TryGetValue(key,out var drawing)) {
-            var formatted=new FormattedText(text,CultureInfo.GetCultureInfo("zh-CN"),FlowDirection.LeftToRight,Typeface,size,B(color),1) { MaxTextWidth=width,MaxLineCount=1,Trimming=TextTrimming.CharacterEllipsis,TextAlignment=TextAlignment.Center };
+            var formatted=new FormattedText(text,CultureInfo.CurrentUICulture,FlowDirection.LeftToRight,Typeface,size,B(color),1) { MaxTextWidth=width,MaxLineCount=1,Trimming=TextTrimming.CharacterEllipsis,TextAlignment=TextAlignment.Center };
             drawing=new DrawingGroup();using(var c=drawing.Open())c.DrawText(formatted,new Point(-width/2,-formatted.Height/2));drawing.Freeze();if(Labels.Count>512)Labels.Clear();Labels[key]=drawing;
         }
         dc.PushTransform(new TranslateTransform(x,y));dc.DrawDrawing(drawing);dc.Pop();
     }
     internal static bool Stale(Slot slot) => slot.UpdatedAt.HasValue && slot.StateSource!="手动标记" && slot.IntegrationConnected && slot.State is AgentState.Running or AgentState.Waiting && DateTimeOffset.UtcNow-slot.UpdatedAt.Value>TimeSpan.FromMinutes(10);
     internal static bool NeedsMotion(IEnumerable<Slot> slots) => slots.Any(s=>s.Occupied && s.Connected && !Stale(s) && (s.State==AgentState.Running || s.Unread && s.State is AgentState.Waiting or AgentState.Ready or AgentState.Error));
-    internal static string LabelFor(Slot slot) => !slot.Connected ? "已断开" : Stale(slot) ? "状态待确认" : slot.State switch {
-        AgentState.Running=>"执行中",AgentState.Waiting=>slot.StateSource=="终端状态信号"?"通知待查看":"等待确认",AgentState.Ready=>slot.Unread?"回复待查看":"已查看回复",AgentState.Error=>"发生错误",_=>slot.IntegrationConnected?"等待任务":"未接入状态"
+    internal static string LabelFor(Slot slot) => !slot.Connected ? L.T("已断开") : Stale(slot) ? L.T("状态待确认") : slot.State switch {
+        AgentState.Running=>L.T("执行中"),AgentState.Waiting=>slot.StateSource=="终端状态信号"?L.T("通知待查看"):L.T("等待确认"),AgentState.Ready=>slot.Unread?L.T("回复待查看"):L.T("已查看回复"),AgentState.Error=>L.T("发生错误"),_=>slot.IntegrationConnected?L.T("等待任务"):L.T("未接入状态")
     };
     internal static bool CoreVisible(WheelStatusSummary summary) => summary.Attention>0 || summary.Running>0 || summary.Unlinked>0;
     internal static int CoreCount(WheelStatusSummary summary) => summary.Attention>0 ? summary.Attention : summary.Running;

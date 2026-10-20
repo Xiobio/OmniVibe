@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Threading;
@@ -240,10 +241,23 @@ public static class SelfTests
                 manager.State.Slots[0].Name = "登录修复"; manager.Save();
                 var now = DateTimeOffset.UtcNow;
                 manager.Store.Send(new() { TaskId = manager.State.Slots[0].Id, State = AgentState.Ready, At = now });
-                manager.ProcessPendingEvents();
+                WaitForTask(manager.ProcessPendingEvents());
                 Check(manager.State.Slots[0].State == AgentState.Ready && manager.State.Slots[0].Unread, "External result did not show unread");
                 manager.Store.Send(new() { TaskId = manager.State.Slots[0].Id, State = AgentState.Running, At = now.AddSeconds(-1) });
-                manager.ProcessPendingEvents(); Check(manager.State.Slots[0].State == AgentState.Ready, "Old event overwrote newer state");
+                WaitForTask(manager.ProcessPendingEvents()); Check(manager.State.Slots[0].State == AgentState.Ready, "Old event overwrote newer state");
+                // Simulate an unwritable state target without touching user settings.
+                string savedState = manager.Store.StateFile + ".fixture";
+                File.Move(manager.Store.StateFile, savedState); Directory.CreateDirectory(manager.Store.StateFile);
+                try {
+                    manager.Store.Send(new() { TaskId = manager.State.Slots[0].Id, State = AgentState.Ready, Message = "durability fixture", At = now.AddMilliseconds(100) });
+                    var batch = manager.ProcessPendingEvents();
+                    Check(ReferenceEquals(batch, manager.ProcessPendingEvents()), "Concurrent polls started duplicate batches");
+                    WaitForTask(batch);
+                    Check(Directory.GetFiles(manager.Store.EventsDirectory, "*.json").Length == 1, "Failed persistence acknowledged an event");
+                }
+                finally { Directory.Delete(manager.Store.StateFile); File.Move(savedState, manager.Store.StateFile); }
+                WaitForTask(manager.ProcessPendingEvents());
+                Check(Directory.GetFiles(manager.Store.EventsDirectory, "*.json").Length == 0 && manager.Store.Load().Slots[0].Message == "durability fixture", "Retry did not durably save before acknowledgement");
                 manager.MarkRead(manager.State.Slots[0]); Check(!manager.State.Slots[0].Unread && manager.State.Slots[0].State == AgentState.Ready, "Read conflated with task completion");
                 manager.Hotkey(1); Pump();
                 Check(manager.State.Popup?.SlotId == manager.State.Slots[0].Id && !Native.IsIconic(new(firstIdentity.Handle)), "Number did not bring up the minimized task");
@@ -572,6 +586,7 @@ public static class SelfTests
             }
             finally { if (Directory.Exists(directory)) Directory.Delete(directory, true); }
         });
+        results.AddRange(ReliabilityTests.Run());
         results.AddRange(SkinTests.Run());
         return results;
     }
@@ -607,6 +622,17 @@ public static class SelfTests
             try { if (Directory.Exists(directory)) Directory.Delete(directory, true); } catch (IOException) { }
         }
         return new("Real terminal recovery smoke", passed, detail);
+    }
+    internal static void WaitForTask(Task task)
+    {
+        if (!task.IsCompleted) {
+            var frame = new DispatcherFrame(); var watch = Stopwatch.StartNew();
+            var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(5) };
+            timer.Tick += (_, _) => { if (task.IsCompleted || watch.Elapsed.TotalSeconds > 15) frame.Continue = false; };
+            timer.Start(); try { Dispatcher.PushFrame(frame); } finally { timer.Stop(); }
+            if (!task.IsCompleted) throw new TimeoutException("Background operation did not finish");
+        }
+        task.GetAwaiter().GetResult();
     }
     private static void Pump() { var frame = new DispatcherFrame(); Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, () => frame.Continue = false); Dispatcher.PushFrame(frame); }
 }

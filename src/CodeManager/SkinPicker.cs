@@ -20,7 +20,7 @@ public sealed class SkinPicker : StackPanel
     private readonly TextBlock _description = new() { FontSize = 12, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 6, 0, 0) };
     private readonly TextBlock _assetStatus = new() { FontSize = 11, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 8, 0, 12) };
     private readonly TextBlock _feedback = new() { FontSize = 12, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 8, 0, 0) };
-    private readonly CheckBox _terminalAnimation = new() { Content = "Terminal 背景动画（较高资源占用）", IsChecked = false, Margin = new Thickness(0, 0, 0, 10) };
+    private readonly CheckBox _terminalAnimation = new() { Content = L.T("Terminal 背景动画（较高资源占用）"), IsChecked = false, Margin = new Thickness(0, 0, 0, 10) };
     private readonly UniformGrid _tiles = new() { Columns = 3, Margin = new Thickness(-4, 6, -4, 0) };
     private readonly Dictionary<Skin, Button> _tileButtons = new();
     private readonly Dictionary<string, Button> _tabs = new();
@@ -37,26 +37,26 @@ public sealed class SkinPicker : StackPanel
         var host = SkinCatalog.Current;
         foreach (var s in SkinCatalog.All) _choices.Items.Add(new ComboBoxItem { Content = s.Name, ToolTip = s.Subtitle, Tag = s.Id });
         _choices.SelectedIndex = Math.Max(0, SkinCatalog.All.ToList().FindIndex(s => s.Id == selected));
-        AutomationProperties.SetName(_choices, "皮肤套装");
+        AutomationProperties.SetName(_choices, L.T("皮肤套装"));
         // Selection state stays independent of the visual catalogue; no duplicate text dropdown.
         var heading = new StackPanel { Margin = new Thickness(0, 4, 0, 10) };
         _description.Foreground = WuxiaTheme.Brush(host.Muted);
         heading.Children.Add(_description); Children.Add(heading);
         var tabs = new WrapPanel { Margin = new Thickness(0, 0, 0, 10) };
-        foreach (var (id, label) in new[] { ("suite", "整套效果"), ("dock", "任务圆环"), ("overview", "任务总览"), ("terminal", "Terminal"), ("states", "菜单与状态") })
+        foreach (var (id, label) in new[] { ("suite", L.T("整套效果")), ("dock", L.T("任务圆环")), ("overview", L.T("任务总览")), ("terminal", "Terminal"), ("states", L.T("菜单与状态")) })
         {
             var tab = new Button { Content = label, Padding = new Thickness(12, 7, 12, 7), Margin = new Thickness(0, 0, 5, 5), MinHeight = 32, FontSize = 12, Tag = id };
-            AutomationProperties.SetName(tab, "预览" + label);
+            AutomationProperties.SetName(tab, L.T("预览") + label);
             tab.Click += (_, _) => ShowPart(id); _tabs[id] = tab; tabs.Children.Add(tab);
         }
         Children.Add(tabs);
-        var enlarge = new Button { Content = "放大预览 ↗", Padding = new Thickness(12, 7, 12, 7), Margin = new Thickness(0, 0, 0, 5), MinHeight = 32, FontSize = 12 };
+        var enlarge = new Button { Content = L.T("放大预览 ↗"), Padding = new Thickness(12, 7, 12, 7), Margin = new Thickness(0, 0, 0, 5), MinHeight = 32, FontSize = 12 };
         enlarge.Click += (_, _) =>
         {
             var scene = new SkinSuitePreview { Mode = _scene.Mode };
             scene.SetSkin(SelectedSkin, TerminalAnimationEnabled, DecorationsEnabled?.Invoke() ?? true);
             var screen = Native.ScreenAtCursor();
-            var window = new Window { Title = "主题预览 · " + SkinCatalog.Get(SelectedSkin).Name, Owner = Window.GetWindow(this), Width = Math.Min(1080, (screen.Work.Right - screen.Work.Left) / screen.Scale - 36), Height = Math.Min(640, (screen.Work.Bottom - screen.Work.Top) / screen.Scale - 36), WindowStartupLocation = WindowStartupLocation.CenterOwner, Background = WuxiaTheme.Brush(SkinCatalog.Get(SelectedSkin).Background), Content = scene, ShowInTaskbar = false };
+            var window = new Window { Title = L.T("主题预览 · ") + SkinCatalog.Get(SelectedSkin).Name, Owner = Window.GetWindow(this), Width = Math.Min(1080, (screen.Work.Right - screen.Work.Left) / screen.Scale - 36), Height = Math.Min(640, (screen.Work.Bottom - screen.Work.Top) / screen.Scale - 36), WindowStartupLocation = WindowStartupLocation.CenterOwner, Background = WuxiaTheme.Brush(SkinCatalog.Get(SelectedSkin).Background), Content = scene, ShowInTaskbar = false };
             window.ShowDialog();
         };
         tabs.Children.Add(enlarge);
@@ -66,9 +66,9 @@ public sealed class SkinPicker : StackPanel
         _assetStatus.Foreground = WuxiaTheme.Brush(host.Muted); Children.Add(_assetStatus);
         var apply = new Border { Background = WuxiaTheme.Brush(host.Surface), CornerRadius = new CornerRadius(9), Padding = new Thickness(16), Margin = new Thickness(0, 0, 0, 24) };
         var applyBody = new StackPanel();
-        applyBody.Children.Add(new TextBlock { Text = "保存并应用将同步 Terminal、圆环、槽位、总览与菜单。Terminal 配置会自动备份，正在运行的任务继续保留。", FontSize = 11, Foreground = WuxiaTheme.Brush(host.Muted), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 9) });
+        applyBody.Children.Add(new TextBlock { Text = L.T("保存并应用将同步 Terminal、圆环、槽位、总览与菜单。Terminal 配置会自动备份，正在运行的任务继续保留。"), FontSize = 11, Foreground = WuxiaTheme.Brush(host.Muted), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 9) });
         _terminalAnimation.IsChecked = terminalAnimation;
-        AutomationProperties.SetName(_terminalAnimation, "Terminal 背景动画");
+        AutomationProperties.SetName(_terminalAnimation, L.T("Terminal 背景动画"));
         _terminalAnimation.Checked += (_, _) => RefreshOptions();
         _terminalAnimation.Unchecked += (_, _) => RefreshOptions();
         applyBody.Children.Add(_feedback); apply.Child = applyBody;
@@ -88,7 +88,7 @@ public sealed class SkinPicker : StackPanel
             foreach (string color in new[] { s.Accent, s.Secondary, s.Running, s.Waiting }) swatches.Children.Add(new Border { Background = WuxiaTheme.Brush(color), Width = 14, Height = 3, CornerRadius = new CornerRadius(2), Margin = new Thickness(0, 0, 4, 0) });
             body.Children.Add(swatches); tile.Children.Add(body);
             var button = new Button { Content = tile, Padding = new Thickness(0), Margin = new Thickness(4), BorderThickness = new Thickness(1), HorizontalContentAlignment = HorizontalAlignment.Stretch, ToolTip = s.Name + "\n" + s.Subtitle, Tag = s.Id };
-            AutomationProperties.SetName(button, "选择主题 " + s.Name);
+            AutomationProperties.SetName(button, L.T("选择主题 ") + s.Name);
             button.Click += (_, _) => { _choices.SelectedIndex = SkinCatalog.All.ToList().FindIndex(row => row.Id == s.Id); };
             _tileButtons[s.Id] = button; _tiles.Children.Add(button);
         }
@@ -98,10 +98,10 @@ public sealed class SkinPicker : StackPanel
         foreach (var child in detailChildren) details.Children.Add(child);
         var catalogue = new StackPanel();
         var catalogueHeading = new DockPanel();
-        var equipment = new Button { Content = "角色与武器 →", FontSize = 11, Padding = new Thickness(8, 4, 8, 4), MinHeight = 27, Margin = new Thickness(6, 0, 0, 0) };
+        var equipment = new Button { Content = L.T("角色与武器 →"), FontSize = 11, Padding = new Thickness(8, 4, 8, 4), MinHeight = 27, Margin = new Thickness(6, 0, 0, 0) };
         equipment.Click += (_, _) => LoadoutRequested?.Invoke(); DockPanel.SetDock(equipment, Dock.Right); catalogueHeading.Children.Add(equipment);
-        catalogueHeading.Children.Add(new TextBlock { Text = "选择主题", FontSize = 17, FontWeight = FontWeights.SemiBold, VerticalAlignment = VerticalAlignment.Center }); catalogue.Children.Add(catalogueHeading);
-        catalogue.Children.Add(new TextBlock { Text = "直接点图片 · 预览不会修改当前外观", FontSize = 11, Foreground = WuxiaTheme.Brush(host.Muted), Margin = new Thickness(0, 6, 0, 10) });
+        catalogueHeading.Children.Add(new TextBlock { Text = L.T("选择主题"), FontSize = 17, FontWeight = FontWeights.SemiBold, VerticalAlignment = VerticalAlignment.Center }); catalogue.Children.Add(catalogueHeading);
+        catalogue.Children.Add(new TextBlock { Text = L.T("直接点图片 · 预览不会修改当前外观"), FontSize = 11, Foreground = WuxiaTheme.Brush(host.Muted), Margin = new Thickness(0, 6, 0, 10) });
         catalogue.Children.Add(_tiles);
         var studio = new Grid(); studio.ColumnDefinitions.Add(new()); studio.ColumnDefinitions.Add(new()); studio.RowDefinitions.Add(new() { Height = GridLength.Auto }); studio.RowDefinitions.Add(new() { Height = GridLength.Auto });
         studio.Children.Add(catalogue); Grid.SetColumn(details, 1); studio.Children.Add(details); Children.Add(studio);
@@ -138,10 +138,10 @@ public sealed class SkinPicker : StackPanel
     public void RefreshOptions() => _scene.SetSkin(SelectedSkin, TerminalAnimationEnabled, DecorationsEnabled?.Invoke() ?? true);
     private void RefreshPreview()
     {
-        var s = SkinCatalog.Get(SelectedSkin); _name.Text = s.Name; _description.Text = s.Subtitle + " · 圆环 / 总览 / Terminal / 菜单与状态";
+        var s = SkinCatalog.Get(SelectedSkin); _name.Text = s.Name; _description.Text = s.Subtitle + L.T(" · 圆环 / 总览 / Terminal / 菜单与状态");
         foreach (var pair in _tileButtons) { pair.Value.BorderBrush = WuxiaTheme.Brush(pair.Key == s.Id ? SkinCatalog.Current.Accent : SkinCatalog.Current.Border); pair.Value.BorderThickness = new Thickness(pair.Key == s.Id ? 2 : 1); }
         _terminalAnimation.IsEnabled = true;
-        _feedback.Text = "动画选项会保存；默认静态，多窗口时更省资源。";
+        _feedback.Text = L.T("动画选项会保存；默认静态，多窗口时更省资源。");
         RefreshOptions(); SelectionChanged?.Invoke();
     }
 }

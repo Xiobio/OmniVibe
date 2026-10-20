@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -74,7 +74,7 @@ public partial class DockWindow : Window
             if (!interactionTest) { Native.Decorate(this); Native.RemoveOverlayFrame(this); }
             System.Windows.Interop.HwndSource.FromHwnd(new System.Windows.Interop.WindowInteropHelper(this).Handle)?.AddHook(PointerMessage);
         };
-        if (interactionTest) { ShowInTaskbar = true; ShowActivated = true; Title = "CodeManager · 交互验证（示例任务）"; }
+        if (interactionTest) { ShowInTaskbar = true; ShowActivated = true; Title = L.T("CodeManager · 交互验证（示例任务）"); }
         Closing += (_, e) => { if (Manager != null && !Manager.Exiting) { e.Cancel = true; if (interactionTest) Manager.Exit(); else Manager.ToggleVisibility(); } };
         Closed += (_, _) => { CompositionTarget.Rendering -= DragFrame; _holdDelay.Stop(); _retractDelay.Stop(); if (_activeMenu != null) _activeMenu.IsOpen = false; ClosePreview(); };
     }
@@ -340,7 +340,7 @@ public partial class DockWindow : Window
         row.Setters.Add(new Setter(Control.PaddingProperty, new Thickness(8, 5, 8, 5)));
         menu.Resources[typeof(MenuItem)] = row;
         menu.Resources[SystemParameters.MenuPopupAnimationKey] = PopupAnimation.None;
-        menu.Template = (ControlTemplate)System.Windows.Markup.XamlReader.Parse("""
+        menu.Template = (ControlTemplate)System.Windows.Markup.XamlReader.Parse(L.T("""
 <ControlTemplate xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" TargetType="ContextMenu">
   <Border Background="{DynamicResource SkinBackgroundBrush}" BorderBrush="{DynamicResource SkinBorderBrush}" BorderThickness="1" CornerRadius="9" Padding="6">
     <StackPanel>
@@ -352,7 +352,7 @@ public partial class DockWindow : Window
     </StackPanel>
   </Border>
 </ControlTemplate>
-""");
+"""));
         menu.Loaded += (_, _) =>
         {
             if (menu.Parent is Popup popup) popup.PopupAnimation = PopupAnimation.None;
@@ -411,48 +411,48 @@ public partial class DockWindow : Window
     {
         if (Manager == null) return;
         var menu = CreateMenu();
-        if (slot.Connected) menu.Items.Add(Item("进入任务", () => Manager.ActivateSlot(slot.Number)));
-        menu.Items.Add(Item("更换角色 / 配装…", () => Manager.ShowLoadout(slot)));
-        if (slot.Occupied) menu.Items.Add(Item("编辑任务", () => Manager.Rename(slot)));
-        var advanced = new MenuItem { Header = "更多任务操作" };
+        if (slot.Connected) menu.Items.Add(Item(L.T("进入任务"), () => Manager.ActivateSlot(slot.Number)));
+        menu.Items.Add(Item(L.T("更换角色 / 配装…"), () => Manager.ShowLoadout(slot)));
+        if (slot.Occupied) menu.Items.Add(Item(L.T("编辑任务"), () => Manager.Rename(slot)));
+        var advanced = new MenuItem { Header = L.T("更多任务操作") };
         var legacy = new ContextMenu();
         if (slot.Occupied)
         {
-            legacy.Items.Add(Item("唤出窗口", () => Manager.ActivateSlot(slot.Number), slot.Connected));
-            legacy.Items.Add(Item("编辑名称、颜色与项目…", () => Manager.Rename(slot)));
-            legacy.Items.Add(Item("恢复这个任务（自动打开并重连）", () => { if (RecoveryLaunch.Validation(slot) != null) Manager.Rename(slot); SetHint(Manager.RestoreTask(slot)); }, !slot.Connected && slot.Recovery == null));
-            legacy.Items.Add(Item("收起窗口", () => Manager.Park(slot), slot.Connected));
+            legacy.Items.Add(Item(L.T("唤出窗口"), () => Manager.ActivateSlot(slot.Number), slot.Connected));
+            legacy.Items.Add(Item(L.T("编辑名称、颜色与项目…"), () => Manager.Rename(slot)));
+            legacy.Items.Add(Item(L.T("恢复这个任务（自动打开并重连）"), () => { if (RecoveryLaunch.Validation(slot) != null) Manager.Rename(slot); SetHint(Manager.RestoreTask(slot)); }, !slot.Connected && slot.Recovery == null));
+            legacy.Items.Add(Item(L.T("收起窗口"), () => Manager.Park(slot), slot.Connected));
             legacy.Items.Add(new Separator());
-            var statuses = new MenuItem { Header = "手动标记状态" };
+            var statuses = new MenuItem { Header = L.T("手动标记状态") };
             foreach (var state in Enum.GetValues<AgentState>())
             {
-                string label = state switch { AgentState.Unknown => "状态未知", AgentState.Running => "正在执行", AgentState.Waiting => "等待我处理", AgentState.Ready => "本轮已回复", _ => "发生错误" };
+                string label = state switch { AgentState.Unknown => L.T("状态未知"), AgentState.Running => L.T("正在执行"), AgentState.Waiting => L.T("等待我处理"), AgentState.Ready => L.T("本轮已回复"), _ => L.T("发生错误") };
                 statuses.Items.Add(Item(label, () => Manager.SetStatus(slot, state, "手动标记", "")));
             }
             legacy.Items.Add(statuses);
-            legacy.Items.Add(Item("标记已查看", () => Manager.MarkRead(slot)));
-            menu.Items.Add(Item("连接当前 CLI 会话状态…", () => Manager.ConnectExistingSession(slot)));
-            var integration = new MenuItem { Header = "精确状态 hooks 接入" };
+            legacy.Items.Add(Item(L.T("标记已查看"), () => Manager.MarkRead(slot)));
+            menu.Items.Add(Item(L.T("连接当前 CLI 会话状态…"), () => Manager.ConnectExistingSession(slot)));
+            var integration = new MenuItem { Header = L.T("精确状态 hooks 接入") };
             integration.Items.Add(Item("Claude Code…", () => Manager.ConnectAgent(slot, "claude")));
             integration.Items.Add(Item("Codex…", () => Manager.ConnectAgent(slot, "codex")));
             legacy.Items.Add(integration);
-            var move = new MenuItem { Header = "移动到槽位" };
+            var move = new MenuItem { Header = L.T("移动到槽位") };
             foreach (Slot destination in Manager.State.Slots.Where(s => !s.Occupied))
-                move.Items.Add(Item("槽位 " + destination.Number, () => Manager.MoveSlot(slot, destination)));
+                move.Items.Add(Item(L.T("槽位 ") + destination.Number, () => Manager.MoveSlot(slot, destination)));
             move.IsEnabled = move.Items.Count > 0; legacy.Items.Add(move);
             legacy.Items.Add(new Separator());
         }
-        legacy.Items.Add(Item(slot.Occupied ? "重新连接窗口（保留名称）…" : "选择一个已有窗口…", () => Manager.PickWindow(slot)));
-        if (slot.Occupied) legacy.Items.Add(Item("移出武器栏（保留窗口）", () => Manager.Remove(slot)));
+        legacy.Items.Add(Item(slot.Occupied ? L.T("重新连接窗口（保留名称）…") : L.T("选择一个已有窗口…"), () => Manager.PickWindow(slot)));
+        if (slot.Occupied) legacy.Items.Add(Item(L.T("移出武器栏（保留窗口）"), () => Manager.Remove(slot)));
         legacy.Items.Add(new Separator());
-        var management = new MenuItem { Header = "OmniVibe 管理" };
+        var management = new MenuItem { Header = L.T("OmniVibe 管理") };
         var commands = BuildManagementMenu();
         while (commands.Items.Count > 0) { var command = commands.Items[0]; commands.Items.RemoveAt(0); management.Items.Add(command); }
         legacy.Items.Add(management);
         while (legacy.Items.Count > 0) { var command = legacy.Items[0]; legacy.Items.RemoveAt(0); advanced.Items.Add(command); }
-        if (!slot.Occupied) menu.Items.Add(Item("选择窗口", () => Manager.PickWindow(slot)));
+        if (!slot.Occupied) menu.Items.Add(Item(L.T("选择窗口"), () => Manager.PickWindow(slot)));
         menu.Items.Add(advanced);
-        if (slot.Occupied) menu.Items.Add(Item("移出管理", () => Manager.Remove(slot)));
+        if (slot.Occupied) menu.Items.Add(Item(L.T("移出管理"), () => Manager.Remove(slot)));
         OpenMenu(target, menu);
     }
     private void MenuClick(object sender, RoutedEventArgs e)
@@ -464,16 +464,16 @@ public partial class DockWindow : Window
     {
         var menu = CreateMenu();
         if (Manager == null) return menu;
-        menu.Items.Add(Item("添加窗口", AddWindow, Manager.State.Slots.Any(s => !s.Occupied)));
-        menu.Items.Add(Item("任务总览", () => Manager.ToggleInventory()));
-        menu.Items.Add(Item(Manager.State.Layout.Count > 0 ? "恢复布局" : "排列窗口", () => Manager.RequestOverview()));
+        menu.Items.Add(Item(L.T("添加窗口"), AddWindow, Manager.State.Slots.Any(s => !s.Occupied)));
+        menu.Items.Add(Item(L.T("任务总览"), () => Manager.ToggleInventory()));
+        menu.Items.Add(Item(Manager.State.Layout.Count > 0 ? L.T("恢复布局") : L.T("排列窗口"), () => Manager.RequestOverview()));
         menu.Items.Add(new Separator());
-        menu.Items.Add(Item("设置", () => Manager.ShowSettings()));
-        menu.Items.Add(Item("最近任务 / 恢复工作现场", () => Manager.ShowRecovery()));
-        menu.Items.Add(Item("快速上手", () => Manager.ShowHelp()));
-        menu.Items.Add(Item("隐藏悬浮入口", () => Manager.ToggleVisibility()));
+        menu.Items.Add(Item(L.T("设置"), () => Manager.ShowSettings()));
+        menu.Items.Add(Item(L.T("最近任务 / 恢复工作现场"), () => Manager.ShowRecovery()));
+        menu.Items.Add(Item(L.T("快速上手"), () => Manager.ShowHelp()));
+        menu.Items.Add(Item(L.T("隐藏悬浮入口"), () => Manager.ToggleVisibility()));
         menu.Items.Add(new Separator());
-        menu.Items.Add(Item("退出 · 终端继续运行", () => Manager.Exit()));
+        menu.Items.Add(Item(L.T("退出 · 终端继续运行"), () => Manager.Exit()));
         return menu;
     }
     private void AddWindow()

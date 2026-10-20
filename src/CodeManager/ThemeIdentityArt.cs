@@ -34,7 +34,7 @@ internal static class ThemeIdentityArt
         var image = Decode(file) ?? (file != fallback ? Decode(fallback) : null);
         Images[id] = image; return image;
     }
-    internal static string Name(Skin skin) => Files.TryGetValue(SkinCatalog.Get(skin).Slug,out var asset) ? asset.Name : "主题灵物";
+    internal static string Name(Skin skin) => L.IsEnglish ? "Theme companion" : Files.TryGetValue(SkinCatalog.Get(skin).Slug,out var asset) ? asset.Name : "主题灵物";
     private static BitmapSource? Decode(string path)
     {
         try {

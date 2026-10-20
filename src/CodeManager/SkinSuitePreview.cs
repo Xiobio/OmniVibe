@@ -40,7 +40,7 @@ public sealed class SkinSuitePreview : FrameworkElement
             if (_gif != null && _mode is "suite" or "terminal")
             {
                 try { _frame = (_frame + 1) % _frames; _gif.SelectActiveFrame(System.Drawing.Imaging.FrameDimension.Time, _frame); _terminal = DecodeFrame(_gif); }
-                catch (Exception ex) when (ex is ArgumentException or ExternalException) { DisposeAnimation(); UpdatePlayback(); AssetStatus = "动效暂不可用，已显示静态预览"; AssetStatusChanged?.Invoke(); }
+                catch (Exception ex) when (ex is ArgumentException or ExternalException) { DisposeAnimation(); UpdatePlayback(); AssetStatus = L.T("动效暂不可用，已显示静态预览"); AssetStatusChanged?.Invoke(); }
             }
             InvalidateVisual();
         };
@@ -57,7 +57,7 @@ public sealed class SkinSuitePreview : FrameworkElement
         _art = decorations ? Bitmap(_skin.Artwork) : null;
         string suffix = decorations ? "c-v1" : "frame-only-v1";
         _terminal = Bitmap($"themes/windows-terminal/assets/refined-v1/{_skin.Slug}-{suffix}.png");
-        AssetStatus = _terminal == null ? "Terminal 资源未找到，显示配色回退" : "Terminal 使用实际背景资源 · 保存后同步整套外观";
+        AssetStatus = _terminal == null ? L.T("Terminal 资源未找到，显示配色回退") : L.T("Terminal 使用实际背景资源 · 保存后同步整套外观");
         if (IsLoaded) LoadAnimation();
         UpdatePlayback(); InvalidateVisual(); AssetStatusChanged?.Invoke();
     }
@@ -78,7 +78,7 @@ public sealed class SkinSuitePreview : FrameworkElement
             _frames = _gif.GetFrameCount(System.Drawing.Imaging.FrameDimension.Time); _frame = 0;
             _terminal = DecodeFrame(_gif);
         }
-        catch (Exception ex) when (ex is IOException or ArgumentException or ExternalException) { DisposeAnimation(); AssetStatus = "动效暂不可用，已显示静态预览"; }
+        catch (Exception ex) when (ex is IOException or ArgumentException or ExternalException) { DisposeAnimation(); AssetStatus = L.T("动效暂不可用，已显示静态预览"); }
     }
     private void DisposeAnimation() { _gif?.Dispose(); _gif = null; _gifStream?.Dispose(); _gifStream = null; _frames = 0; }
     private static BitmapSource DecodeFrame(System.Drawing.Image image)
@@ -114,14 +114,14 @@ public sealed class SkinSuitePreview : FrameworkElement
         for (int x = 0; x < 960; x += 32) dc.DrawLine(new Pen(B(_skin.Muted), .5), new Point(x, 0), new Point(x, 490));
         dc.Pop();
         Text(dc, _skin.Name, 24, 18, 22, _skin.Text, 740, true);
-        Text(dc, "示例工作台 / 预览不修改当前任务", 24, 49, 12, _skin.Muted, 700);
+        Text(dc, L.T("示例工作台 / 预览不修改当前任务"), 24, 49, 12, _skin.Muted, 700);
         switch (_mode)
         {
             case "terminal": Terminal(dc, new Rect(24, 85, 912, 375)); break;
             case "dock":
                 Ring(dc, new Point(310, 275), 160);
-                Text(dc, "固定槽位，快速唤出", 575, 130, 24, _skin.Text, 320, true);
-                Text(dc, "01  网站重构\n02  接口检查\n03  测试补齐\n\n运行、等待与已回复分别标记。\n这里只演示外观，不操作窗口。", 575, 181, 16, _skin.Muted, 315); break;
+                Text(dc, L.T("固定槽位，快速唤出"), 575, 130, 24, _skin.Text, 320, true);
+                Text(dc, L.T("01  网站重构\n02  接口检查\n03  测试补齐\n\n运行、等待与已回复分别标记。\n这里只演示外观，不操作窗口。"), 575, 181, 16, _skin.Muted, 315); break;
             case "overview": Overview(dc, new Rect(24, 85, 912, 375), true); break;
             case "states": Menu(dc, new Rect(40, 95, 340, 342)); States(dc, 435, 112); break;
             default:
@@ -129,9 +129,9 @@ public sealed class SkinSuitePreview : FrameworkElement
                 Overview(dc, new Rect(558, 92, 378, 207), false);
                 Ring(dc, new Point(751, 388), 74);
                 Text(dc, "TERMINAL", 25, 73, 10, _skin.Muted, 300, true);
-                Text(dc, "任务总览", 559, 73, 11, _skin.Muted, 300, true);
-                Text(dc, "圆环与槽位", 558, 326, 12, _skin.Muted, 120);
-                Text(dc, "同一套材质、状态与配色", 24, 426, 15, _skin.Text, 500);
+                Text(dc, L.T("任务总览"), 559, 73, 11, _skin.Muted, 300, true);
+                Text(dc, L.T("圆环与槽位"), 558, 326, 12, _skin.Muted, 120);
+                Text(dc, L.T("同一套材质、状态与配色"), 24, 426, 15, _skin.Text, 500);
                 Swatches(dc, 24, 455); break;
         }
         dc.Pop(); dc.Pop();
@@ -158,12 +158,12 @@ public sealed class SkinSuitePreview : FrameworkElement
         // Motion being off must not hide the frame-only PNG that the applier installs.
         if (_terminal != null) dc.DrawImage(_terminal, body);
         dc.DrawRectangle(B(_skin.Surface), null, new Rect(r.X, r.Y, r.Width, 27));
-        Text(dc, "●  OmniVibe / 示例 Terminal", r.X + 12, r.Y + 6, 11, _skin.Text, r.Width - 70);
+        Text(dc, L.T("●  OmniVibe / 示例 Terminal"), r.X + 12, r.Y + 6, 11, _skin.Text, r.Width - 70);
         Text(dc, "−  □  ×", r.Right - 57, r.Y + 6, 11, _skin.Muted, 55);
         {
             double font = r.Width > 700 ? 19 : 13, step = font * 1.85;
             double x = body.X + body.Width * .045, y = body.Y + 25;
-            foreach (var (line, color) in new[] { ("$ codex resume --last", _skin.Text), ("正在检查任务恢复与窗口切换…", _skin.Muted), ("", _skin.Text), ("✓ 任务与窗口绑定保持不变", _skin.Running), ("✓ 外框与正文区域分离", _skin.Running), ("! 等待你的下一条指令", _skin.Waiting) }) { Text(dc, line, x, y, font, color, body.Width * .75); y += step; }
+            foreach (var (line, color) in new[] { ("$ codex resume --last", _skin.Text), (L.T("正在检查任务恢复与窗口切换…"), _skin.Muted), ("", _skin.Text), (L.T("✓ 任务与窗口绑定保持不变"), _skin.Running), (L.T("✓ 外框与正文区域分离"), _skin.Running), (L.T("! 等待你的下一条指令"), _skin.Waiting) }) { Text(dc, line, x, y, font, color, body.Width * .75); y += step; }
         }
         dc.Pop(); dc.DrawRoundedRectangle(null, new Pen(B(_skin.Border), 1), r, 8, 8);
     }
@@ -173,7 +173,7 @@ public sealed class SkinSuitePreview : FrameworkElement
         Text(dc, _skin.OverviewTitle, r.X + 14, r.Y + 10, large ? 21 : 14, _skin.Text, r.Width - 30, true);
         double top = large ? 54 : 37, gap = large ? 12 : 7;
         double w = (r.Width - gap * 4) / 3, h = (r.Height - top - gap * 4) / 3;
-        string[] names = { "网站重构", "接口检查", "测试补齐", "文档更新", "状态未知", "窗口断开", "空槽位", "空槽位", "空槽位" };
+        string[] names = { L.T("网站重构"), L.T("接口检查"), L.T("测试补齐"), L.T("文档更新"), L.T("状态未知"), L.T("窗口断开"), L.T("空槽位"), L.T("空槽位"), L.T("空槽位") };
         string[] colors = { _skin.Running, _skin.Waiting, _skin.Ready, _skin.Error, _skin.Unknown, _skin.Unknown };
         for (int i = 0; i < 9; i++)
         {
@@ -184,9 +184,9 @@ public sealed class SkinSuitePreview : FrameworkElement
             double fs = large ? 15 : 10;
             double portrait = large ? 78 : 34;
             if (i < 6) EquipmentCatalog.Draw(dc, DemoLoadout[i], new Rect(c.Right-portrait-8, c.Y+3, portrait, c.Height-6), skin: _skin.Id);
-            Text(dc, (i + 1).ToString("00") + "  " + (i < 6 ? EquipmentCatalog.Name(DemoLoadout[i], _skin.Id) : "+ 空槽位"), c.X + 9, c.Y + 9, fs, _skin.CardText, w - (i < 6 ? portrait + 18 : 18), true);
+            Text(dc, (i + 1).ToString("00") + "  " + (i < 6 ? EquipmentCatalog.Name(DemoLoadout[i], _skin.Id) : L.T("+ 空槽位")), c.X + 9, c.Y + 9, fs, _skin.CardText, w - (i < 6 ? portrait + 18 : 18), true);
             if (large && i < 6) Text(dc, names[i], c.X+9, c.Y+32, 11, _skin.CardText, w-portrait-18);
-            if (i < 6) { dc.DrawEllipse(B(colors[i]), null, new Point(c.X + 12, c.Bottom - (large ? 17 : 10)), 2.5, 2.5); Text(dc, new[] { "运行中", "等待处理", "本轮已回复", "错误示例", "未知", "已断开" }[i], c.X + 21, c.Bottom - (large ? 25 : 17), large ? 12 : 9, _skin.CardText, w - portrait - 28); }
+            if (i < 6) { dc.DrawEllipse(B(colors[i]), null, new Point(c.X + 12, c.Bottom - (large ? 17 : 10)), 2.5, 2.5); Text(dc, new[] { L.T("运行中"), L.T("等待处理"), L.T("本轮已回复"), L.T("错误示例"), L.T("未知"), L.T("已断开") }[i], c.X + 21, c.Bottom - (large ? 25 : 17), large ? 12 : 9, _skin.CardText, w - portrait - 28); }
             dc.Pop();
         }
     }
@@ -215,9 +215,9 @@ public sealed class SkinSuitePreview : FrameworkElement
     private void Menu(DrawingContext dc, Rect r)
     {
         Plate(dc, r, _skin.Surface);
-        Text(dc, "右键菜单", r.X + 22, r.Y + 16, 12, _skin.Muted, r.Width - 44);
+        Text(dc, L.T("右键菜单"), r.X + 22, r.Y + 16, 12, _skin.Muted, r.Width - 44);
         int i = 0;
-        foreach (string item in new[] { "打开任务总览", "唤出窗口", "编辑任务与项目…", "连接自动任务状态", "移出列表，保留窗口" })
+        foreach (string item in new[] { L.T("打开任务总览"), L.T("唤出窗口"), L.T("编辑任务与项目…"), L.T("连接自动任务状态"), L.T("移出列表，保留窗口") })
         {
             double y = r.Y + 60 + i * 51;
             if (i == 1) dc.DrawRoundedRectangle(B(_skin.Elevated), null, new Rect(r.X + 10, y - 9, r.Width - 20, 43), 5, 5);
@@ -226,9 +226,9 @@ public sealed class SkinSuitePreview : FrameworkElement
     }
     private void States(DrawingContext dc, double x, double y)
     {
-        Text(dc, "每种状态，都能一眼识别", x, y, 23, _skin.Text, 460, true);
+        Text(dc, L.T("每种状态，都能一眼识别"), x, y, 23, _skin.Text, 460, true);
         int i = 0;
-        foreach (var (label, color) in new[] { ("运行中 · 正在执行", _skin.Running), ("等待处理 · 需要你决策", _skin.Waiting), ("本轮已回复 · 可继续跟进", _skin.Ready), ("错误 · 示例警示状态", _skin.Error), ("未知 · 尚未接入状态事件", _skin.Unknown) })
+        foreach (var (label, color) in new[] { (L.T("运行中 · 正在执行"), _skin.Running), (L.T("等待处理 · 需要你决策"), _skin.Waiting), (L.T("本轮已回复 · 可继续跟进"), _skin.Ready), (L.T("错误 · 示例警示状态"), _skin.Error), (L.T("未知 · 尚未接入状态事件"), _skin.Unknown) })
         {
             double top = y + 61 + i * 47; dc.DrawEllipse(B(color), null, new Point(x + 5, top + 10), 5, 5);
             Text(dc, label, x + 24, top, 17, color, 435); i++;

@@ -20,3 +20,6 @@ bridge-errors.log
 # Python build and review caches
 __pycache__/
 *.py[cod]
+
+# Rebuildable legacy export; the current v2 download remains versioned.
+assets/brand/OmniVibe-brand-kit.zip

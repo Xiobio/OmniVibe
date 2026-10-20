@@ -39,24 +39,24 @@ public static class TerminalThemeService
     public static async Task<TerminalThemeReceipt> ApplyAsync(Preferences preferences, string? settingsPath = null, string? assetRoot = null)
     {
         settingsPath ??= FindSettings();
-        if (settingsPath == null) return new(false,"","未找到 Windows Terminal 配置，已仅保存 OmniVibe 外观。");
+        if (settingsPath == null) return new(false,"",L.T("未找到 Windows Terminal 配置，已仅保存 OmniVibe 外观。"));
         string script = Path.Combine(AppContext.BaseDirectory,"themes/windows-terminal/Apply-Skin.ps1");
-        if (!File.Exists(script)) throw new IOException("Terminal 外观应用器缺失，请从源码重新运行。");
+        if (!File.Exists(script)) throw new IOException(L.T("Terminal 外观应用器缺失，请从源码重新运行。"));
         var start = new ProcessStartInfo("powershell.exe") { UseShellExecute = false, CreateNoWindow = true, RedirectStandardOutput = true, RedirectStandardError = true, StandardOutputEncoding = Encoding.UTF8, StandardErrorEncoding = Encoding.UTF8 };
         foreach (string arg in new[] { "-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass", "-File", script, "-SettingsPath", Path.GetFullPath(settingsPath) }) start.ArgumentList.Add(arg);
         if (assetRoot != null) { start.ArgumentList.Add("-AssetRoot"); start.ArgumentList.Add(Path.GetFullPath(assetRoot)); }
         foreach (string arg in Arguments(preferences.Skin,preferences.TerminalAnimation,preferences.DecorationsEnabled)) start.ArgumentList.Add(arg);
-        using var process = Process.Start(start) ?? throw new IOException("无法启动 Terminal 外观应用器。");
+        using var process = Process.Start(start) ?? throw new IOException(L.T("无法启动 Terminal 外观应用器。"));
         var output = process.StandardOutput.ReadToEndAsync(); var error = process.StandardError.ReadToEndAsync();
         using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(60));
         try { await process.WaitForExitAsync(timeout.Token).ConfigureAwait(false); }
-        catch (OperationCanceledException) { try { process.Kill(entireProcessTree:true); } catch (InvalidOperationException) { } throw new IOException("Terminal 外观应用超时，当前 OmniVibe 主题未更改。"); }
+        catch (OperationCanceledException) { try { process.Kill(entireProcessTree:true); } catch (InvalidOperationException) { } throw new IOException(L.T("Terminal 外观应用超时，当前 OmniVibe 主题未更改。")); }
         string text = await output.ConfigureAwait(false), problem = await error.ConfigureAwait(false);
-        if (process.ExitCode != 0) throw new IOException(problem.Split(new[] {'\r','\n'},StringSplitOptions.RemoveEmptyEntries).FirstOrDefault() ?? "Terminal 外观未能应用，请重试。");
+        if (process.ExitCode != 0) throw new IOException(problem.Split(new[] {'\r','\n'},StringSplitOptions.RemoveEmptyEntries).FirstOrDefault() ?? L.T("Terminal 外观未能应用，请重试。"));
         using var result = JsonDocument.Parse(text);
         var json = result.RootElement;
         string backup = json.GetProperty("BackupPath").GetString() ?? "";
-        if (json.GetProperty("Skin").GetString() != SkinCatalog.Get(preferences.Skin).Slug || !json.GetProperty("AllProfiles").GetBoolean() || !File.Exists(backup)) throw new IOException("Terminal 应用结果不完整，未确认同步成功。");
-        return new(true,backup,"Terminal 与 OmniVibe 已应用同一套主题。");
+        if (json.GetProperty("Skin").GetString() != SkinCatalog.Get(preferences.Skin).Slug || !json.GetProperty("AllProfiles").GetBoolean() || !File.Exists(backup)) throw new IOException(L.T("Terminal 应用结果不完整，未确认同步成功。"));
+        return new(true,backup,L.T("Terminal 与 OmniVibe 已应用同一套主题。"));
     }
 }

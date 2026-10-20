@@ -1,0 +1,42 @@
+{
+  "tests": {
+    "localization": {
+      "passed": 4,
+      "total": 4,
+      "failures": []
+    },
+    "reliability": {
+      "passed": 6,
+      "total": 6,
+      "failures": []
+    },
+    "skin": {
+      "passed": 24,
+      "total": 24,
+      "failures": []
+    },
+    "task-status": {
+      "passed": 12,
+      "total": 12,
+      "failures": []
+    }
+  },
+  "readmes": {
+    "README.md": {
+      "missing_paths": [],
+      "theme_images": 39
+    },
+    "README.en.md": {
+      "missing_paths": [],
+      "theme_images": 39
+    }
+  },
+  "build": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "reload": {
+    "bindings_preserved": true,
+    "terminal_processes_preserved": true
+  }
+}

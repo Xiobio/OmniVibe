@@ -55,15 +55,15 @@ public sealed class InventoryWindow : Window
         var header = new Grid { Margin = new Thickness(0, 0, 0, scrollingLayout ? 9 : 15) };
         header.ColumnDefinitions.Add(new ColumnDefinition()); header.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
         var title = new StackPanel();
-        title.Children.Add(new TextBlock { Text = presentationPreview ? "任务总览 / 皮肤预览 · 示例任务" : duringDrag ? "拖入窗口，松手收纳到指定槽位" : "任务总览 · " + occupied.Count + " 个任务", FontSize = 10, Foreground = WuxiaTheme.Brush(skin.Muted) });
+        title.Children.Add(new TextBlock { Text = presentationPreview ? L.T("任务总览 / 皮肤预览 · 示例任务") : duringDrag ? L.T("拖入窗口，松手收纳到指定槽位") : L.T("任务总览 · ") + occupied.Count + L.T(" 个任务"), FontSize = 10, Foreground = WuxiaTheme.Brush(skin.Muted) });
         title.Children.Add(new TextBlock { Text = skin.OverviewTitle, FontSize = scrollingLayout ? 22 : 26, TextTrimming = TextTrimming.CharacterEllipsis, FontFamily = skin.TitleFont, FontWeight = FontWeights.SemiBold, Foreground = WuxiaTheme.Brush(skin.Text), Margin = new Thickness(0, 3, 0, 3) });
-        if (!scrollingLayout && Width >= 640) title.Children.Add(new TextBlock { Text = "滚轮 / 方向键浏览     ·     Enter 进入     ·     数字直达", FontSize = 10, Foreground = WuxiaTheme.Brush(skin.Muted) });
+        if (!scrollingLayout && Width >= 640) title.Children.Add(new TextBlock { Text = L.T("滚轮 / 方向键浏览     ·     Enter 进入     ·     数字直达"), FontSize = 10, Foreground = WuxiaTheme.Brush(skin.Muted) });
         header.Children.Add(title);
-        var close = new Button { Content = "×", ToolTip = "Tab / Esc 关闭", FontSize = 23, Width = 36, Height = 36, Background = Brushes.Transparent, BorderThickness = new Thickness(0), VerticalAlignment = VerticalAlignment.Top, Padding = new Thickness(0), Margin = new Thickness(8, 0, 0, 0) };
+        var close = new Button { Content = "×", ToolTip = L.T("Tab / Esc 关闭"), FontSize = 23, Width = 36, Height = 36, Background = Brushes.Transparent, BorderThickness = new Thickness(0), VerticalAlignment = VerticalAlignment.Top, Padding = new Thickness(0), Margin = new Thickness(8, 0, 0, 0) };
         close.Click += (_, _) => Dismiss?.Invoke();
         var actions = new StackPanel { Orientation = Orientation.Horizontal, VerticalAlignment = VerticalAlignment.Top };
         if (!duringDrag && occupied.Count > 0 && ordered.FirstOrDefault(s => !s.Occupied) is Slot empty) {
-            var add = new Button { Content = "＋ 添加", ToolTip = "选择一个已有窗口", FontSize = 11, MinHeight = 32, Padding = new Thickness(9, 5, 9, 5), Margin = new Thickness(8, 2, 0, 0) };
+            var add = new Button { Content = L.T("＋ 添加"), ToolTip = L.T("选择一个已有窗口"), FontSize = 11, MinHeight = 32, Padding = new Thickness(9, 5, 9, 5), Margin = new Thickness(8, 2, 0, 0) };
             add.Click += (_, _) => Choose?.Invoke(empty.Number); actions.Children.Add(add);
         }
         actions.Children.Add(close); Grid.SetColumn(actions, 1); header.Children.Add(actions); root.Children.Add(header);
@@ -121,8 +121,8 @@ public sealed class InventoryWindow : Window
     {
         foreach (var slot in _slots) { _cards[slot.Number].Update(slot.Number == SelectedNumber); _visualStates[slot.Number] = VisualKey(slot); }
         var selected = _slots.FirstOrDefault(s => s.Number == SelectedNumber);
-        _hint.Text = selected == null ? "所有任务，一个工作现场" : SkinCatalog.Current.SlotNumber(selected.Number) + "  /  " + (selected.Occupied ? selected.DisplayName + "    ·    Enter 进入 · Tab / Esc 关闭" : "空槽位    ·    点击或 Enter 选择已有窗口");
-        if (_viewport != null) { _hint.Text = "滚动总览 · 部分预览收起 · 方向键可浏览全部任务"; _hint.ToolTip = "屏幕工作区较短时，任务保持可读尺寸。只有完整显示在视口内的窗口预览实时更新；滚动到任务后恢复预览。"; }
+        _hint.Text = selected == null ? L.T("所有任务，一个工作现场") : SkinCatalog.Current.SlotNumber(selected.Number) + "  /  " + (selected.Occupied ? selected.DisplayName + L.T("    ·    Enter 进入 · Tab / Esc 关闭") : L.T("空槽位    ·    点击或 Enter 选择已有窗口"));
+        if (_viewport != null) { _hint.Text = L.T("滚动总览 · 部分预览收起 · 方向键可浏览全部任务"); _hint.ToolTip = L.T("屏幕工作区较短时，任务保持可读尺寸。只有完整显示在视口内的窗口预览实时更新；滚动到任务后恢复预览。"); }
     }
     internal void Browse(int delta) { var next = _wheel.Move(delta, _slots.Where(s => _viewport != null || s.Connected).Select(s => s.Number).ToArray(), SelectedNumber); if (next.HasValue) Select(next.Value); }
     internal void Select(int n) { if (!_cards.ContainsKey(n)) return; SelectedNumber = n; RefreshSelection(); BringSelectedIntoView(); }

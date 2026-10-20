@@ -1,57 +1,99 @@
-# OmniVibe
+<p align="center"><img src="assets/brand/v4/icons/omnivibe-128.png" width="80" height="80" alt="OmniVibe"></p>
+<h1 align="center">OmniVibe</h1>
+<p align="center"><strong>像玩游戏一样，沉浸式 Vibe Coding。</strong><br>
+窗口不再难找，任务随手切换，工作空间由你定义。</p>
+<p align="center"><a href="README.md">简体中文</a> · <a href="README.en.md">English</a> · <a href="docs/project-kit/showcase.md">主题图册</a> · <a href="docs/project-kit/README.md">Docs</a> · <a href="CONTRIBUTING.md">Contribute</a></p>
+<p align="center"><strong>WINDOW MANAGEMENT · GAME-INSPIRED INTERACTION · YOUR OWN STYLE</strong><br><sub>Windows · .NET 10 · Development preview · MIT code</sub></p>
 
-![OmniVibe：让并行开发，像切换装备一样直觉。](assets/brand/v2/promo/readme-banner-1600x600.png)
+**开了十几个终端，却总找不到刚才那个？** 写代码之外，你还在反复 Alt+Tab、辨认相似的标题、拖动窗口、调整大小。
 
-**The Open-Source Task Inventory for Vibe Coding**
+**OmniVibe 把散落的终端和 AI Agent 窗口收进固定槽位，让你像切换游戏角色、装备或技能一样切换任务。** 平时是一个小巧入口，需要时展开轮盘；想同时看代码、日志和测试，一键排好。再用喜欢的角色、主题插画与声音，把工作桌面变成属于自己的沉浸式空间。
 
-让并行开发，像切换装备一样直觉。
+**少找窗口，多一点心流。让 Vibe Coding 更轻松，也更有趣。**
 
-OmniVibe 是面向多 AI Agent 并行开发的 Windows 桌面任务装备核心。平时只有一个 116×116 的悬浮装备入口，鼠标移上去展开任务，点击切换，移开收回。用熟悉的角色、武器或藏品辨认窗口，任务详情悬停即显；终端与任务身份始终独立于外观。
+> **正在成长的开发预览版。** OmniVibe 已具备窗口收纳、快捷切换和排列等核心能力，但部分功能与交互仍未完善，兼容性也需要更多真实场景验证。欢迎体验、反馈问题、提交 PR，和我们一起把它打磨成更顺手、更有趣的 Vibe Coding 工具。[查看当前限制](#使用范围) · [参与贡献](CONTRIBUTING.md)
 
-项目以完全开源、可切换皮肤和社区自定义皮肤为目标。当前为本地开发版，源码及程序名称仍使用 `CodeManager`，技术栈为 C# / WPF / Win32。
+## 先看看效果
 
-## 当前能力
+**默认主题：黑神话：悟空 · 灵蕴法宝匣。** 从轮盘、任务总览到终端外观统一氛围，音效默认跟随主题。音频需要本机安装对应资源；缺少资源时保持静音，也可以导入自己的 WAV。
 
-- 拖入或选择已有窗口，收纳、切换和排列任务。
-- 常驻装备入口支持悬停展开、长按拖动位置；空槽的轻量「＋」直接添加窗口，悬停「×」移出管理并保留终端。
-- 使用 `Alt + 1–9`、`Alt + 滚轮` 快速进入任务。
-- 按住 `Alt+Q` 打开九方向任务轮盘，指向后松键切换。
-- 使用 `Tab` 打开任务总览，查看窗口预览与任务状态。
-- 接入 Claude Code / Codex hooks，显示运行、等待、本轮已回复等状态。
-- 保存任务配置，重连窗口或恢复已配置的工作现场。
-- 内置十套完整风格皮肤及三套经典主题，覆盖任务栏、总览、菜单、设置和状态反馈。
-- 13 套内容包各有 9 个独立透明实体，共 117 张；内置配装按主题分别记忆，导入图片随任务跨主题保留。
-- 窗口切换使用单个游戏标志音；音效主题可跟随界面或单独保存，支持音量与自定义 WAV。真实游戏音源单独安装，缺失时静音，不用合成音冒充。
-- 配套十套 Windows Terminal 外观，包含原创插画、边饰与配色；默认静态背景，动态背景单独选择，可在设置中应用并自动备份原配置。
-- 动画、音效与装饰独立开关，换肤保留任务绑定、窗口位置与会话信息。
+<table><tr>
+<td align="center"><img src="docs/game-suite-refinement/screens/deck-relic-decorated.png" width="300" alt="黑神话主题展开轮盘"><br><strong>指向任务，切入状态</strong></td>
+<td align="center"><img src="docs/game-suite-refinement/screens/inventory-relic.png" width="540" alt="黑神话主题任务总览"><br><strong>多个窗口，一眼看清</strong></td>
+</tr></table>
 
-社区皮肤包的导入、独立制作和分发属于后续建设目标，当前尚未提供完整开放皮肤机制。开源发布前还需确定并添加许可证。
+![黑神话主题终端外观](docs/terminal-frame-refinement/relic-regular.png)
 
-## 快速启动
+<sub>展示图来自原生组件测试，包含示例任务；不是实时录屏。部分截图早于最新版本。游戏相关主题不代表官方合作。</sub>
 
-需要 Windows、.NET 10 SDK 和 Windows Desktop Runtime。在项目根目录执行：
+## 把管理窗口的时间，还给创作
+
+| 你遇到的麻烦 | OmniVibe 帮你做什么 |
+| --- | --- |
+| **窗口太多，总被遮住、找不到** | 集中收纳到 **1–9 固定槽位**，位置不因切换顺序打乱 |
+| **反复 Alt+Tab，标题又长得一样** | **编号直达、鼠标轮盘、角色图标**，形成自己的任务记忆 |
+| **想并排看日志和代码，排版很费劲** | **一键排列 / 恢复**，支持网格、分栏、分行、主窗居左 |
+| **不知道哪个 Agent 在等我** | **任务总览 + 状态提示**；接入 CLI 事件后显示运行、等待、回复等状态 |
+| **管理面板占地、工作桌面单调** | **小巧入口，悬停展开**；主题、配装图片、声音与动画可调 |
+
+### 收纳 → 切换 → 排列 → 回到心流
+
+1. **给任务一个固定位置。** 前端放 1 号、接口放 2 号、测试放 3 号。点击空槽选择窗口，或拖入终端标题栏。
+2. **像游戏里切换一样自然。** `Alt + 1–9` 直达；按住 `Alt + Q` 呼出轮盘，指向后松键进入。入口支持悬停展开、长按左键拖动、右键管理。
+3. **需要全局视野，就展开工作空间。** 总览查看预览；`Alt + 反引号` 排列已收录窗口，再按恢复原布局。
+
+保留你原来的终端与 CLI 工作方式，可用于 Claude Code、Codex 等多窗口并行场景。**收纳、切换与排列不依赖 AI 状态接入。**
+
+## 让工作空间有你的风格
+
+**不止是武器和装备，也可以是你喜欢的角色、动物或动漫形象。** 把喜欢的图片变成任务标识，一眼认出自己的项目；轮盘、总览和终端外观相互呼应，再配上可调的音效与动画，让 Vibe Coding 更有沉浸感。
+
+**默认黑神话，另外还有 12 套主题可选。** 完整图册按界面模块展示每套主题，可以点击查看原图。
+
+### [浏览全部 13 套主题 →](docs/project-kit/showcase.md)
+
+## 快速开始
+
+当前是开发预览版，从源码运行需要 **Windows + .NET 10 SDK**，SDK 基线见 [global.json](global.json)。
 
 ```powershell
+git clone https://github.com/Xiobio/OmniVibe.git
+cd OmniVibe
 powershell -ExecutionPolicy Bypass -File .\run.ps1
 ```
 
-启动后，将终端窗口标题栏拖到侧栏空槽，或点击空槽选择窗口，再使用 `Alt + 编号` 唤出任务。右键任务可编辑信息和连接 CLI 状态。
+脚本编译并启动应用；已有管理器实例会先被请求正常退出。新配置默认使用黑神话主题，已有用户的主题与任务绑定会保留。
 
-当前按整个窗口绑定，不支持单独绑定 Windows Terminal 内部标签页或分屏。`Tab` 默认全局接管，会影响终端补全，可在设置中关闭或更改。
+预览包的运行库、安装、更新与回退步骤见 [安装说明](docs/project-kit/INSTALL.md)。
 
-当前使用 Debug 开发版；`artifacts/CodeManager` 是不随源码更新的早期产物。退出工具会恢复其收起的窗口，CLI 继续运行。
+**语言：** 右键入口 → 设置 → 通用 → **界面语言 / Language**，选择 English 或简体中文，保存并重启。默认跟随系统；也可通过 `--language=en` 启动参数临时指定英文。[查看英文界面与语言说明](docs/localization/README.md)。
 
-## 文档
+| 默认操作 | 功能 |
+| --- | --- |
+| `Alt + 1–9` | 进入对应任务，再按恢复先前窗口状态 |
+| `Alt + 滚轮` | 切换任务 |
+| 按住 `Alt + Q` | 呼出轮盘，指向后松键进入 |
+| `Tab` | 打开 / 关闭任务总览 |
+| `Alt + 反引号` | 排列 / 恢复已收录窗口 |
+| `Ctrl + Alt + Space` | 显示 / 隐藏入口 |
 
-- [产品定义](docs/product-definition.md)：定位、核心交互、开放皮肤机制和首版范围。
-- [皮肤设计候选](docs/skin-design-candidates.md)：10 套游戏风格皮肤方向、统一状态规则和建议制作顺序。
-- [皮肤图册](docs/skin-gallery/index.html)：十套真实界面截图与设置预览（下载后用浏览器打开）。
-- [整套配装实拍](docs/game-suite-refinement/index.html)：13 套内容在圆盘、总览与配装页的真实效果。
-- [主题标志音](skins/signature-audio/README.md)：真实音源、安装与单个切换音设置。
-- [旧合成音实验](docs/game-audio/index.html)：保留的早期声音素材试听，已不用于日常操作反馈。
-- [内容包规范](skins/loadouts/suites-v1/README.md)：素材来源、原生尺寸、提示词与九实体替换约定。
-- [皮肤校准记录](skins/VALIDATION.md)：可读性、状态、布局与回归验证。
-- [Terminal 套装](docs/terminal-skins.md)：十套配套终端外观与恢复方法。
-- [品牌与宣传素材](assets/brand/v2/README.md)：桌面图标、产品图标、图标动效、发布图与可编辑源文件。
-- [代码分析与评测](docs/reviews/2026-10-19-code-review.md)：架构、独立回归、性能实测、发现项与发行准备。
-- [使用与开发指南](docs/usage.md)：完整操作、快捷键、状态接入、数据恢复和开发检查。
+默认全局 `Tab` 会影响终端补全，可在设置中更换或关闭。隐藏入口后，**单击托盘仓鼠图标**可以找回。
+
+## 使用范围
+
+- **管理整个窗口**，暂不单独绑定 Windows Terminal 内部标签页或分屏。
+- 自动状态依赖 CLI 事件；“本轮已回复”不代表整个任务完成。
+- 支持自定义配装图片与现有主题配置，完整社区皮肤包 SDK 仍在规划中。
+- 英文版覆盖应用菜单、设置与操作提示；用户任务名、终端内容和图片内文字保留原文。
+
+[使用指南](docs/project-kit/getting-started.md) · [CLI 状态接入](docs/usage.md) · [FAQ](docs/project-kit/faq.md) · [开发指南](docs/project-kit/development.md) · [路线图](docs/project-kit/roadmap.md)
+
+## 一起把 Vibe Coding 变得更有趣
+
+**这个工具还没有完成，我们期待和大家一起完善它。** 无论是修复一个交互问题、验证多显示器与缩放体验、改进 CLI 状态接入，还是补充翻译、文档和来源明确的主题素材，都很有帮助。不会写代码也欢迎提交复现步骤与使用建议。
+
+项目采用 **C# / WPF / Win32**，程序与源码目录仍使用 `CodeManager` 名称。
+
+[贡献指南](CONTRIBUTING.md) · [更新记录](CHANGELOG.md) · [安全说明](SECURITY.md)
+
+自有代码、脚本和文档使用 **[MIT License](LICENSE)**。第三方图像、角色、商标与音频的权利另行说明，参见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。本项目与相关游戏厂商无官方合作关系。

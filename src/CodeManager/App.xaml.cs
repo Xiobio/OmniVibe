@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -18,6 +18,7 @@ public partial class App : Application
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
+        L.Initialize(e.Args);
         try
         {
             if (e.Args.FirstOrDefault() == "--quit") { Native.RequestExit(); Shutdown(); return; }
@@ -41,10 +42,10 @@ public partial class App : Application
                 }
                 Shutdown(); return;
             }
-            if (e.Args.FirstOrDefault() is "--self-test" or "--skin-test" or "--loadout-test" or "--theme-test" or "--task-status-test")
+            if (e.Args.FirstOrDefault() is "--localization-test" or "--self-test" or "--skin-test" or "--loadout-test" or "--reliability-test" or "--theme-test" or "--task-status-test")
             {
                 string path = e.Args.Length > 1 ? Path.GetFullPath(e.Args[1]) : Path.Combine(AppContext.BaseDirectory, "self-test.json");
-                var results = e.Args[0] == "--task-status-test" ? TaskStatusTests.Run(Path.GetDirectoryName(path)!) : e.Args[0] == "--theme-test" ? UnifiedThemeTests.Run(Path.GetDirectoryName(path)!) : e.Args[0] == "--loadout-test" ? EquipmentTests.Run(Path.GetDirectoryName(path)!).ToList() : e.Args[0] == "--skin-test" ? SkinTests.Run().ToList() : SelfTests.Run();
+                var results = e.Args[0] == "--localization-test" ? LocalizationTests.Run() : e.Args[0] == "--task-status-test" ? TaskStatusTests.Run(Path.GetDirectoryName(path)!) : e.Args[0] == "--theme-test" ? UnifiedThemeTests.Run(Path.GetDirectoryName(path)!) : e.Args[0] == "--reliability-test" ? ReliabilityTests.Run() : e.Args[0] == "--loadout-test" ? EquipmentTests.Run(Path.GetDirectoryName(path)!).ToList() : e.Args[0] == "--skin-test" ? SkinTests.Run().ToList() : SelfTests.Run();
                 Directory.CreateDirectory(Path.GetDirectoryName(path)!);
                 File.WriteAllText(path, JsonSerializer.Serialize(results, StateStore.Json));
                 Shutdown(results.All(r => r.Passed) ? 0 : 1); return;
@@ -79,19 +80,19 @@ public partial class App : Application
                 WriteStatus(e.Args); Shutdown(); return;
             }
             _mutex = new Mutex(true, "Local\\CodeManager.TaskDock.v1", out bool created);
-            if (!created) { MessageBox.Show("CodeManager 已经在运行，请双击系统托盘图标显示侧栏。", "CodeManager"); Shutdown(); return; }
+            if (!created) { MessageBox.Show(L.IsEnglish ? "OmniVibe is already running. Click the hamster tray icon to show the launcher." : "OmniVibe 已经在运行，请单击系统托盘中的仓鼠图标显示入口。", "OmniVibe"); Shutdown(); return; }
             DispatcherUnhandledException += Unhandled;
             _manager = new Manager();
             if (e.Args.Contains("--recovery")) { _manager.ShowRecovery(); return; }
             if (e.Args.Contains("--arrange")) _manager.RequestOverview();
             if (e.Args.Contains("--inventory")) _manager.ToggleInventory();
-            if (e.Args.Length == 0) Dispatcher.BeginInvoke(() => _manager.StartupRecovery(), DispatcherPriority.ApplicationIdle);
+            if (e.Args.All(a => a.StartsWith("--language=", StringComparison.OrdinalIgnoreCase))) Dispatcher.BeginInvoke(() => _manager.StartupRecovery(), DispatcherPriority.ApplicationIdle);
         }
         catch (Exception ex)
         {
             var root = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CodeManager");
             Directory.CreateDirectory(root); File.AppendAllText(Path.Combine(root, "app.log"), DateTime.Now.ToString("O") + " " + ex + Environment.NewLine);
-            if (e.Args.Length == 0) MessageBox.Show("启动失败：" + ex.Message + "\n\n日志：" + root, "CodeManager");
+            if (e.Args.All(a => a.StartsWith("--language=", StringComparison.OrdinalIgnoreCase))) MessageBox.Show((L.IsEnglish ? "Startup failed: " : "启动失败：") + ex.Message + (L.IsEnglish ? "\n\nLog: " : "\n\n日志：") + root, "OmniVibe");
             Shutdown(1);
         }
     }
@@ -100,7 +101,7 @@ public partial class App : Application
         _manager?.Store.Log(e.Exception.ToString());
         // Exit through cleanup so parked windows are not stranded after an unexpected error.
         e.Handled = true;
-        MessageBox.Show("发生错误，程序将恢复收起的窗口并退出。\n" + e.Exception.Message, "CodeManager");
+        MessageBox.Show((L.IsEnglish ? "An error occurred. OmniVibe will restore parked windows and exit.\n" : "发生错误，程序将恢复收起的窗口并退出。\n") + e.Exception.Message, "OmniVibe");
         _manager?.Exit(); Shutdown(1);
     }
     private static void WriteStatus(string[] args)

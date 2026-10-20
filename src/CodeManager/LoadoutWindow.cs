@@ -55,15 +55,15 @@ public sealed class LoadoutWindow : Window
         var heading = new StackPanel { Margin = new Thickness(24, 14, 24, 12) };
         heading.Children.Add(Label(_skin.Name + " / LOADOUT", 10, _skin.Accent));
         heading.Children.Add(Label(pack.Title, 22, _skin.Text));
-        heading.Children.Add(Label(pack.Subtitle + " · 为当前主题独立保存选择，任务与窗口绑定保持不变。", 12, _skin.Muted));
+        heading.Children.Add(Label(pack.Subtitle + L.T(" · 为当前主题独立保存选择，任务与窗口绑定保持不变。"), 12, _skin.Muted));
         DockPanel.SetDock(heading, Dock.Top); root.Children.Add(heading);
         var footer = new DockPanel { Margin = new Thickness(24, 12, 24, 18), LastChildFill = true };
         var actions = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right };
-        var cancel = Button("取消"); cancel.IsCancel = true;
-        var save = Button(settingsDraft ? "使用这些形象" : "保存配装"); save.IsDefault = true; save.FontWeight = FontWeights.SemiBold;
+        var cancel = Button(L.T("取消")); cancel.IsCancel = true;
+        var save = Button(settingsDraft ? L.T("使用这些形象") : L.T("保存配装")); save.IsDefault = true; save.FontWeight = FontWeights.SemiBold;
         save.Click += (_, _) => { DialogResult = true; };
         actions.Children.Add(cancel); actions.Children.Add(save); DockPanel.SetDock(actions, Dock.Right); footer.Children.Add(actions);
-        footer.Children.Add(Label(settingsDraft ? "返回设置后，点「保存并应用」才会生效" : "配装跟随任务移动 · 取消不改变当前配置", 11, _skin.Muted));
+        footer.Children.Add(Label(settingsDraft ? L.T("返回设置后，点「保存并应用」才会生效") : L.T("配装跟随任务移动 · 取消不改变当前配置"), 11, _skin.Muted));
         DockPanel.SetDock(footer, Dock.Bottom); root.Children.Add(footer);
         var left = new ScrollViewer { Width = 236, Margin = new Thickness(16, 0, 0, 8), VerticalScrollBarVisibility = ScrollBarVisibility.Auto, Content = _slotList };
         DockPanel.SetDock(left, Dock.Left); root.Children.Add(left);
@@ -82,17 +82,17 @@ public sealed class LoadoutWindow : Window
             left.Width = Math.Clamp(ActualWidth * .23, 150, 236);
             foreach (var image in _choiceImages) image.Height = ChoiceHeight;
         };
-        body.Children.Add(Label("点击图片选择形象 · 选中项高亮 · 悬停查看名称与来源", 11, _skin.Muted));
+        body.Children.Add(Label(L.T("点击图片选择形象 · 选中项高亮 · 悬停查看名称与来源"), 11, _skin.Muted));
         body.Children.Add(_weapons);
         var customization = new StackPanel();
-        body.Children.Add(new Expander { Header = "使用自己的图片", Content = customization, Margin = new Thickness(0, 16, 0, 0) });
-        customization.Children.Add(Label("导入透明 PNG，可替换当前槽位的角色或武器。", 11, _skin.Muted));
-        var custom = new WrapPanel(); var import = Button("导入图片…"); var reset = Button("恢复主题藏品"); custom.Children.Add(import); custom.Children.Add(reset); customization.Children.Add(custom);
-        customization.Children.Add(Label("藏品名称", 11, _skin.Muted)); customization.Children.Add(_customName);
+        body.Children.Add(new Expander { Header = L.T("使用自己的图片"), Content = customization, Margin = new Thickness(0, 16, 0, 0) });
+        customization.Children.Add(Label(L.T("导入透明 PNG，可替换当前槽位的角色或武器。"), 11, _skin.Muted));
+        var custom = new WrapPanel(); var import = Button(L.T("导入图片…")); var reset = Button(L.T("恢复主题藏品")); custom.Children.Add(import); custom.Children.Add(reset); customization.Children.Add(custom);
+        customization.Children.Add(Label(L.T("藏品名称"), 11, _skin.Muted)); customization.Children.Add(_customName);
         _customName.TextChanged += (_, _) => { if (!_refreshing && _draft[_index].EquipmentImage != "") { _draft[_index].EquipmentName = _customName.Text.Trim(); UpdateHero(); } };
         _error.Foreground = WuxiaTheme.Brush(_skin.Waiting); _error.Margin = new Thickness(0, 8, 0, 0); body.Children.Add(_error);
         import.Click += (_, _) => {
-            var dialog = new Microsoft.Win32.OpenFileDialog { Title = "导入配装图片", Filter = "图片|*.png;*.jpg;*.jpeg;*.bmp", CheckFileExists = true };
+            var dialog = new Microsoft.Win32.OpenFileDialog { Title = L.T("导入配装图片"), Filter = L.T("图片|*.png;*.jpg;*.jpeg;*.bmp"), CheckFileExists = true };
             if (dialog.ShowDialog(this) != true) return;
             try { SetCustomImage(EquipmentCatalog.Import(dialog.FileName), System.IO.Path.GetFileNameWithoutExtension(dialog.FileName)); }
             catch (Exception ex) when (ex is System.IO.IOException or UnauthorizedAccessException or ArgumentException) { _error.Text = ex.Message; }
@@ -124,7 +124,7 @@ public sealed class LoadoutWindow : Window
     {
         var slot = _draft[_index]; _portrait.Source = EquipmentCatalog.Image(slot, _skin.Id); _title.Text = EquipmentCatalog.Name(slot, _skin.Id);
         var item = EquipmentCatalog.Item(slot, _skin.Id);
-        _subtitle.Text = "槽位 " + slot.Number + "  /  " + (slot.Occupied ? slot.DisplayName : "等待收纳窗口");
+        _subtitle.Text = L.T("槽位 ") + slot.Number + "  /  " + (slot.Occupied ? slot.DisplayName : L.T("等待收纳窗口"));
     }
     private void Refresh()
     {
@@ -135,7 +135,7 @@ public sealed class LoadoutWindow : Window
             var image = new Image { Source = EquipmentCatalog.Image(slot, _skin.Id), Height = 34, Width = 30, Stretch = Stretch.Uniform }; Grid.SetColumn(image, 1); row.Children.Add(image);
             var name = new StackPanel { VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(8, 0, 0, 0) };
             name.Children.Add(new TextBlock { Text = EquipmentCatalog.Name(slot, _skin.Id), FontSize = 12, TextTrimming = TextTrimming.CharacterEllipsis, Foreground = WuxiaTheme.Brush(_skin.Text) });
-            name.Children.Add(new TextBlock { Text = slot.Occupied ? slot.DisplayName : "空槽位", FontSize = 9, Foreground = WuxiaTheme.Brush(_skin.Muted), TextTrimming = TextTrimming.CharacterEllipsis, Margin = new Thickness(0, 2, 0, 0) });
+            name.Children.Add(new TextBlock { Text = slot.Occupied ? slot.DisplayName : L.T("空槽位"), FontSize = 9, Foreground = WuxiaTheme.Brush(_skin.Muted), TextTrimming = TextTrimming.CharacterEllipsis, Margin = new Thickness(0, 2, 0, 0) });
             Grid.SetColumn(name, 2); row.Children.Add(name);
             var b = new Button { Content = row, Padding = new Thickness(8, 2, 8, 2), Margin = new Thickness(0, 0, 0, 4), HorizontalContentAlignment = HorizontalAlignment.Stretch, Background = WuxiaTheme.Brush(slot == selected ? _skin.Elevated : _skin.Surface), BorderBrush = WuxiaTheme.Brush(slot == selected ? _skin.Accent : _skin.Border), ToolTip = slot.DisplayName };
             b.Click += (_, _) => SelectSlot(slot.Number); _slotList.Children.Add(b);
@@ -150,7 +150,7 @@ public sealed class LoadoutWindow : Window
             b.Click += (_, _) => SelectWeapon(item.Id); _weapons.Children.Add(b);
         }
         _customName.Text = selected.EquipmentName; _customName.IsEnabled = selected.EquipmentImage != "";
-        _error.Text = EquipmentCatalog.CustomMissing(selected) ? "自定义图片不可用，暂时显示主题藏品。可重新导入或恢复主题藏品。" : EquipmentCatalog.BuiltInMissing(selected, _skin.Id) ? "主题素材缺失或损坏，暂时显示兼容角色。请恢复该主题素材包，或导入自己的图片。" : "";
+        _error.Text = EquipmentCatalog.CustomMissing(selected) ? L.T("自定义图片不可用，暂时显示主题藏品。可重新导入或恢复主题藏品。") : EquipmentCatalog.BuiltInMissing(selected, _skin.Id) ? L.T("主题素材缺失或损坏，暂时显示兼容角色。请恢复该主题素材包，或导入自己的图片。") : "";
         _refreshing = false;
     }
 }

@@ -16,7 +16,7 @@ public sealed record SkinDefinition(
 {
     public string Artwork => $"skins/{Slug}/illustration.png";
     public bool IsLight => SkinCatalog.Luminance(Background) > .5;
-    public string SlotNumber(int number) => Family is "ink" or "arsenal" or "relic" ?
+    public string SlotNumber(int number) => L.IsEnglish ? number.ToString("D2", CultureInfo.InvariantCulture) : Family is "ink" or "arsenal" or "relic" ?
         (number is >= 1 and <= 9 ? new[] { "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖" }[number - 1] : "零") :
         number.ToString(Family is "tactical" or "protocol" ? "D2" : "0", CultureInfo.InvariantCulture);
 }
@@ -28,7 +28,7 @@ public static class SkinCatalog
     private static readonly FontFamily Modern = new("Bahnschrift, Microsoft YaHei UI, Segoe UI");
     private static readonly FontFamily Classic = new("KaiTi, STKaiti, FangSong, SimSun");
     private static readonly FontFamily Elegant = new("Georgia, Microsoft YaHei UI, Segoe UI");
-    public static IReadOnlyList<SkinDefinition> All { get; } = Array.AsReadOnly(new[]
+    private static IReadOnlyList<SkinDefinition> Original { get; } = Array.AsReadOnly(new[]
     {
         new SkinDefinition(Skin.InkJade, "ink-jade", "墨玉机关", "水墨 · 机关 · 玉石", "九宫剑匣", "九宫百宝囊", "ink", "#111714", "#241F18", "#343B2C", "#E7D8B6", "#B9AE94", "#BFA76C", "#82B89B", "#8F7D54", "#82B89B", "#E6C279", "#ACD5AB", "#F38E7C", "#ABB5A5", "#D8C8A5", "#342D22", 2, Classic),
         new SkinDefinition(Skin.Midnight, "midnight", "玄夜青金", "夜色 · 青金 · 山海", "玄夜剑匣", "玄夜百宝囊", "ink", "#111827", "#18283F", "#263C58", "#E8E5D8", "#B1BDCE", "#BDB27D", "#76BBC8", "#7B98A8", "#85D5C7", "#EFCE81", "#ADD9BE", "#FF9E99", "#AAB9CC", "#CBD2D7", "#243344", 2, Classic),
@@ -44,6 +44,13 @@ public static class SkinCatalog
         new SkinDefinition(Skin.Astral, "astral", "原神 · 星旅背包", "深蓝星图 · 香槟细线", "星旅道具袋", "星旅任务图鉴", "astral", "#172A41", "#223B54", "#35506A", "#F1EBDD", "#C2CDD8", "#EAD6AE", "#9DCAD9", "#A6A28F", "#A8DCCF", "#F5D797", "#BDE4B7", "#FFB0A2", "#C6D1DC", "#EDE5D6", "#263E50", 8, Elegant),
         new SkinDefinition(Skin.Wonderland, "wonderland", "梦幻西游 · 三界百宝袋", "青瓷彩绘 · 云纹绣金", "三界百宝袋", "三界百宝图鉴", "wonderland", "#EFF8F6", "#E1F0EA", "#D0E6DF", "#183C48", "#46616A", "#7C5918", "#216C77", "#729B94", "#236653", "#815C17", "#356733", "#A63739", "#53656D", "#FFF8E9", "#263E45", 18, Classic)
     });
+
+    private static readonly Lazy<IReadOnlyList<SkinDefinition>> English = new(() => {
+        var names = new[] { "Jade Mechanism", "Midnight Lapis", "Cinnabar", "League of Legends \u00b7 Hextech Hub", "Delta Force \u00b7 Tactical Terminal", "VALORANT \u00b7 Action Protocol", "Dungeon & Fighter \u00b7 Adventure Inventory", "NARAKA: BLADEPOINT \u00b7 Arsenal", "Black Myth: Wukong \u00b7 Relic Vault", "Honor of Kings \u00b7 Starlight Command", "Battle of Golden Spatula \u00b7 Agent Bench", "Genshin Impact \u00b7 Astral Inventory", "Fantasy Westward Journey \u00b7 Wonderland" };
+        var subtitles = new[] { "Ink \u00b7 Mechanics \u00b7 Jade", "Night \u00b7 Lapis \u00b7 Mountains", "Lacquer \u00b7 Bronze \u00b7 Hidden blades", "Brass rings \u00b7 Crystal energy", "Dark alloy \u00b7 Tactical coordinates", "Geometric cuts \u00b7 Bold commands", "Steel relief \u00b7 Leather gear", "Characters \u00b7 Transparent portraits", "Stone relics \u00b7 Gilded spirit", "Blue and gold \u00b7 Jade radiance", "Violet board \u00b7 Golden bonds", "Star charts \u00b7 Champagne lines", "Celadon \u00b7 Clouds \u00b7 Gold trim" };
+        return Array.AsReadOnly(Original.Select((s, i) => s with { Name = names[i], Subtitle = subtitles[i], DockTitle = "Task wheel", OverviewTitle = "Task inventory", TitleFont = Modern }).ToArray());
+    });
+    public static IReadOnlyList<SkinDefinition> All => L.IsEnglish ? English.Value : Original;
 
     public static SkinDefinition Get(Skin skin) => All.FirstOrDefault(s => s.Id == skin) ?? All[0];
     public static double Luminance(string hex)

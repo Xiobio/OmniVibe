@@ -11,10 +11,10 @@ public static class RecoveryLaunch
 {
     public static string? Validation(Slot slot)
     {
-        if (slot.LaunchMode == LaunchMode.Unconfigured) return "请先配置启动方式与项目目录";
-        if (string.IsNullOrWhiteSpace(slot.ProjectDirectory)) return "请补充项目目录";
-        if (!Path.IsPathFullyQualified(slot.ProjectDirectory) || !Directory.Exists(slot.ProjectDirectory)) return "项目目录不存在或不可访问";
-        if (slot.LaunchMode != LaunchMode.Terminal && slot.ResumeConversation && !Guid.TryParse(slot.ResumeSessionId, out _)) return "缺少原会话 ID，可在配置中补充";
+        if (slot.LaunchMode == LaunchMode.Unconfigured) return L.T("请先配置启动方式与项目目录");
+        if (string.IsNullOrWhiteSpace(slot.ProjectDirectory)) return L.T("请补充项目目录");
+        if (!Path.IsPathFullyQualified(slot.ProjectDirectory) || !Directory.Exists(slot.ProjectDirectory)) return L.T("项目目录不存在或不可访问");
+        if (slot.LaunchMode != LaunchMode.Terminal && slot.ResumeConversation && !Guid.TryParse(slot.ResumeSessionId, out _)) return L.T("缺少原会话 ID，可在配置中补充");
         return null;
     }
     public static string Quote(string text) => "'" + text.Replace("'", "''") + "'";
@@ -52,10 +52,10 @@ public static class RecoveryLaunch
     public static WindowIdentity? ExistingMatch(Slot slot, IEnumerable<Slot> slots, IReadOnlyList<WindowIdentity> windows)
     {
         if (slot.Window == null) return null;
-        string title = slot.Window.Title.Trim();
-        if (title.Length < 7 || new[] { "Windows PowerShell", "PowerShell", "Command Prompt", "命令提示符", "Windows Terminal" }.Contains(title, StringComparer.OrdinalIgnoreCase)) return null;
+        string title = (slot.Window.Title ?? "").Trim();
+        if (title.Length < 7 || new[] { "Windows PowerShell", "PowerShell", "Command Prompt", L.T("命令提示符"), "Windows Terminal" }.Contains(title, StringComparer.OrdinalIgnoreCase)) return null;
         if (slots.Count(s => s.Occupied && string.Equals(s.Window!.Title, title, StringComparison.Ordinal)) != 1) return null;
-        var matches = windows.Where(w => w.Title == title && w.ProcessName.Equals(slot.Window.ProcessName, StringComparison.OrdinalIgnoreCase) && !slots.Any(s => s != slot && Native.Matches(s.Window) && s.Window!.Handle == w.Handle)).ToArray();
+        var matches = windows.Where(w => w.Title == title && string.Equals(w.ProcessName, slot.Window.ProcessName, StringComparison.OrdinalIgnoreCase) && !slots.Any(s => s != slot && Native.Matches(s.Window) && s.Window!.Handle == w.Handle)).ToArray();
         return matches.Length == 1 ? matches[0] : null;
     }
     public static WindowIdentity? PendingMatch(PendingRecovery pending, IReadOnlyList<WindowIdentity> windows)

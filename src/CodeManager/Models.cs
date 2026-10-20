@@ -17,6 +17,7 @@ public enum ShortcutModifiers { Alt = 1, Ctrl = 2, CtrlAlt = 3, Shift = 4, AltSh
 
 public sealed class Preferences
 {
+    public string Language { get; set; } = "auto";
     public ShortcutModifiers TaskModifiers { get; set; } = ShortcutModifiers.Alt;
     public ShortcutModifiers MouseModifiers { get; set; } = ShortcutModifiers.Alt;
     public Dictionary<int, string> TaskGestures { get; set; } = new();
@@ -30,7 +31,7 @@ public sealed class Preferences
     public OverviewSize OverviewSize { get; set; } = OverviewSize.Large;
     public int LayoutGap { get; set; }
     public bool HideDockOnArrange { get; set; }
-    public Skin Skin { get; set; }
+    public Skin Skin { get; set; } = Skin.Relic;
     public double DockWidth { get; set; } = 360;
     public Native.Point? RingCentre { get; set; }
     public double DockHeight { get; set; }
@@ -109,16 +110,30 @@ public sealed class Slot : INotifyPropertyChanged
     [JsonIgnore] public bool IsDisplayed { get; set; } = true;
     [JsonIgnore] public bool JustCaptured { get; set; }
     [JsonIgnore] public bool Occupied => Window != null;
-    [JsonIgnore] public string DisplayName => Occupied ? (string.IsNullOrWhiteSpace(Name) ? Window!.Title : Name) : "拖入窗口";
-    [JsonIgnore] public string ToolName => Window?.ProcessName.ToLowerInvariant() switch
+    [JsonIgnore] public string DisplayName => Occupied ? (string.IsNullOrWhiteSpace(Name) ? Window!.Title : Name) : L.T("拖入窗口");
+    [JsonIgnore] public string ToolName => Window?.ProcessName?.ToLowerInvariant() switch
     {
         "windowsterminal" or "windowsterminalpreview" => "Windows Terminal",
         "cmd" => "CMD", "powershell" => "PowerShell", "pwsh" => "PowerShell 7",
-        "openconsole" or "conhost" => "Console", null => "空槽位", _ => Window.ProcessName
+        "openconsole" or "conhost" => "Console", null => L.T("空槽位"), _ => Window.ProcessName
     };
-    [JsonIgnore] public string StateLabel => !Occupied ? "拖入或点击添加" : !Connected ? "已断开 · 点击重连" : State switch
-    { AgentState.Running => "正在执行", AgentState.Waiting => "等待你处理", AgentState.Ready => "本轮已回复", AgentState.Error => "发生错误", _ => "状态未知" };
-    [JsonIgnore] public string StateColor => !Connected ? SkinCatalog.Current.Unknown : State switch
+    // Hooks are event-driven, not a heartbeat. Age is uncertainty, never proof of failure.
+    internal bool StatusMayBeStaleAt(DateTimeOffset now) => Occupied && Connected && StateSource != "手动标记" && (IntegrationConnected || StateSource == "外部事件") &&
+        State is AgentState.Running or AgentState.Waiting && UpdatedAt.HasValue && now - UpdatedAt.Value >= TimeSpan.FromMinutes(10);
+    [JsonIgnore] public bool StatusMayBeStale => StatusMayBeStaleAt(DateTimeOffset.UtcNow);
+    [JsonIgnore] public string StatusTimestamp => UpdatedAt.HasValue ? L.T("最近更新：") + UpdatedAt.Value.ToLocalTime().ToString("MM-dd HH:mm:ss") : L.T("尚未收到任务状态事件");
+    [JsonIgnore] public string StatusFreshnessNote => StatusMayBeStale ? L.T("较长时间未收到事件，状态可能过期；长任务可能仍在运行，请查看终端确认。") : "";
+    private long _freshnessMinute = -1;
+    internal void RefreshStatusFreshness(DateTimeOffset now)
+    {
+        long minute = now.UtcTicks / TimeSpan.TicksPerMinute;
+        if (_freshnessMinute == minute) return;
+        _freshnessMinute = minute; Refresh();
+    }
+    [JsonIgnore] public string StateLabel => LastStateLabel + (StatusMayBeStale ? L.T(" · 状态可能过期") : "");
+    private string LastStateLabel => !Occupied ? L.T("拖入或点击添加") : !Connected ? L.T("已断开 · 点击重连") : State switch
+    { AgentState.Running => L.T("正在执行"), AgentState.Waiting => L.T("等待你处理"), AgentState.Ready => L.T("本轮已回复"), AgentState.Error => L.T("发生错误"), _ => L.T("状态未知") };
+    [JsonIgnore] public string StateColor => !Connected || StatusMayBeStale ? SkinCatalog.Current.Unknown : State switch
     { AgentState.Running => SkinCatalog.Current.Running, AgentState.Waiting => SkinCatalog.Current.Waiting, AgentState.Ready => SkinCatalog.Current.Ready, AgentState.Error => SkinCatalog.Current.Error, _ => SkinCatalog.Current.Unknown };
     [JsonIgnore] public string StatusGlyph => !Occupied ? "+" : !Connected ? "↺" : State switch
     { AgentState.Running => "▶", AgentState.Waiting => "Ⅱ", AgentState.Ready => "✓", AgentState.Error => "!", _ => "?" };
@@ -126,15 +141,15 @@ public sealed class Slot : INotifyPropertyChanged
     [JsonIgnore] public string OutlineColor => IsDropTarget || IsSelected ? SkinCatalog.Current.Accent : JustCaptured || IsActive ? SkinCatalog.Current.Running : SkinCatalog.Current.Border;
     [JsonIgnore] public string NumberColor => IsSelected ? SkinCatalog.Current.Accent : IsDropTarget || IsActive ? SkinCatalog.Current.Running : Unread && Connected ? StateColor : SkinCatalog.Current.Muted;
     [JsonIgnore] public string ActivityColor => IsSelected ? SkinCatalog.Current.Accent : IsActive ? SkinCatalog.Current.Running : StateColor;
-    [JsonIgnore] public string Detail => IsDropTarget ? Occupied ? "松手调整任务顺序" : "松手收纳到这个槽位" : JustCaptured ? "已收录 · 右键可编辑任务" : Occupied ? !IntegrationConnected && State == AgentState.Unknown ? "未接入自动状态 · 右键连接" : (AgentProvider == "" ? ToolName : AgentProvider == "claude" ? "Claude Code" : "Codex") + " · " + StateLabel : StateLabel;
-    [JsonIgnore] public string IntegrationLabel => (IntegrationConnected ? "已接入 " + (AgentProvider == "claude" ? "Claude Code" : "Codex") : "未接入 / 会话已结束") + (UpdatedAt.HasValue ? "\n最近事件：" + UpdatedAt.Value.ToLocalTime().ToString("MM-dd HH:mm:ss") + " · " + StateLabel + "\n来源：" + StateSource : "\n尚未收到任务状态事件");
-    [JsonIgnore] public string ActivityLabel => IsSelected ? "选择" : IsActive ? "当前" : Unread && Connected ? "新" : "";
+    [JsonIgnore] public string Detail => IsDropTarget ? Occupied ? L.T("松手调整任务顺序") : L.T("松手收纳到这个槽位") : JustCaptured ? L.T("已收录 · 右键可编辑任务") : Occupied ? !IntegrationConnected && State == AgentState.Unknown ? L.T("未接入自动状态 · 右键连接") : (AgentProvider == "" ? ToolName : AgentProvider == "claude" ? "Claude Code" : "Codex") + " · " + StateLabel : StateLabel;
+    [JsonIgnore] public string IntegrationLabel => (IntegrationConnected ? L.T("已接入 ") + (AgentProvider == "claude" ? "Claude Code" : "Codex") : L.T("未接入 / 会话已结束")) + "\n" + StatusTimestamp + (UpdatedAt.HasValue ? " · " + StateLabel + L.T("\n来源：") + L.T(StateSource) : "") + (StatusMayBeStale ? "\n" + StatusFreshnessNote : "");
+    [JsonIgnore] public string ActivityLabel => IsSelected ? L.T("选择") : IsActive ? L.T("当前") : Unread && Connected ? L.T("新") : "";
     [JsonIgnore] public string ProjectLabel => string.IsNullOrWhiteSpace(ProjectDirectory) ? "" : System.IO.Path.GetFileName(ProjectDirectory.TrimEnd('\\', '/'));
     [JsonIgnore] public string Inscription => SkinCatalog.Current.SlotNumber(Number);
-    [JsonIgnore] public string WuxiaStateLabel => !Occupied ? "空阵眼" : !Connected ? "已断开 · 待重连" : State switch { AgentState.Running => "运转中", AgentState.Waiting => "候君决断", AgentState.Ready => "本轮已回复", AgentState.Error => "阵法崩坏 · 发生错误", _ => "状态未知" };
-    [JsonIgnore] public string Tooltip => DisplayName + "\n" + (Window?.Title ?? "空槽位") + (ProjectDirectory == "" ? "" : "\n" + ProjectDirectory) + "\n" + StateLabel + "\n" + (IntegrationConnected ? "已连接 " + AgentProvider + " 状态事件" : "未连接自动状态") + (Message == "" ? "" : "\n" + Message);
-    [JsonIgnore] public string RecoveryLabel => Recovery != null ? "正在打开并重连…" : Connected ? "窗口已连接" : RecoveryError != "" ? RecoveryError : RecoveryLaunch.Validation(this) is string error ? error : "可以恢复 · " + (LaunchMode == LaunchMode.Terminal ? "项目终端" : LaunchMode == LaunchMode.Claude ? "Claude Code" : "Codex") + (ResumeConversation && LaunchMode != LaunchMode.Terminal ? " · 原会话" : "");
-    [JsonIgnore] public string RecoveryDetails => (ProjectDirectory == "" ? "项目目录未记录" : ProjectDirectory) + (LastSeenAt.HasValue ? "\n上次在线 " + LastSeenAt.Value.ToLocalTime().ToString("MM-dd HH:mm") : "") + (Notes == "" ? "" : "\n备忘：" + Notes) + (Message == "" ? "" : "\n上次状态：" + Message);
+    [JsonIgnore] public string WuxiaStateLabel => !Occupied ? L.T("空阵眼") : !Connected ? L.T("已断开 · 待重连") : State switch { AgentState.Running => L.T("运转中"), AgentState.Waiting => L.T("候君决断"), AgentState.Ready => L.T("本轮已回复"), AgentState.Error => L.T("阵法崩坏 · 发生错误"), _ => L.T("状态未知") };
+    [JsonIgnore] public string Tooltip => DisplayName + "\n" + (Window?.Title ?? L.T("空槽位")) + (ProjectDirectory == "" ? "" : "\n" + ProjectDirectory) + "\n" + StateLabel + "\n" + StatusTimestamp + (StatusMayBeStale ? "\n" + StatusFreshnessNote : "") + "\n" + (IntegrationConnected ? L.T("已连接 ") + AgentProvider + L.T(" 状态事件") : L.T("未连接自动状态")) + (Message == "" ? "" : "\n" + Message);
+    [JsonIgnore] public string RecoveryLabel => Recovery != null ? L.T("正在打开并重连…") : Connected ? L.T("窗口已连接") : RecoveryError != "" ? RecoveryError : RecoveryLaunch.Validation(this) is string error ? error : L.T("可以恢复 · ") + (LaunchMode == LaunchMode.Terminal ? L.T("项目终端") : LaunchMode == LaunchMode.Claude ? "Claude Code" : "Codex") + (ResumeConversation && LaunchMode != LaunchMode.Terminal ? L.T(" · 原会话") : "");
+    [JsonIgnore] public string RecoveryDetails => (ProjectDirectory == "" ? L.T("项目目录未记录") : ProjectDirectory) + (LastSeenAt.HasValue ? L.T("\n上次在线 ") + LastSeenAt.Value.ToLocalTime().ToString("MM-dd HH:mm") : "") + (Notes == "" ? "" : L.T("\n备忘：") + Notes) + (Message == "" ? "" : L.T("\n上次状态：") + Message);
     public event PropertyChangedEventHandler? PropertyChanged;
     public void Refresh() => Changed("");
     private void Changed([CallerMemberName] string? property = null) => PropertyChanged?.Invoke(this, new(property));

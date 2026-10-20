@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Threading;
@@ -38,6 +40,10 @@ public sealed partial class Manager : IDisposable
     private bool _startupRecoveryProcessed;
     private bool _processingStatusBatch, _statusBatchDirty;
     private Dictionary<string, Slot>? _statusBatchNotices;
+    private readonly StatusEventInbox _eventInbox;
+    private readonly CancellationTokenSource _eventCancellation = new();
+    private Task? _eventTask;
+    private DateTime _nextEventWarning;
     private InventoryWindow? _inventory;
     private RadialInventoryWindow? _radial;
     internal RadialInventoryWindow? Radial => _radial;
@@ -52,12 +58,14 @@ public sealed partial class Manager : IDisposable
     public string TaskChord => Preferences.ModifierLabel(State.Preferences.TaskModifiers);
     public string MouseChord => Preferences.ModifierLabel(State.Preferences.MouseModifiers);
     public string ToggleShortcut => _input.ToggleShortcut;
-    public string InventoryMenuLabel => "任务总览" + (State.Preferences.TabTogglesInventory ? "（" + ShortcutBindings.Display(State.Preferences.InventoryGesture) + "）" : "");
+    public string InventoryMenuLabel => L.T("任务总览") + (State.Preferences.TabTogglesInventory ? "（" + ShortcutBindings.Display(State.Preferences.InventoryGesture) + "）" : "");
 
     public Manager(StateStore? store = null, bool interactionTest = false, Action<ProcessStartInfo>? startRecovery = null)
     {
-        _startRecovery = startRecovery ?? (info => { using var process = Process.Start(info); if (process == null) throw new InvalidOperationException("启动器没有返回进程"); });
+        _startRecovery = startRecovery ?? (info => { using var process = Process.Start(info); if (process == null) throw new InvalidOperationException(L.T("启动器没有返回进程")); });
         Store = store ?? new StateStore(); State = Store.Load();
+        L.Apply(State.Preferences.Language);
+        _eventInbox = new StatusEventInbox(Store);
         ApplyAudioPreferences();
 
         SkinCatalog.DecorationsEnabled = State.Preferences.DecorationsEnabled; WuxiaTheme.Apply(State.Preferences.Skin, State.Preferences.Animate);
@@ -83,17 +91,22 @@ public sealed partial class Manager : IDisposable
         _dragTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(30) };
         _dragTimer.Tick += (_, _) => DragTick();
         _trayIcon = ProductIcon.CreateTrayIcon();
-        _tray = new TaskTrayIcon { Icon = _trayIcon, Text = "OmniVibe · AI 任务武器栏", Visible = true };
+        _tray = new TaskTrayIcon { Icon = _trayIcon, Text = L.T("OmniVibe · 窗口收纳与任务管理"), Visible = true };
         InitializeNotifications();
         var menu = new Forms.ContextMenuStrip { BackColor = System.Drawing.Color.FromArgb(22, 30, 27), ForeColor = System.Drawing.Color.FromArgb(250, 234, 203), Font = new System.Drawing.Font("Microsoft YaHei UI", 10), Renderer = new TrayMenuRenderer() };
-        menu.Items.Add("显示 / 隐藏悬浮入口", null, (_, _) => Dock.Dispatcher.Invoke(ToggleVisibility));
+        menu.Items.Add(L.T("显示 / 隐藏悬浮入口"), null, (_, _) => Dock.Dispatcher.Invoke(ToggleVisibility));
         menu.Items.Add(InventoryMenuLabel, null, (_, _) => Dock.Dispatcher.Invoke(ToggleInventory));
-        menu.Items.Add("最近关闭 / 恢复工作现场…", null, (_, _) => Dock.Dispatcher.Invoke(ShowRecovery));
-        menu.Items.Add("排列 / 恢复窗口", null, (_, _) => Dock.Dispatcher.Invoke(RequestOverview));
-        menu.Items.Add("设置", null, (_, _) => Dock.Dispatcher.Invoke(ShowSettings));
-        menu.Items.Add("快速上手", null, (_, _) => Dock.Dispatcher.Invoke(ShowHelp));
-        menu.Items.Add("退出并恢复窗口", null, (_, _) => Dock.Dispatcher.Invoke(Exit));
+        menu.Items.Add(L.T("最近关闭 / 恢复工作现场…"), null, (_, _) => Dock.Dispatcher.Invoke(ShowRecovery));
+        menu.Items.Add(L.T("排列 / 恢复窗口"), null, (_, _) => Dock.Dispatcher.Invoke(RequestOverview));
+        menu.Items.Add(L.T("设置"), null, (_, _) => Dock.Dispatcher.Invoke(ShowSettings));
+        menu.Items.Add(L.T("快速上手"), null, (_, _) => Dock.Dispatcher.Invoke(ShowHelp));
+        menu.Items.Add(L.T("退出并恢复窗口"), null, (_, _) => Dock.Dispatcher.Invoke(Exit));
         _tray.ContextMenuStrip = menu; RefreshTrayTheme();
+        _tray.MouseClick += (_, e) =>
+        {
+            if (e.Button == Forms.MouseButtons.Left)
+                Dock.Dispatcher.Invoke(() => { _dockHiddenByUser = false; EnsureDockVisible(); Expand(); });
+        };
         _tray.DoubleClick += (_, _) => Dock.Dispatcher.Invoke(() => { _dockHiddenByUser = false; EnsureDockVisible(); Expand(); });
         if (State.AutoHide) Collapse();
         Microsoft.Win32.SystemEvents.DisplaySettingsChanged += DisplayChanged;
@@ -101,7 +114,7 @@ public sealed partial class Manager : IDisposable
         RefreshConnections(); UpdateSlotsVisibility(); Dock.UpdateSummary(); Save();
         if (Store.LoadWarning != null) Hint(Store.LoadWarning);
         else if (_input.Warnings.Count > 0) Hint(string.Join("；", _input.Warnings));
-        else Hint("拖动窗口标题栏到槽位；右键可选择窗口");
+        else Hint(L.T("拖动窗口标题栏到槽位；右键可选择窗口"));
         foreach (string warning in _input.Warnings) Store.Log(warning);
     }
     private void RefreshTrayTheme()
@@ -115,7 +128,7 @@ public sealed partial class Manager : IDisposable
     {
         try { Store.Save(State); return true; }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
-        { Hint("配置保存失败：" + ex.Message); Store.Log(ex.ToString()); return false; }
+        { Hint(L.T("配置保存失败：") + ex.Message); Store.Log(ex.ToString()); return false; }
     }
     private void Hint(string message) { Dock.SetHint(message); _lastHint = DateTime.UtcNow; }
     private void ApplyAudioPreferences() => GameAudio.Configure(State.Preferences.SoundEffects || State.Preferences.SoundNotifications, State.Preferences.SoundVolume, State.Preferences.ImmersiveAudio);
@@ -150,35 +163,35 @@ public sealed partial class Manager : IDisposable
             var match = RecoveryLaunch.ExistingMatch(slot, State.Slots, windows);
             if (match != null && AttachRecoveredWindow(slot, match, restorePosition: false)) count++;
         }
-        Hint("已匹配重连 " + count + " 个窗口；无法唯一确认的任务保留待处理"); return count;
+        Hint(L.T("已匹配重连 ") + count + L.T(" 个窗口；无法唯一确认的任务保留待处理")); return count;
     }
     public string RestoreTask(Slot slot)
     {
         if (!State.Slots.Contains(slot)) {
             string? error = RecoveryLaunch.Validation(slot);
             if (error != null) return error;
-            if (!ReclaimRecentTask(slot)) return "当前九个槽位已满，请先移出一个任务";
+            if (!ReclaimRecentTask(slot)) return L.T("当前九个槽位已满，请先移出一个任务");
         }
-        if (!slot.Occupied) return "这个任务已移出列表";
-        if (Native.Matches(slot.Window)) { slot.Connected = true; slot.Refresh(); return "窗口已连接，无需重复打开"; }
-        if (slot.Recovery != null) return "正在恢复，已阻止重复打开";
+        if (!slot.Occupied) return L.T("这个任务已移出列表");
+        if (Native.Matches(slot.Window)) { slot.Connected = true; slot.Refresh(); return L.T("窗口已连接，无需重复打开"); }
+        if (slot.Recovery != null) return L.T("正在恢复，已阻止重复打开");
         var match = RecoveryLaunch.ExistingMatch(slot, State.Slots, Native.Windows());
-        if (match != null && AttachRecoveredWindow(slot, match, false)) return "已重连现有窗口";
+        if (match != null && AttachRecoveredWindow(slot, match, false)) return L.T("已重连现有窗口");
         string? validation = RecoveryLaunch.Validation(slot);
         if (validation != null) { slot.RecoveryError = validation; slot.Refresh(); return validation; }
         var pending = new PendingRecovery { Token = Guid.NewGuid().ToString("N") };
         Directory.CreateDirectory(Path.Combine(Store.Root, "recovery")); slot.Recovery = pending; slot.RecoveryError = ""; slot.Refresh();
-        if (!Save()) { slot.Recovery = null; slot.Refresh(); return "配置未保存，未打开新窗口"; }
-        try { _startRecovery(RecoveryLaunch.StartInfo(slot, Store, pending)); return "正在打开并自动重连"; }
+        if (!Save()) { slot.Recovery = null; slot.Refresh(); return L.T("配置未保存，未打开新窗口"); }
+        try { _startRecovery(RecoveryLaunch.StartInfo(slot, Store, pending)); return L.T("正在打开并自动重连"); }
         catch (Exception ex) when (ex is System.ComponentModel.Win32Exception or InvalidOperationException or IOException or UnauthorizedAccessException)
-        { slot.Recovery = null; slot.RecoveryError = "打开失败：" + ex.Message; slot.Refresh(); Save(); return slot.RecoveryError; }
+        { slot.Recovery = null; slot.RecoveryError = L.T("打开失败：") + ex.Message; slot.Refresh(); Save(); return slot.RecoveryError; }
     }
     public string RestoreAllTasks()
     {
         RefreshConnections(); ReconnectExisting(); int started = 0, skipped = 0;
         foreach (var slot in State.Slots.Where(s => s.Occupied && !s.Connected && s.Recovery == null).Concat(State.RecentTasks.Select(r => r.Task)).ToArray())
         { if (RecoveryLaunch.Validation(slot) != null) { skipped++; continue; } RestoreTask(slot); if (slot.Recovery != null || slot.Connected) started++; else skipped++; }
-        string result = "已开始恢复 " + started + " 个任务" + (skipped > 0 ? " · " + skipped + " 个需补充启动信息" : ""); Hint(result); return result;
+        string result = L.T("已开始恢复 ") + started + L.T(" 个任务") + (skipped > 0 ? " · " + skipped + L.T(" 个需补充启动信息") : ""); Hint(result); return result;
     }
     private bool ReclaimRecentTask(Slot task)
     {
@@ -194,7 +207,7 @@ public sealed partial class Manager : IDisposable
     public void PickRecoveryWindow(Slot task)
     {
         if (State.Slots.Contains(task)) { PickWindow(task); return; }
-        if (!State.Slots.Any(s => !s.Occupied)) { Hint("当前九个槽位已满，请先移出一个任务"); return; }
+        if (!State.Slots.Any(s => !s.Occupied)) { Hint(L.T("当前九个槽位已满，请先移出一个任务")); return; }
         BeginDialog();
         try {
             var picked = Dialogs.Pick(task.Number, WorkArea, task, State.Slots);
@@ -221,7 +234,7 @@ public sealed partial class Manager : IDisposable
         if (closed.Length > 0) {
             State.RecentTasks = State.RecentTasks.Take(30).ToList();
             Save(); UpdateSlotsVisibility();
-            Hint(closed.Length + " 个已关闭窗口已移到最近关闭，槽位已腾出");
+            Hint(closed.Length + L.T(" 个已关闭窗口已移到最近关闭，槽位已腾出"));
         }
         return closed.Length;
     }
@@ -242,7 +255,7 @@ public sealed partial class Manager : IDisposable
         {
             var launch = slot.Recovery!;
             if (Native.Matches(slot.Window) && File.Exists(RecoveryLaunch.Acknowledgement(Store, launch))) { slot.Recovery = null; slot.Refresh(); Save(); continue; }
-            if (DateTimeOffset.UtcNow - launch.StartedAt > TimeSpan.FromSeconds(24)) { slot.Recovery = null; slot.RecoveryError = "恢复超时，请选择已有窗口；未重复启动"; slot.Refresh(); Save(); continue; }
+            if (DateTimeOffset.UtcNow - launch.StartedAt > TimeSpan.FromSeconds(24)) { slot.Recovery = null; slot.RecoveryError = L.T("恢复超时，请选择已有窗口；未重复启动"); slot.Refresh(); Save(); continue; }
             var match = RecoveryLaunch.PendingMatch(launch, windows);
             if (match != null && AttachRecoveredWindow(slot, match, true))
             {
@@ -407,7 +420,7 @@ public sealed partial class Manager : IDisposable
         if (State.Popup?.SlotId == slot.Id && Native.Matches(State.Popup.Window))
         {
             CancelInteraction(); Dock.ClosePreview(); RestorePopup(restoreFocus: true);
-            RefreshConnections(); Dock.UpdateSummary(); Hint("已恢复 " + number + " 唤出前的状态");
+            RefreshConnections(); Dock.UpdateSummary(); Hint(L.T("已恢复 ") + number + L.T(" 唤出前的状态"));
             PlayCue(AudioCue.Restore, slot);
         }
         else ActivateSlot(number);
@@ -420,7 +433,7 @@ public sealed partial class Manager : IDisposable
         int? active = State.Slots.FirstOrDefault(s => s.IsActive)?.Number;
         int? previous = _wheel.Selected;
         int? selected = _wheel.Move(delta, slots, active);
-        if (selected == null) { if (slots.Count == 0) Hint("先拖入一个窗口，或右键槽位进行绑定"); return; }
+        if (selected == null) { if (slots.Count == 0) Hint(L.T("先拖入一个窗口，或右键槽位进行绑定")); return; }
         if (selected == previous) return;
         ActivateSlot(selected.Value, keepWheelGesture: true);
     }
@@ -440,7 +453,7 @@ public sealed partial class Manager : IDisposable
         if (keepWheelGesture) ClearSelection();
         else CancelInteraction();
         Dock.ClosePreview();
-        if (!Native.Matches(slot.Window)) { if (slot.Occupied) PickWindow(slot); else Hint("槽位 " + number + " 还没有窗口"); return; }
+        if (!Native.Matches(slot.Window)) { if (slot.Occupied) PickWindow(slot); else Hint(L.T("槽位 ") + number + L.T(" 还没有窗口")); return; }
         var hwnd = new IntPtr(slot.Window!.Handle);
         if (State.Popup?.SlotId != slot.Id || !Native.Matches(State.Popup.Window))
         {
@@ -448,7 +461,7 @@ public sealed partial class Manager : IDisposable
             if (State.Popup != null && previous?.Handle == State.Popup.Window.Handle) previous = State.Popup.PreviousFocus;
             RestorePopup(restoreFocus: false);
             var placement = Native.PlacementOf(hwnd);
-            if (!placement.HasValue) { Hint("无法记录窗口位置，请重试"); return; }
+            if (!placement.HasValue) { Hint(L.T("无法记录窗口位置，请重试")); return; }
             State.Popup = new() { SlotId = slot.Id, Window = slot.Window!, Placement = placement.Value, ParkedByApp = slot.ParkedByApp, PreviousFocus = previous };
             if (!Save()) { State.Popup = null; return; }
         }
@@ -466,14 +479,14 @@ public sealed partial class Manager : IDisposable
         {
             slot.ParkedByApp = false;
             slot.Unread = false;
-            Hint("已唤出 " + number + " · " + slot.DisplayName);
+            Hint(L.T("已唤出 ") + number + " · " + slot.DisplayName);
             Dock.Pulse(slot, capture: false);
             PlayCue(AudioCue.Switch, slot);
         }
         else
         {
             RestorePopup(restoreFocus: false);
-            Hint("未能取得窗口焦点，可尝试点击窗口或用相同权限运行");
+            Hint(L.T("未能取得窗口焦点，可尝试点击窗口或用相同权限运行"));
         }
         Save(); RefreshConnections(); Dock.UpdateSummary();
     }
@@ -500,7 +513,7 @@ public sealed partial class Manager : IDisposable
         if (!Native.Matches(slot.Window)) return;
         RememberPlacement(slot);
         Native.ShowWindow(new(slot.Window!.Handle), 6);
-        slot.ParkedByApp = true; Save(); Hint("已收起 " + slot.DisplayName);
+        slot.ParkedByApp = true; Save(); Hint(L.T("已收起 ") + slot.DisplayName);
     }
     public void ParkAll()
     {
@@ -509,17 +522,17 @@ public sealed partial class Manager : IDisposable
         if (State.Layout.Count > 0) RestoreLayout();
         foreach (Slot slot in State.Slots.Where(s => Native.Matches(s.Window)))
         { RememberPlacement(slot); Native.ShowWindow(new(slot.Window!.Handle), 6); slot.ParkedByApp = true; }
-        Save(); Hint("已收起所有任务窗口，进程继续运行");
+        Save(); Hint(L.T("已收起所有任务窗口，进程继续运行"));
     }
     public void Bind(Slot slot, WindowIdentity identity, Native.Placement? original = null)
     {
-        if (!Native.Matches(identity)) { Hint("这个窗口已经关闭，请重新选择"); return; }
+        if (!Native.Matches(identity)) { Hint(L.T("这个窗口已经关闭，请重新选择")); return; }
         RestorePopup(restoreFocus: false);
         if (State.Layout.Count > 0) RestoreLayout();
         var duplicate = State.Slots.FirstOrDefault(s => s.Window?.Handle == identity.Handle && Native.Matches(s.Window));
         if (duplicate != null && duplicate != slot)
         {
-            if (slot.Occupied) { Hint("目标槽位已占用，请先移出原任务"); return; }
+            if (slot.Occupied) { Hint(L.T("目标槽位已占用，请先移出原任务")); return; }
             MoveSlot(duplicate, slot);
             if (original.HasValue) Native.RestorePlacement(new(identity.Handle), original.Value);
             if (State.MinimizeOnCapture) Park(slot);
@@ -546,7 +559,7 @@ public sealed partial class Manager : IDisposable
         RefreshConnections(); UpdateSlotsVisibility(); slot.Refresh(); Save(); Dock.UpdateSummary(); Dock.Pulse(slot);
         PlayCue(AudioCue.Capture, slot);
         InkEffects.Sweep(WorkArea, _scale, State.Preferences.Animate, capture: true);
-        Hint("已收录至 " + slot.Number + " · 右键可重命名任务");
+        Hint(L.T("已收录至 ") + slot.Number + L.T(" · 右键可重命名任务"));
     }
     public void PickWindow(Slot slot)
     {
@@ -583,7 +596,7 @@ public sealed partial class Manager : IDisposable
         target.State = source.State; target.StateSource = source.StateSource; target.UpdatedAt = source.UpdatedAt;
         target.Unread = source.Unread; target.Message = source.Message;
         ClearSlot(source); RefreshConnections(); UpdateSlotsVisibility(); Save(); Dock.UpdateSummary();
-        Hint("任务已移动到槽位 " + target.Number);
+        Hint(L.T("任务已移动到槽位 ") + target.Number);
         PlayCue(AudioCue.Reorder, target);
     }
     public void ReorderSlot(Slot source, Slot target)
@@ -595,7 +608,7 @@ public sealed partial class Manager : IDisposable
         _captureFlashes.Clear(); CancelSelection();
         Dock.SetSlots(State.Slots.ToArray());
         foreach (var slot in State.Slots) { slot.JustCaptured = false; slot.Refresh(); }
-        RefreshBindings(); UpdateSlotsVisibility(); Save(); Hint("顺序已更新 · 各窗口使用新槽位对应的快捷键");
+        RefreshBindings(); UpdateSlotsVisibility(); Save(); Hint(L.T("顺序已更新 · 各窗口使用新槽位对应的快捷键"));
         PlayCue(AudioCue.Reorder, source);
     }
     private static void ClearSlot(Slot slot)
@@ -621,7 +634,7 @@ public sealed partial class Manager : IDisposable
         if (State.Popup?.SlotId == slot.Id) RestorePopup(restoreFocus: false);
         if (State.Layout.Count > 0) RestoreLayout();
         ReleaseSlotWindow(slot); ClearSlot(slot); RefreshConnections(); UpdateSlotsVisibility(); Save(); Dock.UpdateSummary();
-        Hint("已移出武器栏，原窗口保留");
+        Hint(L.T("已移出武器栏，原窗口保留"));
         PlayCue(AudioCue.Remove, slot);
     }
     public void SetStatus(Slot slot, AgentState state, string source, string message, DateTimeOffset? at = null)
@@ -659,10 +672,10 @@ public sealed partial class Manager : IDisposable
     {
         CancelInteraction(); Dock.ClosePreview();
         RestorePopup(restoreFocus: false);
-        if (State.Layout.Count > 0) { RestoreLayout(); Hint("已恢复展开之前的布局"); PlayCue(AudioCue.Restore); return; }
+        if (State.Layout.Count > 0) { RestoreLayout(); Hint(L.T("已恢复展开之前的布局")); PlayCue(AudioCue.Restore); return; }
         RefreshConnections();
         var slots = State.Slots.Where(s => s.Connected).ToList();
-        if (slots.Count == 0) { Hint("先收录窗口，再一起展开"); return; }
+        if (slots.Count == 0) { Hint(L.T("先收录窗口，再一起展开")); return; }
         ApplyOverview(slots, Tiling.Arrange(slots.Count, WorkArea, State.Preferences.Arrangement, (int)(State.Preferences.LayoutGap * _scale)));
     }
     private void ApplyOverview(System.Collections.Generic.IReadOnlyList<Slot> slots, System.Collections.Generic.IReadOnlyList<Cell> cells)
@@ -683,7 +696,7 @@ public sealed partial class Manager : IDisposable
             slot.ParkedByApp = false;
         }
         Save(); Dock.UpdateSummary();
-        Hint(failed == 0 ? "窗口已排列 · " + State.Preferences.ArrangeGesture.Replace("Oem3", "反引号") + " 恢复布局" : failed + " 个窗口未能排列，其余窗口已展开");
+        Hint(failed == 0 ? L.T("窗口已排列 · ") + State.Preferences.ArrangeGesture.Replace("Oem3", L.T("反引号")) + L.T(" 恢复布局") : failed + L.T(" 个窗口未能排列，其余窗口已展开"));
         PlayCue(AudioCue.Arrange);
     }
     private void RestoreLayout()
@@ -734,7 +747,7 @@ public sealed partial class Manager : IDisposable
             bool highlighted = slot == target;
             if (slot.IsDropTarget != highlighted) { slot.IsDropTarget = highlighted; slot.Refresh(); }
         }
-        if (target != null) Hint(target.Occupied ? "槽位 " + target.Number + " 已占用，请选择空槽位" : "松手，将窗口收录到 " + target.Number);
+        if (target != null) Hint(target.Occupied ? L.T("槽位 ") + target.Number + L.T(" 已占用，请选择空槽位") : L.T("松手，将窗口收录到 ") + target.Number);
         if (!Native.Down(1)) FinishDrag();
     }
     private void FinishDrag()
@@ -753,7 +766,7 @@ public sealed partial class Manager : IDisposable
             else
             {
                 if (placement.HasValue && Native.Matches(identity)) Native.RestorePlacement(new(identity.Handle), placement.Value);
-                Hint("槽位已占用，原任务未替换");
+                Hint(L.T("槽位已占用，原任务未替换"));
             }
         }
         else
@@ -783,7 +796,8 @@ public sealed partial class Manager : IDisposable
         EnsureDockVisible();
         // Native inspection and disk polling wait until manipulation or a hover transition ends.
         if (Dock.IsManipulating || Dock.IsTransitioning) return;
-        ProcessRecoveries(); RefreshConnections(); ConsumeEvents(); PollSessionStatus(); CheckpointWindows(); Dock.UpdateSummary();
+        ProcessRecoveries(); RefreshConnections(); _ = ProcessPendingEvents(); PollSessionStatus(); CheckpointWindows(); Dock.UpdateSummary();
+        foreach (var slot in State.Slots) slot.RefreshStatusFreshness(DateTimeOffset.UtcNow);
         if (Selecting && !Native.RequiredModifiersDown(State.Preferences.MouseModifiers)) CommitSelection();
         foreach (int number in _captureFlashes.Where(p => p.Value <= DateTime.UtcNow).Select(p => p.Key).ToList())
         { State.Slots[number - 1].JustCaptured = false; State.Slots[number - 1].Refresh(); _captureFlashes.Remove(number); }
@@ -794,31 +808,19 @@ public sealed partial class Manager : IDisposable
             if (inside && Dock.Collapsed) Expand();
             else if (!inside && !Dock.Collapsed && DateTime.UtcNow - _lastHint > TimeSpan.FromSeconds(2)) Collapse();
         }
-        if (DateTime.UtcNow - _lastHint > TimeSpan.FromSeconds(8)) Dock.SetHint("拖入收纳 · 右键管理 · 悬停预览");
+        if (DateTime.UtcNow - _lastHint > TimeSpan.FromSeconds(8)) Dock.SetHint(L.T("拖入收纳 · 右键管理 · 悬停预览"));
     }
-    private void ConsumeEvents()
+    private async Task ConsumeEventsAsync()
     {
         try
         {
-            // A bounded batch prevents a noisy producer from blocking the UI thread.
-            var pending = new List<(string Path, StatusEvent Status)>();
-            foreach (string path in Directory.EnumerateFiles(Store.EventsDirectory, "*.json").OrderBy(File.GetLastWriteTimeUtc).Take(24))
-            {
-                try
-                {
-                    if (new FileInfo(path).Length > 32768) { File.Move(path, path + ".rejected", true); continue; }
-                    var status = JsonSerializer.Deserialize<StatusEvent>(File.ReadAllText(path), StateStore.Json);
-                    if (status != null && Enum.IsDefined(status.State) && status.At <= DateTimeOffset.UtcNow.AddMinutes(1))
-                        pending.Add((path, status));
-                    else File.Delete(path);
-                }
-                catch (JsonException) { File.Move(path, path + ".rejected", true); }
-                catch (IOException) { /* A writer or antivirus may temporarily own the file. */ }
-            }
+            var pending = await _eventInbox.ReadAsync(_eventCancellation.Token);
+            if (_disposed) return;
+            if (pending.Count == 0 && !_statusBatchDirty) return;
             _processingStatusBatch = true;
             try
             {
-                foreach (var item in pending.OrderBy(p => p.Status.At))
+                foreach (var item in pending)
                 {
                     var slot = State.Slots.FirstOrDefault(s => s.Id == item.Status.TaskId && s.Occupied);
                     if (slot != null) ApplyStatusEvent(slot, item.Status);
@@ -831,11 +833,17 @@ public sealed partial class Manager : IDisposable
             if (_statusBatchDirty) Dock.UpdateSummary();
             _statusBatchDirty = false;
             if (_statusBatchNotices != null) { foreach (var notice in _statusBatchNotices) if (notice.Value.Id == notice.Key && notice.Value.Unread) NotifyStatus(notice.Value); _statusBatchNotices.Clear(); }
-            foreach (var item in pending) try { File.Delete(item.Path); } catch (IOException) { }
+            await _eventInbox.AcknowledgeAsync(pending, _eventCancellation.Token);
         }
-        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException) { Store.Log("Status events: " + ex.Message); }
+        catch (OperationCanceledException) when (_eventCancellation.IsCancellationRequested) { }
+        catch (Exception ex)
+        {
+            if (!_disposed && DateTime.UtcNow >= _nextEventWarning)
+            { _nextEventWarning = DateTime.UtcNow.AddMinutes(1); Store.Log("Status events: " + ex); Hint(L.T("任务状态读取暂时失败，将自动重试")); }
+        }
     }
-    internal void ProcessPendingEvents() => ConsumeEvents();
+    // One in-flight read/apply/ack cycle; repeated timer ticks cannot duplicate a batch.
+    internal Task ProcessPendingEvents() => _disposed ? Task.CompletedTask : _eventTask is { IsCompleted: false } ? _eventTask : _eventTask = ConsumeEventsAsync();
     internal bool ApplyStatusEvent(Slot slot, StatusEvent status)
     {
         if (!slot.Occupied || slot.Id != status.TaskId) return false;
@@ -868,7 +876,7 @@ public sealed partial class Manager : IDisposable
     public void TogglePause()
     {
         ShortcutsPaused = !ShortcutsPaused; CancelInteraction(); RefreshBindings(); Dock.UpdateSummary();
-        Hint(ShortcutsPaused ? "快捷键已暂停，Tab、数字和鼠标操作交还原应用" : "任务快捷键已恢复");
+        Hint(ShortcutsPaused ? L.T("快捷键已暂停，Tab、数字和鼠标操作交还原应用") : L.T("任务快捷键已恢复"));
     }
     public void ToggleAllSlots() { ShowingAllSlots = !ShowingAllSlots; UpdateSlotsVisibility(); }
     public void UpdateSlotsVisibility()
@@ -892,8 +900,8 @@ public sealed partial class Manager : IDisposable
         var before = State.Slots.ToDictionary(s => s.Id, EquipmentAssignment.From);
         var result = picker.Result;
         foreach (var slot in State.Slots) if (result.TryGetValue(slot.Id, out var equipment)) equipment.Apply(slot);
-        if (!Save()) { foreach (var slot in State.Slots) before[slot.Id].Apply(slot); Hint("配装未保存，请检查配置目录是否可写"); return; }
-        Dock.UpdateChrome(); Hint("主题配装已保存 · 右键槽位可再次更换");
+        if (!Save()) { foreach (var slot in State.Slots) before[slot.Id].Apply(slot); Hint(L.T("配装未保存，请检查配置目录是否可写")); return; }
+        Dock.UpdateChrome(); Hint(L.T("主题配装已保存 · 右键槽位可再次更换"));
     }
     public void ShowSettings()
         => ShowSettingsPage(2);
@@ -928,7 +936,7 @@ public sealed partial class Manager : IDisposable
                 foreach (var slot in State.Slots) slot.Refresh();
                 Dock.RefreshTheme(); RefreshTrayTheme(); SetAutoHide(settings.AutoHide); Save(); UpdateSlotsVisibility();
                 _tray.ContextMenuStrip!.Items[1].Text = InventoryMenuLabel;
-                Hint("设置已保存 · " + settings.TerminalApplyMessage);
+                Hint(L.T("设置已保存 · ") + settings.TerminalApplyMessage);
             }
         }
         finally { EndDialog(); }
@@ -949,14 +957,14 @@ public sealed partial class Manager : IDisposable
         {
             if (_disposed) return;
             CancelInteraction(); var screen = Native.ScreenAt(State.Preferences.DockAnchor); WorkArea = screen.Work; _scale = screen.Scale; Reposition();
-            Hint("显示器布局已更新，窗口唤出时会校正可见位置");
+            Hint(L.T("显示器布局已更新，窗口唤出时会校正可见位置"));
         });
     }
     public void OpenDataDirectory() => Process.Start(new ProcessStartInfo("explorer.exe", Store.Root) { UseShellExecute = true });
     public void AddWindow()
     {
         var empty = State.Slots.FirstOrDefault(s => !s.Occupied);
-        if (empty != null) PickWindow(empty); else Hint("九个槽位已满，请先移出一个任务");
+        if (empty != null) PickWindow(empty); else Hint(L.T("九个槽位已满，请先移出一个任务"));
     }
     public void ShowHelp()
     {
@@ -983,6 +991,7 @@ public sealed partial class Manager : IDisposable
     {
         if (_disposed) return; _disposed = true; Exiting = true;
         _heartbeat.Stop(); _dragTimer.Stop(); _notificationTimer?.Stop(); _notifications.Clear();
+        _eventCancellation.Cancel();
         CheckpointWindows();
         _input.Dispose(); CancelInteraction(); Dock.ClosePreview(); InkEffects.CancelVisuals();
         GameAudio.Stop();

@@ -23,39 +23,39 @@ public sealed class AudioSettingsPanel : StackPanel
     public AudioSettingsPanel(Preferences source, Func<Skin> previewSkin)
     {
         _previewSkin = previewSkin;
-        var controls = Section("窗口切换音", "切换到终端时播放主题标志音；完成提示在「任务提醒」中设置。");
-        _enabled = new CheckBox { Content = "启用窗口切换音", IsChecked = source.SoundEffects, Margin = new Thickness(0, 3, 0, 12) };
+        var controls = Section(L.T("窗口切换音"), L.T("切换到终端时播放主题标志音；完成提示在「任务提醒」中设置。"));
+        _enabled = new CheckBox { Content = L.T("启用窗口切换音"), IsChecked = source.SoundEffects, Margin = new Thickness(0, 3, 0, 12) };
         controls.Children.Add(_enabled);
         _enabled.Click += (_, _) => { if (_enabled.IsChecked != true) GameAudio.Stop(); };
-        Caption(controls, "声音主题");
+        Caption(controls, L.T("声音主题"));
         _theme.MinHeight = 36;
-        _theme.Items.Add(new ComboBoxItem { Content = "跟随界面主题" });
+        _theme.Items.Add(new ComboBoxItem { Content = L.T("跟随界面主题") });
         foreach (var skin in SkinCatalog.All) _theme.Items.Add(new ComboBoxItem { Content = skin.Name, Tag = skin.Id });
         _theme.SelectedItem = source.SoundTheme is Skin selected
             ? _theme.Items.OfType<ComboBoxItem>().FirstOrDefault(x => x.Tag is Skin id && id == selected) ?? _theme.Items[0]
             : _theme.Items[0];
         controls.Children.Add(_theme);
         _description.Foreground = WuxiaTheme.Brush(SkinCatalog.Current.Muted); controls.Children.Add(_description);
-        var volumeLabel = Caption(controls, "音量");
+        var volumeLabel = Caption(controls, L.T("音量"));
         _volume = new Slider { Minimum = 0, Maximum = 100, Value = double.IsFinite(source.SoundVolume) ? Math.Clamp(source.SoundVolume * 100, 0, 100) : 45, TickFrequency = 5, IsSnapToTickEnabled = true, Margin = new Thickness(0, 7, 0, 12) };
-        void UpdateVolume() => volumeLabel.Text = "音量  " + Math.Round(_volume.Value) + "%";
+        void UpdateVolume() => volumeLabel.Text = L.T("音量  ") + Math.Round(_volume.Value) + "%";
         _volume.ValueChanged += (_, _) => UpdateVolume(); UpdateVolume(); controls.Children.Add(_volume);
         var playback = new WrapPanel { Margin = new Thickness(0, 6, 0, 0) }; controls.Children.Add(playback);
-        var preview = Action("试听切换音"); preview.Click += (_, _) => Audition(); playback.Children.Add(preview);
-        var stop = Action("停止试听"); stop.Click += (_, _) => GameAudio.Stop(); playback.Children.Add(stop);
+        var preview = Action(L.T("试听切换音")); preview.Click += (_, _) => Audition(); playback.Children.Add(preview);
+        var stop = Action(L.T("停止试听")); stop.Click += (_, _) => GameAudio.Stop(); playback.Children.Add(stop);
         _auditionStatus.Foreground = WuxiaTheme.Brush(SkinCatalog.Current.Muted); controls.Children.Add(_auditionStatus);
 
-        var custom = Section("自定义标志音", "为所选声音主题导入一段 WAV；按「保存并应用」后生效。关闭或取消设置会保留原声音。");
+        var custom = Section(L.T("自定义标志音"), L.T("为所选声音主题导入一段 WAV；按「保存并应用」后生效。关闭或取消设置会保留原声音。"));
         var customCard = Children[Children.Count - 1]; Children.Remove(customCard);
-        Children.Add(new Expander { Header = "自定义声音文件", Content = customCard, Margin = new Thickness(0, 4, 0, 12) });
+        Children.Add(new Expander { Header = L.T("自定义声音文件"), Content = customCard, Margin = new Thickness(0, 4, 0, 12) });
         var actions = new WrapPanel(); custom.Children.Add(actions);
-        var import = Action("导入 WAV…"); var reset = Action("恢复默认声音"); actions.Children.Add(import); actions.Children.Add(reset);
+        var import = Action(L.T("导入 WAV…")); var reset = Action(L.T("恢复默认声音")); actions.Children.Add(import); actions.Children.Add(reset);
         _status.Foreground = WuxiaTheme.Brush(SkinCatalog.Current.Muted); custom.Children.Add(_status);
         import.Click += (_, _) =>
         {
-            var dialog = new Microsoft.Win32.OpenFileDialog { Title = "选择窗口切换标志音", Filter = "WAV 音频|*.wav", CheckFileExists = true };
+            var dialog = new Microsoft.Win32.OpenFileDialog { Title = L.T("选择窗口切换标志音"), Filter = L.T("WAV 音频|*.wav"), CheckFileExists = true };
             if (dialog.ShowDialog(Window.GetWindow(this)) != true) return;
-            if (!GameAudio.ValidateWave(dialog.FileName, out string error)) { _status.Text = "请选择不超过 3 秒的 PCM16 WAV（单声道或立体声，16–96 kHz）。\n" + error; return; }
+            if (!GameAudio.ValidateWave(dialog.FileName, out string error)) { _status.Text = L.T("请选择不超过 3 秒的 PCM16 WAV（单声道或立体声，16–96 kHz）。\n") + error; return; }
             QueueOverride(dialog.FileName); UpdateDescription();
         };
         reset.Click += (_, _) => { QueueOverride(null); UpdateDescription(); };
@@ -73,14 +73,14 @@ public sealed class AudioSettingsPanel : StackPanel
     private void UpdateDescription()
     {
         Skin skin = SelectedSkin;
-        _description.Text = (ThemeOverride == null ? "当前跟随：" + SkinCatalog.Get(skin).Name + "\n" : "") + SignatureAudio.Description(skin);
+        _description.Text = (ThemeOverride == null ? L.T("当前跟随：") + SkinCatalog.Get(skin).Name + "\n" : "") + SignatureAudio.Description(skin);
         var draft = _overrides.LastOrDefault(x => x.Skin == skin);
         string path = draft == null ? SignatureAudio.GetPath(skin) : draft.Source ?? SignatureAudio.DefaultPath(skin);
-        if (!File.Exists(path)) _description.Text += "\n尚未安装 · 当前静音，可导入自己的 WAV。";
+        if (!File.Exists(path)) _description.Text += L.T("\n尚未安装 · 当前静音，可导入自己的 WAV。");
         _status.Text = draft != null
-            ? draft.Source == null ? "待保存：恢复默认声音" : "待保存：" + Path.GetFileName(draft.Source)
-            : File.Exists(path) ? "已就绪 · " + Path.GetFileName(path) : "尚未安装此主题的标志音，可导入自己的 WAV。";
-        if (draft?.Source == null && !File.Exists(path) && draft != null) _status.Text += " · 默认声音未安装，恢复后将保持静音。";
+            ? draft.Source == null ? L.T("待保存：恢复默认声音") : L.T("待保存：") + Path.GetFileName(draft.Source)
+            : File.Exists(path) ? L.T("已就绪 · ") + Path.GetFileName(path) : L.T("尚未安装此主题的标志音，可导入自己的 WAV。");
+        if (draft?.Source == null && !File.Exists(path) && draft != null) _status.Text += L.T(" · 默认声音未安装，恢复后将保持静音。");
     }
     private void QueueOverride(string? source)
     {
@@ -93,9 +93,9 @@ public sealed class AudioSettingsPanel : StackPanel
         Skin skin = SelectedSkin;
         var draft = _overrides.LastOrDefault(x => x.Skin == skin);
         string path = draft == null ? SignatureAudio.GetPath(skin) : draft.Source ?? SignatureAudio.DefaultPath(skin);
-        if (!File.Exists(path)) { GameAudio.Stop(); _auditionStatus.Text = "此主题的标志音尚未安装，当前保持静音。"; return; }
+        if (!File.Exists(path)) { GameAudio.Stop(); _auditionStatus.Text = L.T("此主题的标志音尚未安装，当前保持静音。"); return; }
         GameAudio.PreviewFile(skin, AudioCue.Switch, path, _volume.Value / 100);
-        _auditionStatus.Text = SkinCatalog.Get(skin).Name + " · " + (draft == null ? "窗口切换音" : "试听待保存声音") + " · " + Math.Round(_volume.Value) + "%";
+        _auditionStatus.Text = SkinCatalog.Get(skin).Name + " · " + (draft == null ? L.T("窗口切换音") : L.T("试听待保存声音")) + " · " + Math.Round(_volume.Value) + "%";
     }
     public bool TryCommit(Preferences result, out string error)
     {

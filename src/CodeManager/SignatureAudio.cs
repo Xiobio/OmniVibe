@@ -27,7 +27,7 @@ public static class SignatureAudio
         return File.Exists(custom) ? custom : DefaultPath(skin);
     }
     private static readonly Lazy<IReadOnlyDictionary<string, string>> Names = new(ReadNames);
-    public static string Description(Skin skin) => Names.Value.TryGetValue(SkinCatalog.Get(skin).Slug, out string? name) ? name : "尚未安装主题标志音，可导入 WAV";
+    public static string Description(Skin skin) => Names.Value.TryGetValue(SkinCatalog.Get(skin).Slug, out string? name) ? name : L.T("尚未安装主题标志音，可导入 WAV");
     private static IReadOnlyDictionary<string, string> ReadNames()
     {
         var names = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);

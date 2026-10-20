@@ -1,0 +1,31 @@
+name: Windows validation
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  regression:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Build and isolated regression
+        shell: powershell
+        run: ./scripts/Validate.ps1 -OutputRoot "$env:RUNNER_TEMP/omnivibe-validation"
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-validation
+          path: |
+            ${{ runner.temp }}/omnivibe-validation/results.json
+            ${{ runner.temp }}/omnivibe-validation/*-results.json
+            ${{ runner.temp }}/omnivibe-validation/release-manifest.json

@@ -58,10 +58,10 @@ internal static class AudioOverrideTransaction
                 catch (Exception restore) when (restore is IOException or UnauthorizedAccessException)
                 {
                     if (item.Backup != null) retainedBackups.Add(item.Backup);
-                    rollbackError += "\n恢复失败：" + item.Target + " · " + restore.Message + (item.Backup == null ? "" : "\n原文件备份保留在：" + item.Backup);
+                    rollbackError += L.T("\n恢复失败：") + item.Target + " · " + restore.Message + (item.Backup == null ? "" : L.T("\n原文件备份保留在：") + item.Backup);
                 }
             }
-            error = (rollbackError == "" ? "音频保存失败，已取消本轮更改：" : "音频保存未完成，请查看保留的备份：") + exception.Message + rollbackError;
+            error = (rollbackError == "" ? L.T("音频保存失败，已取消本轮更改：") : L.T("音频保存未完成，请查看保留的备份：")) + exception.Message + rollbackError;
             return false;
         }
         finally

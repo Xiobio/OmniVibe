@@ -1,0 +1,70 @@
+{
+  "method": "Built-in imagegen; PNG/ICO format and size export only",
+  "files": [
+    {
+      "path": "source.png",
+      "bytes": 964743,
+      "sha256": "bfc04a61788698d3924a04b8a41090bd0b76d02f1b262edb17043124edcfcc2a"
+    },
+    {
+      "path": "icons/omnivibe-1024.png",
+      "bytes": 597303,
+      "sha256": "d1823c37d892a1e19a9cadcfe63e02f90df09c10dedbde231b57e17f1784a040"
+    },
+    {
+      "path": "icons/omnivibe-128.png",
+      "bytes": 17702,
+      "sha256": "e5e964c964a339fca5e84bd4c7124f2ebf9c299f227a0dea54e8c1197dd92b78"
+    },
+    {
+      "path": "icons/omnivibe-16.png",
+      "bytes": 863,
+      "sha256": "081447cb14de3d3b7e213a1e5c5ff5e68378fd008a68fb0a840322b1bb56de73"
+    },
+    {
+      "path": "icons/omnivibe-20.png",
+      "bytes": 1203,
+      "sha256": "8e40cdebe7b62ace5f3fe9426c954ecce6e414cb7b60f078f8777969a92ab2de"
+    },
+    {
+      "path": "icons/omnivibe-24.png",
+      "bytes": 1549,
+      "sha256": "23b3e3a209bea809ecc328a71cf98f0ad52a6790401045295a22c67e6e275fe6"
+    },
+    {
+      "path": "icons/omnivibe-256.png",
+      "bytes": 54304,
+      "sha256": "42393297e66dc09e32ea2884707b4f0ddd416a7323c8238c39f1443de39a8fcb"
+    },
+    {
+      "path": "icons/omnivibe-32.png",
+      "bytes": 2333,
+      "sha256": "7eb6dc39c2eac71dc221d4d984b08b9e3c95205d26f7f3ae096a3e8e14e40e17"
+    },
+    {
+      "path": "icons/omnivibe-40.png",
+      "bytes": 3256,
+      "sha256": "ccbc22e916daf7ebbc2dda09a27ec627165a2668a5cec0cdf32291c0aa2074ab"
+    },
+    {
+      "path": "icons/omnivibe-48.png",
+      "bytes": 4247,
+      "sha256": "6980bda463d605b6e5d2c2168c60f3a625d6042ad0cded66e0852121d3cd2821"
+    },
+    {
+      "path": "icons/omnivibe-512.png",
+      "bytes": 179946,
+      "sha256": "1c1d9daec1fd859c56be3b1f19870eefc337682be06069f8e7f89bba2c5217da"
+    },
+    {
+      "path": "icons/omnivibe-64.png",
+      "bytes": 6446,
+      "sha256": "cc54110a7d9c580a3b8e87287c7b2e824a549f42298ac178209a395056bf2920"
+    },
+    {
+      "path": "icons/omnivibe.ico",
+      "bytes": 92053,
+      "sha256": "f2e19c39dc6a9c2d14dede69c0f77cc3a82c6cc22a36e155410abeb5e53ef026"
+    }
+  ]
+}

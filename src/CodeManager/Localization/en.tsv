@@ -1,0 +1,506 @@
+设置	Settings
+快速上手	Getting started
+常规	General
+主题与换装	Themes & loadouts
+窗口与布局	Windows & layout
+快捷键	Shortcuts
+保存并应用	Save & apply
+恢复默认	Reset defaults
+取消	Cancel
+任务总览	Task overview
+任务圆环	Task ring
+快速轮盘	Radial switcher
+全部排列	Arrange windows
+排列 / 恢复	Arrange / restore
+排列 / 恢复窗口	Arrange / restore windows
+排列窗口	Arrange windows
+恢复布局	Restore layout
+添加窗口	Add window
+添加任务	Add task
+显示 / 隐藏悬浮入口	Show / hide launcher
+显示 / 隐藏入口	Show / hide launcher
+隐藏悬浮入口	Hide launcher
+悬浮入口	Floating launcher
+退出并恢复窗口	Quit and restore windows
+退出 · 终端继续运行	Quit · terminals keep running
+OmniVibe · 窗口收纳与任务管理	OmniVibe · Window & task manager
+OmniVibe · 设置	OmniVibe · Settings
+OmniVibe · 快速上手	OmniVibe · Getting started
+OmniVibe · 恢复工作现场	OmniVibe · Restore workspace
+OmniVibe 管理	Manage OmniVibe
+OMNIVIBE / 工作台	OMNIVIBE / WORKSPACE
+拖入窗口	Drop a window
+拖入或点击添加	Drop or click to add
+拖入窗口，或点击选择已有窗口	Drop a window, or click to select one
+拖入窗口，松手收纳到指定槽位	Drop a window into this slot
+拖入窗口，装备任务	Drop a window to equip a task
+松手收纳	Release to add
+松手收纳到这个槽位	Release to add to this slot
+松手调整任务顺序	Release to reorder tasks
+或点击空槽添加	Or click an empty slot
+空槽位	Empty slot
+空阵眼	Empty slot
+状态未知	Unknown status
+未知	Unknown
+正在执行	Running
+运行中	Running
+运转中	Running
+执行中	Running
+等待你处理	Needs your input
+等待处理	Needs attention
+等待我处理	Needs my input
+等待确认	Awaiting approval
+候君决断	Awaiting your decision
+本轮已回复	Response ready
+发生错误	Error
+已断开	Disconnected
+窗口断开	Window disconnected
+离线	Offline
+已断开 · 点击重连	Disconnected · click to reconnect
+已断开 · 待重连	Disconnected · reconnect needed
+窗口已连接	Window connected
+选择	Select
+当前	Active
+新	New
+新消息	New message
+未设置	Not set
+尚未配置	Not configured
+尚未收到任务状态事件	No task status events received
+最近更新：	Last updated: 
+任务名称	Task name
+颜色标签	Color label
+任务备忘 / 下次接着做什么	Notes / next steps
+项目目录（可选，用于任务辨认与重连）	Project folder (optional, for identification and reconnecting)
+项目目录未记录	Project folder not recorded
+项目目录不存在。	Project folder does not exist.
+项目目录不存在或不可访问	Project folder does not exist or cannot be accessed
+项目终端	Project terminal
+终端窗口	Terminal window
+命令提示符	Command Prompt
+保存任务	Save task
+保存名称	Save name
+保存配装	Save loadout
+编辑任务	Edit task
+编辑任务与项目…	Edit task & project…
+编辑名称、颜色与项目…	Edit name, color & project…
+重命名任务	Rename task
+请给任务起一个名称。	Enter a task name.
+请补充项目目录	Specify a project folder
+请先配置启动方式与项目目录	Set a launch method and project folder first
+恢复时如何启动	Launch method
+只打开项目终端（PowerShell）	Open project terminal (PowerShell)
+恢复原 AI 对话（取消勾选则新建会话）	Resume the AI conversation (uncheck for a new session)
+原会话 ID（接入 hooks 后自动记录）	Original session ID (recorded by hooks)
+会话 ID 应为完整 UUID。	Session ID must be a complete UUID.
+缺少原会话 ID，可在配置中补充	Original session ID is missing; add it in settings
+配置恢复	Configure recovery
+恢复 / 唤出	Restore / focus
+恢复工作现场	Restore workspace
+恢复上次任务	Restore previous tasks
+一键恢复已配置任务	Restore configured tasks
+最近任务 / 恢复工作现场	Recent tasks / restore workspace
+最近关闭 / 恢复工作现场…	Recently closed / restore workspace…
+查看最近任务 / 恢复工作现场	Recent tasks / restore workspace
+最近关闭 · 恢复时使用空槽位	Recently closed · restores into empty slots
+所有任务，一个工作现场	All tasks, one workspace
+任务记录持续保存在本机 · 启动行为可在设置中调整	Tasks are saved locally · configure startup behavior in Settings
+恢复这个任务（自动打开并重连）	Restore task (launch and reconnect)
+匹配已有窗口	Match existing windows
+正在打开并重连…	Opening and reconnecting…
+正在打开并自动重连	Opening and reconnecting automatically
+正在恢复，已阻止重复打开	Restoring; duplicate launch prevented
+窗口已连接，无需重复打开	Window already connected; no need to reopen
+恢复超时，请选择已有窗口；未重复启动	Recovery timed out. Select an existing window; no duplicate was launched.
+重新连接窗口 · 保留任务名与颜色	Reconnect window · keep task name and color
+重新连接窗口（保留名称）…	Reconnect window (keep name)…
+选择一个已有窗口	Select an existing window
+选择一个已有窗口…	Select an existing window…
+选择已有窗口	Select existing window
+选择窗口	Select window
+选择一个窗口，或拖动标题栏到槽位	Select a window, or drag its title bar to a slot
+按标题或进程名筛选	Filter by title or process name
+绑定选中的窗口	Bind selected window
+选择窗口后即可按编号唤出	Select a window, then focus it by slot number
+这个窗口已经关闭，请重新选择	This window has closed. Select another.
+这个任务已移出列表	This task has been removed
+移出管理	Remove from manager
+移出管理，保留终端窗口	Remove from manager; keep terminal open
+移出列表，保留窗口	Remove from list; keep window
+移出武器栏（保留窗口）	Unequip task (keep window)
+已移出武器栏，原窗口保留	Task removed; original window kept
+更多任务操作	More task actions
+更换角色 / 配装…	Change character / loadout…
+恢复主题藏品	Reset theme item
+使用自己的图片	Use your own image
+使用这些形象	Use these items
+导入图片…	Import image…
+导入配装图片	Import loadout image
+图片|*.png;*.jpg;*.jpeg;*.bmp	Images|*.png;*.jpg;*.jpeg;*.bmp
+藏品名称	Item name
+角色与武器 →	Characters & items →
+配装跟随任务移动 · 取消不改变当前配置	Loadout follows the task · cancel keeps current settings
+主题配装已保存 · 右键槽位可再次更换	Loadout saved · right-click a slot to change it
+已装备	Equipped
+点击图片选择形象 · 选中项高亮 · 悬停查看名称与来源	Click to select · selected items are highlighted · hover for name and source
+导入透明 PNG，可替换当前槽位的角色或武器。	Import a transparent PNG to replace this slot's character or item.
+皮肤套装	Theme collection
+选择主题	Select theme
+整套效果	Complete theme
+界面效果	Visual effects
+圆环与槽位	Ring & slots
+菜单与状态	Menus & status
+同一套材质、状态与配色	Consistent materials, status & colors
+实时窗口预览	Live window preview
+示例预览	Sample preview
+示例工作台 / 预览不修改当前任务	Sample workspace / preview does not change your tasks
+任务总览 / 皮肤预览 · 示例任务	Task overview / theme preview · sample tasks
+每种状态，都能一眼识别	Recognize every status at a glance
+网站重构	Website refactor
+接口检查	API review
+测试补齐	Test coverage
+文档更新	Documentation update
+错误示例	Sample error
+错误警报	Error alert
+错误 · 示例警示状态	Error · sample alert
+未知 · 尚未接入状态事件	Unknown · no status events connected
+未接入状态	No status connection
+未接入状态事件	No status events connected
+未接入自动状态	Automatic status not connected
+未接入自动状态 · 右键连接	No automatic status · right-click to connect
+未连接自动状态	Automatic status not connected
+未接入 / 会话已结束	Not connected / session ended
+状态待确认	Status unconfirmed
+运行中 · 正在执行	Running · in progress
+等待处理 · 需要你决策	Waiting · needs your decision
+本轮已回复 · 可继续跟进	Response ready · follow up when ready
+仅本轮回复完成 · 任务可继续	Response complete · task may continue
+回复待查看	Response unread
+已查看回复	Response viewed
+已查看 · 等待任务	Viewed · awaiting task
+标记已查看	Mark as viewed
+手动标记状态	Set status manually
+连接自动任务状态	Connect automatic task status
+连接当前 CLI 会话状态…	Connect current CLI session…
+连接任务状态	Connect task status
+连接正在使用的 CLI 会话	Connect an active CLI session
+连接所选会话	Connect selected session
+精确状态 hooks 接入	Precise status via hooks
+终端状态信号	Terminal status signals
+复制接入命令	Copy integration command
+已复制，在对应终端执行	Copied; run in the matching terminal
+接入	Connect
+Claude Code · 自动接入状态	Claude Code · automatic status
+Codex · 自动接入状态	Codex · automatic status
+声音主题	Sound theme
+跟随界面主题	Follow visual theme
+窗口切换音	Window switch sound
+启用窗口切换音	Enable window switch sound
+音量	Volume
+音量  	Volume  
+试听切换音	Preview switch sound
+试听待保存声音	Preview pending sound
+停止试听	Stop preview
+导入 WAV…	Import WAV…
+WAV 音频|*.wav	WAV audio|*.wav
+恢复默认声音	Reset default sound
+自定义声音文件	Custom sound file
+自定义标志音	Custom signature sound
+选择窗口切换标志音	Choose window switch sound
+尚未安装主题标志音，可导入 WAV	Theme sound is not installed; import a WAV
+尚未安装此主题的标志音，可导入自己的 WAV。	This theme's sound is not installed. Import your own WAV.
+此主题的标志音尚未安装，当前保持静音。	This theme's sound is not installed; playback is silent.
+待保存：恢复默认声音	Pending: reset default sound
+待保存：	Pending: 
+当前跟随：	Following: 
+Terminal 背景动画	Terminal background animation
+Terminal 背景动画（较高资源占用）	Animated Terminal background (uses more resources)
+Terminal 使用实际背景资源 · 保存后同步整套外观	Terminal uses actual background assets · Save applies the complete theme
+Terminal 资源未找到，显示配色回退	Terminal assets missing; showing fallback colors
+Terminal 与 OmniVibe 已应用同一套主题。	The same theme is applied to Terminal and OmniVibe.
+未找到 Windows Terminal 配置，已仅保存 OmniVibe 外观。	Windows Terminal settings not found; only OmniVibe appearance was saved.
+Terminal 外观应用器缺失，请从源码重新运行。	Terminal theme applicator is missing. Rebuild from source.
+Terminal 外观应用超时，当前 OmniVibe 主题未更改。	Terminal theme application timed out. OmniVibe theme was not changed.
+Terminal 外观未能应用，请重试。	Could not apply Terminal theme. Try again.
+Terminal 应用结果不完整，未确认同步成功。	Terminal result is incomplete; synchronization could not be confirmed.
+无法启动 Terminal 外观应用器。	Cannot start the Terminal theme applicator.
+正在应用整套主题…	Applying theme…
+保存后同步 Terminal 与 OmniVibe 整套外观	Save to apply the theme to Terminal and OmniVibe
+恢复右侧默认位置	Reset launcher position
+保存后恢复右侧位置	Position will reset after saving
+任务总览大小	Overview size
+紧凑 · 少占桌面	Compact · less desktop space
+标准 · 中等卡片	Standard · medium cards
+宽敞 · 放大预览	Spacious · larger previews
+超大 · 推荐	Large · recommended
+近全屏 · 保留桌面边距	Near fullscreen · keep margins
+均衡网格 · 铺满屏幕	Balanced grid · fill work area
+纵向分栏	Columns
+横向分行	Rows
+主窗居左 · 其余居右	Main window left · others right
+窗口间距	Window spacing
+切换窗口	Switch windows
+保留窗口最近的大小和位置	Keep last window size and position
+唤出时铺满当前屏幕工作区	Fill current work area when focusing
+收纳后最小化原窗口	Minimize original window after adding
+展开范围	Expanded size
+完整效果 · 插画、装饰与动画	Full · artwork, decoration & animation
+静态外观 · 保留插画和装饰	Static · artwork & decoration
+简洁外观 · 保留任务与状态	Simple · tasks & status
+启动与输入	Startup & input
+只显示悬浮入口	Show launcher only
+重连仍在运行的窗口	Reconnect running windows
+重连窗口，并显示待恢复任务	Reconnect and show recoverable tasks
+重连窗口，并自动打开已配置任务	Reconnect and launch configured tasks
+本次运行暂停全局快捷键（鼠标仍可用）	Pause global shortcuts for this run (mouse remains available)
+维护与诊断	Maintenance & diagnostics
+打开配置目录	Open data folder
+录入	Record
+清除	Clear
+清除此快捷键	Clear this shortcut
+恢复此项默认快捷键	Reset this shortcut
+请按快捷键…	Press shortcut…
+请同时按住 Ctrl / Alt 等	Hold Ctrl / Alt or another modifier
+滚轮切换	Wheel switching
+滚轮	Mouse wheel
++滚轮	+Wheel
+按住修饰键并滚动	Hold modifiers and scroll
+按住修饰键并滚动…	Hold modifiers and scroll…
+滚轮切换需要至少一个修饰键。	Wheel switching requires at least one modifier.
+反引号	Backtick
+反引号 (`)	Backtick (`)
+空格	Space
+Ctrl+Alt+空格	Ctrl+Alt+Space
+常用操作	Common actions
+当前快捷键 · 按需记住	Your shortcuts · learn as needed
+查看窗口 1–9 的对应按键	View shortcuts for windows 1–9
+窗口 1–9 · 展开后逐个自定义	Windows 1–9 · expand to customize
+修改快捷键	Edit shortcuts
+系统托盘图标	System tray icon
+为什么 AI 状态是未知？	Why is AI status unknown?
+悬浮入口不见了怎么办？	Where is the floating launcher?
+窗口关了怎么办？	What if a window closes?
+固定槽位，快速唤出	Fixed slots, instant access
+收纳窗口	Add windows
+整理或移出	Reorder or remove
+找回任务	Recover tasks
+一个窗口，就是一个可随时找回的任务	Every window is a task you can return to
+常见问题：窗口恢复、入口隐藏与 AI 状态	FAQ: recovery, hidden launcher & AI status
+知道了，开始使用	Got it, let's start
+稍后继续 / 关闭	Continue later / close
+打开任务总览	Open task overview
+进入任务	Open task
+唤出窗口	Focus window
+收起窗口	Minimize window
+预览	Preview
+放大预览 ↗	Enlarge preview ↗
+右键菜单	Context menu
+快捷操作	Quick actions
+关闭 · Esc	Close · Esc
+切换中	Switching
+等待任务	Awaiting task
+等待收纳窗口	Waiting for a window
+需要处理	Needs attention
+需要你处理 · 进入终端查看	Needs your input · open terminal
+通知待查看	Unread notification
+当前任务	Active task
+任务 1   ·   移出管理	Task 1   ·   Remove
+永劫无间 / 角色配装	NARAKA / character loadout
+Tab / Esc 关闭	Tab / Esc to close
+中央松键 / Esc / 右键取消	Release at center / Esc / right-click to cancel
+左键进入 · 右上角×移出管理 · 拖动可调整顺序	Click to enter · × to remove · drag to reorder
+拖入收纳 · 右键管理 · 悬停预览	Drop to add · right-click to manage · hover to preview
+点击×移出管理 · 终端窗口继续运行	Click × to remove · terminal keeps running
+点击添加 · 保留固定编号	Click to add · fixed slot number
+点击角色进入任务	Click character to open task
+点击重新连接窗口	Click to reconnect window
+点击＋选择已有窗口，也可以把窗口拖到这里	Click + to select a window, or drag it here
+空槽位 · 等待接入	Empty slot · awaiting window
+空槽位 · 拖入窗口绑定这件武器	Empty slot · drop a window to equip
+空槽位    ·    点击或 Enter 选择已有窗口	Empty slot    ·    Click or Enter to select a window
+✓ 本轮已回复	✓ Response ready
+▷ 正在执行	▷ Running
+! 等待你处理	! Needs your input
+! 等待你的下一条指令	! Awaiting your next instruction
+× 发生错误	× Error
+⌁ 连接已断开	⌁ Disconnected
+○ 状态未知	○ Unknown
++ 空槽位	+ Empty slot
+● 当前	● Active
+◆ 已选	◆ Selected
+✉ 未读	✉ Unread
+✓ 任务与窗口绑定保持不变	✓ Task and window bindings stay unchanged
+✓ 外框与正文区域分离	✓ Frame stays outside the text area
+●  OmniVibe / 示例 Terminal	●  OmniVibe / Sample Terminal
+＋ 添加	＋ Add
+阵法崩坏 · 发生错误	Error · task failed
+任务快捷键已恢复	Task shortcuts resumed
+已恢复展开之前的布局	Previous layout restored
+已收起所有任务窗口，进程继续运行	All task windows minimized; processes keep running
+已重连现有窗口	Existing window reconnected
+槽位已占用，原任务未替换	Slot occupied; original task kept
+目标槽位已占用，请先移出原任务	Target slot occupied; remove its task first
+九个槽位已满，请先移出一个任务	All nine slots are full; remove a task first
+当前九个槽位已满，请先移出一个任务	All nine slots are full; remove a task first
+先拖入一个窗口，或右键槽位进行绑定	Add a window first, or right-click a slot to bind one
+先收录窗口，再一起展开	Add windows before arranging them
+无法记录窗口位置，请重试	Could not save window position. Try again.
+未能取得窗口焦点，可尝试点击窗口或用相同权限运行	Could not focus the window. Click it or run with matching privileges.
+配置未保存，未打开新窗口	Settings not saved; no window was launched
+配装未保存，请检查配置目录是否可写	Loadout not saved; check that the data folder is writable
+任务状态读取暂时失败，将自动重试	Could not read task status; retrying automatically
+拖动监听不可用，请点击添加窗口	Drag detection unavailable; click to add a window
+松键确认不可用，请点击任务卡片	Key-release selection unavailable; click a task card
+滚轮监听不可用	Mouse-wheel listener unavailable
+显示快捷键不可用，请双击托盘图标恢复侧栏	Show shortcut unavailable; click the tray icon to restore the launcher
+未设置（双击托盘图标可显示）	Not set (click the tray icon to show)
+快捷键已暂停，Tab、数字和鼠标操作交还原应用	Shortcuts paused; Tab, number keys and mouse gestures pass through
+显示器布局已更新，窗口唤出时会校正可见位置	Display layout updated; window positions will be corrected on focus
+顺序已更新 · 各窗口使用新槽位对应的快捷键	Order updated · use the shortcuts for the new slots
+启动器没有返回进程	Launcher did not return a process
+\n上次在线 	\nLast online: 
+\n上次状态：	\nLast status: 
+\n原文件备份保留在：	\nOriginal backup kept at: 
+\n备忘：	\nNotes: 
+\n尚未安装 · 当前静音，可导入自己的 WAV。	\nNot installed · silent until you import a WAV.
+\n恢复失败：	\nRecovery failed: 
+\n来源：	\nSource: 
+    ·    Enter 进入 · Tab / Esc 关闭	    ·    Enter to open · Tab / Esc to close
+  ·  指向角色  ·  松键进入任务	  ·  Point at a task  ·  Release to enter
+ · 为当前主题独立保存选择，任务与窗口绑定保持不变。	 · Saved separately for this theme; task and window bindings stay unchanged.
+ · 原会话	 · original session
+ · 右键可重命名任务	 · right-click to rename
+ · 圆环 / 总览 / Terminal / 菜单与状态	 · Ring / Overview / Terminal / Menus & status
+ · 已连接会话，正在读取状态	 · Session connected; reading status
+ · 添加窗口	 · Add window
+ · 点击重连	 · Click to reconnect
+ · 状态可能过期	 · Status may be stale
+ · 状态已接入	 · Status connected
+ · 空槽位\n拖入窗口，或点击选择已有窗口	 · Empty slot\nDrop a window, or click to select one
+ · 自动状态未接入	 · Automatic status not connected
+ · 默认声音未安装，恢复后将保持静音。	 · Default sound not installed; resetting will be silent.
+ 与「	 and "
+ 个任务	 tasks
+ 个任务执行中	 tasks running
+ 个可唯一确认的窗口	 uniquely identified windows
+ 个已关闭窗口已移到最近关闭，槽位已腾出	 closed windows moved to history; slots freed
+ 个窗口未能排列，其余窗口已展开	 windows could not be arranged; others are arranged
+ 个窗口；无法唯一确认的任务保留待处理	 windows; ambiguous tasks remain pending
+ 个需补充启动信息	 tasks need launch details
+ 会全局接管原应用的这个键；清除或加修饰键即可交还。	 overrides the original key globally; clear it or add a modifier to restore normal input.
+ 会话记录	 session history
+ 唤出前的状态	 previous window state
+ 已占用，请选择空槽位	 is occupied; select an empty slot
+ 已被系统或其他程序占用，请换一个组合。	 is used by Windows or another app. Choose another shortcut.
+ 快捷键被占用：	 shortcut unavailable: 
+ 恢复布局	 Restore layout
+ 状态	 status
+ 状态事件	 status events
+ 由 Windows 保留，请换一个组合。	 is reserved by Windows. Choose another shortcut.
+ 还没有窗口	 has no window yet
+ 项待处理	 items need attention
+01  网站重构\n02  接口检查\n03  测试补齐\n\n运行、等待与已回复分别标记。\n这里只演示外观，不操作窗口。	01  Website refactor\n02  API review\n03  Test coverage\n\nRunning, waiting and ready have distinct indicators.\nAppearance preview only; no windows are controlled.
+CodeManager · 交互验证（示例任务）	CodeManager · interaction test (sample tasks)
+Codex 首次提示 hooks 待审核时，输入 /hooks 查看并信任 CodeManager 的观察脚本，状态接入才会生效。	If Codex asks to review hooks, use /hooks to inspect and trust CodeManager's observer scripts before status integration can work.
+」使用了相同快捷键。	" use the same shortcut.
+上次：	Last: 
+不必记窗口标题：给任务选一个角色或武器，再用点击或快捷键切换。管理的是独立窗口，同一 Terminal 窗口里的标签页共用一个槽位。	Choose a character or item for each task, then click or use shortcuts to switch. Each slot manages a whole window; Terminal tabs within one window share a slot.
+不用打开总览，按住修饰键并滚动即可切换已收纳的窗口。	Hold the modifier and scroll to switch managed windows without opening the overview.
+临时隐藏或找回桌面上的悬浮入口	Hide or reveal the floating launcher
+为所选声音主题导入一段 WAV；按「保存并应用」后生效。关闭或取消设置会保留原声音。	Import a WAV for the selected sound theme. Save & apply commits it; closing or canceling keeps the original sound.
+主题素材缺失或损坏，暂时显示兼容角色。请恢复该主题素材包，或导入自己的图片。	Theme assets are missing or damaged; a fallback item is shown. Restore the theme assets or import an image.
+主题预览 · 	Theme preview · 
+仅为此会话添加观察 hooks；不会修改全局 CLI 配置，也不会替你批准任何操作。	Adds observer hooks to this session only. Global CLI settings stay unchanged; no actions are approved on your behalf.
+仅恢复指定会话，不自动提交提示词。终端恢复不包含内存、未保存内容或任意后台命令。	Resumes the specified session without submitting prompts. Recovery does not restore memory, unsaved content or arbitrary background commands.
+以下快捷键或监听当前不可用：\n	These shortcuts or listeners are unavailable:\n
+任务与恢复配置 · 	Task & recovery settings · 
+任务已移动到槽位 	Task moved to slot 
+任务总览 · 	Task overview · 
+会话记录暂不可读：	Session history is temporarily unreadable: 
+你当前使用单独 Tab 打开总览，因此终端的 Tab 补全会被接管。可点「修改快捷键」，改成带修饰键的组合，或清除该项。	Tab alone currently opens the overview and overrides terminal completion. Use Edit shortcuts to add a modifier or clear this binding.
+保存并应用将同步 Terminal、圆环、槽位、总览与菜单。Terminal 配置会自动备份，正在运行的任务继续保留。	Save & apply updates Terminal, the ring, slots, overview and menus. Terminal settings are backed up; running tasks are preserved.
+先照常打开终端，再点悬浮入口旁的空槽＋，选择它。也可以把窗口标题栏拖到空槽，松手收纳。	Open a terminal normally, then click an empty + slot to select it. You can also drag its title bar onto a slot and release.
+全局快捷键已暂时暂停。鼠标点击仍可使用；在设置 → 常规中恢复后，下方按键才会生效。	Global shortcuts are paused. Mouse clicks still work; resume shortcuts in Settings > General to enable the keys below.
+关闭终端后槽位会腾出，任务信息留在「最近任务」。从这里恢复时，缺少项目目录或启动方式的任务需要先补充配置。	Closing a terminal frees its slot and keeps it in Recent tasks. Add any missing project folder or launch settings before restoring.
+切换到终端时播放一声主题标志音；其他操作保持安静。	Play one theme signature sound when switching terminals; other actions stay quiet.
+动效暂不可用，已显示静态预览	Animation unavailable; showing static preview
+动画选项会保存；默认静态，多窗口时更省资源。	Animation preference is saved. Static backgrounds are the default and use fewer resources with multiple windows.
+历史记录 · {0}	History · {0}
+双击系统托盘中的 OmniVibe 图标可找回入口；也可以使用上方「显示 / 隐藏入口」快捷键。长按入口可移动，设置 → 窗口与布局可恢复默认位置。	Click the OmniVibe tray icon or use the Show / hide launcher shortcut to reveal it. Hold and drag to move it; reset its position in Settings > Windows & layout.
+可以恢复 · 	Ready to restore · 
+同一个窗口的快捷键再按一次，会恢复唤出之前的样子。	Press the same task shortcut again to restore the window's previous state.
+同时查看多个窗口，再按恢复原来的布局	View multiple windows; press again to restore their layout
+唤出对应窗口，再按一次恢复原样	Focus the window; press again to restore it
+在这个任务对应的 terminal 里执行下方命令。若 CLI 正在运行，请先正常退出 CLI，再执行接入命令。	Run the command below in this task's terminal. If the CLI is running, exit it normally before running the integration command.
+尚未发现本地 Codex / Claude Code 会话。请先在终端启动 CLI，或使用菜单中的 hooks 接入方式。	No local Codex / Claude Code sessions found. Start the CLI in a terminal, or use the hooks integration from the menu.
+屏幕工作区较短时，任务保持可读尺寸。只有完整显示在视口内的窗口预览实时更新；滚动到任务后恢复预览。	On shorter screens, cards keep a readable size. Only fully visible previews update live; scrolling a task into view resumes its preview.
+已匹配重连 	Matched and reconnected 
+已唤出 	Focused 
+已就绪 · 	Ready · 
+已开始恢复 	Started restoring 
+已恢复 	Restored 
+已接入 	Connected to 
+已收录 · 右键可编辑任务	Added · right-click to edit
+已收录至 	Added to 
+已收起 	Minimized 
+已连接 	Connected 
+已重连 	Reconnected 
+当前任务与最近关闭的任务都留在这里。已关闭的窗口会腾出槽位；恢复时重新分配空槽，不会挤掉当前任务。	Active and recently closed tasks are kept here. Closed windows free their slots; recovery uses empty slots without displacing active tasks.
+当前快捷键 / 监听提示\n	Shortcut / listener notices\n
+总览快捷键被占用：	Overview shortcut unavailable: 
+总览看全部任务，轮盘用指向选择；选你顺手的一种即可。	Overview shows all tasks; the radial menu selects by direction. Use whichever feels natural.
+所有主题直接陈列。先点图片选风格，再调整这套主题的角色和武器。	Click a theme image to choose a style, then customize its characters and items.
+打开失败：	Failed to open: 
+把窗口收进来，用形象认任务，用快捷键找回窗口。	Collect windows, recognize tasks by their artwork, and return with a shortcut.
+拖入窗口只完成收纳。要显示运行、等待或回复，需要右键任务 → 更多任务操作 → 连接自动任务状态，选择 Claude Code 或 Codex，按提示启动会话。未接入时显示未知是正常情况；「本轮已回复」也不代表整个任务已完成。	Adding a window only enables window management. For status, right-click a task > More task actions > Connect automatic task status, choose Claude Code or Codex, and follow the instructions. Unknown is normal without integration; Response ready does not mean the whole task is finished.
+拖动任务形象可调整顺序。鼠标移到已收纳的槽位，点击右上角 ×，即可移出管理，终端继续运行。	Drag task artwork to reorder. Hover over a managed slot and click its top-right × to remove it; the terminal keeps running.
+拖动窗口标题栏到槽位；右键可选择窗口	Drag a window title bar to a slot; right-click to select a window
+按「排列 / 恢复」快捷键铺开窗口，再按一次恢复。	Use Arrange / restore to lay out windows; press again to restore them.
+按住 	Hold 
+按住组合键 → 指向任务形象 → 松键进入	Hold shortcut > point at a task > release to enter
+按总览快捷键查看任务。档位越大，终端预览越清楚；会按屏幕大小自动限制，并保留桌面边距。	Use the overview shortcut to view tasks. Larger sizes improve previews; the layout fits the screen and keeps desktop margins.
+排列快捷键被占用：	Arrange shortcut unavailable: 
+接入后会自动显示：正在执行、等待确认、本轮已回复。事件只关联本任务，不会按项目名称猜测窗口。	Integration shows Running, Awaiting approval and Response ready. Events belong to this task; windows are not guessed from project names.
+插画与装饰随整套主题应用；Terminal 动画使用上方独立开关。	Artwork and decoration follow the theme. Terminal animation uses the separate toggle above.
+整套主题尚未应用：	Theme not applied: 
+最小化时预览可能暂停更新	Previews may pause while minimized
+未配置的旧任务不会凭标题猜测启动命令。点击“配置恢复”补充一次，之后即可恢复。	Launch commands are not guessed from old task titles. Use Configure recovery once to enable restoration.
+松手，将窗口收录到 	Release to add the window to 
+查看全部任务；滚轮选中，Enter / 点击进入，再按关闭	View all tasks; scroll to select, Enter / click to open, press again to close
+槽位 	Slot 
+正在检查任务恢复与窗口切换…	Checking recovery and window switching…
+滚动总览 · 部分预览收起 · 方向键可浏览全部任务	Scrollable overview · some previews hidden · arrow keys browse all tasks
+滚轮 / 方向键浏览     ·     Enter 进入     ·     数字直达	Scroll / arrows to browse     ·     Enter to open     ·     Numbers to jump
+点击右侧按键后直接录入，保存后全局生效。× 清除，↺ 恢复默认，Esc 取消录入。Windows 保留组合无法接管。	Click a key field and press a shortcut. Saving applies it globally. × clears, ↺ resets, Esc cancels. Windows-reserved shortcuts cannot be assigned.
+点击后按住修饰键并滚动滚轮；Esc 取消	Click, then hold modifiers and scroll; Esc cancels
+点击后直接按下新快捷键；Esc 取消	Click, then press a new shortcut; Esc cancels
+用任务名称辨认窗口	Identify windows by task name
+直接切换已收纳的窗口，不必打开总览	Switch managed windows without opening the overview
+直接点图片 · 预览不会修改当前外观	Click an image · preview does not change your current theme
+移入悬浮入口即可展开任务。点击形象进入对应窗口；按同一个窗口快捷键两次，可以唤出再恢复。	Hover over the launcher to expand tasks. Click artwork to open its window; use the same shortcut again to restore it.
+移动到槽位	Move to slot
+窗口 	Window 
+窗口已排列 · 	Windows arranged · 
+管理启动恢复和声音。少用的维护工具收在页面底部。	Manage startup recovery and sounds. Maintenance tools are at the bottom.
+绑定窗口到槽位 	Bind window to slot 
+自定义图片不可用，暂时显示主题藏品。可重新导入或恢复主题藏品。	Custom image unavailable; showing the theme item. Import again or reset the theme item.
+设置已保存 · 	Settings saved · 
+请先完成按键录入，或按 Esc 取消本次录入。	Finish recording the shortcut, or press Esc to cancel.
+请选择不超过 3 秒的 PCM16 WAV（单声道或立体声，16–96 kHz）。\n	Choose a PCM16 WAV up to 3 seconds (mono or stereo, 16–96 kHz).\n
+调整多个窗口怎么排、单个窗口怎么唤出，以及桌面入口的位置。	Configure window arrangement, focus behavior and launcher position.
+轮盘快捷键不可用：	Radial shortcut unavailable: 
+较长时间未收到事件，状态可能过期；长任务可能仍在运行，请查看终端确认。	No recent events; status may be stale. A long task may still be running. Check the terminal.
+返回设置后，点「保存并应用」才会生效	Return to settings and choose Save & apply to commit
+还没有保存的任务，先把终端拖进侧栏。	No saved tasks yet. Drag a terminal into the launcher.
+连接 	Connect 
+选择主题 	Select theme 
+选择打开 OmniVibe 后如何继续上次的工作。	Choose how OmniVibe resumes your workspace on startup.
+选择这个窗口里正在运行的会话。无需退出 CLI；连接后自动跟踪执行与回复。权限确认的精确事件可再接入 hooks。	Select the session running in this window. No need to exit the CLI; execution and replies are tracked after connection. Add hooks for precise approval events.
+配置保存失败：	Failed to save settings: 
+音频保存失败，已取消本轮更改：	Audio save failed; changes rolled back: 
+音频保存未完成，请查看保留的备份：	Audio save incomplete; inspect the retained backup: 
+鼠标移入展开任务，移开收回；长按入口可直接拖动位置。	Hover to expand, move away to collapse; hold and drag to move the launcher.
+：请录入有效按键。	: enter a valid shortcut.
+界面语言 / Language	Language
+保存后重启 OmniVibe 生效；终端任务不受影响。	Save and restart OmniVibe to apply. Terminal tasks are unaffected.
+跟随系统 / System	System default
+简体中文	简体中文

@@ -1,0 +1,1476 @@
+{
+  "at_utc": "2026-10-20T05:03:41.277895+00:00",
+  "base_commit": "4d2bef9ec3e0cd7f707fd09fb85b46fa86ba8693",
+  "disk_bytes_before": {
+    "artifacts": 8349625247,
+    "tools": 1412965050,
+    ".git": 396390029,
+    "src": 199763219,
+    "docs": 185463992,
+    "skins": 136217395,
+    "themes": 56039970,
+    "assets": 24577591,
+    "scripts": 62284,
+    "(root files)": 6158,
+    ".github": 776
+  },
+  "disk_bytes_after": {
+    "(root files)": 6395,
+    ".git": 396390029,
+    ".github": 776,
+    "artifacts": 3661998712,
+    "assets": 13850643,
+    "docs": 185467919,
+    "scripts": 62284,
+    "skins": 136217395,
+    "src": 358634330,
+    "themes": 56039970,
+    "tools": 527463
+  },
+  "net_logical_file_bytes_reduced": 5951915795,
+  "cleanup": {
+    "mode": "applied",
+    "at": "2026-10-20T04:59:22.8362581+00:00",
+    "removedBytes": 6361681096,
+    "candidateBytes": 0,
+    "records": [
+      {
+        "path": "artifacts/suite-rollout/staged-check-08f339d0/src/CodeManager/bin/Debug/net10.0-windows",
+        "bytes": 193350322,
+        "files": 505,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/signature-completion/staged-source/src/CodeManager/bin/Debug/net10.0-windows",
+        "bytes": 193472273,
+        "files": 507,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/suite-rollout/audio-commit-check/src/CodeManager/bin/Debug/net10.0-windows",
+        "bytes": 35918214,
+        "files": 251,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/empty-dock/staged-source/src/CodeManager/bin/Debug/net10.0-windows",
+        "bytes": 193473141,
+        "files": 507,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/signature-settings-validation/product-build",
+        "bytes": 193307576,
+        "files": 507,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/signature-audio-settings/product-build",
+        "bytes": 193257192,
+        "files": 505,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/suite-rollout/integration-build",
+        "bytes": 193257620,
+        "files": 505,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "tools/terminal-performance-validation/obj",
+        "bytes": 350633,
+        "files": 21,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "tools/terminal-performance-validation/bin",
+        "bytes": 193478551,
+        "files": 512,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/terminal-chrome-all-presets/app",
+        "bytes": 85539542,
+        "files": 159,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/experience-audit/product-build",
+        "bytes": 193260430,
+        "files": 505,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/settings-studio/validation-app",
+        "bytes": 193282136,
+        "files": 507,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "tools/signature-settings-validation/obj",
+        "bytes": 419597,
+        "files": 21,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "tools/signature-settings-validation/bin",
+        "bytes": 193566965,
+        "files": 512,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/terminal-performance/ui-build",
+        "bytes": 193282064,
+        "files": 507,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/skin-monitor/name-check-build",
+        "bytes": 69424604,
+        "files": 129,
+        "status": "protected",
+        "reason": "protected verification or monitoring directory"
+      },
+      {
+        "path": "tools/settings-studio-validation/bin",
+        "bytes": 386894308,
+        "files": 1022,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "tools/settings-studio-validation/obj",
+        "bytes": 657730,
+        "files": 37,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/signature-completion/app",
+        "bytes": 193319680,
+        "files": 507,
+        "status": "protected",
+        "reason": "protected verification or monitoring directory"
+      },
+      {
+        "path": "artifacts/signature-refinement/app",
+        "bytes": 193281964,
+        "files": 507,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/reliability/unified/app",
+        "bytes": 193255602,
+        "files": 508,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/feedback-validation-app",
+        "bytes": 22338420,
+        "files": 64,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/settings-studio/build",
+        "bytes": 69482752,
+        "files": 129,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/suite-performance/app",
+        "bytes": 193195212,
+        "files": 505,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "tools/game-audio-validation/bin",
+        "bytes": 27511907,
+        "files": 379,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "tools/game-audio-validation/obj",
+        "bytes": 605655,
+        "files": 33,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/reliability/final/app",
+        "bytes": 193256850,
+        "files": 508,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/native-polish/build",
+        "bytes": 85514790,
+        "files": 156,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/button-polish/build",
+        "bytes": 143177109,
+        "files": 200,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "tools/feedback-validation/obj",
+        "bytes": 312143,
+        "files": 21,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "tools/feedback-validation/bin",
+        "bytes": 22552382,
+        "files": 69,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/compact-ring-build",
+        "bytes": 69483332,
+        "files": 129,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/reliability/ci/app",
+        "bytes": 193256906,
+        "files": 508,
+        "status": "protected",
+        "reason": "protected verification or monitoring directory"
+      },
+      {
+        "path": "artifacts/suite-visual-build",
+        "bytes": 193257704,
+        "files": 505,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/equipment-dock-dev",
+        "bytes": 22400397,
+        "files": 67,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "tools/suite-performance/bin",
+        "bytes": 390406996,
+        "files": 1017,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "tools/suite-performance/obj",
+        "bytes": 615744,
+        "files": 37,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/interaction-build",
+        "bytes": 143173285,
+        "files": 200,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/audio-suite-build",
+        "bytes": 156648189,
+        "files": 385,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/overlay-clean-dev",
+        "bytes": 69427340,
+        "files": 129,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "tools/experience-audit/obj",
+        "bytes": 367935,
+        "files": 21,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "tools/experience-audit/bin",
+        "bytes": 193482795,
+        "files": 510,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/hover-ring-build",
+        "bytes": 69440808,
+        "files": 129,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/smooth-baseline",
+        "bytes": 69432376,
+        "files": 129,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/reliability/app",
+        "bytes": 193253356,
+        "files": 507,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/ring-drag-build",
+        "bytes": 69442028,
+        "files": 129,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/diagnostics-dev",
+        "bytes": 514323,
+        "files": 8,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/code-review/app",
+        "bytes": 193195212,
+        "files": 505,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/character-build",
+        "bytes": 119113120,
+        "files": 184,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/skin-engine-dev",
+        "bytes": 22354021,
+        "files": 66,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/wheel-dock-dev",
+        "bytes": 31542923,
+        "files": 73,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/empty-dock/app",
+        "bytes": 193323982,
+        "files": 508,
+        "status": "protected",
+        "reason": "protected verification or monitoring directory"
+      },
+      {
+        "path": "artifacts/loadout-build",
+        "bytes": 85642841,
+        "files": 169,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/brand-kit/app",
+        "bytes": 143169925,
+        "files": 200,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/brand-v2/app",
+        "bytes": 143069589,
+        "files": 200,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "tools/code-review/obj",
+        "bytes": 260219,
+        "files": 21,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "tools/code-review/bin",
+        "bytes": 962681,
+        "files": 7,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/smooth-dev",
+        "bytes": 69446052,
+        "files": 129,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/radial-dev",
+        "bytes": 27384545,
+        "files": 68,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/nexus-dev",
+        "bytes": 35953829,
+        "files": 76,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/root-dev",
+        "bytes": 22303187,
+        "files": 63,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/fx-check",
+        "bytes": 22329243,
+        "files": 63,
+        "status": "removed",
+        "reason": ""
+      },
+      {
+        "path": "artifacts/ui-dev",
+        "bytes": 22354021,
+        "files": 66,
+        "status": "removed",
+        "reason": ""
+      }
+    ]
+  },
+  "versioned_worktree_bytes_before": 403281665,
+  "removed_legacy_export": {
+    "path": "assets/brand/OmniVibe-brand-kit.zip",
+    "bytes": 10727056,
+    "recoverable_from_git": true
+  },
+  "distribution": {
+    "full_build_bytes": 193256906,
+    "lean_bytes": 159201687,
+    "savings_percent": 17.62173456300703,
+    "excluded_files": [
+      {
+        "path": "CodeManager.pdb",
+        "bytes": 158404,
+        "sha256": "72f2c85f83b345b72c6e3ba0b9591e054b518f7c0297503a953bd425a1cf0700",
+        "category": "application"
+      },
+      {
+        "path": "scripts/Validate.ps1",
+        "bytes": 1634,
+        "sha256": "b4c689e51a68390662846ecb62d3892bb91ce6c4632a97474607bd41580a61d9",
+        "category": "integration-script"
+      },
+      {
+        "path": "skins/adventure/prompt.md",
+        "bytes": 1280,
+        "sha256": "36d40a87b0474340658ca81029337a1f9d11b940f208d3619df4aa28ed02808a",
+        "category": "documentation-or-gallery"
+      },
+      {
+        "path": "skins/adventure/terminal-scene-v2.png",
+        "bytes": 2612695,
+        "sha256": "ea4908adc77fdac1b9cfbb41496f9164fbad00f366d5c3aa0f2a3de371a5ec35",
+        "category": "theme-resource"
+      },
+      {
+        "path": "skins/adventure/terminal-scene-v2.prompt.md",
+        "bytes": 1628,
+        "sha256": "c8b475b2bbc8a2369f9b82132ff0f3e15d08cd9f631d9955f78c8aeee386632e",
+        "category": "development-reference"
+      },
+      {
+        "path": "skins/arsenal/prompt.md",
+        "bytes": 1249,
+        "sha256": "82bd07ee18acd2c0bdcdffca83698271aa0990abf860d79e62e15338feed7316",
+        "category": "documentation-or-gallery"
+      },
+      {
+        "path": "skins/arsenal/terminal-scene-v2.png",
+        "bytes": 2267905,
+        "sha256": "73855e673ec9a6186579bb6487646478d6d9c14d28cf00bb0ccbd9fdaa621c23",
+        "category": "theme-resource"
+      },
+      {
+        "path": "skins/arsenal/terminal-scene-v2.prompt.md",
+        "bytes": 2249,
+        "sha256": "c735334cd711aab65230b43225ecb36f6a761bb1f2e25d4343065af1a43101fc",
+        "category": "development-reference"
+      },
+      {
+        "path": "skins/astral/prompt.md",
+        "bytes": 1291,
+        "sha256": "0a039612e65fcf742c05b201241083462eb6718114f0effe1b622e33da2a1bbb",
+        "category": "documentation-or-gallery"
+      },
+      {
+        "path": "skins/astral/terminal-scene-v2.png",
+        "bytes": 2845104,
+        "sha256": "8d37471de4b2e611835d4882034af36f62dc355733392d658e828b59d92472c3",
+        "category": "theme-resource"
+      },
+      {
+        "path": "skins/astral/terminal-scene-v2.prompt.md",
+        "bytes": 1500,
+        "sha256": "06b5aa72019dc2dd095720c2dd0730c52c0e544c904babce5df2e4b174aa3619",
+        "category": "development-reference"
+      },
+      {
+        "path": "skins/formation/prompt.md",
+        "bytes": 1289,
+        "sha256": "a59a638ebaba6c44d3070f6e02a58951461893b76fe8457eb7da091bd027c6e8",
+        "category": "documentation-or-gallery"
+      },
+      {
+        "path": "skins/formation/terminal-scene-v2.png",
+        "bytes": 2251803,
+        "sha256": "5e25f2fd037e00d7f4e5aec041f09d8129037e34c39e2617212a0de981d6add6",
+        "category": "theme-resource"
+      },
+      {
+        "path": "skins/formation/terminal-scene-v2.prompt.md",
+        "bytes": 1545,
+        "sha256": "17b17a1149a80005fd3e88d22c3e821ee229a8bcb9781521f50dde5b39897f48",
+        "category": "development-reference"
+      },
+      {
+        "path": "skins/hextech/prompt.md",
+        "bytes": 1246,
+        "sha256": "3f7e0d985100290db18caa8bf4589a1c30bf71ff4c26f76a3e7b112443991eb6",
+        "category": "documentation-or-gallery"
+      },
+      {
+        "path": "skins/hextech/terminal-scene-v2.png",
+        "bytes": 2386589,
+        "sha256": "281c64c9a9efaa800124277a7479b4cbb9ee6071433ddfa48043f502cb055284",
+        "category": "theme-resource"
+      },
+      {
+        "path": "skins/hextech/terminal-scene-v2.prompt.md",
+        "bytes": 1618,
+        "sha256": "93bf1be5a340a6597cda04d40d6d30bbbbe6377b0945e00161bb3c1af1681896",
+        "category": "development-reference"
+      },
+      {
+        "path": "skins/loadouts/naraka/characters-v2/validation.json",
+        "bytes": 2772,
+        "sha256": "66a7541467575965d11a431edcb97fa78fae7a2b93bece0279558624528effe6",
+        "category": "theme-resource"
+      },
+      {
+        "path": "skins/loadouts/suites-v1/validation.json",
+        "bytes": 72675,
+        "sha256": "b1a2274ead1b4d3a8d812273f6749c0b94aefefd0054068de9ab7c76d36bbb47",
+        "category": "theme-resource"
+      },
+      {
+        "path": "skins/native-test-results.json",
+        "bytes": 4059,
+        "sha256": "d072d3e58842bf20e78544aea6ac16a01fa6d97f8e02277a1fbcbcec87f683f0",
+        "category": "theme-resource"
+      },
+      {
+        "path": "skins/native-v2/validation.json",
+        "bytes": 5456,
+        "sha256": "e33ede80a05747539053c82ddba1ed49d43604551196d1c69814fe826c5d26a4",
+        "category": "theme-resource"
+      },
+      {
+        "path": "skins/native-validation-summary.json",
+        "bytes": 23981,
+        "sha256": "01ac8e11a44dc96fddb72616626d2370b2a9ff194448f1affc9633e28eef2ee1",
+        "category": "theme-resource"
+      },
+      {
+        "path": "skins/protocol/prompt.md",
+        "bytes": 1261,
+        "sha256": "8228e3743a962e9d39bd7110666e00f0771f93fc5ecf14ddb75473cb1af88322",
+        "category": "documentation-or-gallery"
+      },
+      {
+        "path": "skins/protocol/terminal-scene-v2.png",
+        "bytes": 2223504,
+        "sha256": "29f080c9039fd47e68f310ad68a8eb7c9d6625e28c660b7738519baf46e4dbf9",
+        "category": "theme-resource"
+      },
+      {
+        "path": "skins/protocol/terminal-scene-v2.prompt.md",
+        "bytes": 1639,
+        "sha256": "4e04e6d3d23c619441663e88c818e64dc6c4fb75000d5e0639237f7d129d09a9",
+        "category": "development-reference"
+      },
+      {
+        "path": "skins/relic/prompt.md",
+        "bytes": 1310,
+        "sha256": "f3284c0efe0537fef661e9c01ee715bed907997cc711fc4764c437af2bb287d6",
+        "category": "documentation-or-gallery"
+      },
+      {
+        "path": "skins/relic/terminal-scene-v2.png",
+        "bytes": 2582761,
+        "sha256": "9052c11b9ad45ec1149b9a54d0a567218430918e1f820dc1a876fea3b7d32729",
+        "category": "theme-resource"
+      },
+      {
+        "path": "skins/relic/terminal-scene-v2.prompt.md",
+        "bytes": 2663,
+        "sha256": "a8c3f1577427354916357fd781bbf98bfc234432273489f0f0a0013b2c1eb3f2",
+        "category": "development-reference"
+      },
+      {
+        "path": "skins/starlight/prompt.md",
+        "bytes": 1241,
+        "sha256": "bf61783aa9c4028807fd096ed9040218fdd2bea3ddd560924d0ff6519eaf64ad",
+        "category": "documentation-or-gallery"
+      },
+      {
+        "path": "skins/starlight/terminal-scene-v2.png",
+        "bytes": 2578514,
+        "sha256": "5fee63b6d2a42497efe1841f3ad8e2f90dad4b0080975dfde90cf53d195d15b1",
+        "category": "theme-resource"
+      },
+      {
+        "path": "skins/starlight/terminal-scene-v2.prompt.md",
+        "bytes": 1500,
+        "sha256": "7d18ac35a827ac33a64012ad408e15df88d125461e725b2c204ef0e5fa266754",
+        "category": "development-reference"
+      },
+      {
+        "path": "skins/tactical/prompt.md",
+        "bytes": 1257,
+        "sha256": "9dddbfbf749b65d243be752b8aba6a18fb57093a69d641a837184dc033559f44",
+        "category": "documentation-or-gallery"
+      },
+      {
+        "path": "skins/tactical/terminal-scene-v2.png",
+        "bytes": 2453140,
+        "sha256": "97b1687c0fdf8d3c8e74749998db611e119c03bbda06243ac8713b021949ebaa",
+        "category": "theme-resource"
+      },
+      {
+        "path": "skins/tactical/terminal-scene-v2.prompt.md",
+        "bytes": 1628,
+        "sha256": "12a5b5683efc3e68e9e96b0c8d2f0fa569b915f5c5f16c65804c6b82f391f104",
+        "category": "development-reference"
+      },
+      {
+        "path": "skins/wonderland/prompt.md",
+        "bytes": 1316,
+        "sha256": "a40a24695b1dc08d52cc551b5ca4372ef8dff44aa1c14b7899a2232de97ba6da",
+        "category": "documentation-or-gallery"
+      },
+      {
+        "path": "skins/wonderland/terminal-scene-v2.png",
+        "bytes": 2352779,
+        "sha256": "93ed5f0a7764bd0d6bfe6fd74b8e3802160531a9df39703eac3c221b6c276026",
+        "category": "theme-resource"
+      },
+      {
+        "path": "skins/wonderland/terminal-scene-v2.prompt.md",
+        "bytes": 1826,
+        "sha256": "46b593528c49b841685924bed2d0392b65ee4bfe45d1e131f5c959e6f8905e7b",
+        "category": "development-reference"
+      },
+      {
+        "path": "themes/windows-terminal/assets/ink-jade-background-v3.gif",
+        "bytes": 4954234,
+        "sha256": "ece79bf339526b82d1db52af1421ffd15ee67edf8d17893480812767925c49c3",
+        "category": "theme-resource"
+      },
+      {
+        "path": "themes/windows-terminal/assets/ink-jade-background-v3.validation.json",
+        "bytes": 894,
+        "sha256": "55284f3d7f6a50e8fc4cdc0e11dc22cfd959ab930897a67c6bcb738ef9b4b0af",
+        "category": "development-reference"
+      },
+      {
+        "path": "themes/windows-terminal/assets/ink-jade-background-v4.gif",
+        "bytes": 4147269,
+        "sha256": "eb87fc565ca12aa213b5a48819fcc8f139759785389e52db5fa3ca852d4d38c2",
+        "category": "theme-resource"
+      },
+      {
+        "path": "themes/windows-terminal/assets/ink-jade-background-v4.validation.json",
+        "bytes": 1209,
+        "sha256": "630f8c2a8aac37bc24a915f15c4d4635b250246b9da769224f746ec10a9d9dab",
+        "category": "development-reference"
+      },
+      {
+        "path": "themes/windows-terminal/assets/ink-jade-background-v5.validation.json",
+        "bytes": 1248,
+        "sha256": "66611709fc31fe4da892fc0220b284cd0305b3e68e4241dfa9bd8ec84bf2df66",
+        "category": "development-reference"
+      },
+      {
+        "path": "themes/windows-terminal/assets/ink-jade-ornate-v2.prompt.md",
+        "bytes": 1996,
+        "sha256": "feacc56cdbe0a260a2e966cb388daf66bfa80fe4bfc38941e727b4cf5dccba5f",
+        "category": "development-reference"
+      },
+      {
+        "path": "themes/windows-terminal/assets/refined-v1/adventure.validation.json",
+        "bytes": 2033,
+        "sha256": "09ddfca4cc2b25b81b1f94790bae071a7ac64e633aceb8a6310485f4d70e4e76",
+        "category": "development-reference"
+      },
+      {
+        "path": "themes/windows-terminal/assets/refined-v1/arsenal.validation.json",
+        "bytes": 2017,
+        "sha256": "2257886796e38c42538a01b817749e85ca1334ed277d3788b6be71adfdb339a1",
+        "category": "development-reference"
+      },
+      {
+        "path": "themes/windows-terminal/assets/refined-v1/astral.validation.json",
+        "bytes": 2000,
+        "sha256": "b49e9325f87364546132f9eae5ea7f902bd3610c52354ed56ea09801c777ade6",
+        "category": "development-reference"
+      },
+      {
+        "path": "themes/windows-terminal/assets/refined-v1/formation.validation.json",
+        "bytes": 2019,
+        "sha256": "401dea76a0d90016dd045a1c68ba04343f7e1e2147ef2a043b9b4620e8bcee40",
+        "category": "development-reference"
+      },
+      {
+        "path": "themes/windows-terminal/assets/refined-v1/hextech.validation.json",
+        "bytes": 2019,
+        "sha256": "e3fbb1b221fc8a7d0af4ae69ecc0870948abacc9d258e5117dfda37be5e504db",
+        "category": "development-reference"
+      },
+      {
+        "path": "themes/windows-terminal/assets/refined-v1/protocol.validation.json",
+        "bytes": 2018,
+        "sha256": "9f15f3cbc3f44b54eaf2c5be8e7110cbaf812527694f37689b650c3d05b706d4",
+        "category": "development-reference"
+      },
+      {
+        "path": "themes/windows-terminal/assets/refined-v1/relic.validation.json",
+        "bytes": 2014,
+        "sha256": "d04b84b32787fdfc1e0febbe824b8eca952cf5cd0a6dcae97ef8a0484c25458f",
+        "category": "development-reference"
+      },
+      {
+        "path": "themes/windows-terminal/assets/refined-v1/starlight.validation.json",
+        "bytes": 2027,
+        "sha256": "7efc7f54a97ae0936be73e6a1e70d9371b27c4955494ec56f86b8f5a97587403",
+        "category": "development-reference"
+      },
+      {
+        "path": "themes/windows-terminal/assets/refined-v1/tactical.validation.json",
+        "bytes": 2019,
+        "sha256": "1cbc0d2bfa4c4fcb6f8f4d461bcd1f4969c716f71e93cf6b6091511b5bb823ba",
+        "category": "development-reference"
+      },
+      {
+        "path": "themes/windows-terminal/assets/refined-v1/validation.json",
+        "bytes": 23029,
+        "sha256": "70020182166fdc2b708009d9f70255e5e8128a87d0870a2bcc3c54062b82a1de",
+        "category": "theme-resource"
+      },
+      {
+        "path": "themes/windows-terminal/assets/refined-v1/wonderland.validation.json",
+        "bytes": 2031,
+        "sha256": "83932e4b441adde3cab553e55168036b96925baed8ac7bfbd82e8d66a1e6cdcc",
+        "category": "development-reference"
+      },
+      {
+        "path": "themes/windows-terminal/Build-TerminalSkins.ps1",
+        "bytes": 7055,
+        "sha256": "4851cc9e607d427c84433555e3732fe7b1a8da26274fec13ccc4dc31d094e8f1",
+        "category": "theme-resource"
+      },
+      {
+        "path": "themes/windows-terminal/ink-jade-background-config-validation.json",
+        "bytes": 640,
+        "sha256": "99b42cb4ac8b720163dbb572b3d459e157fd2645b46cba568948ab3d886826f7",
+        "category": "theme-resource"
+      },
+      {
+        "path": "themes/windows-terminal/ink-jade-background-validation.md",
+        "bytes": 3613,
+        "sha256": "975df565bae985a8307c9446b6ffa97f9503612b33dc18c5f28cb1c45a239e5b",
+        "category": "documentation-or-gallery"
+      },
+      {
+        "path": "themes/windows-terminal/README.md",
+        "bytes": 8406,
+        "sha256": "714db53f52ad7dd53886c96dbb7c9d3bfd89eeb2c1335d136305728a6ba69a2a",
+        "category": "documentation-or-gallery"
+      },
+      {
+        "path": "themes/windows-terminal/Test-InkJadeBackground.ps1",
+        "bytes": 8861,
+        "sha256": "4b58bbe86c52e61eee04f7a42856888707b801a4d3bf7b3f25ae6c4826f12f6a",
+        "category": "theme-resource"
+      },
+      {
+        "path": "themes/windows-terminal/Test-RefinedFrames.ps1",
+        "bytes": 1846,
+        "sha256": "f9fac9930f2f3e84fa305043ec67615d48940e44785ff80afdac9bf01b19a0f4",
+        "category": "theme-resource"
+      },
+      {
+        "path": "themes/windows-terminal/Test-TerminalChrome.ps1",
+        "bytes": 8596,
+        "sha256": "d62f6f9374e18df19e801d828c29558cae9cfcc775678d90469e37c797614b3a",
+        "category": "theme-resource"
+      },
+      {
+        "path": "themes/windows-terminal/Test-TerminalSkins.ps1",
+        "bytes": 11303,
+        "sha256": "e3802a424fa93e63b5359f2845a024fe6b06d42a2e7543bde2886d2b7df9c171",
+        "category": "theme-resource"
+      }
+    ],
+    "manifest_sha256": "8e8073894eceb305a85bfa22fc740c8d2aa5d954d3341af5e82f616c90a2190e"
+  },
+  "validation": {
+    "full": [
+      {
+        "Name": "Tiling: 1–9 windows fill the work area exactly, including odd dimensions and negative origins",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Arrangement preferences: every mode fills work area; gaps stay bounded",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Selection: fixed sparse slots, high-resolution wheel, cancel and wrap",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Alt mouse gestures: wheel routing, AltGr exclusion and middle-click passthrough",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Settings: configurable modifiers, valid toggle keys and off-screen placement",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Input: connected digits only; Tab toggles inventory and yields when paused or disabled",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Agent events: real lifecycle mapping, nested-agent filtering and idle notifications",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Persistence: identity, stable task ID, placement, atomic events and corrupt recovery",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Win32: enumerate, validate identity, tile/minimize/restore owned fixture",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Win32: activating an already focused window raises it above a nonactivating covering window",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Win32: hotkey registration and low-level mouse/keyboard/drag hooks",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Win32: DWM live preview relationship between owned fixture windows",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Integration: capture, rename, external status, move fixed slot, overview and cleanup",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Interaction: persistent entrance, immediate hints, direct removal and closed-task history",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Hook transport: PowerShell observer emits Unicode event without agent instructions",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Recovery: exact matching, ambiguity rejection, startup quoting and saved session metadata",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Recovery: repeat suppression, title handshake, stable identity, move and timeout",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Recovery: Claude launcher forwards only the specified resume ID",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Configuration: nested null fields repaired without losing task identity or original bytes",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Configuration: invalid slot structure falls back with byte-preserving backup",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Status: age signals uncertainty; long jobs, terminal states and manual marks retain semantics",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Inbox: bounded oldest-first backlog, event ordering, retention until acknowledgement",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Inbox: rejects malformed, oversized and future events; tolerates locks and nullable text",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Portraits: background warmup yields frozen bounded cached images and supports cancellation",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Motion: repeated commands preserve transitions and reversal renders intermediate frames",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Motion: warm text layouts ignore task renames while changing equipment updates the rendered identity",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Overlay: desktop gaps are alpha-zero and native clicks pass to the window underneath",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Compact host: native bounds shrink to the ring, deployment preserves the screen anchor",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Equipment gesture: dead zone, connected-only release and boundary hysteresis preserve task data",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Equipment core: hover opens without focus, desktop gaps retain it, leaving retracts with reentry grace",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Radial inventory: fixed sectors, centre cancel, outer cancel and scaled hit testing",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Radial inventory: confirm only connected slots; no focus steal, reordering or retained window",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Radial inventory: release after a quick chord cancels once and stops its timer",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Dock wheel: nine permanent sectors replace the list across skins without changing bindings",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Dock equipment: switch cue never takes focus and releases itself after feedback",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Skins: all 13 palettes meet body, panel, card and status text contrast >= 4.5",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Skins: terminal/native JSON palette contract matches every new skin",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Skins: switching and rendering each task state preserves task IDs, launch, session and window snapshots",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Skins: family glyphs are distinct and decorations-off renders a clean interactive background",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Dock wheel: resize preserves nine hit targets and centre capture resolves to an empty slot",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Skins: 13 settings choices use stable enum tags; cancel and save preserve preference boundaries",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Skins: nine-card overview remains readable at 780x650 and 200-percent display scaling",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Skins: themed settings scroll viewer retains vertical and horizontal scrolling",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Skins: short work areas scroll all nine tasks and suppress clipped native thumbnails",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Skins: themed slider retains native commands; menu and combo popups honor animation off/on",
+        "Passed": true,
+        "Detail": "OK"
+      }
+    ],
+    "loadout": [
+      {
+        "Name": "Nine distinct HD transparent character cutouts match their provenance manifest",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Legacy migration and restart preserve task identity and chosen weapon",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Picker is an isolated draft, supports per-slot choices and fixed short-window actions",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Custom import survives original removal; missing, corrupt and unsafe files fall back",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Resting 116-DIP core is contained and weapon identity ignores task titles",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Reordering a task preserves the remembered current entity after focus leaves managed terminals",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "All nine deployed weapons retain fixed hit positions at 320, 360 and 480 DIP",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Empty slots visibly offer direct add targets without moving existing task positions",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Every theme has nine distinct readable entities with explicit provenance",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Theme loadouts remain independent and equipment assignment copies value semantics",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "All theme entities render with fixed targets and no task initials, with decorations on or off",
+        "Passed": true,
+        "Detail": "OK"
+      },
+      {
+        "Name": "Loadout validation preserves live window bindings, appearance and preferences",
+        "Passed": true,
+        "Detail": "OK"
+      }
+    ],
+    "terminal_skins": {
+      "skins": [
+        {
+          "backgroundGifFrames": 96,
+          "jsoncAccepted": true,
+          "postTextShaderEnabled": false,
+          "backupRestoreByteExact": true,
+          "frameLayout": "C",
+          "applied": true,
+          "testIllustrationFixture": false,
+          "effectsDisableVerified": true,
+          "explicitAnimationVerified": true,
+          "commandsAndShortcutsPreserved": true,
+          "originalFontPreserved": true,
+          "slug": "hextech",
+          "staticByDefault": true,
+          "allProfilesVerified": true,
+          "artworkOffAnimationPreserved": true
+        },
+        {
+          "backgroundGifFrames": 96,
+          "jsoncAccepted": true,
+          "postTextShaderEnabled": false,
+          "backupRestoreByteExact": true,
+          "frameLayout": "C",
+          "applied": true,
+          "testIllustrationFixture": false,
+          "effectsDisableVerified": true,
+          "explicitAnimationVerified": true,
+          "commandsAndShortcutsPreserved": true,
+          "originalFontPreserved": true,
+          "slug": "tactical",
+          "staticByDefault": true,
+          "allProfilesVerified": true,
+          "artworkOffAnimationPreserved": true
+        },
+        {
+          "backgroundGifFrames": 96,
+          "jsoncAccepted": true,
+          "postTextShaderEnabled": false,
+          "backupRestoreByteExact": true,
+          "frameLayout": "C",
+          "applied": true,
+          "testIllustrationFixture": false,
+          "effectsDisableVerified": true,
+          "explicitAnimationVerified": true,
+          "commandsAndShortcutsPreserved": true,
+          "originalFontPreserved": true,
+          "slug": "protocol",
+          "staticByDefault": true,
+          "allProfilesVerified": true,
+          "artworkOffAnimationPreserved": true
+        },
+        {
+          "backgroundGifFrames": 96,
+          "jsoncAccepted": true,
+          "postTextShaderEnabled": false,
+          "backupRestoreByteExact": true,
+          "frameLayout": "C",
+          "applied": true,
+          "testIllustrationFixture": false,
+          "effectsDisableVerified": true,
+          "explicitAnimationVerified": true,
+          "commandsAndShortcutsPreserved": true,
+          "originalFontPreserved": true,
+          "slug": "adventure",
+          "staticByDefault": true,
+          "allProfilesVerified": true,
+          "artworkOffAnimationPreserved": true
+        },
+        {
+          "backgroundGifFrames": 96,
+          "jsoncAccepted": true,
+          "postTextShaderEnabled": false,
+          "backupRestoreByteExact": true,
+          "frameLayout": "C",
+          "applied": true,
+          "testIllustrationFixture": false,
+          "effectsDisableVerified": true,
+          "explicitAnimationVerified": true,
+          "commandsAndShortcutsPreserved": true,
+          "originalFontPreserved": true,
+          "slug": "arsenal",
+          "staticByDefault": true,
+          "allProfilesVerified": true,
+          "artworkOffAnimationPreserved": true
+        },
+        {
+          "backgroundGifFrames": 96,
+          "jsoncAccepted": true,
+          "postTextShaderEnabled": false,
+          "backupRestoreByteExact": true,
+          "frameLayout": "C",
+          "applied": true,
+          "testIllustrationFixture": false,
+          "effectsDisableVerified": true,
+          "explicitAnimationVerified": true,
+          "commandsAndShortcutsPreserved": true,
+          "originalFontPreserved": true,
+          "slug": "relic",
+          "staticByDefault": true,
+          "allProfilesVerified": true,
+          "artworkOffAnimationPreserved": true
+        },
+        {
+          "backgroundGifFrames": 96,
+          "jsoncAccepted": true,
+          "postTextShaderEnabled": false,
+          "backupRestoreByteExact": true,
+          "frameLayout": "C",
+          "applied": true,
+          "testIllustrationFixture": false,
+          "effectsDisableVerified": true,
+          "explicitAnimationVerified": true,
+          "commandsAndShortcutsPreserved": true,
+          "originalFontPreserved": true,
+          "slug": "starlight",
+          "staticByDefault": true,
+          "allProfilesVerified": true,
+          "artworkOffAnimationPreserved": true
+        },
+        {
+          "backgroundGifFrames": 96,
+          "jsoncAccepted": true,
+          "postTextShaderEnabled": false,
+          "backupRestoreByteExact": true,
+          "frameLayout": "C",
+          "applied": true,
+          "testIllustrationFixture": false,
+          "effectsDisableVerified": true,
+          "explicitAnimationVerified": true,
+          "commandsAndShortcutsPreserved": true,
+          "originalFontPreserved": true,
+          "slug": "formation",
+          "staticByDefault": true,
+          "allProfilesVerified": true,
+          "artworkOffAnimationPreserved": true
+        },
+        {
+          "backgroundGifFrames": 96,
+          "jsoncAccepted": true,
+          "postTextShaderEnabled": false,
+          "backupRestoreByteExact": true,
+          "frameLayout": "C",
+          "applied": true,
+          "testIllustrationFixture": false,
+          "effectsDisableVerified": true,
+          "explicitAnimationVerified": true,
+          "commandsAndShortcutsPreserved": true,
+          "originalFontPreserved": true,
+          "slug": "astral",
+          "staticByDefault": true,
+          "allProfilesVerified": true,
+          "artworkOffAnimationPreserved": true
+        },
+        {
+          "backgroundGifFrames": 96,
+          "jsoncAccepted": true,
+          "postTextShaderEnabled": false,
+          "backupRestoreByteExact": true,
+          "frameLayout": "C",
+          "applied": true,
+          "testIllustrationFixture": false,
+          "effectsDisableVerified": true,
+          "explicitAnimationVerified": true,
+          "commandsAndShortcutsPreserved": true,
+          "originalFontPreserved": true,
+          "slug": "wonderland",
+          "staticByDefault": true,
+          "allProfilesVerified": true,
+          "artworkOffAnimationPreserved": true
+        }
+      ],
+      "negativeCasesPassed": 10,
+      "utf8BomRestoreByteExact": true,
+      "isolatedSettingsOnly": true,
+      "artworkFixtureCount": 0,
+      "outputRoot": "D:\\tools\\OmniVibe\\artifacts\\publish\\lean-20261020\\validation\\terminal-skins\\86ad8e20b5654912860b32e098f5665e"
+    },
+    "terminal_chrome": {
+      "Passed": true,
+      "ThemeCount": 13,
+      "Cases": [
+        {
+          "Skin": "hextech",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "tactical",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "protocol",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "adventure",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "arsenal",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "relic",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "starlight",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "formation",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "astral",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "wonderland",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "ink-jade",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "midnight",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "cinnabar",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "ink-jade-Minimal",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Skin": "ink-jade-Ornate",
+          "ChromeOnly": true,
+          "ProfilesAndBehaviorPreserved": true,
+          "NativeControlsPreserved": true,
+          "BackupRestoreByteExact": true
+        }
+      ],
+      "BulkCases": [
+        {
+          "Selection": "named",
+          "RegisteredThemeCount": 13,
+          "SelectionAndProfilesPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Selection": "automatic",
+          "RegisteredThemeCount": 13,
+          "SelectionAndProfilesPreserved": true,
+          "BackupRestoreByteExact": true
+        },
+        {
+          "Selection": "absent",
+          "RegisteredThemeCount": 13,
+          "SelectionAndProfilesPreserved": true,
+          "BackupRestoreByteExact": true
+        }
+      ],
+      "OutputRoot": "D:\\tools\\OmniVibe\\artifacts\\publish\\lean-20261020\\validation\\terminal-chrome-final\\4ae444f17d794755ac80aa0e1c0bee6a"
+    }
+  },
+  "limits": [
+    "Logical file sizes, not filesystem allocated blocks.",
+    "New publish/build/test output was created after cache cleanup.",
+    "Git history unchanged; deletion does not imply equivalent full-clone savings.",
+    "Packaged app requires .NET 10 Desktop Runtime.",
+    "Current live Debug instance was not restarted."
+  ],
+  "retained_test_copies_reason": "Automatic tool policy review blocked optional removal of temporary validation asset copies; retained without retrying removal."
+}

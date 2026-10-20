@@ -157,11 +157,11 @@ internal sealed class RadialInventorySurface : FrameworkElement
         }
         var chosen = Slots.FirstOrDefault(x => x.Number == SelectedNumber) ?? Slots.FirstOrDefault(x => x.IsActive) ?? Slots.First();
         if (chosen.Occupied) EquipmentCatalog.Draw(dc, chosen, new Rect(-80, -80, 160, 160), skin: s.Id);
-        Text(dc, chosen.Occupied ? EquipmentCatalog.Name(chosen, s.Id) : "添加任务", new Point(0, 91), 13, s.Text, 180, true);
-        Text(dc, "永劫无间 / 角色配装", new Point(0, -320), 17, s.Text, 450, true);
-        Text(dc, chosen.Occupied ? chosen.DisplayName + " · " + chosen.StateLabel : "空槽位 · 拖入窗口绑定这件武器", new Point(0, 292), 12, s.Text, 560);
-        Text(dc, _hold ? "按住 " + _gesture + "  ·  指向角色  ·  松键进入任务" : "点击角色进入任务", new Point(0, 321), 11, s.Muted, 560);
-        Text(dc, "中央松键 / Esc / 右键取消", new Point(0, 346), 10, s.Muted, 500);
+        Text(dc, chosen.Occupied ? EquipmentCatalog.Name(chosen, s.Id) : L.T("添加任务"), new Point(0, 91), 13, s.Text, 180, true);
+        Text(dc, L.T("永劫无间 / 角色配装"), new Point(0, -320), 17, s.Text, 450, true);
+        Text(dc, chosen.Occupied ? chosen.DisplayName + " · " + chosen.StateLabel : L.T("空槽位 · 拖入窗口绑定这件武器"), new Point(0, 292), 12, s.Text, 560);
+        Text(dc, _hold ? L.T("按住 ") + _gesture + L.T("  ·  指向角色  ·  松键进入任务") : L.T("点击角色进入任务"), new Point(0, 321), 11, s.Muted, 560);
+        Text(dc, L.T("中央松键 / Esc / 右键取消"), new Point(0, 346), 10, s.Muted, 500);
         dc.Pop(); dc.Pop();
     }
 }
@@ -169,8 +169,8 @@ internal sealed class RadialInventorySurface : FrameworkElement
 /// <summary>Original vector signals; no game artwork, fonts or sound samples.</summary>
 internal static class HexSignal
 {
-    internal static string Label(Slot slot) => !slot.Connected ? "离线" : slot.State switch
-    { AgentState.Waiting => "需要处理", AgentState.Error => "错误警报", AgentState.Ready => "本轮已回复", AgentState.Running => "正在执行", _ => "状态未知" };
+    internal static string Label(Slot slot) => !slot.Connected ? L.T("离线") : slot.State switch
+    { AgentState.Waiting => L.T("需要处理"), AgentState.Error => L.T("错误警报"), AgentState.Ready => L.T("本轮已回复"), AgentState.Running => L.T("正在执行"), _ => L.T("状态未知") };
     internal static void Draw(DrawingContext dc, Point centre, double radius, Slot slot, SkinDefinition skin, double phase)
     {
         string color = slot.Connected ? SkinUi.StateColor(slot, skin) : skin.Unknown;

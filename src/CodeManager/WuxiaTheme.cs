@@ -8,7 +8,7 @@ namespace CodeManager;
 
 public static class WuxiaTheme
 {
-    public static Skin CurrentSkin { get; private set; }
+    public static Skin CurrentSkin { get; private set; } = Skin.Relic;
     public static readonly FontFamily Calligraphy = new("KaiTi, STKaiti, FangSong, SimSun");
     public static readonly FontFamily BodyFont = new("Microsoft YaHei UI, Segoe UI");
     public static Brush Ink { get; private set; } = Brush("#111714");
@@ -52,7 +52,7 @@ public static class WuxiaTheme
         group.Children.Add(new GeometryDrawing(new SolidColorBrush(color), null, new RectangleGeometry(new Rect(0, 0, 256, 256))));
         var b = new DrawingBrush(group) { TileMode = TileMode.Tile, Viewport = new Rect(0, 0, 256, 256), ViewportUnits = BrushMappingMode.Absolute }; b.Freeze(); return b;
     }
-    public static string Numeral(int n) => n is >= 1 and <= 9 ? new[] { "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖" }[n - 1] : "零";
+    public static string Numeral(int n) => L.IsEnglish ? n.ToString("D2") : n is >= 1 and <= 9 ? new[] { "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖" }[n - 1] : "零";
     public static SolidColorBrush Brush(string color) { var b = (SolidColorBrush)new BrushConverter().ConvertFromString(color)!; b.Freeze(); return b; }
     private static Brush Texture(bool wood)
     {

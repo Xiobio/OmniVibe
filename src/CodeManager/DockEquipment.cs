@@ -101,9 +101,9 @@ public sealed class SkinDockContent : Grid
         _number.Foreground = WuxiaTheme.Brush(equipped ? _skin.Accent : _slot.Occupied ? _skin.Text : _skin.Muted);
         _binding.Text = _slot.Occupied ? "SLOT" : "+";
         _provider.Text = !_slot.Occupied ? "EMPTY SLOT" : _slot.AgentProvider == "claude" ? "CLAUDE CODE" : _slot.AgentProvider == "codex" ? "CODEX" : _slot.ToolName.ToUpperInvariant();
-        _badge.Text = _slot.IsDropTarget ? "接入" : _slot.IsSelected ? "切换中" : _slot.IsActive ? "已装备" : _slot.Unread ? "新消息" : "";
+        _badge.Text = _slot.IsDropTarget ? L.T("接入") : _slot.IsSelected ? L.T("切换中") : _slot.IsActive ? L.T("已装备") : _slot.Unread ? L.T("新消息") : "";
         _badge.Margin = new Thickness(4, 0, _slot.Occupied ? 10 : 0, 0);
-        _name.Text = _slot.Occupied ? EquipmentCatalog.Name(_slot, _skin.Id) : "拖入窗口，装备任务";
+        _name.Text = _slot.Occupied ? EquipmentCatalog.Name(_slot, _skin.Id) : L.T("拖入窗口，装备任务");
         _name.FontSize = equipped ? (dense ? 13 : 14) : _slot.Occupied ? 12 : 10;
         _name.TextWrapping = equipped ? TextWrapping.Wrap : TextWrapping.NoWrap;
         _name.MaxHeight = equipped ? (dense ? 36 : 42) : 22;

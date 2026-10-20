@@ -20,6 +20,7 @@ public sealed class StateStore
     }
     public AppState Load()
     {
+        LoadWarning = null;
         if (!File.Exists(StateFile)) return new();
         try
         {
@@ -28,15 +29,25 @@ public sealed class StateStore
                 throw new InvalidDataException("Invalid task slots");
             result.Layout ??= new();
             result.Preferences ??= new();
+            bool repaired = false;
+            foreach (var slot in result.Slots) repaired |= NormalizeSlot(slot);
+            repaired |= result.Layout.RemoveAll(entry => entry == null || entry.Window == null || string.IsNullOrWhiteSpace(entry.SlotId)) > 0;
+            foreach (var entry in result.Layout) repaired |= NormalizeWindow(entry.Window);
+            if (result.Popup is { } popup)
+            {
+                if (popup.Window == null || string.IsNullOrWhiteSpace(popup.SlotId)) { result.Popup = null; repaired = true; }
+                else { repaired |= NormalizeWindow(popup.Window); if (popup.PreviousFocus != null) repaired |= NormalizeWindow(popup.PreviousFocus); }
+            }
             result.Preferences.HideDockOnArrange = false;
             result.RecentTasks ??= new();
             result.RecentTasks = result.RecentTasks.Where(r => r?.Task?.Window != null && !string.IsNullOrWhiteSpace(r.Task.Id) && !result.Slots.Any(s => s.Id == r.Task.Id))
                 .DistinctBy(r => r.Task.Id).OrderByDescending(r => r.ClosedAt).Take(30).ToList();
-            foreach (var recent in result.RecentTasks) { recent.Task.Number = Math.Clamp(recent.Task.Number, 1, 9); recent.Task.Recovery = null; EquipmentCatalog.EnsureDefaults(new[] { recent.Task }); }
+            foreach (var recent in result.RecentTasks) { repaired |= NormalizeSlot(recent.Task); recent.Task.Number = Math.Clamp(recent.Task.Number, 1, 9); recent.Task.Recovery = null; EquipmentCatalog.EnsureDefaults(new[] { recent.Task }); }
             if (!Enum.IsDefined(result.Preferences.TaskModifiers)) result.Preferences.TaskModifiers = ShortcutModifiers.Alt;
             if (!Enum.IsDefined(result.Preferences.MouseModifiers)) result.Preferences.MouseModifiers = ShortcutModifiers.Alt;
             if (!Enum.IsDefined(result.Preferences.Arrangement)) result.Preferences.Arrangement = ArrangementMode.Balanced;
-            if (!Enum.IsDefined(result.Preferences.Skin)) result.Preferences.Skin = Skin.InkJade;
+            if (!Enum.IsDefined(result.Preferences.Skin)) result.Preferences.Skin = Skin.Relic;
+            if (result.Preferences.Language is not ("auto" or "en" or "zh-CN")) result.Preferences.Language = "auto";
             if (result.Preferences.SoundTheme is Skin soundTheme && !Enum.IsDefined(soundTheme)) result.Preferences.SoundTheme = null;
             result.Preferences.SoundVolume = double.IsFinite(result.Preferences.SoundVolume) ? Math.Clamp(result.Preferences.SoundVolume, 0, 1) : .45;
             result.Preferences.DockWidth = double.IsFinite(result.Preferences.DockWidth) ? Math.Clamp(result.Preferences.DockWidth, 210, 620) : 460;
@@ -62,16 +73,38 @@ public sealed class StateStore
             }
             result.Slots = result.Slots.OrderBy(s => s.Number).ToList();
             EquipmentCatalog.EnsureDefaults(result.Slots);
+            if (repaired) LoadWarning = "配置含有无效字段，已修复并保留原文件：" + BackupOriginal();
             return result;
         }
         catch (Exception ex) when (ex is IOException or JsonException or InvalidDataException or ArgumentException)
         {
             // Preserve the original before a fresh state is ever written.
-            var backup = StateFile + ".recovery-" + DateTime.Now.ToString("yyyyMMdd-HHmmss-fff");
-            File.Copy(StateFile, backup, false);
+            var backup = BackupOriginal();
             LoadWarning = "配置读取失败，原文件已备份：" + backup;
             return new();
         }
+    }
+    private string BackupOriginal()
+    {
+        string backup = StateFile + ".recovery-" + DateTime.Now.ToString("yyyyMMdd-HHmmss-fff") + "-" + Guid.NewGuid().ToString("N")[..8];
+        File.Copy(StateFile, backup, false);
+        return backup;
+    }
+    private static bool NormalizeWindow(WindowIdentity window)
+    {
+        bool repaired = window.Title == null || window.ProcessName == null;
+        window.Title ??= ""; window.ProcessName ??= "";
+        return repaired;
+    }
+    private static bool NormalizeSlot(Slot slot)
+    {
+        bool repaired = slot.Name == null || slot.ProjectDirectory == null || slot.AgentProvider == null || slot.SessionId == null ||
+            slot.Message == null || slot.StateSource == null || slot.Notes == null || slot.ResumeSessionId == null || slot.RecoveryError == null || !Enum.IsDefined(slot.State);
+        slot.Name ??= ""; slot.ProjectDirectory ??= ""; slot.AgentProvider ??= ""; slot.SessionId ??= "";
+        slot.Message ??= ""; slot.StateSource ??= ""; slot.Notes ??= ""; slot.ResumeSessionId ??= ""; slot.RecoveryError ??= "";
+        if (!Enum.IsDefined(slot.State)) slot.State = AgentState.Unknown;
+        if (slot.Window != null) repaired |= NormalizeWindow(slot.Window);
+        return repaired;
     }
     public void Save(AppState state) => AtomicWrite(StateFile, JsonSerializer.Serialize(state, Json));
     public void Send(StatusEvent status) => AtomicWrite(Path.Combine(EventsDirectory, Guid.NewGuid().ToString("N") + ".json"), JsonSerializer.Serialize(status, Json));

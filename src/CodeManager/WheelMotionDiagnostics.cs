@@ -20,6 +20,9 @@ internal static class WheelMotionDiagnostics
         try
         {
             window.Show(); window.UpdateLayout(); wheel.Deploy(true, false);
+            // Measure warm drawing with all nine real portraits present, not placeholders.
+            EquipmentCatalog.PrewarmAsync(wheel.Slots, Skin.Hextech).GetAwaiter().GetResult();
+            if (wheel.Slots.Any(slot => EquipmentCatalog.Image(slot, Skin.Hextech, true) == null)) throw new InvalidOperationException("Benchmark portraits failed to warm");
             for (int i = 0; i < 210; i++)
             {
                 if (i == 30) wheel.MeasureDrawing = true;

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="OmniVibe 开发效果图册：浏览 13 套任务装备栏与终端主题。">
+  <title>OmniVibe — 主题展示</title>
+  <link rel="icon" href="../../assets/brand/v4/icons/omnivibe.ico">
+  <link rel="stylesheet" href="showcase.css">
+  <script src="showcase.js" defer></script>
+</head>
+<body>
+  <header class="top"><a class="wordmark" href="../../README.md"><img src="../../assets/brand/v4/icons/omnivibe-64.png" width="36" height="36" alt=""> OmniVibe</a><span>WINDOWS / 开发预览</span><a href="../project-kit/README.md">项目文档 ↗</a></header>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">OMNIVIBE / THEME GALLERY</p>
+      <h1>像玩游戏一样，<br><em>沉浸式 Vibe Coding。</em></h1>
+      <p class="intro">集中收纳、快捷切换、一键排列，让多窗口工作更有条理。<br>这里按圆盘、总览、配装和终端模块，展示 13 套主题的不同效果。</p>
+      <a class="cta" href="#gallery">探索 13 套外观 <span>↓</span></a>
+      <div class="facts"><span>01 / 窗口收纳</span><span>02 / 切换与排列</span><span>03 / 个性换肤</span></div>
+    </section>
+    <section id="gallery" aria-labelledby="gallery-heading">
+      <div class="section-title"><div><p class="eyebrow">THE COLLECTION</p><h2 id="gallery-heading">从装备栏到终端，换一整套。</h2></div><span class="count">13 THEMES</span></div>
+      <div class="controls">
+        <label for="theme">主题<select id="theme">
+          <option value="ink-jade">墨玉机关</option><option value="midnight">玄夜青金</option><option value="cinnabar">朱砂藏锋</option>
+          <option value="hextech">海克斯枢纽</option><option value="tactical">战术终端</option><option value="protocol">行动协议</option>
+          <option value="adventure">冒险装备栏</option><option value="arsenal">无间兵器匣</option><option value="relic" selected>黑神话：悟空 · 灵蕴法宝匣（默认）</option>
+          <option value="starlight">星曜指挥台</option><option value="formation">Agent 备战席</option><option value="astral">星旅背包</option><option value="wonderland">三界百宝袋</option>
+        </select></label>
+        <div class="modes" role="group" aria-label="展示视图">
+          <button type="button" data-mode="deck" aria-pressed="false">展开圆盘</button>
+          <button type="button" data-mode="inventory" aria-pressed="false">任务总览</button>
+          <button type="button" data-mode="loadout" aria-pressed="false">配装界面</button>
+          <button type="button" data-mode="terminal" aria-pressed="true">终端外观</button>
+        </div>
+      </div>
+      <figure class="stage">
+        <div class="stage-top"><span id="selection" aria-live="polite">黑神话：悟空 / 终端外观</span><a id="original" href="../terminal-frame-refinement/relic-regular.png" target="_blank" rel="noopener">查看原图 ↗</a></div>
+        <div class="image-wrap"><img id="preview" src="../terminal-frame-refinement/relic-regular.png" alt="黑神话主题终端外观测试示例" width="1280" height="800"></div>
+        <figcaption id="caption">终端外观测试示例；保留原生标题栏，以配色、插画和边饰统一氛围。</figcaption>
+      </figure>
+      <p class="evidence">展示来自仓库已有开发截图，包含示例任务。部分截图早于最新交互调整，静态图不代表实测切换速度或完整验收结果。</p>
+      <noscript><p>主题切换需要启用 JavaScript。也可查看 <a href="../project-kit/showcase.md">静态展示文档</a>。</p></noscript>
+    </section>
+    <section class="features" aria-label="使用体验">
+      <article><span>01</span><h3>固定位置，形成习惯</h3><p>把任务交给 1–9 号槽位。编号快捷键与轮盘，为不同操作习惯提供入口。</p><kbd>Alt + 1–9</kbd></article>
+      <article><span>02</span><h3>看见需要关注的事</h3><p>打开总览，查看窗口与接入后的任务状态。没有有效事件时，明确显示未知。</p><kbd>Tab · 可改键</kbd></article>
+      <article><span>03</span><h3>一键排列，随时恢复</h3><p>将已收录窗口按选定布局排开，再次触发恢复原布局，减少手动拖动与缩放。</p><a href="../project-kit/getting-started.md">查看使用方法 ↗</a></article>
+    </section>
+  </main>
+  <footer><strong>OmniVibe</strong><p>让并行开发，像切换装备一样直觉。</p><div><a href="../project-kit/press-kit.md">传播素材</a><a href="../../CONTRIBUTING.md">参与贡献</a><a href="../../THIRD_PARTY_NOTICES.md">素材与许可</a></div><small>自有代码 MIT。游戏相关主题不代表官方合作。完整社区皮肤 SDK 尚在规划中。</small></footer>
+</body>
+</html>

@@ -1,0 +1,6 @@
+# Optional asset-generation and review tools; the Windows application does not use Python.
+Pillow==11.1.0
+numpy==2.1.3
+scipy==1.15.3
+imageio-ffmpeg==0.6.0
+requests==2.32.5

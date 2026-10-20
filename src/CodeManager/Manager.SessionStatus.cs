@@ -48,7 +48,7 @@ public sealed partial class Manager
                 // Tool-output records provide liveness but should not cause one disk
                 // write per tool. Genuine state changes remain immediate.
                 if (slot.State == AgentState.Running && status.State == AgentState.Running && slot.UpdatedAt.HasValue && status.At-slot.UpdatedAt.Value < TimeSpan.FromSeconds(30)) continue;
-                string source = (session.Provider == "codex" ? "Codex" : "Claude Code") + " 会话记录";
+                string source = (session.Provider == "codex" ? "Codex" : "Claude Code") + L.T(" 会话记录");
                 if (update.Initial && slot.UpdatedAt == null) {
                     slot.State=status.State; slot.StateSource=source; slot.Message=status.Message; slot.UpdatedAt=status.At;
                     slot.Unread=status.State is AgentState.Ready or AgentState.Waiting or AgentState.Error;
@@ -84,9 +84,9 @@ public sealed partial class Manager
                 BindSession(slot,session); slot.UpdatedAt=null; slot.State=AgentState.Unknown; slot.Unread=false;
                 _sessionStatus.Reset(slot.Id);
                 Save(); Dock.UpdateSummary(); _sessionPollAfter=DateTime.MinValue;
-                Hint(slot.Number + " · 已连接会话，正在读取状态");
+                Hint(slot.Number + L.T(" · 已连接会话，正在读取状态"));
             }
-        } catch (Exception e) when (e is System.IO.IOException or UnauthorizedAccessException) { Hint("会话记录暂不可读：" + e.Message); }
+        } catch (Exception e) when (e is System.IO.IOException or UnauthorizedAccessException) { Hint(L.T("会话记录暂不可读：") + e.Message); }
         finally { EndDialog(); }
     }
 }

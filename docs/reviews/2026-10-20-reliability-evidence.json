@@ -1,0 +1,382 @@
+{
+  "generated_at_utc": "2026-10-20T03:58:23.284081+00:00",
+  "base_commit": "6517902b4454531c1e670c70e147a34c3466a8d4",
+  "scope": "Local working tree, isolated build; user manager and terminals not restarted.",
+  "build": {
+    "configuration": "Release",
+    "warnings": 0,
+    "errors": 0,
+    "assembly_sha256": "94873a4db7569c80f6b0705b6a8efc0751bccd7b3eaf5bfe1f75b9301c468ee8"
+  },
+  "source_sha256": {
+    "src/CodeManager/App.xaml.cs": "c998c55bd5f87f76f2c20e780eaf6c60dd3b4b26a3650bff38ca8fb6656ae77e",
+    "src/CodeManager/DockWeaponWheel.cs": "4cbf739bc9a97a691e3ac0d066f8290d6ca3ccd40a2de88c0e8dcb5b1fd877cc",
+    "src/CodeManager/EquipmentCatalog.cs": "f3ca12c49587728c653d9bc8a0f5d8cfe11a558d0d8fdaeb6765531c1c13dc49",
+    "src/CodeManager/Manager.cs": "c17023f6e09f9fafb02fdfec992174724fe325da19ea0e70d3d448b03e77e1ea",
+    "src/CodeManager/Models.cs": "ab8d6f01857f5d80ecab264c2fdd783177cd6db1897ec1a3b5a6e532e11311b5",
+    "src/CodeManager/RecoveryLaunch.cs": "165b958388185de6fab99f2baac8bd82761e72ac1eb1b7f6a0ad54becaa7197e",
+    "src/CodeManager/SelfTests.cs": "d20a7f0f561a98c189c273127f29fd527466d85c4bd0c43cc5cf33eb45e452cf",
+    "src/CodeManager/SkinTaskCard.cs": "4b2bc7f81548fc02968028b03e06b1b4124f1e5bb64e4642cb24a99097e482e4",
+    "src/CodeManager/SlotHintWindow.cs": "4b78ce1e01a902d343dbd4ea09a3b43c40a53764d5035c7a129745e0e5517820",
+    "src/CodeManager/StateStore.cs": "f384d00b5e1e9ae8ef67928ef5545649faa80bbb1d8a2a98cf180d0898c7d545",
+    "src/CodeManager/WheelMotionDiagnostics.cs": "519c4038893e1679c64f64f51ed50704bd5e24066ab0971590da5d5a4265fa83",
+    "src/CodeManager/ReliabilityTests.cs": "4411c3c8dacd5e3682593edc5edcc3838dccd3ed8db33beba0a4836d65dd471e",
+    "src/CodeManager/StatusEventInbox.cs": "fdac0ab8ab9ee75a8010b7afd3a6a804673f238b8820a6e863db8011f1bea667",
+    "scripts/Validate.ps1": "b4c689e51a68390662846ecb62d3892bb91ce6c4632a97474607bd41580a61d9",
+    "tools/release-manifest.py": "36369280ccaefa2b3c954ce060ddfd8fb55ecbad2738b464306666b2499e48d2",
+    "global.json": "a79f52375658471909f8f6634b27a2e3e7f465c67eaaf1c6f2e8188ea49682e0",
+    "requirements-dev.txt": "ad672bc66fa11d2fcccdac23fa85314e4dbba2cc09124909346fd3e201c924f6",
+    ".github/workflows/validate.yml": "13af9de25e62e0b441f07095d423653a609e6fa91657ada479eebea2a7024798"
+  },
+  "full_self_test": [
+    {
+      "Name": "Tiling: 1–9 windows fill the work area exactly, including odd dimensions and negative origins",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Arrangement preferences: every mode fills work area; gaps stay bounded",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Selection: fixed sparse slots, high-resolution wheel, cancel and wrap",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Alt mouse gestures: wheel routing, AltGr exclusion and middle-click passthrough",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Settings: configurable modifiers, valid toggle keys and off-screen placement",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Input: connected digits only; Tab toggles inventory and yields when paused or disabled",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Agent events: real lifecycle mapping, nested-agent filtering and idle notifications",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Persistence: identity, stable task ID, placement, atomic events and corrupt recovery",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Win32: enumerate, validate identity, tile/minimize/restore owned fixture",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Win32: activating an already focused window raises it above a nonactivating covering window",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Win32: hotkey registration and low-level mouse/keyboard/drag hooks",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Win32: DWM live preview relationship between owned fixture windows",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Integration: capture, rename, external status, move fixed slot, overview and cleanup",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Interaction: persistent entrance, immediate hints, direct removal and closed-task history",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Hook transport: PowerShell observer emits Unicode event without agent instructions",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Recovery: exact matching, ambiguity rejection, startup quoting and saved session metadata",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Recovery: repeat suppression, title handshake, stable identity, move and timeout",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Recovery: Claude launcher forwards only the specified resume ID",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Configuration: nested null fields repaired without losing task identity or original bytes",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Configuration: invalid slot structure falls back with byte-preserving backup",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Status: age signals uncertainty; long jobs, terminal states and manual marks retain semantics",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Inbox: bounded oldest-first backlog, event ordering, retention until acknowledgement",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Inbox: rejects malformed, oversized and future events; tolerates locks and nullable text",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Portraits: background warmup yields frozen bounded cached images and supports cancellation",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Motion: repeated commands preserve transitions and reversal renders intermediate frames",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Motion: warm text layouts ignore task renames while changing equipment updates the rendered identity",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Overlay: desktop gaps are alpha-zero and native clicks pass to the window underneath",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Compact host: native bounds shrink to the ring, deployment preserves the screen anchor",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Equipment gesture: dead zone, connected-only release and boundary hysteresis preserve task data",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Equipment core: hover opens without focus, desktop gaps retain it, leaving retracts with reentry grace",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Radial inventory: fixed sectors, centre cancel, outer cancel and scaled hit testing",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Radial inventory: confirm only connected slots; no focus steal, reordering or retained window",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Radial inventory: release after a quick chord cancels once and stops its timer",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Dock wheel: nine permanent sectors replace the list across skins without changing bindings",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Dock equipment: switch cue never takes focus and releases itself after feedback",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Skins: all 13 palettes meet body, panel, card and status text contrast >= 4.5",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Skins: terminal/native JSON palette contract matches every new skin",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Skins: switching and rendering each task state preserves task IDs, launch, session and window snapshots",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Skins: family glyphs are distinct and decorations-off renders a clean interactive background",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Dock wheel: resize preserves nine hit targets and centre capture resolves to an empty slot",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Skins: 13 settings choices use stable enum tags; cancel and save preserve preference boundaries",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Skins: nine-card overview remains readable at 780x650 and 200-percent display scaling",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Skins: themed settings scroll viewer retains vertical and horizontal scrolling",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Skins: short work areas scroll all nine tasks and suppress clipped native thumbnails",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Skins: themed slider retains native commands; menu and combo popups honor animation off/on",
+      "Passed": true,
+      "Detail": "OK"
+    }
+  ],
+  "reliability_test": [
+    {
+      "Name": "Configuration: nested null fields repaired without losing task identity or original bytes",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Configuration: invalid slot structure falls back with byte-preserving backup",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Status: age signals uncertainty; long jobs, terminal states and manual marks retain semantics",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Inbox: bounded oldest-first backlog, event ordering, retention until acknowledgement",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Inbox: rejects malformed, oversized and future events; tolerates locks and nullable text",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Portraits: background warmup yields frozen bounded cached images and supports cancellation",
+      "Passed": true,
+      "Detail": "OK"
+    }
+  ],
+  "loadout_test": [
+    {
+      "Name": "Nine distinct HD transparent character cutouts match their provenance manifest",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Legacy migration and restart preserve task identity and chosen weapon",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Picker is an isolated draft, supports per-slot choices and fixed short-window actions",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Custom import survives original removal; missing, corrupt and unsafe files fall back",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Resting 116-DIP core is contained and weapon identity ignores task titles",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Reordering a task preserves the remembered current entity after focus leaves managed terminals",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "All nine deployed weapons retain fixed hit positions at 320, 360 and 480 DIP",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Empty slots visibly offer direct add targets without moving existing task positions",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Every theme has nine distinct readable entities with explicit provenance",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Theme loadouts remain independent and equipment assignment copies value semantics",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "All theme entities render with fixed targets and no task initials, with decorations on or off",
+      "Passed": true,
+      "Detail": "OK"
+    },
+    {
+      "Name": "Loadout validation preserves live window bindings, appearance and preferences",
+      "Passed": true,
+      "Detail": "OK"
+    }
+  ],
+  "monitoring_unit_tests": {
+    "passed": 7,
+    "total": 7
+  },
+  "wheel_benchmark": {
+    "metric": "UI thread drawing-recording time; excludes OS composition, window activation and screenshot encoding",
+    "samples": 180,
+    "median_ms": 0.0672,
+    "p95_ms": 0.1409,
+    "max_ms": 0.2406,
+    "mean_allocated_bytes": 14432.488888888889
+  },
+  "build_output_inventory": {
+    "file_count": 508,
+    "total_bytes": 193256906,
+    "bytes_by_category": {
+      "application": 990326,
+      "integration-script": 9215,
+      "theme-resource": 192169705,
+      "documentation-or-gallery": 44320,
+      "development-reference": 43340
+    }
+  },
+  "limitations": [
+    "Reliability group is included in full self-test; do not count twice.",
+    "Warm drawing-recording benchmark excludes end-to-end input, native activation and composition.",
+    "Existing switch-cue focus assertion failed once initially; three subsequent full runs passed; cue implementation was not changed.",
+    "GitHub workflow added but remote execution not performed.",
+    "No long-run or physical mixed-DPI certification."
+  ]
+}

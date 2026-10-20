@@ -62,7 +62,7 @@ public sealed class SkinTaskCard : Grid
         _badgeFrame = new Border { Padding = new Thickness(5, 3, 5, 3), CornerRadius = new CornerRadius(Math.Min(8, _skin.CornerRadius)), Child = _badge, VerticalAlignment = VerticalAlignment.Center };
         Grid.SetColumn(_badgeFrame, 2); top.Children.Add(_badgeFrame); body.Children.Add(top);
         top.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-        _remove = new Button { Width = 22, Height = 22, MinWidth = 0, MinHeight = 0, Padding = new Thickness(0), Margin = new Thickness(5, 0, 0, 0), ToolTip = "移出管理，保留终端窗口", Foreground = WuxiaTheme.Brush(_skin.CardText), VerticalAlignment = VerticalAlignment.Center };
+        _remove = new Button { Width = 22, Height = 22, MinWidth = 0, MinHeight = 0, Padding = new Thickness(0), Margin = new Thickness(5, 0, 0, 0), ToolTip = L.T("移出管理，保留终端窗口"), Foreground = WuxiaTheme.Brush(_skin.CardText), VerticalAlignment = VerticalAlignment.Center };
         _remove.Template = (ControlTemplate)System.Windows.Markup.XamlReader.Parse("""
 <ControlTemplate xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:CodeManager;assembly=CodeManager" TargetType="Button">
   <Grid Background="Transparent">
@@ -214,24 +214,24 @@ public sealed class SkinTaskCard : Grid
         _remove.Visibility = _slot.Occupied ? Visibility.Visible : Visibility.Collapsed;
         _previewEntity.Source = _slot.Occupied ? EquipmentCatalog.Image(_slot, _skin.Id) : ThemeIdentityArt.Image(_skin.Id);
         UpdatePreviewEntity(PreviewRegion.ActualWidth, PreviewRegion.ActualHeight);
-        if (_weaponImage != null) { _weaponImage.Source = _slot.Occupied ? EquipmentCatalog.Image(_slot, _skin.Id) : ThemeIdentityArt.Image(_skin.Id); _weaponImage.ToolTip = _slot.Occupied ? EquipmentCatalog.Name(_slot, _skin.Id) : ThemeIdentityArt.Name(_skin.Id); _weaponImage.Visibility = Visibility.Visible; ToolTip = _slot.Occupied ? EquipmentCatalog.Detail(_slot) : ThemeIdentityArt.Name(_skin.Id) + " · 空槽位\n拖入窗口，或点击选择已有窗口"; }
+        if (_weaponImage != null) { _weaponImage.Source = _slot.Occupied ? EquipmentCatalog.Image(_slot, _skin.Id) : ThemeIdentityArt.Image(_skin.Id); _weaponImage.ToolTip = _slot.Occupied ? EquipmentCatalog.Name(_slot, _skin.Id) : ThemeIdentityArt.Name(_skin.Id); _weaponImage.Visibility = Visibility.Visible; ToolTip = _slot.Occupied ? EquipmentCatalog.Detail(_slot) : ThemeIdentityArt.Name(_skin.Id) + L.T(" · 空槽位\n拖入窗口，或点击选择已有窗口"); }
         string statusColor = SkinUi.StateColor(_slot, _skin);
         var status = WuxiaTheme.Brush(statusColor);
-        _state.Text = SkinUi.StateSymbol(_slot) + "  " + (_slot.Occupied ? _slot.StateLabel : "空槽位 · 等待接入");
+        _state.Text = SkinUi.StateSymbol(_slot) + "  " + (_slot.Occupied ? _slot.StateLabel : L.T("空槽位 · 等待接入"));
         // Pale cards use their own dark text; status color remains visible as an adjacent line and icon.
         _state.Foreground = WuxiaTheme.Brush(_skin.CardText);
         _frame.BorderBrush = WuxiaTheme.Brush(selected || _slot.IsDropTarget ? _skin.Accent : _slot.Connected ? statusColor : _skin.Border);
         _frame.BorderThickness = new Thickness(selected || _slot.IsDropTarget ? 2 : 1);
         _frame.Background = _cardSurface;
-        _name.Text = _slot.Occupied ? _slot.DisplayName : "槽位 " + _slot.Number + " · 添加窗口";
-        _metadata.Text = !_slot.Occupied ? "拖入窗口，或点击选择已有窗口" : !_slot.Connected ? "上次：" + SkinUi.ExecutionLabel(_slot.State) + " · 点击重连" : _slot.State == AgentState.Waiting ? "需要你处理 · 进入终端查看" : _slot.State == AgentState.Ready ? "仅本轮回复完成 · 任务可继续" : (_slot.ProjectLabel == "" ? _slot.ToolName : _slot.ProjectLabel) + (_slot.IntegrationConnected ? " · 状态已接入" : " · 自动状态未接入");
+        _name.Text = _slot.Occupied ? _slot.DisplayName : L.T("槽位 ") + _slot.Number + L.T(" · 添加窗口");
+        _metadata.Text = !_slot.Occupied ? L.T("拖入窗口，或点击选择已有窗口") : !_slot.Connected ? L.T("上次：") + SkinUi.ExecutionLabel(_slot.State) + L.T(" · 点击重连") : _slot.State == AgentState.Waiting ? L.T("需要你处理 · 进入终端查看") : _slot.State == AgentState.Ready ? L.T("仅本轮回复完成 · 任务可继续") : (_slot.ProjectLabel == "" ? _slot.ToolName : _slot.ProjectLabel) + (_slot.IntegrationConnected ? L.T(" · 状态已接入") : L.T(" · 自动状态未接入"));
         var flags = new System.Collections.Generic.List<string>();
-        if (selected) flags.Add("◆ 已选"); if (_slot.IsActive) flags.Add("● 当前"); if (_slot.Unread) flags.Add("✉ 未读");
+        if (selected) flags.Add(L.T("◆ 已选")); if (_slot.IsActive) flags.Add(L.T("● 当前")); if (_slot.Unread) flags.Add(L.T("✉ 未读"));
         string tag = string.Join("\n", flags);
         _badge.Text = tag; _badge.Foreground = WuxiaTheme.Brush(_skin.Background); _badgeFrame.Background = WuxiaTheme.Brush(_skin.Accent); _badgeFrame.Visibility = tag == "" ? Visibility.Collapsed : Visibility.Visible;
-        _placeholder.Text = !_slot.Occupied ? "+" : !_slot.Connected ? "⌁ 连接已断开" : _slot.State switch { AgentState.Waiting => "! 等待你处理", AgentState.Ready => "✓ 本轮已回复", AgentState.Error => "× 发生错误", AgentState.Running => "▷ 正在执行", _ => "○ 状态未知" };
+        _placeholder.Text = !_slot.Occupied ? "+" : !_slot.Connected ? L.T("⌁ 连接已断开") : _slot.State switch { AgentState.Waiting => L.T("! 等待你处理"), AgentState.Ready => L.T("✓ 本轮已回复"), AgentState.Error => L.T("× 发生错误"), AgentState.Running => L.T("▷ 正在执行"), _ => L.T("○ 状态未知") };
         _placeholder.Foreground = status;
-        _previewHint.Text = !_slot.Occupied ? "点击添加 · 保留固定编号" : !_slot.Connected ? "点击重新连接窗口" : "实时窗口预览";
+        _previewHint.Text = !_slot.Occupied ? L.T("点击添加 · 保留固定编号") : !_slot.Connected ? L.T("点击重新连接窗口") : L.T("实时窗口预览");
         _ornament.StateColor = statusColor; _ornament.Selected = selected; _ornament.IsEmpty = !_slot.Occupied; _ornament.InvalidateVisual();
         var key = _slot.State + ":" + _slot.Connected + ":" + _slot.Occupied;
         if (key == _lastState) return;
@@ -287,8 +287,8 @@ public sealed class SkinTaskCard : Grid
 
 internal static class SkinUi
 {
-    internal static string ExecutionLabel(AgentState state) => state switch { AgentState.Running => "正在执行", AgentState.Waiting => "等待你处理", AgentState.Ready => "本轮已回复", AgentState.Error => "发生错误", _ => "状态未知" };
-    internal static string StateColor(Slot slot, SkinDefinition skin) => !slot.Connected ? skin.Unknown : slot.State switch { AgentState.Running => skin.Running, AgentState.Waiting => skin.Waiting, AgentState.Ready => skin.Ready, AgentState.Error => skin.Error, _ => skin.Unknown };
+    internal static string ExecutionLabel(AgentState state) => state switch { AgentState.Running => L.T("正在执行"), AgentState.Waiting => L.T("等待你处理"), AgentState.Ready => L.T("本轮已回复"), AgentState.Error => L.T("发生错误"), _ => L.T("状态未知") };
+    internal static string StateColor(Slot slot, SkinDefinition skin) => !slot.Connected || slot.StatusMayBeStale ? skin.Unknown : slot.State switch { AgentState.Running => skin.Running, AgentState.Waiting => skin.Waiting, AgentState.Ready => skin.Ready, AgentState.Error => skin.Error, _ => skin.Unknown };
     internal static string StateSymbol(Slot slot) => !slot.Occupied ? "+" : !slot.Connected ? "⌁" : slot.State switch { AgentState.Running => "▷", AgentState.Waiting => "!", AgentState.Ready => "✓", AgentState.Error => "×", _ => "○" };
 }
 

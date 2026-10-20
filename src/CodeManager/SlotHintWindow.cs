@@ -22,11 +22,11 @@ internal sealed class SlotHintWindow : Window
         var action = new TextBlock { FontSize = 10, Foreground = WuxiaTheme.Brush(remove ? skin.Error : skin.Muted), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0,7,0,0) };
         body.Children.Add(title); body.Children.Add(status); body.Children.Add(project); body.Children.Add(action);
         void Refresh() {
-            title.Text = slot.Number + " · " + (slot.Occupied ? slot.DisplayName : "添加窗口");
-            status.Text = slot.Occupied ? slot.StateLabel : "点击＋选择已有窗口，也可以把窗口拖到这里";
+            title.Text = slot.Number + " · " + (slot.Occupied ? slot.DisplayName : L.T("添加窗口"));
+            status.Text = slot.Occupied ? slot.StateLabel + "\n" + slot.StatusTimestamp : L.T("点击＋选择已有窗口，也可以把窗口拖到这里");
             status.Foreground = WuxiaTheme.Brush(slot.Occupied ? slot.StateColor : skin.Muted);
             project.Text = slot.ProjectDirectory; project.Visibility = string.IsNullOrWhiteSpace(slot.ProjectDirectory) ? Visibility.Collapsed : Visibility.Visible;
-            action.Text = slot.Occupied ? remove ? "点击×移出管理 · 终端窗口继续运行" : "左键进入 · 右上角×移出管理 · 拖动可调整顺序" : "选择窗口后即可按编号唤出";
+            action.Text = slot.Occupied ? remove ? L.T("点击×移出管理 · 终端窗口继续运行") : L.T("左键进入 · 右上角×移出管理 · 拖动可调整顺序") : L.T("选择窗口后即可按编号唤出");
         }
         void Changed(object? sender, PropertyChangedEventArgs e) => Refresh();
         Refresh(); slot.PropertyChanged += Changed; Closed += (_, _) => slot.PropertyChanged -= Changed;
