@@ -69,9 +69,20 @@ internal static class Program
             var scroll = Nodes(window.Content).OfType<ScrollViewer>().Single(v => v.IsVisible); scroll.ScrollToEnd(); Pump(10);
             Capture((FrameworkElement)window.Content, Path.Combine(output, "settings-gallery.png")); scroll.ScrollToTop();
         });
-        Test("Animation changes actual frames and stops when hidden or unloaded", () =>
+        Test("Static frame-only preview stays visible; explicit animation advances and stops when hidden or unloaded", () =>
         {
-            picker.EffectsEnabled = () => true; picker.DecorationsEnabled = () => true; picker.ShowPart("terminal"); Pump(50);
+            picker.EffectsEnabled = () => true; picker.DecorationsEnabled = () => false; picker.ShowPart("terminal"); Pump(50);
+            Require(picker.Scene.OpenAnimationCount == 0 && !picker.Scene.IsPlaying, "Global UI motion started a Terminal GIF without explicit opt-in");
+            var terminalAsset = typeof(SkinSuitePreview).GetField("_terminal", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!;
+            object? staticAsset = terminalAsset.GetValue(picker.Scene); Require(staticAsset != null, "Frame-only static PNG was not loaded");
+            string withFrame = Hash(Capture(picker.Scene, Path.Combine(output, "static-frame-only.png")));
+            string withoutFrame;
+            try { terminalAsset.SetValue(picker.Scene, null); picker.Scene.InvalidateVisual(); Pump(5); withoutFrame = Hash(Capture(picker.Scene, Path.Combine(output, "static-without-asset.png"))); }
+            finally { terminalAsset.SetValue(picker.Scene, staticAsset); picker.Scene.InvalidateVisual(); }
+            Require(withFrame != withoutFrame, "Static frame-only PNG was loaded but not rendered when artwork and animation were off");
+            picker.DecorationsEnabled = () => true;
+            var terminalMotion = Nodes(window.Content).OfType<CheckBox>().Single(c => System.Windows.Automation.AutomationProperties.GetName(c) == "Terminal 背景动画");
+            terminalMotion.IsChecked = true; Pump(50);
             Require(picker.Scene.OpenAnimationCount == 1 && picker.Scene.IsPlaying, "Animation did not start");
             string first = Hash(Capture(picker.Scene, Path.Combine(output, "animation-before.png"))); Pump(350);
             string second = Hash(Capture(picker.Scene, Path.Combine(output, "animation-after.png"))); Require(first != second, "Real GIF frame did not advance");

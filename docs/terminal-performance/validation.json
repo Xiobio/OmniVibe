@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-20",
+  "passed": true,
+  "scope": "Windows Terminal static artwork default and independent animation opt-in",
+  "live_change": {
+    "theme": "relic",
+    "changed_fields": ["profiles.defaults.backgroundImage"],
+    "from": "relic-c-v1-7257df8abd19.gif",
+    "to": "relic-c-v1-2126bff9bbe6.png",
+    "byte_exact_backup": true,
+    "other_fields_and_jsonc_text_preserved": true,
+    "terminal_or_cli_restarted_by_fix": false,
+    "same_process_id_for_before_after": 2900,
+    "prior_process_id": 26972,
+    "prior_process_exited_before_fix": true,
+    "evidence": "artifacts/terminal-lag-audit/static-background-change.json"
+  },
+  "sampling": {
+    "unit": "percent of one logical CPU core",
+    "input_latency_measured": false,
+    "terminal_output_load_controlled": false,
+    "before": {"seconds": 8.0183895, "cpu_seconds": 2.859375, "one_core_percent": 35.6602158076756, "working_set_bytes": 190943232},
+    "after": {"seconds": 8.003583, "cpu_seconds": 0.40625, "one_core_percent": 5.07585165294094, "working_set_bytes": 145461248},
+    "after_repeat": {"seconds": 8.0080287, "cpu_seconds": 0.4375, "one_core_percent": 5.463267133395764, "working_set_bytes": 145444864},
+    "evidence": ["artifacts/terminal-lag-audit/new-process-before-static.json", "artifacts/terminal-lag-audit/new-process-after-static.json", "artifacts/terminal-lag-audit/new-process-after-static-repeat.json"],
+    "limitations": "Old process hang and memory usage are separate observations; no claim that GIF alone caused the hang or that cross-process memory reduction was caused by this fix."
+  },
+  "artwork": {
+    "matching_existing_static_asset": true,
+    "size": [1280, 754],
+    "center_rgb_mean_absolute_error_0_to_255": 0.9844849441225166,
+    "evidence": "artifacts/terminal-lag-audit/static-artwork-check.json"
+  },
+  "behavior": {
+    "game_script_default": "static PNG",
+    "ink_jade_ornate_default": "static PNG",
+    "animation_opt_in_flag": "-EnableAnimation",
+    "settings_checkbox_default": false,
+    "independent_of_global_effects": true,
+    "classic_themes_animation_disabled": true,
+    "preview_matches_explicit_animation_selection": true,
+    "static_frame_only_preview_visible": true
+  },
+  "checks": [
+    {"name": "game scripts", "passed": true, "themes": 10, "negative_cases": 10, "artwork_fixtures": 0, "evidence": "artifacts/terminal-lag-audit/script-tests/report.json"},
+    {"name": "Ink Jade background", "passed": true, "default_static": true, "explicit_gif_native_frames": 200, "evidence": "artifacts/terminal-lag-audit/ink-jade-tests/report.json"},
+    {"name": "native chrome", "passed": true, "themes": 13, "cases": 15, "bulk_cases": 3, "evidence": "artifacts/terminal-lag-audit/chrome-tests/report.json"},
+    {"name": "Terminal UI arguments", "passed": true, "cases": 4, "external_process_started": false, "live_settings_changed": false, "evidence": "artifacts/terminal-lag-audit/ui-validation/report.json"},
+    {"name": "settings studio including frame-only static rendering", "passed": true, "cases": 6, "themes": 13, "preview_modes": 5, "live_settings_changed": false, "evidence": "artifacts/terminal-lag-audit/settings-validation/report.json"}
+  ],
+  "packaged": false,
+  "private_terminal_configuration_committed": false
+}

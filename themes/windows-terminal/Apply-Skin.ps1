@@ -4,6 +4,7 @@ param(
     [string]$SettingsPath = (Join-Path $env:LOCALAPPDATA 'Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json'),
     [string]$RestoreFrom = '',
     [switch]$DisableEffects,
+    [switch]$EnableAnimation,
     [switch]$DisableArtwork,
     [switch]$AllProfiles,
     [switch]$ChromeOnly,
@@ -14,8 +15,9 @@ $ErrorActionPreference = 'Stop'
 [Console]::OutputEncoding = New-Object Text.UTF8Encoding($false)
 if (-not $Skin -and -not $RestoreFrom -and -not $RegisterAllChrome) { throw 'Select -Skin <slug>, -RegisterAllChrome, or -RestoreFrom <backup.json>.' }
 if ($Skin -and $RestoreFrom) { throw '-Skin and -RestoreFrom cannot be combined.' }
-if ($RegisterAllChrome -and ($Skin -or $RestoreFrom -or $ChromeOnly -or $DisableEffects -or $DisableArtwork -or $AllProfiles)) { throw '-RegisterAllChrome only registers native presets and preserves the selected theme; do not combine it with other appearance options.' }
-if ($ChromeOnly -and ($RestoreFrom -or $DisableEffects -or $DisableArtwork -or $AllProfiles)) { throw '-ChromeOnly changes native theme colors only; do not combine it with restore or profile options.' }
+if ($EnableAnimation -and ($DisableEffects -or $RestoreFrom)) { throw '-EnableAnimation cannot be combined with -DisableEffects or -RestoreFrom.' }
+if ($RegisterAllChrome -and ($Skin -or $RestoreFrom -or $ChromeOnly -or $DisableEffects -or $EnableAnimation -or $DisableArtwork -or $AllProfiles)) { throw '-RegisterAllChrome only registers native presets and preserves the selected theme; do not combine it with other appearance options.' }
+if ($ChromeOnly -and ($RestoreFrom -or $DisableEffects -or $EnableAnimation -or $DisableArtwork -or $AllProfiles)) { throw '-ChromeOnly changes native theme colors only; do not combine it with restore or profile options.' }
 if ($Skin -in @('ink-jade','midnight','cinnabar') -and -not $ChromeOnly) { throw 'Classic themes support native chrome via -ChromeOnly; illustrated game backgrounds are separate presets.' }
 if (-not (Test-Path -LiteralPath $SettingsPath -PathType Leaf)) { throw 'Windows Terminal settings.json was not found.' }
 if (-not ('OmniVibeJsonc' -as [type])) { Add-Type -Path (Join-Path $PSScriptRoot 'Jsonc.cs') }
@@ -30,6 +32,7 @@ $settingsFullPath = (Resolve-Path -LiteralPath $SettingsPath).Path
 $original = [IO.File]::ReadAllText($settingsFullPath)
 $settings = Read-Settings $original
 $utf8 = New-Object Text.UTF8Encoding($false)
+$animated = [bool]$EnableAnimation
 if ($RestoreFrom) {
     $restorePath = (Resolve-Path -LiteralPath $RestoreFrom).Path
     $restoreBytes = [IO.File]::ReadAllBytes($restorePath)
@@ -60,7 +63,9 @@ if ($RestoreFrom) {
     $shaderBytes = 0
     $refinedRoot = Join-Path $PSScriptRoot 'assets/refined-v1'
     $suffix = if ($DisableArtwork) { 'frame-only-v1' } else { 'c-v1' }
-    $extension = if ($DisableEffects) { '.png' } else { '.gif' }
+    # Animation repeatedly decodes and repaints every open Terminal background.
+    # Keep the complete illustrated frame by default, with motion explicitly opt-in.
+    $extension = if ($animated) { '.gif' } else { '.png' }
     $sourceBackground = Join-Path $refinedRoot ($Skin + '-' + $suffix + $extension)
     $backgroundEnabled = -not ($DisableArtwork -and $DisableEffects)
     if ($backgroundEnabled -and -not (Test-Path -LiteralPath $sourceBackground -PathType Leaf)) { throw "Refined C-layout background is missing: $sourceBackground" }
@@ -70,8 +75,8 @@ if ($RestoreFrom) {
         $image = [Drawing.Image]::FromFile($sourceBackground)
         try {
             if ($image.Width -ne 1280 -or $image.Height -ne 754) { throw 'Unexpected refined background dimensions.' }
-            $animationFrames = if ($DisableEffects) { 1 } else { $image.GetFrameCount([Drawing.Imaging.FrameDimension]::Time) }
-            if (-not $DisableEffects -and $animationFrames -ne 96) { throw 'Refined background animation is incomplete.' }
+            $animationFrames = if ($animated) { $image.GetFrameCount([Drawing.Imaging.FrameDimension]::Time) } else { 1 }
+            if ($animated -and $animationFrames -ne 96) { throw 'Refined background animation is incomplete.' }
         } finally { $image.Dispose() }
     }
     if (-not ('OmniVibeFrameLayout' -as [type])) { Add-Type -Path (Join-Path $PSScriptRoot 'FrameLayout.cs') }
@@ -149,10 +154,10 @@ try {
 } finally { if ([IO.File]::Exists($temporary)) { [IO.File]::Delete($temporary) } }
 [pscustomobject]@{
     Skin = $Skin; Restored = [bool]$RestoreFrom; SettingsPath = $settingsFullPath
-    BackupPath = $backup; EffectsEnabled = $(if ($ChromeOnly -or $RegisterAllChrome) {$null} else {-not $RestoreFrom -and -not $DisableEffects})
+    BackupPath = $backup; EffectsEnabled = $(if ($ChromeOnly -or $RegisterAllChrome) {$null} else {-not $RestoreFrom -and $animated})
     ArtworkEnabled = $(if ($ChromeOnly -or $RegisterAllChrome) {$null} else {-not $RestoreFrom -and -not $DisableArtwork})
     ShaderCompiledBytes = $shaderBytes; AllProfiles = [bool]$AllProfiles
-    RenderingMode = $(if ($RestoreFrom) {'restored'} elseif ($RegisterAllChrome) {'native-chrome-register-all'} elseif ($ChromeOnly) {'native-chrome-only'} elseif (-not $backgroundEnabled) {'plain'} elseif ($DisableEffects) {'background-png'} else {'background-gif'})
+    RenderingMode = $(if ($RestoreFrom) {'restored'} elseif ($RegisterAllChrome) {'native-chrome-register-all'} elseif ($ChromeOnly) {'native-chrome-only'} elseif (-not $backgroundEnabled) {'plain'} elseif ($animated) {'background-gif'} else {'background-png'})
     NativeChromeApplied = (-not $RestoreFrom); ChromeOnly = [bool]$ChromeOnly
     RegisteredThemeCount = $(if ($RegisterAllChrome) {$selected.Count} else {0})
     FrameLayout = $(if ($ChromeOnly -or $RegisterAllChrome) {'unchanged'} else {'C'}); AnimationFrames = $animationFrames; Padding = $safePadding

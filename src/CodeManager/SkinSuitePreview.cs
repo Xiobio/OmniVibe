@@ -157,7 +157,9 @@ public sealed class SkinSuitePreview : FrameworkElement
         dc.PushClip(new RectangleGeometry(r, 8, 8));
         dc.DrawRectangle(B(_skin.Background), null, r);
         var body = new Rect(r.X, r.Y + 27, r.Width, r.Height - 27);
-        if (_terminal != null && (_decorations || _effects)) dc.DrawImage(_terminal, body);
+        // The selected static asset already represents the artwork/frame-only choice.
+        // Motion being off must not hide the frame-only PNG that the applier installs.
+        if (_terminal != null) dc.DrawImage(_terminal, body);
         dc.DrawRectangle(B(_skin.Surface), null, new Rect(r.X, r.Y, r.Width, 27));
         Text(dc, "●  OmniVibe / 示例 Terminal", r.X + 12, r.Y + 6, 11, _skin.Text, r.Width - 70);
         Text(dc, "−  □  ×", r.Right - 57, r.Y + 6, 11, _skin.Muted, 55);

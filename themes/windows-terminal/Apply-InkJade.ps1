@@ -3,6 +3,7 @@
     [string]$RestoreFrom = '',
     [ValidateSet('Minimal', 'Ornate')][string]$Style = 'Minimal',
     [switch]$DisableEffects,
+    [switch]$EnableAnimation,
     [switch]$BackgroundOnly,
     [switch]$ChromeOnly,
     [string]$AssetRoot = ''
@@ -10,7 +11,9 @@
 $ErrorActionPreference = 'Stop'
 [Console]::OutputEncoding = New-Object Text.UTF8Encoding($false)
 if ($BackgroundOnly -and ($Style -ne 'Ornate' -or $RestoreFrom)) { throw '-BackgroundOnly requires -Style Ornate and cannot be used with -RestoreFrom.' }
-if ($ChromeOnly -and ($BackgroundOnly -or $RestoreFrom -or $DisableEffects)) { throw '-ChromeOnly cannot be combined with background, effect or restore options.' }
+if ($EnableAnimation -and ($DisableEffects -or $RestoreFrom -or $Style -ne 'Ornate')) { throw '-EnableAnimation requires -Style Ornate and cannot be combined with -DisableEffects or -RestoreFrom.' }
+if ($ChromeOnly -and ($BackgroundOnly -or $RestoreFrom -or $DisableEffects -or $EnableAnimation)) { throw '-ChromeOnly cannot be combined with background, effect or restore options.' }
+$animated = [bool]$EnableAnimation
 if (-not ('OmniVibeJsonc' -as [type])) { Add-Type -Path (Join-Path $PSScriptRoot 'Jsonc.cs') }
 . (Join-Path $PSScriptRoot 'TerminalChrome.ps1')
 if (-not $AssetRoot) { $AssetRoot = Join-Path $env:LOCALAPPDATA $(if ($Style -eq 'Ornate') { 'OmniVibe/TerminalTheme/InkJadeOrnate' } else { 'OmniVibe/TerminalTheme/InkJade' }) }
@@ -69,14 +72,14 @@ if ($ChromeOnly) {
 [IO.Directory]::CreateDirectory($AssetRoot) | Out-Null
 $animationFrames = 1
 if ($Style -eq 'Ornate') {
-    $assetName = if ($DisableEffects) { 'ink-jade-ornate-v2.png' } else { 'ink-jade-background-v5.gif' }
+    $assetName = if ($animated) { 'ink-jade-background-v5.gif' } else { 'ink-jade-ornate-v2.png' }
     $source = Join-Path $PSScriptRoot ('assets/' + $assetName)
     if (-not (Test-Path -LiteralPath $source -PathType Leaf)) { throw "Background asset is missing: $source" }
     Add-Type -AssemblyName System.Drawing
     $image = [Drawing.Image]::FromFile($source)
     try {
         if ($image.Width -lt 1024 -or $image.Height -lt 512) { throw 'Background asset resolution is too small.' }
-        if (-not $DisableEffects) {
+        if ($animated) {
             $animationFrames = $image.GetFrameCount([Drawing.Imaging.FrameDimension]::Time)
             if ($animationFrames -lt 2) { throw 'Animated background has no animation frames.' }
         }
@@ -201,7 +204,7 @@ $backup = Write-Settings ($utf8.GetBytes($updated))
 [pscustomobject]@{
     Theme = $settings.theme; Style = $Style; SettingsPath = $SettingsPath; BackupPath = $backup
     BackgroundPath = $backgroundPath; BackgroundOnly = [bool]$BackgroundOnly
-    RenderingMode = $(if ($Style -eq 'Ornate' -and -not $DisableEffects) { 'background-gif' } else { 'background-png' })
-    EffectsEnabled = ($Style -eq 'Ornate' -and -not $DisableEffects)
+    RenderingMode = $(if ($Style -eq 'Ornate' -and $animated) { 'background-gif' } else { 'background-png' })
+    EffectsEnabled = ($Style -eq 'Ornate' -and $animated)
     AnimationFrames = $animationFrames; ShaderEnabled = $false; ShaderCompiledBytes = 0
 } | ConvertTo-Json -Compress

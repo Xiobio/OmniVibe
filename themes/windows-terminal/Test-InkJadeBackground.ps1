@@ -48,7 +48,11 @@ $encoding = New-Object Text.UTF8Encoding($true)
 $originalBytes = [IO.File]::ReadAllBytes($settingsPath)
 if (-not ('OmniVibeJsonc' -as [type])) { Add-Type -Path (Join-Path $PSScriptRoot 'Jsonc.cs') }
 $before = [OmniVibeJsonc]::Normalize($original) | ConvertFrom-Json
-$result = Apply @('-Style','Ornate','-BackgroundOnly')
+$defaultStatic = Apply @('-Style','Ornate','-BackgroundOnly')
+Assert ($defaultStatic.RenderingMode -eq 'background-png' -and $defaultStatic.AnimationFrames -eq 1 -and -not $defaultStatic.EffectsEnabled) 'Default Ornate application must keep the original static illustration.'
+Assert ($defaultStatic.BackgroundPath -match '\.png$') 'Default Ornate application enabled a GIF.'
+$null = Apply @('-RestoreFrom',$defaultStatic.BackupPath)
+$result = Apply @('-Style','Ornate','-BackgroundOnly','-EnableAnimation')
 $after = [IO.File]::ReadAllText($settingsPath) | ConvertFrom-Json
 Assert ($result.RenderingMode -eq 'background-gif' -and $result.AnimationFrames -eq 200 -and -not $result.ShaderEnabled) 'Expected a 200-frame background GIF with no post-text shader.'
 Assert ($after.profiles.defaults.backgroundImage -match 'ink-jade-background-v5\.gif$') 'Default background was not migrated.'
@@ -69,14 +73,14 @@ foreach ($name in @('defaultProfile','actions','schemes','themes','theme')) {
 Assert (($before.profiles.list[1] | ConvertTo-Json -Compress -Depth 20) -ceq ($after.profiles.list[1] | ConvertTo-Json -Compress -Depth 20)) 'Unrelated profile styling changed.'
 $firstBackup = $result.BackupPath
 Assert ([Convert]::ToBase64String([IO.File]::ReadAllBytes($firstBackup)) -ceq [Convert]::ToBase64String($originalBytes)) 'Backup was not byte-exact.'
-$null = Apply @('-Style','Ornate','-BackgroundOnly')
+$null = Apply @('-Style','Ornate','-BackgroundOnly','-EnableAnimation')
 $still = [IO.File]::ReadAllText($settingsPath) | ConvertFrom-Json
 Assert ($still.profiles.defaults.backgroundImage -eq $result.BackgroundPath) 'Repeated application changed the installed asset.'
 $static = Apply @('-Style','Ornate','-BackgroundOnly','-DisableEffects')
 Assert (-not $static.EffectsEnabled -and $static.RenderingMode -eq 'background-png') 'Disabled animation did not use the original PNG.'
 $null = Apply @('-RestoreFrom',$firstBackup)
 Assert ([Convert]::ToBase64String([IO.File]::ReadAllBytes($settingsPath)) -ceq [Convert]::ToBase64String($originalBytes)) 'Restore did not preserve original bytes, comments and BOM.'
-$full = Apply @('-Style','Ornate')
+$full = Apply @('-Style','Ornate','-EnableAnimation')
 $fullSettings = [IO.File]::ReadAllText($settingsPath) | ConvertFrom-Json
 Assert ($null -eq $fullSettings.profiles.defaults.'experimental.pixelShaderPath' -and $fullSettings.profiles.defaults.backgroundImage -match '\.gif$') 'Normal Ornate apply still used the old shader.'
 
@@ -106,7 +110,7 @@ $report = [ordered]@{
     nativeCenterStatic=$true; nativeEdgeAnimation=$true; defaultShaderRemoved=$true
     explicitAndUnfocusedOverridesMigrated=$true; profileCommandsAndSettingsPreserved=$true
     unrelatedProfilePreserved=$true; fontPaddingAndAppearancePreserved=$true
-    repeatApplyPassed=$true; staticPngFallbackPassed=$true; originalPngPreserved=$true
+    repeatApplyPassed=$true; staticByDefault=$true; explicitAnimationVerified=$true; staticPngFallbackPassed=$true; originalPngPreserved=$true
     backupRestoreByteExactIncludingBom=$true; invalidModeRejectedWithoutSettingsChange=$true
 }
 $json = $report | ConvertTo-Json -Depth 5

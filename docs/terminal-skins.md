@@ -19,7 +19,7 @@
 
 ## 应用与切换
 
-OmniVibe 设置 → 皮肤与侧栏可预览十套主题，保存应用原生界面；点击“应用配套 Terminal 外观”可单独切换终端，结果会显示备份路径。设置中的动画与装饰开关也用于本次 Terminal 应用；随后更改开关时，需再次点击该按钮更新终端。
+OmniVibe 设置 → 皮肤与侧栏可预览十套主题，保存应用原生界面；点击“应用配套 Terminal 外观”可单独切换终端，结果会显示备份路径。Terminal 默认使用同款静态插画与外框；背景动画需要单独勾选“Terminal 背景动画”，不随 OmniVibe 的界面动画自动启用。装饰选项独立控制插画，更新终端需再次点击应用按钮。
 
 从项目根目录执行，必须明确指定一套皮肤。以下命令会修改本机 Windows Terminal 的外观配置，同时自动备份原配置：
 
@@ -35,15 +35,21 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\themes\windows-terminal\Ap
 powershell -NoProfile -ExecutionPolicy Bypass -File .\themes\windows-terminal\Apply-Skin.ps1 -Skin wonderland -AllProfiles
 ```
 
-关闭动画，保留插画与静态 C 边框：
+默认保留插画与静态 C 边框，旧的 `-DisableEffects` 参数仍兼容：
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\themes\windows-terminal\Apply-Skin.ps1 -Skin tactical -DisableEffects
 ```
 
-细化版使用 Windows Terminal 的背景 Image 播放 GIF，静态回退为 PNG；不再启用覆盖文字的 `experimental.pixelShaderPath`。边饰位于文字后面的背景层，不改变系统标题栏、窗口边框、拖动区域或关闭按钮。
+需要背景动画时，显式启用：
 
-`-DisableArtwork` 可独立关闭插画，保留背景边饰动画；同时传入 `-DisableEffects -DisableArtwork`，只保留配色和阅读留白。字体、字号和光标沿用原设置。
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\themes\windows-terminal\Apply-Skin.ps1 -Skin tactical -EnableAnimation
+```
+
+动画版使用 Windows Terminal 的背景 Image 播放 GIF；默认静态版使用同款 PNG，不加载覆盖文字的 `experimental.pixelShaderPath`。边饰位于文字后面的背景层，不改变系统标题栏、窗口边框、拖动区域或关闭按钮。多窗口动画会增加持续解码和绘制开销，实测与修复见[终端性能记录](terminal-performance/README.md)。
+
+`-DisableArtwork` 可独立关闭插画，保留静态边饰；同时加 `-EnableAnimation` 才会播放边饰动画。传入 `-DisableEffects -DisableArtwork` 只保留配色和阅读留白。`-EnableAnimation` 与 `-DisableEffects` 互斥。字体、字号和光标沿用原设置。
 
 ## 备份和恢复
 

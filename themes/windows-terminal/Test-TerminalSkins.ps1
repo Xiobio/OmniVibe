@@ -73,14 +73,22 @@ foreach ($entry in $testedEntries) {
     Assert (Test-Path -LiteralPath $actual.profiles.defaults.backgroundImage) 'Installed illustration is missing.'
     Assert ($actual.profiles.defaults.backgroundImage.StartsWith($assets,[StringComparison]::OrdinalIgnoreCase)) 'Illustration references repository or cache.'
     Assert ($null -eq $actual.profiles.defaults.'experimental.pixelShaderPath') 'A post-text shader was enabled.'
-    Assert ($result.RenderingMode -ceq 'background-gif' -and $result.AnimationFrames -eq 96) 'C background animation was not applied.'
+    Assert ($result.RenderingMode -ceq 'background-png' -and $result.AnimationFrames -eq 1 -and -not $result.EffectsEnabled) 'Default application must use the full static C artwork.'
+    Assert ($actual.profiles.defaults.backgroundImage -match '\.png$') 'Default application unexpectedly enabled a GIF.'
     Assert ($actual.profiles.defaults.backgroundImageOpacity -eq 1 -and $actual.profiles.defaults.backgroundImageStretchMode -ceq 'fill') 'Precomposited C layout was not preserved.'
+    $animated = Invoke-Apply @('-Skin',$entry.slug,'-EnableAnimation')
+    $animatedSettings = Read-Json ([IO.File]::ReadAllText($settingsPath))
+    Assert ($animated.RenderingMode -ceq 'background-gif' -and $animated.AnimationFrames -eq 96 -and $animated.EffectsEnabled) 'Explicit animation did not select the complete GIF.'
+    Assert ($animatedSettings.profiles.defaults.backgroundImage -match '\.gif$') 'Explicit animation background is missing.'
     $null = Invoke-Apply @('-Skin',$entry.slug,'-DisableEffects')
     $static = Read-Json ([IO.File]::ReadAllText($settingsPath))
     Assert ($static.profiles.defaults.backgroundImage -match '\.png$') 'Animation-off did not select the static C asset.'
     $null = Invoke-Apply @('-Skin',$entry.slug,'-DisableArtwork')
     $frameOnly = Read-Json ([IO.File]::ReadAllText($settingsPath))
-    Assert ($frameOnly.profiles.defaults.backgroundImage -match 'frame-only.*\.gif$') 'Artwork-off removed the independently enabled border animation.'
+    Assert ($frameOnly.profiles.defaults.backgroundImage -match 'frame-only.*\.png$') 'Artwork-off unexpectedly enabled border animation.'
+    $null = Invoke-Apply @('-Skin',$entry.slug,'-DisableArtwork','-EnableAnimation')
+    $frameAnimated = Read-Json ([IO.File]::ReadAllText($settingsPath))
+    Assert ($frameAnimated.profiles.defaults.backgroundImage -match 'frame-only.*\.gif$') 'Explicit artwork-off border animation was not applied.'
     $null = Invoke-Apply @('-Skin',$entry.slug,'-DisableEffects','-DisableArtwork','-AllProfiles')
     $disabled = Read-Json ([IO.File]::ReadAllText($settingsPath))
     Assert ($null -eq $disabled.profiles.defaults.'experimental.pixelShaderPath') 'Effects were not disabled.'
@@ -93,9 +101,15 @@ foreach ($entry in $testedEntries) {
     Assert (@($disabled.schemes | Where-Object { $_.name -eq $entry.scheme.name }).Count -eq 1) 'Duplicate scheme created.'
     $null = Invoke-Apply @('-RestoreFrom',$result.BackupPath)
     Assert ([IO.File]::ReadAllText($settingsPath) -ceq $fixture) 'Restore did not preserve original JSONC.'
-    $reports += @{slug=$entry.slug; applied=$true; jsoncAccepted=$true; commandsAndShortcutsPreserved=$true; originalFontPreserved=$true; allProfilesVerified=$true; effectsDisableVerified=$true; artworkOffAnimationPreserved=$true; backgroundGifFrames=$result.AnimationFrames; frameLayout='C'; postTextShaderEnabled=$false; backupRestoreByteExact=$true; testIllustrationFixture=($fixtureImages -contains $entry.slug)}
+    $reports += @{slug=$entry.slug; applied=$true; jsoncAccepted=$true; commandsAndShortcutsPreserved=$true; originalFontPreserved=$true; allProfilesVerified=$true; effectsDisableVerified=$true; staticByDefault=$true; explicitAnimationVerified=$true; artworkOffAnimationPreserved=$true; backgroundGifFrames=$animated.AnimationFrames; frameLayout='C'; postTextShaderEnabled=$false; backupRestoreByteExact=$true; testIllustrationFixture=($fixtureImages -contains $entry.slug)}
 }
 $negativeCases = 0
+foreach ($flags in @(@('-Skin','hextech','-EnableAnimation','-DisableEffects'), @('-Skin','hextech','-ChromeOnly','-EnableAnimation'))) {
+    $snapshot = [IO.File]::ReadAllBytes($settingsPath)
+    Assert ((Invoke-Rejected $flags) -ne 0) 'Conflicting animation options were accepted.'
+    Assert ([Convert]::ToBase64String([IO.File]::ReadAllBytes($settingsPath)) -ceq [Convert]::ToBase64String($snapshot)) 'Conflicting animation options modified settings.'
+    $negativeCases++
+}
 foreach ($bad in @('{"profiles": /* unterminated','{"profiles": [}', '[1,2,3]', '{"profiles": [],}', '{"profiles":{"defaults":[]}}', '{"x":[1,,]}', '{"x":[,]}')) {
     [IO.File]::WriteAllText($settingsPath,$bad,$utf8)
     $rejected = Invoke-Rejected @('-Skin','hextech')

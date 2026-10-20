@@ -2,6 +2,8 @@
 
 新增十套完整游戏风格配套外观，见[十套皮肤说明](../../docs/terminal-skins.md)。通过 `Apply-Skin.ps1 -Skin <标识>` 明确选择；原有墨玉与插画版保持可用。
 
+**默认使用精修静态 PNG，保留完整插画与外框。** 背景动画仅在显式传入 `-EnableAnimation` 时启用；设置界面也有独立且默认关闭的 Terminal 背景动画选项，不随 OmniVibe 的界面动画自动开启。多窗口 GIF 背景会持续解码与重绘，性能排查及实测见[终端性能修复记录](../../docs/terminal-performance/README.md)。
+
 十套插画均已替换为完整环境画作，右侧主体与顶部、左侧和底部场景相连；[查看正式背景总览](../../docs/terminal-scene-gallery/index.html)及[独立源图与实际生成提示词](../../docs/terminal-scene-gallery/README.md)。插画关闭时仍使用独立边框，原生界面的原插画保留。
 
 ## 原生顶部栏与外框衔接
@@ -40,13 +42,13 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\themes\windows-terminal\Ap
 
 脚本先备份现有 Windows Terminal 配置，再添加 `OmniVibe Ink Jade` 配色和窗口主题，并应用到默认外观。已有的终端配置、启动命令和快捷键保留。单独配置过外观的 profile 可能覆盖默认值。当前通过脚本单独应用，尚未与 OmniVibe 的皮肤选择自动联动。
 
-## 插画与动态边饰版
+## 插画与可选动态边饰版
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\themes\windows-terminal\Apply-InkJade.ps1 -Style Ornate
 ```
 
-这一版包含云雷纹青铜外框、玉石角饰、松鹤与山水楼阁插画。2026-10-19 起使用 **背景 GIF 动画**：金色与玉青色流光沿原插画外框行进；去掉额外的内层双线框及机关角纹，避免亮线与文字争夺注意力。终端文字层不再加载像素着色器。
+这一版包含云雷纹青铜外框、玉石角饰、松鹤与山水楼阁插画。默认显示静态插画与外框；需要沿外框移动的金色、玉青色流光时，在命令末尾追加 `-EnableAnimation`。终端文字层不再加载像素着色器，也不会在阅读区增加内框。
 
 Windows Terminal 的 padding 位于文字渲染面板之外；旧着色器运行在文字面板之内，因此增大 padding 不能让细框自动避开文字。这次把装饰动画放回背景 Image 层，保留文字、光标、选区和鼠标交互的原始布局。边饰不改变系统标题栏按钮与窗口拖动区域。
 
@@ -58,7 +60,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\themes\windows-terminal\Ap
 
 脚本也迁移仍显式引用旧墨玉图片或旧着色器的 profile / `unfocusedAppearance`；其他 profile 的独立背景和自定义着色器保留。每次应用前备份原始配置字节，并通过临时文件原子替换；恢复会保留原始注释、换行和 UTF-8 BOM。
 
-关闭动画并使用原始 PNG 插画：
+默认已使用原始 PNG 插画。以下旧命令仍兼容，可明确关闭动画：
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\themes\windows-terminal\Apply-InkJade.ps1 -Style Ornate -DisableEffects
@@ -69,6 +71,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\themes\windows-terminal\Ap
 插画由内置 image_gen 生成，正式资源为 [ink-jade-ornate-v2.png](assets/ink-jade-ornate-v2.png)，[完整生成提示词](assets/ink-jade-ornate-v2.prompt.md)随项目保存。
 
 动画为 [ink-jade-background-v5.gif](assets/ink-jade-background-v5.gif)：1586 × 992，200 帧、每帧 60 ms、12 秒无限循环。原插画不被覆盖；两束带尾迹的流光只沿现有外框移动，不再添加内框或内角花纹。中央插画在所有解码帧中保持静止。GIF 使用统一调色板，避免逐帧重新量化导致背景闪动。关闭动画时直接使用原 PNG。
+
+显式启用动画的例子：`Apply-InkJade.ps1 -Style Ornate -BackgroundOnly -EnableAnimation`。`-EnableAnimation` 与 `-DisableEffects` 不能同时使用。
 
 复现构建及隔离验证：
 
