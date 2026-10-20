@@ -328,8 +328,20 @@ public sealed class DockWeaponWheel : FrameworkElement
                 Text(dc, current.State == AgentState.Ready ? "✓" : "!", 40, 43, 11, current.StateColor, 14, true);
             }
         }
-        else Text(dc, "+", 0, 0, 25, skin.Accent, 40);
+        else DrawEmptyCore(dc, d);
         dc.Pop();
+    }
+    private void DrawEmptyCore(DrawingContext dc, double deployment)
+    {
+        var skin = SkinCatalog.Current;
+        // A theme representative is an idle entrance, not an occupied task.
+        // Reuse the equipment renderer; an empty collection starts no animation.
+        EquipmentCatalog.Draw(dc, _slots[0], new Rect(-48, -52, 96, 86), .78);
+        dc.DrawRoundedRectangle(B(skin.Background), new Pen(B(skin.Border), .7), new Rect(30, 16, 18, 18), 5, 5);
+        var plus = new Pen(B(skin.Accent), 1.2) { StartLineCap = PenLineCap.Round, EndLineCap = PenLineCap.Round };
+        dc.DrawLine(plus, new Point(35, 25), new Point(43, 25));
+        dc.DrawLine(plus, new Point(39, 21), new Point(39, 29));
+        Text(dc, deployment > .9 ? "点击空槽添加" : "拖入窗口", 0, 44, 10, skin.Text, 108);
     }
     private void DrawEmptyTarget(DrawingContext dc, Slot slot, bool selected, double f)
     {
