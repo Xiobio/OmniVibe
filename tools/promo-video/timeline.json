@@ -1,0 +1,102 @@
+{
+  "fps": 30,
+  "duration": 60.0,
+  "bpm": 100,
+  "scenes": {
+    "chaos": [
+      0.0,
+      6.0
+    ],
+    "alttab": [
+      6.0,
+      9.0
+    ],
+    "brand": [
+      9.0,
+      13.2
+    ],
+    "capture": [
+      13.2,
+      21.0
+    ],
+    "switch": [
+      21.0,
+      30.0
+    ],
+    "overview": [
+      30.0,
+      37.2
+    ],
+    "arrange": [
+      37.2,
+      43.2
+    ],
+    "themes": [
+      43.2,
+      52.8
+    ],
+    "cta": [
+      52.8,
+      60.0
+    ]
+  },
+  "events": {
+    "windowPops": [
+      0.25,
+      0.55,
+      0.85,
+      1.15,
+      1.45,
+      1.75,
+      2.05,
+      2.35,
+      2.65
+    ],
+    "waitingChip": 3.6,
+    "altTab": [
+      6.3,
+      6.6,
+      6.9,
+      7.2,
+      7.5,
+      7.8,
+      8.1,
+      8.4
+    ],
+    "brandImpact": 9.0,
+    "captures": [
+      14.4,
+      15.6,
+      16.8,
+      17.7,
+      18.6,
+      19.5
+    ],
+    "dockMotionStart": 21.0,
+    "hover2": 23.0,
+    "hover3": 23.8,
+    "switchConfirm": 24.6,
+    "radialStart": 27.0,
+    "radialSelect": [
+      28.0
+    ],
+    "tabKey": 30.3,
+    "waitingFocus": 32.4,
+    "arrangeKey": 37.8,
+    "arrangeGrid": 38.1,
+    "restoreKey": 41.4,
+    "restoreGrid": 41.6,
+    "themeCuts": [
+      43.2,
+      44.4,
+      45.6,
+      46.8,
+      48.0,
+      49.2,
+      50.4,
+      51.6
+    ],
+    "ctaImpact": 52.8,
+    "radialRelease": 29.2
+  }
+}

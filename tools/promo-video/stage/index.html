@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: "NotoSansSC"; src: local("Noto Sans SC"), url("file:///C:/Windows/Fonts/NotoSansSC-VF.ttf"); }
+  @font-face { font-family: "NotoSerifSC"; src: local("Noto Serif SC"), url("file:///C:/Windows/Fonts/NotoSerifSC-VF.ttf"); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0b0a09; }
+  body { font-family: "Segoe UI Variable Display", "Segoe UI", "NotoSansSC", sans-serif; color: #EDE3CB; -webkit-font-smoothing: antialiased; }
+  body.zh { font-family: "Segoe UI Variable Display", "NotoSansSC", sans-serif; }
+  .abs { position: absolute; }
+  .scene { position: absolute; inset: 0; opacity: 0; }
+  #bg { position: absolute; inset: 0; background: radial-gradient(1200px 800px at 50% 45%, #1d1a14 0%, #0d0c0a 60%, #070706 100%); }
+  #dust, #grain, #vignette { position: absolute; inset: 0; pointer-events: none; }
+  #vignette { background: radial-gradient(1400px 900px at 50% 50%, transparent 55%, rgba(0,0,0,.55) 100%); }
+  #grain { background-image: url("assets/grain.png"); opacity: .055; mix-blend-mode: overlay; }
+  .dot { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #E9C981; box-shadow: 0 0 10px 2px rgba(233,201,129,.6); }
+
+  /* Headlines */
+  .h1 { font-size: 76px; font-weight: 700; letter-spacing: -.01em; line-height: 1.08; color: #F3EAD3; text-shadow: 0 6px 40px rgba(0,0,0,.6); }
+  .h2 { font-size: 34px; font-weight: 400; color: #C9BC9D; line-height: 1.35; }
+  .gold { color: #E3C27E; }
+  body.zh .h1 { font-family: "NotoSansSC", sans-serif; font-weight: 800; letter-spacing: .02em; }
+  body.zh .h2 { font-family: "NotoSansSC", sans-serif; font-weight: 400; }
+  body.zh .serif { font-family: "NotoSerifSC", serif; }
+
+  /* Terminal mock */
+  .term { position: absolute; width: 720px; height: 420px; background: #0d0d0e; border: 1px solid #3a3833; border-radius: 10px; overflow: hidden;
+          box-shadow: 0 30px 80px rgba(0,0,0,.55), 0 2px 0 rgba(255,255,255,.04) inset; transform-origin: 50% 50%; }
+  .term .bar { height: 38px; background: #1c1b19; display: flex; align-items: flex-end; padding-left: 10px; border-bottom: 1px solid #2c2a26; }
+  .term .tab { height: 30px; padding: 0 16px 0 12px; background: #0d0d0e; border-radius: 8px 8px 0 0; display: flex; align-items: center; gap: 9px; font: 14px "Segoe UI", "NotoSansSC"; color: #d8d2c4; max-width: 420px; white-space: nowrap; }
+  .term .tab i { width: 14px; height: 14px; border-radius: 3px; background: linear-gradient(135deg, #4a4a4a, #222); border: 1px solid #555; flex: none; }
+  .term .ctl { position: absolute; right: 14px; top: 10px; display: flex; gap: 22px; color: #8d877b; font: 14px "Segoe UI"; }
+  .term .body { padding: 14px 18px; font: 15px/1.5 "Cascadia Mono", "Consolas", "NotoSansSC", monospace; color: #cfc9bb; white-space: pre; }
+  .c-dim { color: #7d776b; } .c-g { color: #8fd18a; } .c-o { color: #e9a35f; } .c-b { color: #8ab8f0; } .c-y { color: #f0cf7a; } .c-r { color: #f08a7a; } .c-w { color: #f4efe3; }
+  .warn { position: absolute; left: 18px; right: 18px; bottom: 16px; border: 1px solid #e3b25b; background: rgba(227,178,91,.12); border-radius: 6px; padding: 8px 12px; font: 15px "Cascadia Mono", "NotoSansSC"; color: #f3d28f; }
+
+  /* Keycaps */
+  .keys { position: absolute; display: flex; align-items: center; gap: 14px; }
+  .key { min-width: 74px; height: 74px; padding: 0 22px; border-radius: 14px; display: flex; align-items: center; justify-content: center;
+         font: 600 30px "Segoe UI Variable Display", "Segoe UI"; color: #F4ECD8; background: linear-gradient(#3a352b, #24211b);
+         border: 1px solid #6b5d3e; box-shadow: 0 7px 0 #14120f, 0 14px 30px rgba(0,0,0,.5), 0 1px 0 rgba(255,255,255,.12) inset; }
+  .key.down { transform: translateY(5px); box-shadow: 0 2px 0 #14120f, 0 6px 16px rgba(0,0,0,.5), 0 1px 0 rgba(255,255,255,.12) inset; background: linear-gradient(#4a4232, #2c281f); border-color: #E3C27E; }
+  .plus { font: 300 34px "Segoe UI"; color: #b8a982; }
+  .keylabel { font: 26px "Segoe UI", "NotoSansSC"; color: #b9ad8f; margin-right: 6px; }
+
+  .cursor { position: absolute; width: 34px; height: 44px; left: 0; top: 0; z-index: 50; filter: drop-shadow(0 4px 6px rgba(0,0,0,.6)); }
+  .pill { position: absolute; padding: 14px 30px; border-radius: 40px; background: rgba(20,18,14,.82); border: 1px solid #5b4f36; font-size: 34px; font-weight: 600; color: #F3EAD3; backdrop-filter: blur(6px); white-space: nowrap; }
+  body.zh .pill { font-family: "NotoSansSC"; }
+  .chip { display: inline-flex; align-items: center; gap: 10px; padding: 10px 20px; border-radius: 30px; font-size: 24px; font-weight: 600; background: rgba(20,18,14,.85); border: 1px solid #4e4532; margin-right: 14px; }
+  body.zh .chip { font-family: "NotoSansSC"; }
+  .ring { position: absolute; border-radius: 50%; border: 3px solid #E9C981; }
+  img { display: block; }
+  .themed span { color: inherit !important; }
+</style>
+</head>
+<body>
+<div id="bg"></div>
+<div id="dust"></div>
+<div id="root"></div>
+<div id="vignette"></div>
+<div id="grain"></div>
+<script src="config.js"></script>
+<script src="promo.js"></script>
+</body>
+</html>
