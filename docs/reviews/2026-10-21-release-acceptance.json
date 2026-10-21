@@ -1,0 +1,60 @@
+{
+  "source_commit": "b1cb0a3c3a7b43c54f352838faf060983d18f76a",
+  "remote_ci": "https://github.com/Xiobio/OmniVibe/actions/runs/39537810821",
+  "program_checks": {
+    "passed": 105,
+    "entries": 105,
+    "note": "Includes overlapping skin coverage in self-test and standalone suite."
+  },
+  "script_tests": 7,
+  "terminal_theme_count": 13,
+  "terminal_negative_cases": 10,
+  "terminal_restore_exact": true,
+  "chrome_theme_count": 13,
+  "chrome_bulk_cases": 3,
+  "archive": {
+    "commit": "b1cb0a3c3a7b43c54f352838faf060983d18f76a",
+    "zip_sha256": "79fd4866b264bf6df258c8638d33deebf363655275c8a5382a2ff835fbb8b70c",
+    "file_count": 518,
+    "zip_bytes": 196600547,
+    "all_hashes_match": true
+  },
+  "privacy": {
+    "text_files_scanned": 384,
+    "credential_pattern_paths": [],
+    "public_image_count": 43,
+    "scope": "Common credential signatures; visual review covers public entry pages only, not every historical image."
+  },
+  "links": {
+    "files": [
+      "README.md",
+      "README.en.md",
+      "docs/project-kit/showcase.md",
+      "docs/project-kit/showcase.en.md",
+      "docs/project-kit/INSTALL.md"
+    ],
+    "missing": []
+  },
+  "manual_ui": {
+    "right_click_menu": "passed",
+    "escape_dismissal": "passed",
+    "settings_click": "not verified"
+  },
+  "clean_windows": "not tested; Windows Sandbox unavailable",
+  "asset_clearance": "not passed; third-party redistribution basis unresolved",
+  "public_release_approved": false,
+  "extracted_package_tests": {
+    "reliability": {
+      "count": 6,
+      "passed": 6
+    },
+    "localization": {
+      "count": 4,
+      "passed": 4
+    },
+    "task-status": {
+      "count": 23,
+      "passed": 23
+    }
+  }
+}
