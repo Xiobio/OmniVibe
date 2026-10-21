@@ -105,9 +105,8 @@ public sealed partial class Manager : IDisposable
         _tray.MouseClick += (_, e) =>
         {
             if (e.Button == Forms.MouseButtons.Left)
-                Dock.Dispatcher.Invoke(() => { _dockHiddenByUser = false; EnsureDockVisible(); Expand(); });
+                Dock.Dispatcher.Invoke(ToggleVisibility);
         };
-        _tray.DoubleClick += (_, _) => Dock.Dispatcher.Invoke(() => { _dockHiddenByUser = false; EnsureDockVisible(); Expand(); });
         if (State.AutoHide) Collapse();
         Microsoft.Win32.SystemEvents.DisplaySettingsChanged += DisplayChanged;
         RestorePopup(restoreFocus: false);

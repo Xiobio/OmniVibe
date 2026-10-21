@@ -12,6 +12,7 @@ internal sealed class TaskTrayIcon : Forms.NativeWindow, IDisposable
     private const int Callback = 0x8001;
     private static readonly uint TaskbarCreated = RegisterWindowMessage("TaskbarCreated");
     private bool _visible, _added, _disposed;
+    private bool _suppressLeftRelease;
     private Icon? _icon;
     private string _text = "";
     internal Forms.ContextMenuStrip? ContextMenuStrip { get; set; }
@@ -47,8 +48,12 @@ internal sealed class TaskTrayIcon : Forms.NativeWindow, IDisposable
         if ((uint)message.Msg==TaskbarCreated) { _added=false; UpdateIcon(); }
         else if (message.Msg==Callback) {
             switch ((int)message.LParam) {
-                case 0x202: MouseClick?.Invoke(this,new Forms.MouseEventArgs(Forms.MouseButtons.Left,1,0,0,0)); break;
-                case 0x203: DoubleClick?.Invoke(this,EventArgs.Empty); break;
+                case 0x202:
+                    if (_suppressLeftRelease) { _suppressLeftRelease=false; break; }
+                    MouseClick?.Invoke(this,new Forms.MouseEventArgs(Forms.MouseButtons.Left,1,0,0,0)); break;
+                // The first release already performed the action. Treat a double
+                // click as one activation rather than toggling back on release.
+                case 0x203: _suppressLeftRelease=true; DoubleClick?.Invoke(this,EventArgs.Empty); break;
                 case 0x205:
                     if (ContextMenuStrip != null) {
                         SetForegroundWindow(Handle); ContextMenuStrip.Show(Forms.Cursor.Position);
