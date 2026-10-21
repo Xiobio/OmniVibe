@@ -102,4 +102,17 @@ The global `Tab` shortcut can interfere with terminal completion. Change or disa
 
 **This tool is still a work in progress, and we'd love to build it with you.** Help fix an interaction, test multiple monitors and display scaling, improve CLI status integration, or contribute translations, documentation, and theme assets with clear rights. You don't need to write code: reproducible bug reports and feedback from your daily workflow are valuable too.
 
+## Support development
+
+<details>
+<summary>☕ Buy the author a coffee (Alipay)</summary>
+
+If OmniVibe makes your parallel tasks easier to manage, you can support continued development and maintenance. **Any amount is welcome. Support is entirely optional and does not unlock or restrict any features.**
+
+<a href="docs/support.md"><img src="assets/support/alipay.png" width="280" alt="Alipay QR code for supporting OmniVibe"></a>
+
+[Open the support page and full-size image](docs/support.md). Bug reports, sharing the project, and contributions are also appreciated.
+
+</details>
+
 Original code, scripts, and documentation use the **[MIT License](LICENSE)**. Third-party artwork, characters, trademarks, and audio have separate rights; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). OmniVibe is not officially affiliated with the referenced games or their publishers.

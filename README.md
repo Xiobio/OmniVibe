@@ -99,4 +99,17 @@ powershell -ExecutionPolicy Bypass -File .\run.ps1
 
 [贡献指南](CONTRIBUTING.md) · [更新记录](CHANGELOG.md) · [安全说明](SECURITY.md)
 
+## 支持开发
+
+<details>
+<summary>☕ 请作者喝杯咖啡（支付宝）</summary>
+
+如果 OmniVibe 帮你更轻松地管理并行任务，欢迎支持后续开发与维护。**金额随意，完全自愿，不影响任何功能的使用。**
+
+<a href="docs/support.md"><img src="assets/support/alipay.png" width="280" alt="支持 OmniVibe 的支付宝收款二维码"></a>
+
+[打开支持页面与原图](docs/support.md)。反馈问题、分享项目与参与贡献，同样是很好的支持。
+
+</details>
+
 自有代码、脚本和文档使用 **[MIT License](LICENSE)**。第三方图像、角色、商标与音频的权利另行说明，参见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。本项目与相关游戏厂商无官方合作关系。
