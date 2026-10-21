@@ -2,6 +2,8 @@
 
 ## 准备与启动
 
+直接使用可下载 [Windows x64 开发预览版](https://github.com/Xiobio/OmniVibe/releases/tag/v0.1.1-preview)，完整解压后运行 `CodeManager.exe`。发布包只需要 .NET 10 Windows Desktop Runtime x64，无需 SDK 或 Python；详见[安装说明](INSTALL.md)。
+
 需要 Windows 和 .NET 10 SDK，版本基线见 [global.json](../../global.json)。Python 用于部分开发验证与资源工具，日常运行应用不需要执行这些工具。
 
 ```powershell
@@ -10,7 +12,7 @@ cd OmniVibe
 powershell -ExecutionPolicy Bypass -File .\run.ps1
 ```
 
-克隆需要拥有仓库访问权限。启动脚本编译 Debug 版；已有实例会被请求正常退出。使用自行构建的框架依赖发布包时，需要匹配的 .NET 10 Windows Desktop Runtime；运行 `CodeManager.exe` 并保留随包资源目录。
+从源码启动时，脚本编译 Debug 版；已有实例会被请求正常退出。使用框架依赖发布包时，需要匹配的 .NET 10 Windows Desktop Runtime；运行 `CodeManager.exe` 并保留随包资源目录。
 
 ## 第一个任务
 
