@@ -9,7 +9,8 @@ param(
     [switch]$AllProfiles,
     [switch]$ChromeOnly,
     [switch]$RegisterAllChrome,
-    [string]$AssetRoot = (Join-Path $env:LOCALAPPDATA 'OmniVibe/TerminalTheme')
+    [string]$AssetRoot = (Join-Path $env:LOCALAPPDATA 'OmniVibe/TerminalTheme'),
+    [string]$ClaudeThemePath = ''
 )
 $ErrorActionPreference = 'Stop'
 [Console]::OutputEncoding = New-Object Text.UTF8Encoding($false)
@@ -136,6 +137,28 @@ if ($RestoreFrom) {
     }
     $updated = $settings | ConvertTo-Json -Depth 100
     $null = Read-Settings $updated
+    if ($ClaudeThemePath -and -not $ChromeOnly -and -not $RegisterAllChrome) {
+        # Terminal paints every explicit cell background opaquely over the artwork,
+        # so Claude Code's neutral gray message band is retinted from the skin.
+        function Get-Rgb([string]$Hex) { return @([Convert]::ToInt32($Hex.Substring(1,2),16), [Convert]::ToInt32($Hex.Substring(3,2),16), [Convert]::ToInt32($Hex.Substring(5,2),16)) }
+        function Get-Mix([string]$Base, [string]$Tint, [double]$Amount) {
+            $a = Get-Rgb $Base; $b = Get-Rgb $Tint
+            return '#' + ((0..2 | ForEach-Object { '{0:X2}' -f [int][Math]::Round($a[$_] + ($b[$_] - $a[$_]) * $Amount) }) -join '')
+        }
+        $scheme = $entry.scheme; $rgb = Get-Rgb $scheme.background
+        $claudeTheme = [ordered]@{
+            name = 'OmniVibe'
+            base = $(if ((0.2126 * $rgb[0] + 0.7152 * $rgb[1] + 0.0722 * $rgb[2]) / 255 -lt 0.5) { 'dark' } else { 'light' })
+            overrides = [ordered]@{
+                userMessageBackground = Get-Mix $scheme.background $scheme.cursorColor 0.12
+                userMessageBackgroundHover = Get-Mix $scheme.background $scheme.cursorColor 0.18
+                bashMessageBackgroundColor = Get-Mix $scheme.background $scheme.foreground 0.10
+                memoryBackgroundColor = Get-Mix $scheme.background $scheme.cursorColor 0.12
+                selectionBg = $scheme.selectionBackground
+            }
+        }
+        $claudeThemeText = $claudeTheme | ConvertTo-Json -Depth 5
+    }
 }
 # Validate every dependency before creating a backup or touching settings. A
 # byte-for-byte backup preserves original comments and formatting for restore.
@@ -151,6 +174,23 @@ try {
     if ([IO.File]::ReadAllText($settingsFullPath) -cne $original) { throw 'Terminal settings changed during this operation; nothing was overwritten.' }
     [IO.File]::Replace($temporary, $settingsFullPath, [NullString]::Value)
 } finally { if ([IO.File]::Exists($temporary)) { [IO.File]::Delete($temporary) } }
+$claudeThemeWritten = ''
+if ($claudeThemeText) {
+    # Only this theme file is written; Claude Code uses it once selected in /theme.
+    # Terminal settings are already committed above, so this optional companion
+    # file is best-effort: a failure must not report the whole apply as failed.
+    $claudeTemporary = ''
+    try {
+        $claudeThemeFull = [IO.Path]::GetFullPath($ClaudeThemePath)
+        [IO.Directory]::CreateDirectory([IO.Path]::GetDirectoryName($claudeThemeFull)) | Out-Null
+        $claudeTemporary = $claudeThemeFull + '.' + [guid]::NewGuid().ToString('N') + '.tmp'
+        [IO.File]::WriteAllText($claudeTemporary, $claudeThemeText, $utf8)
+        if ([IO.File]::Exists($claudeThemeFull)) { [IO.File]::Replace($claudeTemporary, $claudeThemeFull, [NullString]::Value) } else { [IO.File]::Move($claudeTemporary, $claudeThemeFull) }
+        $claudeThemeWritten = $claudeThemeFull
+    } catch {
+        $claudeThemeWritten = ''
+    } finally { if ($claudeTemporary -and [IO.File]::Exists($claudeTemporary)) { try { [IO.File]::Delete($claudeTemporary) } catch { } } }
+}
 [pscustomobject]@{
     Skin = $Skin; Restored = [bool]$RestoreFrom; SettingsPath = $settingsFullPath
     BackupPath = $backup; EffectsEnabled = $(if ($ChromeOnly -or $RegisterAllChrome) {$null} else {-not $RestoreFrom -and $animated})
@@ -160,4 +200,5 @@ try {
     NativeChromeApplied = (-not $RestoreFrom); ChromeOnly = [bool]$ChromeOnly
     RegisteredThemeCount = $(if ($RegisterAllChrome) {$selected.Count} else {0})
     FrameLayout = $(if ($ChromeOnly -or $RegisterAllChrome) {'unchanged'} else {'C'}); AnimationFrames = $animationFrames; Padding = $safePadding
+    ClaudeThemePath = $claudeThemeWritten
 } | ConvertTo-Json -Compress

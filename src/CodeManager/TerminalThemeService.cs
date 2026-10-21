@@ -36,7 +36,13 @@ public static class TerminalThemeService
         candidates.AddRange(new[] { "Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json", "Microsoft/Windows Terminal/settings.json", "Packages/Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe/LocalState/settings.json" }.Select(p => Path.Combine(local,p)));
         return candidates.FirstOrDefault(File.Exists);
     }
-    public static async Task<TerminalThemeReceipt> ApplyAsync(Preferences preferences, string? settingsPath = null, string? assetRoot = null)
+    // The matching Claude Code theme is offered only where Claude Code is installed.
+    internal static string? ClaudeThemePath()
+    {
+        string root = Environment.GetEnvironmentVariable("CLAUDE_CONFIG_DIR") is { Length: > 0 } configured ? configured : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".claude");
+        return Directory.Exists(root) ? Path.Combine(root, "themes", "omnivibe.json") : null;
+    }
+    public static async Task<TerminalThemeReceipt> ApplyAsync(Preferences preferences, string? settingsPath = null, string? assetRoot = null, string? claudeThemePath = null)
     {
         settingsPath ??= FindSettings();
         if (settingsPath == null) return new(false,"",L.T("未找到 Windows Terminal 配置，已仅保存 OmniVibe 外观。"));
@@ -45,6 +51,7 @@ public static class TerminalThemeService
         var start = new ProcessStartInfo("powershell.exe") { UseShellExecute = false, CreateNoWindow = true, RedirectStandardOutput = true, RedirectStandardError = true, StandardOutputEncoding = Encoding.UTF8, StandardErrorEncoding = Encoding.UTF8 };
         foreach (string arg in new[] { "-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass", "-File", script, "-SettingsPath", Path.GetFullPath(settingsPath) }) start.ArgumentList.Add(arg);
         if (assetRoot != null) { start.ArgumentList.Add("-AssetRoot"); start.ArgumentList.Add(Path.GetFullPath(assetRoot)); }
+        if (claudeThemePath != null) { start.ArgumentList.Add("-ClaudeThemePath"); start.ArgumentList.Add(Path.GetFullPath(claudeThemePath)); }
         foreach (string arg in Arguments(preferences.Skin,preferences.TerminalAnimation,preferences.DecorationsEnabled)) start.ArgumentList.Add(arg);
         using var process = Process.Start(start) ?? throw new IOException(L.T("无法启动 Terminal 外观应用器。"));
         var output = process.StandardOutput.ReadToEndAsync(); var error = process.StandardError.ReadToEndAsync();

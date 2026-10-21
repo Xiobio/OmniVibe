@@ -1,3 +1,5 @@
+# Extra agent arguments must never bind positionally to -ResumeSessionId.
+[CmdletBinding(PositionalBinding = $false)]
 param(
     [Parameter(Mandatory = $true)][string]$TaskId,
     [Parameter(Mandatory = $true)][ValidateSet('claude', 'codex')][string]$Provider,

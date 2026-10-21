@@ -912,7 +912,7 @@ public sealed partial class Manager : IDisposable
         {
             var settings = new SettingsWindow(State.Preferences, WorkArea, warnings, State.AutoHide, State.MinimizeOnCapture, page, ShortcutsPaused);
             settings.ShortcutAvailabilityCheck = p => InputService.RegistrationConflict(p, State.Preferences);
-            settings.ApplyThemeAsync = p => TerminalThemeService.ApplyAsync(p);
+            settings.ApplyThemeAsync = p => TerminalThemeService.ApplyAsync(p, claudeThemePath: TerminalThemeService.ClaudeThemePath());
             IReadOnlyDictionary<string, EquipmentAssignment>? equipmentDraft = null;
             settings.LoadoutRequested += () => {
                 var draft = LoadoutWindow.CreateDraft(State.Slots, equipmentDraft);

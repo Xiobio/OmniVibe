@@ -504,3 +504,21 @@ Codex 首次提示 hooks 待审核时，输入 /hooks 查看并信任 CodeManage
 保存后重启 OmniVibe 生效；终端任务不受影响。	Save and restart OmniVibe to apply. Terminal tasks are unaffected.
 跟随系统 / System	System default
 简体中文	简体中文
+另有 	Plus 
+ 项	 more
+点击打开任务总览	Click to open the task overview
+会话已连接，等待提交任务	Session connected, waiting for a prompt
+AI 正在执行	AI is working
+需要你的确认或输入	Needs your approval or input
+需要你的输入	Needs your input
+本轮回复已结束，请查看结果	Response finished; review the result
+本轮执行发生错误，请查看终端	This turn failed; check the terminal
+本轮已中断	This turn was interrupted
+CLI 会话已结束	CLI session ended
+终端正在执行（标题或进度信号）	Terminal is busy (title or progress signal)
+终端发出通知，请查看结果或确认请求	Terminal sent a notification; review the result or request
+忙碌标记已结束，完成状态待确认	Busy signal ended; completion not confirmed
+手动标记	Set manually
+外部事件	External event
+配置含有无效字段，已修复并保留原文件：	Settings contained invalid fields; repaired, original kept at: 
+配置读取失败，原文件已备份：	Settings could not be read; original backed up to: 

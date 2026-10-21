@@ -22,6 +22,47 @@ internal static class Program
         process.Refresh();double cpu=process.TotalProcessorTime.TotalMilliseconds;var watch=Stopwatch.StartNew();Pump(seconds*1000);process.Refresh();
         return new{name,seconds=watch.Elapsed.TotalSeconds,one_core_percent=100*(process.TotalProcessorTime.TotalMilliseconds-cpu)/watch.Elapsed.TotalMilliseconds,private_bytes=process.PrivateMemorySize64,handles=process.HandleCount};
     }
+    // Real interactive Claude turn through the shipped launcher, hooks, inbox and
+    // tray balloon. The session stays open after Stop, as in normal use.
+    private static int ClaudeChain(string output,List<Window> windows,ref Manager? manager)
+    {
+        var store=new StateStore(Path.Combine(output,"fixture-"+Guid.NewGuid().ToString("N")));var state=new AppState();
+        state.MinimizeOnCapture=false;state.Preferences.SoundEffects=false;state.Preferences.SoundNotifications=false;state.Preferences.SystemNotifications=true;state.Preferences.Animate=false;state.Preferences.TabTogglesInventory=false;state.Preferences.HasSeenIntroduction=true;store.Save(state);
+        manager=new Manager(store,interactionTest:true);manager.TogglePause();
+        var source=typeof(Manager).Assembly.GetType("CodeManager.SessionStatusSource",true)!;
+        typeof(Manager).GetField("_sessionStatus",Private)!.SetValue(manager,Activator.CreateInstance(source,BindingFlags.Instance|BindingFlags.Public|BindingFlags.NonPublic,null,new object[]{Path.Combine(store.Root,"codex"),Path.Combine(store.Root,"claude")},null)!);
+        var w=new Window{Title="OmniVibe Claude chain fixture",Width=160,Height=100,Left=-9000,Top=-9000,ShowActivated=false,ShowInTaskbar=false};w.Show();windows.Add(w);
+        using(var self=Process.GetCurrentProcess())manager.Bind(manager.State.Slots[0],new WindowIdentity{Handle=new WindowInteropHelper(w).Handle.ToInt64(),ProcessId=Environment.ProcessId,ProcessStartedUtcTicks=self.StartTime.ToUniversalTime().Ticks,ProcessName="fixture",Title=w.Title});
+        var slot=manager.State.Slots[0];manager.Save();
+        var tray=typeof(Manager).GetField("_tray",Private)!.GetValue(manager)!;var balloons=new List<double>();var clock=Stopwatch.StartNew();
+        tray.GetType().GetEvent("BalloonTipShown",Private)!.GetAddMethod(true)!.Invoke(tray,new object[]{new EventHandler((_,_)=>balloons.Add(clock.Elapsed.TotalSeconds))});
+        string work=Path.Combine(output,"work");Directory.CreateDirectory(work);
+        // conhost keeps the test session out of the user's Windows Terminal window.
+        var start=new ProcessStartInfo("conhost.exe"){UseShellExecute=true,WindowStyle=ProcessWindowStyle.Minimized,WorkingDirectory=work};
+        // conhost forwards its raw command line; the transcript keeps launcher errors local.
+        string Quote(string a)=>"'"+a.Replace("'","''")+"'";
+        string launch="Start-Transcript -Path "+Quote(Path.Combine(output,"launcher.private.log"))+" | Out-Null; & "+Quote(Path.Combine(AppContext.BaseDirectory,"scripts","Start-TrackedSession.ps1"))+" -TaskId "+slot.Id+" -Provider claude -DataRoot "+Quote(store.Root)+" -ProjectDirectory "+Quote(work)+" -ResumeSessionId '' "+Quote("Reply with exactly OMNIVIBE_CLAUDE_CHAIN_OK. Do not use any tools.");
+        start.Arguments="powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \""+launch+"\"";
+        var timeline=new List<object>();AgentState last=slot.State;bool flushed=false;double? readyAt=null;
+        using var agent=Process.Start(start)!;
+        try {
+            while(clock.Elapsed.TotalSeconds<180 && !(flushed && balloons.Count>0)) {
+                Pump(100);
+                if(slot.State!=last){last=slot.State;if(last==AgentState.Ready)readyAt??=clock.Elapsed.TotalSeconds;timeline.Add(new{seconds=clock.Elapsed.TotalSeconds,state=last.ToString(),source=slot.StateSource});}
+                var notes=typeof(Manager).GetField("_notifications",Private)!.GetValue(manager)!;
+                flushed=slot.State==AgentState.Ready && slot.Unread && !(bool)notes.GetType().GetProperty("HasPending",Private)!.GetValue(notes)!;
+            }
+            if(flushed)Pump(1500);
+        } finally {
+            // conhost may hand the console to a new host process; stop the session by its task id instead.
+            var stop=new ProcessStartInfo("powershell.exe"){UseShellExecute=false,CreateNoWindow=true};
+            foreach(var a in new[]{"-NoProfile","-Command","Get-CimInstance Win32_Process | Where-Object { $_.Name -eq 'powershell.exe' -and $_.CommandLine -like '*"+slot.Id+"*' } | ForEach-Object { taskkill.exe /T /F /PID $_.ProcessId | Out-Null }"})stop.ArgumentList.Add(a);
+            using(var stopper=Process.Start(stop)!)stopper.WaitForExit(20000);
+        }
+        var report=new{passed=flushed && balloons.Count>0,provider="claude",claude_interactive=true,launcher="scripts/Start-TrackedSession.ps1",states=timeline,ready_after_seconds=readyAt,session_id_bound=slot.SessionId!="",integration_connected=slot.IntegrationConnected,unread=slot.Unread,notice_flushed=flushed,balloon_shown_events=balloons,sound_notifications=false,shortcuts_paused=true,fixture_window=true,global_claude_configuration_changed=false,assembly_sha256=Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(typeof(Manager).Assembly.Location)))};
+        File.WriteAllText(Path.Combine(output,"claude-chain.json"),JsonSerializer.Serialize(report,new JsonSerializerOptions{WriteIndented=true}));Console.WriteLine(JsonSerializer.Serialize(report));
+        return report.passed?0:1;
+    }
     [STAThread] private static int Main(string[] args)
     {
         string output=Path.GetFullPath(args[0]);Directory.CreateDirectory(output);int seconds=args.Length>1 && int.TryParse(args[1],out int duration)?duration:300;
@@ -56,6 +97,7 @@ internal static class Program
                 Require(status.State==AgentState.Ready,"Actual Codex completion did not parse as Ready");
                 File.WriteAllText(Path.Combine(output,"real-transcript.json"),JsonSerializer.Serialize(new{passed=true,provider="codex",state=status.State.ToString(),actual_persisted_transcript=true,transcript_modified=false}));return 0;
             }
+            if(args.Length>1 && args[1]=="--claude-chain") return ClaudeChain(output,windows,ref manager);
             var store=new StateStore(Path.Combine(output,"fixture-"+Guid.NewGuid().ToString("N")));var state=new AppState();
             state.MinimizeOnCapture=false;state.Preferences.SoundEffects=false;state.Preferences.SoundNotifications=false;state.Preferences.SystemNotifications=false;state.Preferences.Animate=false;state.Preferences.TabTogglesInventory=false;state.Preferences.HasSeenIntroduction=true;store.Save(state);
             manager=new Manager(store,interactionTest:true);manager.TogglePause();

@@ -37,10 +37,10 @@ public sealed partial class Manager
         bool completion=TaskNotifications.PlayCompletion(notices,p.SoundNotifications,ShortcutsPaused);
         if (completion) GameAudio.PlayCompletion(p.Skin,true,p.SoundVolume);
         if (!p.SystemNotifications) return;
-        string title = notices.Length == 1 ? "OmniVibe · " + TaskNotifications.Caption(notices[0].State) : "OmniVibe · " + notices.Length + " 项待处理";
+        string title = notices.Length == 1 ? "OmniVibe · " + TaskNotifications.Caption(notices[0].State) : "OmniVibe · " + notices.Length + L.T(" 项待处理");
         string body = string.Join("\n", notices.Take(3).Select(n => n.Number + " · " + TaskNotifications.SafeName(n.Name) + " — " + TaskNotifications.Caption(n.State)));
-        if (notices.Length > 3) body += "\n另有 " + (notices.Length-3) + " 项";
-        body += "\n点击打开任务总览";
+        if (notices.Length > 3) body += "\n" + L.T("另有 ") + (notices.Length-3) + L.T(" 项");
+        body += "\n" + L.T("点击打开任务总览");
         try { _tray.ShowBalloonTip(6000, title, body, notices.Any(n => n.State==AgentState.Error) ? Forms.ToolTipIcon.Warning : Forms.ToolTipIcon.Info, silent:completion || notices.All(n=>n.State==AgentState.Ready)); }
         catch (InvalidOperationException e) { Store.Log("System notification: " + e.Message); }
         catch (System.ComponentModel.Win32Exception e) { Store.Log("System notification: " + e.Message); }

@@ -56,6 +56,6 @@ internal sealed class TaskNotifications
         return result;
     }
     internal void Clear() { _pending.Clear(); _seen.Clear(); _flushAt = null; }
-    internal static string Caption(AgentState state) => state switch { AgentState.Ready=>"回复待查看", AgentState.Waiting=>"等待确认", AgentState.Error=>"发生错误", _=>"执行中" };
+    internal static string Caption(AgentState state) => L.T(state switch { AgentState.Ready=>"回复待查看", AgentState.Waiting=>"等待确认", AgentState.Error=>"发生错误", _=>"执行中" });
     internal static string SafeName(string name) => new string(name.Where(c => !char.IsControl(c)).Take(48).ToArray());
 }

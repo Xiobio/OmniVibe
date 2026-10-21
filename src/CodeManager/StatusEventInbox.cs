@@ -40,7 +40,7 @@ internal sealed class StatusEventInbox
                 if (status == null || string.IsNullOrWhiteSpace(status.TaskId) || !Enum.IsDefined(status.State) || status.At > DateTimeOffset.UtcNow.AddMinutes(1))
                 { stream.Dispose(); Reject(path); continue; }
                 status.Message ??= ""; status.Provider ??= ""; status.SessionId ??= ""; status.ProjectDirectory ??= "";
-                status.SuggestedName ??= ""; status.EventName ??= "";
+                status.SuggestedName ??= ""; status.EventName ??= ""; status.TranscriptPath ??= "";
                 pending.Add(new(path, status));
             }
             catch (JsonException) { Reject(path); }

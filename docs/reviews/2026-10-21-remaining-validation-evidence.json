@@ -1,0 +1,194 @@
+{
+  "baseline_commit": "ee989085427ddcabac157aecfa7ebf3ca188b41b",
+  "date": "2026-10-21",
+  "claude_completion_chain": {
+    "passed": true,
+    "provider": "claude",
+    "claude_interactive": true,
+    "launcher": "scripts/Start-TrackedSession.ps1",
+    "states": [
+      {
+        "seconds": 2.5450368,
+        "state": "Running",
+        "source": "Claude Code hooks"
+      },
+      {
+        "seconds": 6.4965564,
+        "state": "Ready",
+        "source": "Claude Code hooks"
+      }
+    ],
+    "ready_after_seconds": 6.496556,
+    "session_id_bound": true,
+    "integration_connected": true,
+    "unread": true,
+    "notice_flushed": true,
+    "balloon_shown_events": [
+      7.3940176
+    ],
+    "sound_notifications": false,
+    "shortcuts_paused": true,
+    "fixture_window": true,
+    "global_claude_configuration_changed": false,
+    "assembly_sha256": "6E3CF4EB0E0118F0A0BFFC4A18FC0FBA9625148B362BD9B6C68FB9C687B9A4ED"
+  },
+  "claude_print_rerun": {
+    "mode": "print_pipes_like_original",
+    "exit_code": 0,
+    "marker_seen": true,
+    "seconds": 5.25,
+    "events": [
+      [
+        "SessionStart",
+        "Unknown"
+      ],
+      [
+        "UserPromptSubmit",
+        "Running"
+      ],
+      [
+        "Stop",
+        "Ready"
+      ],
+      [
+        "SessionEnd",
+        "Unknown"
+      ]
+    ]
+  },
+  "claude_message_band": {
+    "cause": "Windows Terminal paints explicit SGR backgrounds opaquely over backgroundImage; Claude Code dark theme userMessageBackground is neutral gray",
+    "terminal_probe": "neutral, scheme-background and tinted rows all opaque; default-background row transparent",
+    "generated": [
+      {
+        "skin": "ink-jade",
+        "base": "dark",
+        "userMessageBackground": "#26281F"
+      },
+      {
+        "skin": "midnight",
+        "base": "dark",
+        "userMessageBackground": "#262A31"
+      },
+      {
+        "skin": "cinnabar",
+        "base": "dark",
+        "userMessageBackground": "#372722"
+      },
+      {
+        "skin": "hextech",
+        "base": "dark",
+        "userMessageBackground": "#242E30"
+      },
+      {
+        "skin": "tactical",
+        "base": "dark",
+        "userMessageBackground": "#282B1F"
+      },
+      {
+        "skin": "protocol",
+        "base": "dark",
+        "userMessageBackground": "#312A32"
+      },
+      {
+        "skin": "adventure",
+        "base": "dark",
+        "userMessageBackground": "#392E24"
+      },
+      {
+        "skin": "arsenal",
+        "base": "dark",
+        "userMessageBackground": "#312925"
+      },
+      {
+        "skin": "relic",
+        "base": "dark",
+        "userMessageBackground": "#312E24"
+      },
+      {
+        "skin": "starlight",
+        "base": "dark",
+        "userMessageBackground": "#2B3743"
+      },
+      {
+        "skin": "formation",
+        "base": "dark",
+        "userMessageBackground": "#36303F"
+      },
+      {
+        "skin": "astral",
+        "base": "dark",
+        "userMessageBackground": "#303F4E"
+      },
+      {
+        "skin": "wonderland",
+        "base": "light",
+        "userMessageBackground": "#E1E5DB"
+      }
+    ],
+    "claude_theme_selection_changed": false
+  },
+  "regression": {
+    "full_desktop_checks": 105,
+    "passed": 105,
+    "terminal_skin_script_tests": "passed",
+    "terminal_chrome_script_tests": "passed",
+    "theme_tests": "6/6"
+  },
+  "day_run": {
+    "status": "running",
+    "observer_pid": 51564,
+    "started": "2026-10-21T12:34:05+08:00",
+    "hours": 26,
+    "interval_seconds": 300,
+    "read_only": true,
+    "observed_build": "src/CodeManager/bin/Debug (user's running instance)"
+  },
+  "sleep_states": {
+    "available": [
+      "S3"
+    ],
+    "unavailable": [
+      "S1",
+      "S2",
+      "hibernate",
+      "S0 low power idle",
+      "hybrid sleep",
+      "fast startup"
+    ]
+  },
+  "mixed_dpi": {
+    "status": "pending_user_display_change"
+  },
+  "fresh_windows": {
+    "status": "pending_windows_sandbox_enable",
+    "prepared": "artifacts/release-remaining-2026-10-21/fresh-windows/OmniVibe-Fresh.wsb"
+  },
+  "asset_distribution": {
+    "status": "failed_no_basis",
+    "unreferenced_packaged_official_images": 17,
+    "direct_official_images": {
+      "valorant_agents": 9,
+      "naraka_weapons": 9
+    },
+    "official_reference_ai_processed": {
+      "naraka_characters": 9
+    },
+    "ip_style_interpretations_packs": [
+      "hextech",
+      "starlight",
+      "astral",
+      "adventure",
+      "relic"
+    ],
+    "policies_checked": [
+      "https://www.riotgames.com/en/legal",
+      "https://ys.mihoyo.com/main/m/news/detail/15738",
+      "https://pvp.qq.com/hdy/p1/index.html",
+      "https://www.yjwujian.cn/news/official/20210608/33961_952419.html",
+      "https://my.163.com/news/latest/20260723/21142_1308869.html",
+      "https://www.dfoneople.com/policy/termsofservice"
+    ],
+    "legal_opinion": false
+  }
+}

@@ -17,6 +17,8 @@
   <ItemGroup><Content Include="../../scripts/*.ps1" Link="scripts/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" /></ItemGroup>
   <ItemGroup><Content Include="../../skins/**/*" Link="skins/%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" /></ItemGroup>
   <ItemGroup><Content Include="../../themes/windows-terminal/**/*" Link="themes/windows-terminal/%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" /></ItemGroup>
+  <!-- Legacy official covers, wordmarks and cover cutouts are unreferenced; never ship them. -->
+  <ItemGroup><Content Remove="../../skins/identities/*.jpg;../../skins/identities/*-mark-v2.png;../../skins/identities/relic-cutout-v2.*;../../skins/identities/adventure.png;../../skins/identities/formation.png;../../skins/identities/protocol.png;../../skins/identities/starlight.png;../../skins/identities/wonderland.png" /></ItemGroup>
   <!-- Opt-in distribution filter. Development builds retain all fixtures and source art. -->
   <ItemGroup Condition="'$(RuntimeAssetsOnly)' == 'true'">
     <Content Remove="../../skins/**/terminal-scene-v2.png;../../skins/**/*.prompt.md;../../skins/**/prompt.md;../../skins/**/*validation*.json;../../skins/*test-results.json" />

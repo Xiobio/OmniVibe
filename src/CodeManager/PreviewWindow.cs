@@ -24,7 +24,7 @@ public sealed class PreviewWindow : Window
         header.Children.Add(new TextBlock { Text = slot.DisplayName, FontSize = 14, FontWeight = FontWeights.SemiBold, TextTrimming = TextTrimming.CharacterEllipsis });
         header.Children.Add(new TextBlock { Text = slot.StateLabel + " · " + (slot.StateSource == "" ? L.T("未接入状态事件") : L.T(slot.StateSource)), FontSize = 10, Foreground = WuxiaTheme.Brush(SkinCatalog.Current.Muted), Margin = new Thickness(0, 6, 0, 0) });
         panel.Children.Add(header);
-        var footer = new TextBlock { Text = string.IsNullOrWhiteSpace(slot.Message) ? L.T("最小化时预览可能暂停更新") : slot.Message, TextTrimming = TextTrimming.CharacterEllipsis, ToolTip = slot.Message, FontSize = 9, Foreground = WuxiaTheme.Brush(SkinCatalog.Current.Muted) };
+        var footer = new TextBlock { Text = string.IsNullOrWhiteSpace(slot.Message) ? L.T("最小化时预览可能暂停更新") : L.T(slot.Message), TextTrimming = TextTrimming.CharacterEllipsis, ToolTip = L.T(slot.Message), FontSize = 9, Foreground = WuxiaTheme.Brush(SkinCatalog.Current.Muted) };
         Grid.SetRow(footer, 2); panel.Children.Add(footer); Content = panel;
         SourceInitialized += (_, _) => Native.Decorate(this);
         Closed += (_, _) => { if (_thumbnail != IntPtr.Zero) Native.DwmUnregisterThumbnail(_thumbnail); };

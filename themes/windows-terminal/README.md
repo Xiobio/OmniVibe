@@ -6,6 +6,12 @@
 
 十套插画均已替换为完整环境画作，右侧主体与顶部、左侧和底部场景相连；[查看正式背景总览](../../docs/terminal-scene-gallery/index.html)及[独立源图与实际生成提示词](../../docs/terminal-scene-gallery/README.md)。插画关闭时仍使用独立边框，原生界面的原插画保留。
 
+## Claude Code 消息底色
+
+Terminal 会把程序指定的单元格背景色不透明地画在插画之上。Claude Code 默认深色主题给用户消息加中性灰底（约 `#373737`），在插画背景上会显示成一整块灰色条，这不是粘贴内容的问题，手动输入的消息也一样。
+
+设置中应用主题时，若本机存在 Claude Code 配置目录（`CLAUDE_CONFIG_DIR` 或 `~/.claude`），会同步写入 `themes/omnivibe.json`：沿用 Claude 内置深色或浅色主题，只把用户消息、`!` 命令、记忆条目的底色和选区改为当前套装的色调。OmniVibe 不修改 Claude 的主题选择或其他设置；在 Claude Code 中执行一次 `/theme` 并选择 **OmniVibe**，之后切换套装会自动跟随。首次创建 `themes` 目录时需重启 Claude Code 一次才会出现在列表中。单独调用应用器时可传 `-ClaudeThemePath <路径>`。
+
 ## 原生顶部栏与外框衔接
 
 完整应用主题时会同时统一 Windows Terminal 的原生顶部配色：当前标签页与正文区同底色，其他标签融入顶部栏，窗口失焦时轻微压暗；系统细边框使用同套主题的低饱和强调色。标题栏、标签页、加号与窗口按钮仍由 Terminal 原生绘制和处理，不添加覆盖窗口、按钮替身或新的动画循环。

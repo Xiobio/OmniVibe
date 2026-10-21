@@ -38,6 +38,11 @@ public sealed class SessionStatusSource
     }
     internal static string String(JsonElement e, string key) => e.ValueKind == JsonValueKind.Object && e.TryGetProperty(key, out var v) && v.ValueKind == JsonValueKind.String ? v.GetString() ?? "" : "";
     private static bool True(JsonElement e, string key) => e.ValueKind == JsonValueKind.Object && e.TryGetProperty(key, out var v) && v.ValueKind == JsonValueKind.True;
+    private static bool LocalCommand(JsonElement e)
+    {
+        string text = e.TryGetProperty("message", out var message) ? String(message, "content").TrimStart() : "";
+        return text.StartsWith("<command-name>", StringComparison.Ordinal) || text.StartsWith("<command-message>", StringComparison.Ordinal) || text.StartsWith("<local-command-", StringComparison.Ordinal);
+    }
     private bool Allowed(string file) => new[] { _codex, _claude }.Any(root => Path.GetFullPath(file).StartsWith(Path.GetFullPath(root).TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase));
     private static IEnumerable<string> ReadPart(string file, bool tail, int limit)
     {
@@ -163,12 +168,16 @@ public sealed class SessionStatusSource
                 if (type == "response_item" && eventName is "function_call_output" or "custom_tool_call_output") state = AgentState.Running;
             } else if (provider == "claude") {
                 if (String(e,"sessionId") is string id && id != "" && id != sessionId) return null;
-                if (type == "user" && !True(e,"isMeta")) state = AgentState.Running;
+                // Local slash commands (/model, /compact…) and their output are
+                // recorded as user entries but start no model turn; a model-backed
+                // command still shows Running from its first tool use below.
+                if (type == "user" && !True(e,"isMeta") && !LocalCommand(e)) state = AgentState.Running;
                 if (type == "system" && String(e,"subtype") == "turn_duration") state = AgentState.Ready;
                 if (type == "assistant" && e.TryGetProperty("message",out var message)) {
                     if (True(e,"isApiErrorMessage")) state = AgentState.Error;
                     else if (String(message,"stop_reason") is "end_turn" or "max_tokens") state = AgentState.Ready;
                     else if (message.TryGetProperty("content",out var blocks) && blocks.ValueKind == JsonValueKind.Array && blocks.EnumerateArray().Any(b => String(b,"type") == "tool_use" && String(b,"name") == "AskUserQuestion")) state = AgentState.Waiting;
+                    else if (String(message,"stop_reason") == "tool_use") state = AgentState.Running;
                 }
             }
             if (state == null) return null;

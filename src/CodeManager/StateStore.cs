@@ -73,14 +73,14 @@ public sealed class StateStore
             }
             result.Slots = result.Slots.OrderBy(s => s.Number).ToList();
             EquipmentCatalog.EnsureDefaults(result.Slots);
-            if (repaired) LoadWarning = "配置含有无效字段，已修复并保留原文件：" + BackupOriginal();
+            if (repaired) LoadWarning = L.T("配置含有无效字段，已修复并保留原文件：") + BackupOriginal();
             return result;
         }
         catch (Exception ex) when (ex is IOException or JsonException or InvalidDataException or ArgumentException)
         {
             // Preserve the original before a fresh state is ever written.
             var backup = BackupOriginal();
-            LoadWarning = "配置读取失败，原文件已备份：" + backup;
+            LoadWarning = L.T("配置读取失败，原文件已备份：") + backup;
             return new();
         }
     }

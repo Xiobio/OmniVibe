@@ -52,6 +52,11 @@ internal static class LocalizationTests
             _ = slot.IntegrationLabel;
             Check(JsonSerializer.Serialize(slot) == before, "Display translated stored user data");
             Check(L.T("设置") != "设置", "English not applied");
+            Check(TaskNotifications.Caption(AgentState.Ready) == "Response unread", "System notification caption stayed Chinese");
+            foreach (string message in new[] { "需要你的输入", "终端正在执行（标题或进度信号）", "终端发出通知，请查看结果或确认请求", "忙碌标记已结束，完成状态待确认", "手动标记", "外部事件" })
+                Check(L.HasTranslation(message), "Untranslated status text: " + message);
+            foreach (string hook in new[] { "SessionStart", "UserPromptSubmit", "PermissionRequest", "Stop", "StopFailure", "Interrupt", "SessionEnd" })
+                Check(L.HasTranslation(HookBridge.Parse("claude", Guid.NewGuid().ToString(), "{\"hook_event_name\":\"" + hook + "\"}")!.Message), "Untranslated hook status: " + hook);
         });
         Test("All themes retain identity and expose English metadata", () =>
         {

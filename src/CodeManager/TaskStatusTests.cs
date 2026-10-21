@@ -46,6 +46,10 @@ public static class TaskStatusTests
             Check(SessionStatusSource.Parse("claude",task,id,Row(new{type="assistant",sessionId=id,timestamp=now,message=new{content=new[]{new{type="tool_use",name="AskUserQuestion"}}}}))?.State==AgentState.Waiting,"Question not waiting");
             Check(SessionStatusSource.Parse("claude",task,id,Row(new{type="user",isSidechain=true,sessionId=id,timestamp=now}))==null,"Subagent leaked");
             Check(SessionStatusSource.Parse("claude",task,id,Row(new{type="user",sessionId="other",timestamp=now}))==null,"Other session leaked");
+            foreach(string local in new[]{"<command-name>/model</command-name>\n<command-message>model</command-message>\n<command-args></command-args>","<local-command-stdout>Set model</local-command-stdout>","<command-message>skill</command-message>\n<command-name>/skill</command-name>"})
+                Check(SessionStatusSource.Parse("claude",task,id,Row(new{type="user",sessionId=id,timestamp=now,message=new{role="user",content=local}}))==null,"Local slash command left the task running");
+            Check(SessionStatusSource.Parse("claude",task,id,Row(new{type="user",sessionId=id,timestamp=now,message=new{role="user",content="修复 <command-name> 解析"}}))?.State==AgentState.Running,"Ordinary prompt mentioning a tag ignored");
+            Check(SessionStatusSource.Parse("claude",task,id,Row(new{type="assistant",sessionId=id,timestamp=now,message=new{stop_reason="tool_use",content=new[]{new{type="tool_use",name="Bash"}}}}))?.State==AgentState.Running,"Model-backed command tool use not running");
         });
         string fixture=Path.Combine(output,"isolated",Guid.NewGuid().ToString("N")),codex=Path.Combine(fixture,"codex","sessions"),claude=Path.Combine(fixture,"claude","projects");
         string directory=Path.Combine(codex,DateTime.UtcNow.ToString("yyyy/MM/dd"));Directory.CreateDirectory(directory);

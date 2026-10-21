@@ -63,7 +63,8 @@ public static class UnifiedThemeTests
             var records=new List<object>();
             foreach (var skin in SkinCatalog.All) {
                 string folder=Path.Combine(output,skin.Slug); Directory.CreateDirectory(folder); string settings=Path.Combine(folder,"settings.json"); File.WriteAllText(settings,fixture);
-                var receipt=TerminalThemeService.ApplyAsync(new Preferences {Skin=skin.Id},settings,Path.Combine(folder,"assets")).GetAwaiter().GetResult();
+                string claudeTheme=Path.Combine(folder,"claude","themes","omnivibe.json");
+                var receipt=TerminalThemeService.ApplyAsync(new Preferences {Skin=skin.Id},settings,Path.Combine(folder,"assets"),claudeTheme).GetAwaiter().GetResult();
                 Check(receipt.Applied && File.ReadAllText(receipt.BackupPath)==fixture,skin.Slug+": backup is not byte exact");
                 using var document=JsonDocument.Parse(File.ReadAllText(settings)); var root=document.RootElement; var profiles=root.GetProperty("profiles"); var defaults=profiles.GetProperty("defaults"); var profile=profiles.GetProperty("list")[0];
                 Check(root.GetProperty("defaultProfile").GetString()=="keep-guid" && profile.GetProperty("commandline").GetString()=="cmd.exe /k echo preserve" && profile.GetProperty("environment").GetProperty("KEEP").GetString()=="value" && defaults.GetProperty("font").GetProperty("face").GetString()=="fixture font",skin.Slug+": task launch/preferences changed");
@@ -71,7 +72,10 @@ public static class UnifiedThemeTests
                 Check(root.GetProperty("theme").GetString()==scheme && defaults.GetProperty("colorScheme").GetString()==scheme && profile.GetProperty("colorScheme").GetString()==scheme && profile.GetProperty("unfocusedAppearance").GetProperty("colorScheme").GetString()==scheme,skin.Slug+": suite stayed split");
                 Check(!profile.TryGetProperty("foreground",out _) && !profile.TryGetProperty("tabColor",out _),skin.Slug+": explicit overrides blocked the skin");
                 string image=defaults.GetProperty("backgroundImage").GetString()!; Check(image.EndsWith(".png") && File.Exists(image) && profile.GetProperty("backgroundImage").GetString()==image,skin.Slug+": static image did not apply");
-                records.Add(new {skin=skin.Slug,applied=true,all_profiles=true,background=image});
+                using var claude=JsonDocument.Parse(File.ReadAllText(claudeTheme)); var overrides=claude.RootElement.GetProperty("overrides");
+                string band=overrides.GetProperty("userMessageBackground").GetString()!;
+                Check(claude.RootElement.GetProperty("name").GetString()=="OmniVibe" && System.Text.RegularExpressions.Regex.IsMatch(band,"^#[0-9A-F]{6}$") && band!="#373737",skin.Slug+": Claude message band was not retinted");
+                records.Add(new {skin=skin.Slug,applied=true,all_profiles=true,background=image,claude_base=claude.RootElement.GetProperty("base").GetString(),claude_user_message=band});
             }
             File.WriteAllText(Path.Combine(output,"actual-applier.json"),JsonSerializer.Serialize(records,StateStore.Json));
         });

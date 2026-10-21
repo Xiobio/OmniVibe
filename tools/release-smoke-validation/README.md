@@ -18,3 +18,5 @@ artifacts/release-smoke/app/ReleaseSmokeValidation.exe artifacts/release-smoke/e
 另可用 `ReleaseSmokeValidation.exe <证据目录> --observe-codex <已有记录路径> <会话 UUID>` 只读验证一个已完成的真实 Codex 回合。此模式调用产品本身的增量观察器，要求结果为 Ready；不会启动 CLI、修改记录或将聊天正文写入报告。仅使用自己有权访问的测试会话。
 
 `ReleaseSmokeValidation.exe <证据目录> --monitor-smoke` 将一个自有测试窗口移到当前连接的每块物理屏幕，检查可见原点、显示器识别与最小化后恢复。使用产品同款 PerMonitorV2 清单；不改变系统分辨率、缩放比例或显示器连接状态，同缩放屏幕的通过结果不代表已验证混合 DPI。
+
+`ReleaseSmokeValidation.exe <证据目录> --claude-chain` 用一个自有测试窗口和独立配置，经产品自带的 `scripts/Start-TrackedSession.ps1` 在最小化的 conhost 中启动一次真实交互式 Claude Code，提交一条无需工具的短提示，确认 hooks → 事件收件箱 → Running/Ready → 托盘提醒（系统回报气泡已显示）全链路，之后按任务 ID 结束该测试会话。会消耗一次真实请求；不修改全局 Claude 配置，不连接个人 CLI 窗口，不把回复正文写入报告。声音提醒在快捷键暂停时按设计不播放，此模式不验证音频输出。
