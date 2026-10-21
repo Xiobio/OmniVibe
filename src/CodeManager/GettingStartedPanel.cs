@@ -48,8 +48,8 @@ public sealed class GettingStartedPanel : StackPanel
         if (warnings.Length > 0) Children.Add(Text(L.T("以下快捷键或监听当前不可用：\n") + warnings, 12, _skin.Waiting));
         var questions = new StackPanel();
         questions.Children.Add(Text(L.T("窗口关了怎么办？"), 13, _skin.Text, true)); questions.Children.Add(Text(L.T("关闭终端后槽位会腾出，任务信息留在「最近任务」。从这里恢复时，缺少项目目录或启动方式的任务需要先补充配置。"), 12, _skin.Muted));
-        questions.Children.Add(Text(L.T("悬浮入口不见了怎么办？"), 13, _skin.Text, true)); questions.Children.Add(Text(L.T("双击系统托盘中的 OmniVibe 图标可找回入口；也可以使用上方「显示 / 隐藏入口」快捷键。长按入口可移动，设置 → 窗口与布局可恢复默认位置。"), 12, _skin.Muted));
-        questions.Children.Add(Text(L.T("为什么 AI 状态是未知？"), 13, _skin.Text, true)); questions.Children.Add(Text(L.T("拖入窗口只完成收纳。要显示运行、等待或回复，需要右键任务 → 更多任务操作 → 连接自动任务状态，选择 Claude Code 或 Codex，按提示启动会话。未接入时显示未知是正常情况；「本轮已回复」也不代表整个任务已完成。"), 12, _skin.Muted));
+        questions.Children.Add(Text(L.T("悬浮入口不见了怎么办？"), 13, _skin.Text, true)); questions.Children.Add(Text(L.T("单击系统托盘中的 OmniVibe 图标可显示或隐藏入口；也可以使用上方「显示 / 隐藏入口」快捷键。长按入口可移动，设置 → 窗口与布局可恢复默认位置。"), 12, _skin.Muted));
+        questions.Children.Add(Text(L.T("为什么 AI 状态是未知？"), 13, _skin.Text, true)); questions.Children.Add(Text(L.T("拖入窗口只完成收纳。右键任务 →「连接当前 CLI 会话状态…」，选择正在使用的会话；也可在「更多任务操作」里配置精确状态 hooks。未接入时显示未知是正常情况；「本轮已回复」不代表整个任务已完成。"), 12, _skin.Muted));
         Children.Add(new Expander { Header = L.T("常见问题：窗口恢复、入口隐藏与 AI 状态"), Content = questions, Margin = new Thickness(0, 10, 0, 16) });
     }
     private TextBlock Text(string value, double size, string color, bool bold = false) => new() { Text = value, FontSize = size, Foreground = WuxiaTheme.Brush(color), FontWeight = bold ? FontWeights.SemiBold : FontWeights.Normal, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 4, 0, 7), VerticalAlignment = VerticalAlignment.Center };

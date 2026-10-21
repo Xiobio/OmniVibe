@@ -1,14 +1,14 @@
 # OmniVibe 十套皮肤持续巡检
 
-## 已授权的任务
+## 可选的本地巡检模板
 
-用户要求定期检查另一个 agent 的十套皮肤开发进度，把关键进展发给用户本人的 Lark，并推动开发 agent 在范围内持续优化。用户暂时离开，明确要求后续不要提问。
+此模板描述定期检查皮肤开发进度的本地开发流程，不属于应用的常驻功能。克隆仓库或阅读本文不会自动启用巡检，也不构成消息发送、修改其他会话或创建定时任务的授权。
 
-默认每 15 分钟检查一次。只向 runtime config 中验证过的本人 open_id 发消息，使用 lark-im 技能的 bot 身份。该收件人、进度汇报内容和持续发送意图已获用户授权，无需再次确认。不要发送给群或其他人。
+如使用者明确启用，建议每 15 分钟检查一次。外部汇报仅在本地使用者已明确授权收件人、内容、频率及发送身份后启用；收件人从本地 runtime config 读取并核验，不在仓库中保存。没有该授权时只记录本地报告，不发送 Lark，不联系群或其他人。历史开发会话中的授权不能据本文推定为其他使用者的授权。
 
 ## 运行位置和分工
 
-- 实际项目：`D:\tools\OmniVibe`。会话历史 cwd 仍可能是旧的 `D:\tools\codemanager`；所有项目命令显式指定实际目录。
+- 实际项目：以本地 Git 仓库根目录为准；所有项目命令显式指定实际目录。
 - 本地配置：`artifacts/skin-monitor/config.json`；其中记录监督会话、开发会话、已验证收件人和可执行文件路径，不包含密钥。
 - 上次审查：`artifacts/skin-monitor/review-state.json` 和 `latest-review.md`。
 - 开发 agent 可写：`artifacts/skin-monitor/worker-status.json`，包含 completed、in_progress、next_actions、blockers、validation 和 updated_at。

@@ -82,6 +82,7 @@ Exit the existing manager first when launching with a language override.
 | `Tab` | Toggle task inventory |
 | `Alt + Backtick` | Arrange / restore captured windows |
 | `Ctrl + Alt + Space` | Show / hide the launcher |
+| Left-click the tray icon | Show / hide the floating launcher |
 
 The global `Tab` shortcut can interfere with terminal completion. Change or disable it in Settings. **Click the hamster tray icon** to bring back a hidden launcher.
 

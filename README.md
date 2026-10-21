@@ -76,6 +76,7 @@ powershell -ExecutionPolicy Bypass -File .\run.ps1
 | `Tab` | 打开 / 关闭任务总览 |
 | `Alt + 反引号` | 排列 / 恢复已收录窗口 |
 | `Ctrl + Alt + Space` | 显示 / 隐藏入口 |
+| 左键单击托盘图标 | 显示 / 隐藏悬浮圆盘 |
 
 默认全局 `Tab` 会影响终端补全，可在设置中更换或关闭。隐藏入口后，**单击托盘仓鼠图标**可以找回。
 

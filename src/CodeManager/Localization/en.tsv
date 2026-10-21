@@ -425,7 +425,7 @@ Codex 首次提示 hooks 待审核时，输入 /hooks 查看并信任 CodeManage
 动效暂不可用，已显示静态预览	Animation unavailable; showing static preview
 动画选项会保存；默认静态，多窗口时更省资源。	Animation preference is saved. Static backgrounds are the default and use fewer resources with multiple windows.
 历史记录 · {0}	History · {0}
-双击系统托盘中的 OmniVibe 图标可找回入口；也可以使用上方「显示 / 隐藏入口」快捷键。长按入口可移动，设置 → 窗口与布局可恢复默认位置。	Click the OmniVibe tray icon or use the Show / hide launcher shortcut to reveal it. Hold and drag to move it; reset its position in Settings > Windows & layout.
+单击系统托盘中的 OmniVibe 图标可显示或隐藏入口；也可以使用上方「显示 / 隐藏入口」快捷键。长按入口可移动，设置 → 窗口与布局可恢复默认位置。	Click the OmniVibe tray icon to show or hide the launcher, or use the Show / hide launcher shortcut. Hold and drag to move it; reset its position in Settings > Windows & layout.
 可以恢复 · 	Ready to restore · 
 同一个窗口的快捷键再按一次，会恢复唤出之前的样子。	Press the same task shortcut again to restore the window's previous state.
 同时查看多个窗口，再按恢复原来的布局	View multiple windows; press again to restore their layout
@@ -451,7 +451,7 @@ Codex 首次提示 hooks 待审核时，输入 /hooks 查看并信任 CodeManage
 所有主题直接陈列。先点图片选风格，再调整这套主题的角色和武器。	Click a theme image to choose a style, then customize its characters and items.
 打开失败：	Failed to open: 
 把窗口收进来，用形象认任务，用快捷键找回窗口。	Collect windows, recognize tasks by their artwork, and return with a shortcut.
-拖入窗口只完成收纳。要显示运行、等待或回复，需要右键任务 → 更多任务操作 → 连接自动任务状态，选择 Claude Code 或 Codex，按提示启动会话。未接入时显示未知是正常情况；「本轮已回复」也不代表整个任务已完成。	Adding a window only enables window management. For status, right-click a task > More task actions > Connect automatic task status, choose Claude Code or Codex, and follow the instructions. Unknown is normal without integration; Response ready does not mean the whole task is finished.
+拖入窗口只完成收纳。右键任务 →「连接当前 CLI 会话状态…」，选择正在使用的会话；也可在「更多任务操作」里配置精确状态 hooks。未接入时显示未知是正常情况；「本轮已回复」不代表整个任务已完成。	Adding a window only enables window management. Right-click a task > Connect current CLI session… and select your active session, or configure precise status hooks under More task actions. Unknown is normal without integration; Response ready does not mean the whole task is finished.
 拖动任务形象可调整顺序。鼠标移到已收纳的槽位，点击右上角 ×，即可移出管理，终端继续运行。	Drag task artwork to reorder. Hover over a managed slot and click its top-right × to remove it; the terminal keeps running.
 拖动窗口标题栏到槽位；右键可选择窗口	Drag a window title bar to a slot; right-click to select a window
 按「排列 / 恢复」快捷键铺开窗口，再按一次恢复。	Use Arrange / restore to lay out windows; press again to restore them.

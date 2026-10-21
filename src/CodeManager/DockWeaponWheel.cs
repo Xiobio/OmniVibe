@@ -167,7 +167,10 @@ public sealed class DockWeaponWheel : FrameworkElement
         _flowing = run;
         if (!run) { BeginAnimation(FlowProperty, null); return; }
         var flow = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(6)) { RepeatBehavior = RepeatBehavior.Forever };
-        Timeline.SetDesiredFrameRate(flow, 24); BeginAnimation(FlowProperty, flow);
+        // Only tiny status dots/breathing marks use this persistent clock.
+        // Keep interaction transitions fast without repainting the transparent
+        // equipment window at their frame rate for an entire long-running task.
+        Timeline.SetDesiredFrameRate(flow, 12); BeginAnimation(FlowProperty, flow);
     }
     internal void Deploy(bool expanded, bool animate)
     {

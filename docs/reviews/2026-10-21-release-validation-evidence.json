@@ -1,0 +1,307 @@
+{
+  "at": "2026-10-21T04:03:26.679746+00:00",
+  "base_commit": "e9d465ef2682ca0d407e6bf0cea6492ad517abaa",
+  "source_sha256": {
+    "src/CodeManager/DockWeaponWheel.cs": "635b7462b3e3e4fd614a1ab26a31ce755522919cfc4c22fbf03cb07c62171860",
+    "src/CodeManager/GettingStartedPanel.cs": "63e63d2bebc71f0f95da909ab205b1dd3ef330998d590ea170afd5fdedcdc25e",
+    "src/CodeManager/Localization/en.tsv": "1907f71a5094b6a0bf7f66336a78ab0d987bb967072efdf375fa022bc6ec236e",
+    "scripts/Validate.ps1": "de78ed2e03220a3a4b2fdcc4e8471a9cdc2f11c6c00e1427184431d4819d9b5f",
+    "tools/release-smoke-validation/Program.cs": "da2ae6a84f9a68cb94e37bb99b687c00878bd45ba08cbc08e9f403557ef935a9",
+    "tools/release-smoke-validation/ReleaseSmokeValidation.csproj": "f5d379a36ad93d37a35083541c4e08142af0bb1ba186de9cecb36383adac9c3d"
+  },
+  "product_sha256": "a6f5244193e75d2822b324380b95385e004210a26cd7ba3516723854a42dff67",
+  "build": {
+    "configuration": "Release",
+    "warnings": 0,
+    "errors": 0
+  },
+  "suites": {
+    "reliability": {
+      "passed": 6,
+      "total": 6
+    },
+    "localization": {
+      "passed": 4,
+      "total": 4
+    },
+    "task-status": {
+      "passed": 23,
+      "total": 23
+    },
+    "skin": {
+      "passed": 24,
+      "total": 24
+    },
+    "self": {
+      "passed": 48,
+      "total": 48
+    }
+  },
+  "suite_counts_overlap": true,
+  "monitoring_unit_tests": {
+    "passed": 7,
+    "total": 7
+  },
+  "status_visuals": {
+    "passed": true,
+    "pixel_identical_status_images": 39,
+    "themes": 13,
+    "status_clock_only_change": true
+  },
+  "physical_monitor_smoke": {
+    "passed": true,
+    "physical_monitors": [
+      {
+        "left": 0,
+        "top": 0,
+        "width": 3840,
+        "height": 2088,
+        "scale": 1.5
+      },
+      {
+        "left": -3840,
+        "top": 0,
+        "width": 3840,
+        "height": 2088,
+        "scale": 1.5
+      }
+    ],
+    "fixture_only": true,
+    "display_configuration_changed": false
+  },
+  "soak_before_clock_change": {
+    "passed": true,
+    "assembly_sha256": "D22528D2608EEE5B5F124988EF1ED39D3DE0A7DF977C83EE99AEF40CA09A01EE",
+    "samples": [
+      {
+        "name": "nine_unknown_compact",
+        "seconds": 14.9963205,
+        "one_core_percent": 4.897028077596852,
+        "private_bytes": 148647936,
+        "handles": 811
+      },
+      {
+        "name": "nine_running_compact",
+        "seconds": 15.0046087,
+        "one_core_percent": 18.43181697931016,
+        "private_bytes": 158425088,
+        "handles": 806
+      }
+    ],
+    "soak_seconds": 303.6071637,
+    "cycles": 327,
+    "managed_before": 4195000,
+    "managed_after": 3157504,
+    "handles_before": 806,
+    "handles_after": 794,
+    "tray_native_dispatch": true,
+    "hidden_survives_heartbeat": true,
+    "double_click_acts_once": true,
+    "restart_live_windows": true,
+    "closed_window_archived": true,
+    "fixture_only": true,
+    "packaged": false
+  },
+  "soak_final_clock": {
+    "passed": true,
+    "assembly_sha256": "A6F5244193E75D2822B324380B95385E004210A26CD7BA3516723854A42DFF67",
+    "samples": [
+      {
+        "name": "nine_unknown_compact",
+        "seconds": 15.0012456,
+        "one_core_percent": 17.602684637971382,
+        "private_bytes": 156323840,
+        "handles": 843
+      },
+      {
+        "name": "nine_running_compact",
+        "seconds": 15.0003757,
+        "one_core_percent": 5.624855028736393,
+        "private_bytes": 156872704,
+        "handles": 845
+      }
+    ],
+    "soak_seconds": 123.0593792,
+    "cycles": 130,
+    "managed_before": 4282696,
+    "managed_after": 3197312,
+    "handles_before": 845,
+    "handles_after": 843,
+    "tray_native_dispatch": true,
+    "hidden_survives_heartbeat": true,
+    "double_click_acts_once": true,
+    "restart_live_windows": true,
+    "closed_window_archived": true,
+    "fixture_only": true,
+    "packaged": false
+  },
+  "cpu_observations": {
+    "logical_processors": 20,
+    "unit": "Percent of one logical core, not total machine CPU",
+    "default_dpi_driver": {
+      "before_performance_changes": [
+        {
+          "name": "nine_unknown_compact",
+          "seconds": 14.9985907,
+          "one_core_percent": 2.8127605741395882,
+          "private_bytes": 143753216,
+          "handles": 809
+        },
+        {
+          "name": "nine_running_compact",
+          "seconds": 14.9906145,
+          "one_core_percent": 9.797785187560596,
+          "private_bytes": 147656704,
+          "handles": 804
+        }
+      ],
+      "before_clock_change": [
+        {
+          "name": "nine_unknown_compact",
+          "seconds": 15.0044019,
+          "one_core_percent": 2.8116719626070124,
+          "private_bytes": 148860928,
+          "handles": 804
+        },
+        {
+          "name": "nine_running_compact",
+          "seconds": 15.0109629,
+          "one_core_percent": 12.490859522091322,
+          "private_bytes": 156696576,
+          "handles": 802
+        }
+      ],
+      "after_clock_change": [
+        {
+          "name": "nine_unknown_compact",
+          "seconds": 15.000326,
+          "one_core_percent": 4.895719328349241,
+          "private_bytes": 147898368,
+          "handles": 810
+        },
+        {
+          "name": "nine_running_compact",
+          "seconds": 14.9903608,
+          "one_core_percent": 8.85985079254113,
+          "private_bytes": 154632192,
+          "handles": 808
+        }
+      ]
+    },
+    "per_monitor_v2_driver_final": [
+      {
+        "name": "nine_unknown_compact",
+        "seconds": 15.0012456,
+        "one_core_percent": 17.602684637971382,
+        "private_bytes": 156323840,
+        "handles": 843
+      },
+      {
+        "name": "nine_running_compact",
+        "seconds": 15.0003757,
+        "one_core_percent": 5.624855028736393,
+        "private_bytes": 156872704,
+        "handles": 845
+      }
+    ],
+    "claim": "Observed samples only; different moments, DPI contexts and desktop load prevent a universal CPU reduction claim."
+  },
+  "real_cli": {
+    "codex_version": "0.163.0",
+    "claude_version": "2.1.301",
+    "attempts": [
+      {
+        "provider": "claude",
+        "passed": false,
+        "timed_out": true,
+        "seconds": 180.05538249999518
+      },
+      {
+        "provider": "codex",
+        "exit_code": 0,
+        "marker_seen": true,
+        "events": [],
+        "seconds": 12.86332649999531,
+        "global_configuration_changed": false,
+        "existing_cli_restarted": false,
+        "stream_types": [
+          "item.completed",
+          "thread.started",
+          "turn.completed",
+          "turn.started"
+        ],
+        "transcript_event_types": [
+          "item_completed",
+          "task_complete",
+          "task_started",
+          "thread_settings_applied",
+          "token_count"
+        ],
+        "lifecycle_records_present": true,
+        "passed": true
+      }
+    ],
+    "codex_product_observer": {
+      "passed": true,
+      "provider": "codex",
+      "state": "Ready",
+      "actual_persisted_transcript": true,
+      "transcript_modified": false
+    },
+    "claude_received_hook_types": [
+      "SessionStart",
+      "UserPromptSubmit"
+    ],
+    "claude_live_completion_verified": false,
+    "claude_timeout_cause_confirmed": false
+  },
+  "privacy": {
+    "current_text_files": 391,
+    "history_text_blobs": 650,
+    "common_secret_patterns_found": false,
+    "binary_history_blobs_not_scanned": 1226,
+    "media_files": 1008,
+    "entrypoint_contact_sheets_viewed": 4,
+    "entrypoint_images_in_sheets": 43,
+    "all_media_full_resolution_or_ocr_review": false
+  },
+  "completed_fixes": [
+    "Tray toggle and actual CLI-link instructions corrected in Chinese/English onboarding and entry documents.",
+    "Persistent status clock reduced from 24 to 12 fps; six-second loop and interaction transition settings unchanged.",
+    "Optional monitoring instructions made generic; cloning a repository grants no external messaging authorization.",
+    "Reproducible isolated desktop smoke tool added; CI compiles the tool."
+  ],
+  "unverified": [
+    "Claude live completion after a real request; request timed out after 180 seconds.",
+    "Real permission request approval/rejection from both actual CLIs; synthetic event paths pass.",
+    "Full-day soak, OS reboot, suspend/resume, monitor disconnect and mixed-DPI transitions.",
+    "Fresh Windows installation, missing-runtime startup and higher-integrity target windows.",
+    "Complete media redistribution evidence and all historical image privacy review."
+  ],
+  "publication": {
+    "repository_visibility_not_changed": true,
+    "release_not_created": true,
+    "tag_not_created": true,
+    "package_not_generated_by_this_validation": true,
+    "stable_release_signoff": false,
+    "technical_preview_candidate": true,
+    "full_media_public_distribution_signoff": false
+  },
+  "evidence": [
+    "artifacts/release-check-2026-10-21/final-validation/results.json",
+    "artifacts/release-check-2026-10-21/soak/report.json",
+    "artifacts/release-check-2026-10-21/final-soak/report.json",
+    "artifacts/release-check-2026-10-21/physical-monitors/monitors.json",
+    "artifacts/release-check-2026-10-21/cli/report.json",
+    "artifacts/release-check-2026-10-21/cli/codex/real-transcript.json",
+    "artifacts/release-check-2026-10-21/privacy-audit.json"
+  ],
+  "live_refresh": {
+    "occupied_count": 5,
+    "recent_count": 5,
+    "preferences_preserved": true,
+    "terminal_configuration_unchanged": true,
+    "terminal_processes_unchanged": true,
+    "one_debug_process_running": true
+  }
+}

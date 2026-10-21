@@ -12,6 +12,10 @@ Push-Location $projectRoot
 try {
     & dotnet build src/CodeManager/CodeManager.csproj -c Release -o $appRoot
     if ($LASTEXITCODE -ne 0) { throw 'Release build failed.' }
+    # Compile the optional desktop probe without running UI/soak tests on CI.
+    $productAssembly = Join-Path $appRoot 'CodeManager.dll'
+    & dotnet build tools/release-smoke-validation/ReleaseSmokeValidation.csproj -c Release ("-p:ProductAssembly=" + $productAssembly) -o (Join-Path $OutputRoot 'smoke-tool')
+    if ($LASTEXITCODE -ne 0) { throw 'Desktop smoke validation tool build failed.' }
     $suites = @(
         @{ Name = 'reliability'; Language = 'zh-CN' },
         @{ Name = 'localization'; Language = 'en' },
