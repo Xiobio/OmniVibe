@@ -15,6 +15,8 @@ Find your task. Switch in a gesture. Make room to focus.</p>
 
 ## See it in action
 
+https://github.com/user-attachments/assets/15ff02c9-392c-4eed-958c-ab0b1cdb485a
+
 **Default theme: Black Myth: Wukong · Relic Vault.** A coordinated wheel, task inventory, and terminal appearance. Sound follows the selected theme by default; corresponding audio must be installed locally. Missing audio stays silent, and you can import your own WAV files.
 
 <table><tr>
@@ -24,7 +26,7 @@ Find your task. Switch in a gesture. Make room to focus.</p>
 
 ![Relic terminal appearance](docs/terminal-frame-refinement/relic-regular.png)
 
-<sub>Native UI test screenshots with sample tasks, not a live recording. Some screenshots predate the latest build and show Chinese UI. Game-inspired themes do not imply official affiliation.</sub>
+<sub>Demo video and screenshots are rendered from native UI components with sample tasks, not a live recording. Some screenshots predate the latest build and show Chinese UI. Game-inspired themes do not imply official affiliation.</sub>
 
 ## Spend your time building, not hunting for windows
 
