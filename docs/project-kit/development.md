@@ -15,6 +15,8 @@
 | `docs/` | 指南、截图、设计与评测记录 |
 | `artifacts/` | 本地产物与验证证据 |
 
+文档入口见 [docs 导航](../README.md)。当前工作树仅保留正式展示与必要源素材；中间对比图和旧品牌可从固定的预览版标签回溯，见[整理记录](../project-footprint.md)。
+
 ## 源码入口
 
 `App.xaml.cs` 负责启动和测试路由，`Manager.cs` 协调窗口；`Models.cs` 定义状态和偏好，`StateStore.cs` 处理持久化。`DockWeaponWheel.cs` 与相关 WPF 窗口负责交互，`EquipmentCatalog.cs` 管理配装，`StatusEventInbox.cs` 后台读取状态事件，`TerminalThemeService.cs` 连接主题设置与 Terminal 应用流程。

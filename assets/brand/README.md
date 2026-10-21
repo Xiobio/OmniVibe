@@ -6,4 +6,4 @@
 
 项目 README、EXE 和托盘资源引用 v4 图标，下次正常构建启动后生效。v4 提供透明 PNG 与多尺寸 ICO；旧版动画与宣传图尚未重做，不作为 v4 配套素材。
 
-旧版 [折光 v2](v2/README.md) 与 [Window Hub v3](v3/README.md) 保留供回溯。v4 导出脚本为 `tools/build-brand-v4.py`。
+工作树只保留当前 v4、导出脚本 `tools/build-brand-v4.py` 和原始探索板。旧版图标、宣传导出和生成器已清理，可从 [v0.1.1-preview 品牌档案](https://github.com/Xiobio/OmniVibe/tree/v0.1.1-preview/assets/brand) 查阅。

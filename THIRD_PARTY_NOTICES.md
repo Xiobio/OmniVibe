@@ -26,7 +26,7 @@ The root MIT license covers OmniVibe's own source code, scripts and original doc
 | `skins/loadouts/suites-v1/protocol/` | Riot 游戏角色原图，经社区 API 镜像取得 | 属于第三方素材，不能标为 AI 原创或按本项目 MIT 再授权 |
 | `skins/loadouts/naraka/characters-v2/` 及复用它的套装 | 参考网易官方角色美术，经 imagegen 加工为透明持械图 | 标为参考图基础上的 AI 辅助加工；不将角色权利声明为项目自有 |
 | `skins/loadouts/naraka/assets/` | 原官方武器图，来源见该目录清单 | 保留原权利人与来源，不授予 MIT 素材许可 |
-| [`skins/identities/`](skins/identities/README.md) | 官方网站或 Steam 商店图片、官方透明字标，以及基于宣传封面的 AI 辅助角色抠图 | 官方字标不是 AI 生成；抠图不改变原角色与美术的第三方权利 |
+| [`skins/identities/`](skins/identities/README.md) 当前集合 | 13 张无参考图生成的原创透明伙伴，清单、哈希和提示词随目录保留 | 已退役的官方封面、字标及参考封面加工图已从工作树移除；其历史来源与权利声明见 [预览版档案](https://github.com/Xiobio/OmniVibe/tree/v0.1.1-preview/skins/identities)，不因此改变其他在用素材的许可边界 |
 | 主题插画、终端背景、品牌宣传图与截图 | 制作方式随文件而异，包含生成绘制、代码绘制、合成与截图 | 按对应清单和输入素材区分，不能仅凭所在目录或文件名套用同一授权结论 |
 | [`skins/audio/`](skins/audio/LICENSE.txt) 中的原程序合成 WAV | 旧实验音效，由项目生成脚本合成 | 保持该目录既有 CC0 声明，仅覆盖其中声明的原合成音效 |
 | [`skins/signature-audio/`](skins/signature-audio/README.md) | 游戏标志音来源清单；游戏音频另行安装到用户本地目录 | 游戏音频不属于前述 CC0；单独下载安装也不等于取得使用或再分发授权 |

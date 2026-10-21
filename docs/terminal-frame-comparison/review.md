@@ -2,7 +2,7 @@
 
 2026-10-19。已生成十套主题各三种布局，并附当前墨玉参考；每种包含 1280 × 800 和 960 × 600 两个窗口尺寸，共 66 张单独预览。另有 11 张三联对比图、两张五主题总览和区域示意图。
 
-[打开对比页](index.html) · [总览一](overview-01.png) · [总览二](overview-02.png) · [区域示意](geometry.png) · [验证数据](validation.json)
+[打开对比页](index.html) · [总览一](https://raw.githubusercontent.com/Xiobio/OmniVibe/v0.1.1-preview/docs/terminal-frame-comparison/overview-01.png) · [总览二](https://raw.githubusercontent.com/Xiobio/OmniVibe/v0.1.1-preview/docs/terminal-frame-comparison/overview-02.png) · [区域示意](https://raw.githubusercontent.com/Xiobio/OmniVibe/v0.1.1-preview/docs/terminal-frame-comparison/geometry.png) · [验证数据](validation.json)
 
 ## 选择
 
@@ -34,7 +34,7 @@
 
 所有对比保持文字起点为横向 36、纵向 32；字号、行距、内容与文字区域大小相同，没有缩小可读区域。
 
-A 将原边饰坐标放在文字渲染区域的边缘，造成边框进入字形区域。C 把边框矩形从原文字区域扩大到背景四边各约 2 个单位的外缘，并保留各主题原有角纹尺寸。十套主题的边饰宽度为 24，文字上下仍有约 6、左右约 10 的额外间隔。蓝色与金色的关系见[区域示意](geometry.png)。
+A 将原边饰坐标放在文字渲染区域的边缘，造成边框进入字形区域。C 把边框矩形从原文字区域扩大到背景四边各约 2 个单位的外缘，并保留各主题原有角纹尺寸。十套主题的边饰宽度为 24，文字上下仍有约 6、左右约 10 的额外间隔。蓝色与金色的关系见[区域示意](https://raw.githubusercontent.com/Xiobio/OmniVibe/v0.1.1-preview/docs/terminal-frame-comparison/geometry.png)。
 
 ## 验证与边界
 

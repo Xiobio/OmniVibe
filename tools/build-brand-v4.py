@@ -24,7 +24,7 @@ files = [source, *sorted(icons.glob("*"))]
                "sha256": hashlib.sha256(p.read_bytes()).hexdigest()} for p in files]
 }, indent=2), encoding="utf-8")
 rows = "".join(f'<div><img src="icons/omnivibe-{s}.png" width="{s}" height="{s}"><span>{s}px</span></div>' for s in (16, 20, 24, 32, 48, 64, 128, 256))
-(OUT / "index.html").write_text('''<!doctype html><meta charset="utf-8"><title>OmniVibe v3 icon</title>
+(OUT / "index.html").write_text('''<!doctype html><meta charset="utf-8"><title>OmniVibe v4 icon</title>
 <style>body{font:14px Segoe UI,sans-serif;margin:0;background:#eef1f4}header{padding:30px;font-size:24px}section{padding:28px;display:flex;align-items:center;gap:30px;flex-wrap:wrap}section.dark{background:#10141b;color:#eff4fa}section.light{background:#f5f7fa;color:#222}section div{display:flex;flex-direction:column;align-items:center;gap:18px}span{font-size:12px;opacity:.7}img{object-fit:contain}</style>
 <header>OmniVibe · Pocket Hamster</header><section class="light">''' + rows + '</section><section class="dark">' + rows + '</section>', encoding="utf-8")
 print(f"Exported {len(files)} icon files to {OUT}")

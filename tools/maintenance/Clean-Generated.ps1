@@ -1,11 +1,11 @@
 [CmdletBinding(SupportsShouldProcess = $true)]
-param([switch]$Apply)
+param([switch]$Apply, [string[]]$KeepPaths = @())
 $ErrorActionPreference = 'Stop'
 $workspace = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '../..')).Path.TrimEnd('\')
 $artifactRoot = Join-Path $workspace 'artifacts'
 $toolRoot = Join-Path $workspace 'tools'
 $reportRoot = Join-Path $artifactRoot 'maintenance'
-$keep = @('artifacts/reliability/ci/app', 'artifacts/empty-dock/app', 'artifacts/signature-completion/app', 'artifacts/skin-monitor', 'artifacts/publish') | ForEach-Object { [IO.Path]::GetFullPath((Join-Path $workspace $_)).TrimEnd('\') }
+$keep = @('artifacts/reliability/ci/app', 'artifacts/skin-monitor', 'artifacts/publish', 'artifacts/publication-20261021-v0.1.1-preview', 'artifacts/publication-20261021-v0.1.1-preview-final', 'artifacts/release-check-2026-10-21', 'artifacts/release-remaining-2026-10-21', 'artifacts/promo-video') + $KeepPaths | ForEach-Object { [IO.Path]::GetFullPath((Join-Path $workspace $_)).TrimEnd('\') }
 function Active-Executables {
     @(Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath } | ForEach-Object { [IO.Path]::GetFullPath($_.ExecutablePath) })
 }
@@ -24,6 +24,11 @@ function Check-Target([string]$Path) {
     foreach ($executable in (Active-Executables)) {
         if ($executable.StartsWith($resolved + '\', [StringComparison]::OrdinalIgnoreCase)) { return 'contains a running executable' }
     }
+    # Avoid output directories in use by a script or a concurrent fresh build.
+    foreach ($process in Get-CimInstance Win32_Process) {
+        if ($process.CommandLine -and ($process.CommandLine.IndexOf($resolved, [StringComparison]::OrdinalIgnoreCase) -ge 0 -or $process.CommandLine.IndexOf($resolved.Replace('\','/'), [StringComparison]::OrdinalIgnoreCase) -ge 0)) { return 'referenced by an active process' }
+    }
+    if (@(Get-ChildItem -LiteralPath $resolved -File -Recurse -Force | Where-Object LastWriteTimeUtc -gt ([DateTime]::UtcNow.AddHours(-1))).Count) { return 'recently written output (within one hour)' }
     $relative = $resolved.Substring($workspace.Length + 1).Replace('\', '/')
     $tracked = @(& git -C $workspace ls-files -- $relative)
     if ($LASTEXITCODE -ne 0 -or $tracked.Count) { return 'contains versioned files or git check failed' }
@@ -37,7 +42,7 @@ if (Test-Path -LiteralPath $artifactRoot) {
         # Only a pure build output qualifies. Reports, staged source and task data stay.
         $unexpected = @(Get-ChildItem -LiteralPath $folder -Force | Where-Object {
             if ($_.PSIsContainer) { $_.Name -notin @('scripts','skins','themes','runtimes') }
-            else { $_.Name -notin @('CodeManager.exe','CodeManager.dll','CodeManager.pdb','CodeManager.deps.json','CodeManager.runtimeconfig.json') }
+            else { $_.Name -notin @('CodeManager.exe','CodeManager.dll','CodeManager.pdb','CodeManager.deps.json','CodeManager.runtimeconfig.json','LICENSE','THIRD_PARTY_NOTICES.md') }
         })
         if ($unexpected.Count -eq 0) { $null = $candidates.Add($folder) }
     }

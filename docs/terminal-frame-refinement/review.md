@@ -1,6 +1,6 @@
 # 十套 Terminal 主题的 C 外框细化
 
-2026-10-19。[修改前后对比页](index.html) · [角部细节总览](corner-details.png) · [前五套](overview-01.png) · [后五套](overview-02.png)
+2026-10-19。[修改前后对比页](index.html) · [角部细节总览](https://raw.githubusercontent.com/Xiobio/OmniVibe/v0.1.1-preview/docs/terminal-frame-refinement/corner-details.png) · [前五套](https://raw.githubusercontent.com/Xiobio/OmniVibe/v0.1.1-preview/docs/terminal-frame-refinement/overview-01.png) · [后五套](https://raw.githubusercontent.com/Xiobio/OmniVibe/v0.1.1-preview/docs/terminal-frame-refinement/overview-02.png)
 
 十套主题现已全部采用完整环境画作：[正式背景总览](../terminal-scene-gallery/index.html) · [十套源图与实际提示词](../terminal-scene-gallery/README.md)。所有 `terminalArtwork` 均为内置 imagegen 对各自原插画的独立编辑版本，保留右侧主体，补齐上下与左侧场景；原生界面的原插画保留。下文中的局部纹样检查保留作历史记录，当前图像与指标以正式背景和实际资源数值记录为准。
 

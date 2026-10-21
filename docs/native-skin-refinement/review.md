@@ -1,6 +1,8 @@
 # 原生组件细化
 
-2026-10-19。[十三套实际界面对比](index.html) · [收起圆环细节](core-before-after.png) · [新版设置](../settings-studio/index.html)
+2026-10-19。[十三套实际界面对比](index.html) · [收起圆环细节](https://raw.githubusercontent.com/Xiobio/OmniVibe/v0.1.1-preview/docs/native-skin-refinement/core-before-after.png) · [新版设置](../settings-studio/index.html)
+
+> 历史设计记录。中间截图和旧图册生成器已转由固定预览版档案保留；当前完整组件展示见[13 套图册](../game-suite-refinement/index.html)。
 
 这一轮覆盖十套游戏风格与墨玉机关、玄夜青金、朱砂藏锋三套经典主题。
 
@@ -20,4 +22,4 @@
 
 证据：[材质资源验证](../../skins/native-v2/validation.json)、[设置验证](../settings-studio/validation.json)。完整原生检查记录与源截图保留于本地 `artifacts/native-polish/`；静态截图不证明实际 GPU 帧率。
 
-构建入口：[build-native-skin-art.py](../../tools/build-native-skin-art.py)、[build-native-refinement-gallery.py](../../tools/build-native-refinement-gallery.py)。本轮使用 Debug 开发构建，没有打包。
+构建入口：[build-native-skin-art.py](../../tools/build-native-skin-art.py)、[build-native-refinement-gallery.py](https://github.com/Xiobio/OmniVibe/blob/v0.1.1-preview/tools/build-native-refinement-gallery.py)。本轮使用 Debug 开发构建，没有打包。

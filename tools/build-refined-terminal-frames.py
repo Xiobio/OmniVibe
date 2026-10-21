@@ -21,6 +21,7 @@ from terminal_margin_details import margin_layer, DEPTH as MARGIN_DEPTH
 ROOT=Path(__file__).resolve().parents[1]
 ASSETS=ROOT/'themes/windows-terminal/assets/refined-v1'
 GALLERY=ROOT/'docs/terminal-frame-refinement'
+REVIEW=ROOT/'artifacts/terminal-frame-refinement'
 WIDTH,HEIGHT=1280,754
 FRAMES,DURATION=96,150
 spec=importlib.util.spec_from_file_location('comparison',ROOT/'tools/build-terminal-frame-comparison.py')
@@ -196,37 +197,25 @@ def showcase(row,new,old):
         d.text((x,748),'左上角 · 原尺寸细节',font=small,fill='#AFBFCA')
         crop=pic.crop((0,comparison.TITLE,936,comparison.TITLE+220))
         im.paste(crop,(x,780))
-    im.save(GALLERY/f"{row['slug']}-before-after.png",optimize=True)
+    REVIEW.mkdir(parents=True,exist_ok=True)
+    im.save(REVIEW/f"{row['slug']}-before-after.png",optimize=True)
 
 
 def gallery(rows,reports):
-    details=Image.new('RGB',(1900,math.ceil(len(rows)/5)*335),'#101923');detail_draw=ImageDraw.Draw(details)
-    for i,row in enumerate(rows):
-        x=i%5*380;y=i//5*335
-        pic=Image.open(GALLERY/f"{row['slug']}-regular.png")
-        details.paste(pic.crop((0,comparison.TITLE,340,comparison.TITLE+224)),(x+5,y+38))
-        detail_draw.text((x+8,y+5),row['name'],font=ImageFont.truetype(comparison.UI,20),fill='#E8DFCB')
-    details.save(GALLERY/'corner-details.png',optimize=True)
+    rows=json.loads((ROOT/'themes/windows-terminal/classic-palettes.json').read_text(encoding='utf-8'))+json.loads((ROOT/'skins/catalog.json').read_text(encoding='utf-8'))
+    rows=list({row['slug']:row for row in rows}.values())
     cards=[]
-    for r in rows:
-        s=r['slug'];name=html.escape(r['name'])
-        review=f'{s}-before-after.png' if (GALLERY/f'{s}-before-after.png').exists() else f'{s}-regular.png'
-        cards.append(f'<article id="{s}"><h2>{name}</h2><p>{html.escape(r["subtitle"])}</p><a href="{review}"><img loading="lazy" src="{review}" alt="{name}实际背景与示例文字"></a><details><summary>看实际背景动效与不同尺寸</summary><div class="live" style="background-image:url(../../themes/windows-terminal/assets/refined-v1/{s}-c-v1.gif)"><pre style="color:{r["text"]}">$ codex resume --last\n\n正在检查窗口恢复与任务状态。\n\n+ Activate(window.Handle);\n\n等待你的下一条指令…</pre></div><p><a href="{s}-regular.png">常规窗口</a> · <a href="{s}-compact.png">窄窗口</a> · <a href="{s}-hidpi.png">150% DPI 预览</a> · <a href="../../themes/windows-terminal/assets/refined-v1/{s}-c-v1.gif">原始动效 GIF</a></p></details></article>')
-    page='''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OmniVibe · 十套边框细化</title><style>:root{color-scheme:dark}body{margin:0;background:#0e1720;color:#eee9dc;font:16px/1.7 system-ui,"Microsoft YaHei UI",sans-serif}main{max-width:1900px;padding:32px 24px;margin:auto}header{max-width:1050px}h1{font-size:36px;margin:8px 0}p{color:#b1c1cc}a{color:#a9d7c9}article{border-top:1px solid #344554;padding-top:24px;margin-top:36px}h2{margin:0}article p{margin:6px 0 14px}img{width:100%;height:auto;display:block}details{margin-top:14px}summary{cursor:pointer;color:#bbd8cd}.live{width:min(100%,1280px);height:600px;background-size:100% 100%;position:relative;margin-top:18px}.live pre{position:absolute;inset:38px;font:20px/1.7 "Cascadia Mono","Microsoft YaHei UI",monospace;white-space:pre-wrap}nav{display:flex;gap:18px;flex-wrap:wrap}.notice{border-left:3px solid #a8ccba;padding:12px 18px;background:#15251f}article>a{display:block}@media(max-width:700px){main{padding:20px 12px}h1{font-size:28px}.live{height:400px}.live pre{font-size:14px;inset:28px}}</style><main><header><p>OmniVibe / C 布局 · 质量细化</p><h1>边框有材质，主题有自己的结构。</h1><p>十套分别补齐外缘材质、角部肩甲、长边刻纹、嵌件和沿结构移动的光效。装饰沿 C 方案包住原文字区域，不重新添加一圈内容内框。</p><p class="notice">图中的新版来自可应用的实际背景资源。示例文字为离线合成，非 Terminal 实机截图；展开每套可看真实 GIF 动画。正文插画逐像素校准所有 ANSI 色的对比度。</p><nav><a href="review.md">改进清单与验证</a><a href="overview-01.png">前五套总览</a><a href="overview-02.png">后五套总览</a><a href="../../themes/windows-terminal/assets/refined-v1/validation.json">资源验证记录</a></nav></header>'''+''.join(cards)+'</main></html>'
-    page=page.replace('<nav>','<nav><a href="corner-details.png">十套角部细节总览</a>',1)
+    for row in rows:
+        slug=row['slug'];name=html.escape(row['name'])
+        image=f'{slug}-regular.png'
+        if not (GALLERY/image).exists():raise FileNotFoundError(GALLERY/image)
+        cards.append(f'<article id="{slug}"><h2>{name}</h2><a href="{image}"><img loading="lazy" src="{image}" alt="{name}"></a><p><a href="../../themes/windows-terminal/assets/refined-v1/{slug}-c-v1.gif">查看可选背景动效</a></p></article>')
+    page="""<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OmniVibe · 13 套 Terminal 预览</title><style>body{margin:0;background:#101923;color:#e9eee9;font:16px/1.7 system-ui}main{max-width:1280px;margin:auto;padding:28px}a{color:#a6dbc7}article{margin:32px 0;border-top:1px solid #35454e}img{display:block;width:100%;height:auto}nav{display:flex;gap:20px;flex-wrap:wrap}</style><main><h1>13 套 Terminal 正式预览</h1><p>实际背景配离线示例文字，用于展示外观；不代表真实任务状态或实际显示器 DPI 测试。每套保留一张常规预览，完整运行素材与可选动效均保持原样。</p><nav><a href="../project-kit/showcase.md">整套效果展示</a><a href="review.md">设计与验证说明</a><a href="https://github.com/Xiobio/OmniVibe/tree/v0.1.1-preview/docs/terminal-frame-refinement">历史尺寸与前后对比</a></nav>"""+''.join(cards)+'</main></html>\n'
     (GALLERY/'index.html').write_text(page,encoding='utf-8')
-    for part in range(math.ceil(len(rows)/5)):
-        pics=[]
-        for row in rows[part*5:part*5+5]:
-            review=GALLERY/f"{row['slug']}-before-after.png"
-            pic=Image.open(review if review.exists() else GALLERY/f"{row['slug']}-regular.png");pic.thumbnail((1944,1020));pics.append(pic.copy())
-        sheet=Image.new('RGB',(1944,sum(p.height for p in pics)),'#101923');y=0
-        for p in pics:sheet.paste(p,(0,y));y+=p.height
-        sheet.save(GALLERY/f'overview-{part+1:02d}.png',optimize=True)
 
 
 def main():
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--skin',default='');args=parser.parse_args()
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--skin',default='');parser.add_argument('--review-variants',action='store_true');args=parser.parse_args()
     ASSETS.mkdir(parents=True,exist_ok=True);GALLERY.mkdir(parents=True,exist_ok=True)
     rows=json.loads((ROOT/'skins/catalog.json').read_text(encoding='utf-8'))
     schemes={r['slug']:r['scheme'] for r in json.loads((ROOT/'themes/windows-terminal/skins.json').read_text(encoding='utf-8'))['skins']}
@@ -250,13 +239,13 @@ def main():
         assert not margin[MARGIN_DEPTH:HEIGHT-MARGIN_DEPTH,MARGIN_DEPTH:].any(), 'Margin detail reached the central scene'
         for region in (margin[24:54,50:WIDTH//2],margin[55:HEIGHT-55,24:54],margin[HEIGHT-54:HEIGHT-24,50:WIDTH//2]):
             assert np.count_nonzero(region)>200, 'Requested margin band has no details'
-        previous=ROOT/f"docs/terminal-frame-comparison/{row['slug']}-C-regular.png"
+        previous=ROOT/f"artifacts/terminal-frame-comparison/{row['slug']}-C-regular.png"
         original=Image.open(previous).convert('RGB') if previous.exists() else None
-        for mode in ('regular','compact'):
-            result=fixture(row,current,mode);result.save(GALLERY/f"{row['slug']}-{mode}.png",optimize=True)
+        for mode in (('regular','compact') if args.review_variants else ('regular',)):
+            result=fixture(row,current,mode);target=GALLERY if mode=='regular' else REVIEW;target.mkdir(parents=True,exist_ok=True);result.save(target/f"{row['slug']}-{mode}.png",optimize=True)
             if mode=='regular':
-                if original is not None:showcase(row,result,original)
-                result.resize((1920,1200),Image.Resampling.LANCZOS).save(GALLERY/f"{row['slug']}-hidpi.png",optimize=True)
+                if args.review_variants and original is not None:showcase(row,result,original)
+                if args.review_variants:REVIEW.mkdir(parents=True,exist_ok=True);result.resize((1920,1200),Image.Resampling.LANCZOS).save(REVIEW/f"{row['slug']}-hidpi.png",optimize=True)
         # Strict geometry check with the same foreground glyph mask used above.
         fa=np.asarray(frame)[:,:,3]>0
         fg,alpha=comparison.glyphs(row,WIDTH,HEIGHT)
