@@ -158,7 +158,7 @@ internal sealed class RadialInventorySurface : FrameworkElement
         var chosen = Slots.FirstOrDefault(x => x.Number == SelectedNumber) ?? Slots.FirstOrDefault(x => x.IsActive) ?? Slots.First();
         if (chosen.Occupied) EquipmentCatalog.Draw(dc, chosen, new Rect(-80, -80, 160, 160), skin: s.Id);
         Text(dc, chosen.Occupied ? EquipmentCatalog.Name(chosen, s.Id) : L.T("添加任务"), new Point(0, 91), 13, s.Text, 180, true);
-        Text(dc, L.T("永劫无间 / 角色配装"), new Point(0, -320), 17, s.Text, 450, true);
+        Text(dc, s.Name, new Point(0, -320), 17, s.Text, 450, true);
         Text(dc, chosen.Occupied ? chosen.DisplayName + " · " + chosen.StateLabel : L.T("空槽位 · 拖入窗口绑定这件武器"), new Point(0, 292), 12, s.Text, 560);
         Text(dc, _hold ? L.T("按住 ") + _gesture + L.T("  ·  指向角色  ·  松键进入任务") : L.T("点击角色进入任务"), new Point(0, 321), 11, s.Muted, 560);
         Text(dc, L.T("中央松键 / Esc / 右键取消"), new Point(0, 346), 10, s.Muted, 500);
