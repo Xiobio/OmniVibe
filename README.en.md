@@ -54,6 +54,8 @@ Keep using your existing terminals and CLI tools, including Claude Code and Code
 
 ## Get started
 
+**Download the development preview: [Windows x64 · v0.1.1-preview](https://github.com/Xiobio/OmniVibe/releases/tag/v0.1.1-preview)**. Extract the complete archive and run `CodeManager.exe`. Requires .NET 10 Windows Desktop Runtime x64. See [installation and known limits](docs/project-kit/INSTALL.md).
+
 This is a development preview. Building from source requires **Windows and the .NET 10 SDK**. See [global.json](global.json) for the SDK baseline.
 
 ```powershell

@@ -42,6 +42,10 @@ Terminal appearance changes use their own configuration backups. Restore through
 
 ## Known limits / 已知限制
 
+- At the v0.1.1-preview release, mixed-DPI transitions, a fresh Windows installation, and sleep/resume have not been verified. Two physical displays at 150% scaling have passed a limited window-placement smoke test. The 26-hour background observation is still running; there is no full-day pass result yet.
+- 发布 v0.1.1-preview 时，混合 DPI、全新 Windows、睡眠唤醒尚未完成验证。两块均为 150% 缩放的实体屏幕通过有限的窗口移动与恢复检查；26 小时后台观察仍在进行，尚无整日运行通过结论。
+- This preview is unsigned. Third-party media have separate rights and are not covered by the code's MIT license; some redistribution permissions remain unconfirmed. See THIRD_PARTY_NOTICES.md.
+- 本预览版未作代码签名。第三方素材不属于代码的 MIT 授权范围，部分分发许可仍未确认，详见 THIRD_PARTY_NOTICES.md。
 - Global `Tab` may conflict with terminal completion; change or disable it in Settings.
 - Automatic Agent status needs supported CLI events; unknown status does not prevent window management.
 - Missing optional theme audio stays silent; theme images do not install audio.

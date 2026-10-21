@@ -54,6 +54,8 @@
 
 ## 快速开始
 
+**下载开发预览版：[Windows x64 · v0.1.1-preview](https://github.com/Xiobio/OmniVibe/releases/tag/v0.1.1-preview)**。完整解压后运行 `CodeManager.exe`，需要 .NET 10 Windows Desktop Runtime x64。安装、更新与已知限制见[安装说明](docs/project-kit/INSTALL.md)。
+
 当前是开发预览版，从源码运行需要 **Windows + .NET 10 SDK**，SDK 基线见 [global.json](global.json)。
 
 ```powershell
