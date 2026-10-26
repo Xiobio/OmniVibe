@@ -2,6 +2,9 @@
 **/obj/
 artifacts/
 .vs/
+.build/
+.swiftpm/
+.DS_Store
 *.user
 __pycache__/
 *.pyc
