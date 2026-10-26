@@ -15,7 +15,8 @@ struct TerminalThemePalette: Codable, Equatable, Sendable {
 
         @MainActor
         init(_ color: NSColor) throws {
-            guard let color = color.usingColorSpace(.sRGB) else { throw TerminalThemeError.invalidColor }
+            // Terminal's AppleScript RGB lists use calibrated RGB components.
+            guard let color = color.usingColorSpace(.genericRGB) else { throw TerminalThemeError.invalidColor }
             let values = [color.redComponent, color.greenComponent, color.blueComponent]
             guard values.allSatisfy(\.isFinite) else { throw TerminalThemeError.invalidColor }
             let channels = values.map { UInt16((min(1, max(0, $0)) * 65_535).rounded()) }

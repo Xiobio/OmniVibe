@@ -24,13 +24,17 @@ final class TerminalAutomaticRecoveryTests: XCTestCase {
     }
 
     @MainActor
-    private func fixture(twoTabs: Bool = false) throws -> AutomaticRecoveryFixture {
+    private func fixture(twoTabs: Bool = false, cursorColor: NSColor = .white) throws -> AutomaticRecoveryFixture {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent("OmniVibeAutomaticRecovery-\(UUID())")
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
         addTeardownBlock { try? FileManager.default.removeItem(at: root) }
         let zero = TerminalThemePalette.RGB(red: 0, green: 0, blue: 0)
         let full = TerminalThemePalette.RGB(red: 65_535, green: 65_535, blue: 65_535)
-        let appearance = TerminalProfileAppearance(palette: .init(background: zero, normalText: full, boldText: full, cursor: full),
+        let genericCursor = try XCTUnwrap(cursorColor.usingColorSpace(.genericRGB))
+        let cursorValues = [genericCursor.redComponent, genericCursor.greenComponent, genericCursor.blueComponent]
+            .map { UInt16(($0 * 65_535).rounded()) }
+        let cursor = TerminalThemePalette.RGB(red: cursorValues[0], green: cursorValues[1], blue: cursorValues[2])
+        let appearance = TerminalProfileAppearance(palette: .init(background: zero, normalText: full, boldText: full, cursor: cursor),
             fontName: "Menlo-Regular", fontSize: 13)
         let bounds = TerminalProfileWindowBounds(left: 30, top: 40, right: 830, bottom: 640)
         var tabs = [TerminalProfileTabSnapshot(tab: .init(windowID: 101, tty: "/dev/ttys001"),
@@ -41,7 +45,7 @@ final class TerminalAutomaticRecoveryTests: XCTestCase {
         }
         let backend = AutomaticRecoveryBackend(profiles: [.init(id: 1, name: "Basic"), .init(id: 30, name: "OmniVibe-relic")],
             tabs: tabs, appearance: appearance)
-        let preferences = try AutomaticRecoveryPreferences(backend: backend)
+        let preferences = try AutomaticRecoveryPreferences(backend: backend, cursorColor: cursorColor)
         let service = TerminalProfileApplicationService(root: root, backend: backend, profilePreferences: preferences)
         return AutomaticRecoveryFixture(root: root, backend: backend, preferences: preferences, service: service)
     }
@@ -152,6 +156,41 @@ final class TerminalAutomaticRecoveryTests: XCTestCase {
         XCTAssertEqual(try Data(contentsOf: archive), raw)
         let restoredEvidence = try XCTUnwrap(try registryEntries(context.root).first)
         XCTAssertEqual(restoredEvidence["sha256"] as? String, digest)
+    }
+
+    @MainActor
+    func testCalibratedGrayAndColoredProfileArchivesUseTerminalsGenericRGBComponents() async throws {
+        for color in [NSColor(calibratedWhite: 0.5, alpha: 1),
+                      NSColor(calibratedRed: 0.25, green: 0.45, blue: 0.65, alpha: 1)] {
+            let context = try fixture(cursorColor: color)
+            let srgb = try XCTUnwrap(color.usingColorSpace(.sRGB))
+            let srgbValues = [srgb.redComponent, srgb.greenComponent, srgb.blueComponent]
+                .map { Int(($0 * 65_535).rounded()) }
+            let expected = context.backend.publicAppearance.palette.cursor
+            XCTAssertGreaterThan(zip(srgbValues, [Int(expected.red), Int(expected.green), Int(expected.blue)])
+                .map { abs($0 - $1) }.max() ?? 0, 512, "The fixture must detect an incorrect sRGB conversion")
+
+            let receipt = try await context.service.prepareAutomaticRecoveryBaselines()
+            XCTAssertEqual(receipt.nativeCopyCount, 1)
+            XCTAssertTrue(context.backend.profileWrites.isEmpty)
+            let copied = try XCTUnwrap(context.backend.duplicates.first?.profile)
+            let raw = try XCTUnwrap(context.preferences.generatedByName[copied.name])
+            let evidence = try XCTUnwrap(try registryEntries(context.root).first)
+            let archive = context.root.appendingPathComponent("TerminalRecoveryProfiles")
+                .appendingPathComponent(try XCTUnwrap(evidence["filename"] as? String))
+            let digest = SHA256.hash(data: raw).map { String(format: "%02x", $0) }.joined()
+            XCTAssertEqual(try Data(contentsOf: archive), raw)
+            XCTAssertEqual(evidence["sha256"] as? String, digest)
+            let savedAppearance = try JSONDecoder().decode(TerminalProfileAppearance.self,
+                from: JSONSerialization.data(withJSONObject: try XCTUnwrap(evidence["appearance"])))
+            XCTAssertTrue(savedAppearance.matches(context.backend.publicAppearance))
+
+            _ = try await context.service.apply(profileName: themeName)
+            _ = try await context.service.restoreLatest()
+            XCTAssertEqual(context.backend.profileWrites.last, copied)
+            XCTAssertEqual(try Data(contentsOf: archive), raw)
+            XCTAssertEqual((try registryEntries(context.root).first)?["sha256"] as? String, digest)
+        }
     }
 
     @MainActor
@@ -448,14 +487,15 @@ private final class AutomaticRecoveryPreferences: TerminalProfilePreferencesRead
     var generatedByName: [String: Data] = [:]
 
     @MainActor
-    init(backend: AutomaticRecoveryBackend) throws {
+    init(backend: AutomaticRecoveryBackend, cursorColor: NSColor = .white) throws {
         self.backend = backend
         let black = try NSKeyedArchiver.archivedData(withRootObject: NSColor.black, requiringSecureCoding: true)
         whiteArchive = try NSKeyedArchiver.archivedData(withRootObject: NSColor.white, requiringSecureCoding: true)
         wrongFontArchive = try NSKeyedArchiver.archivedData(withRootObject: NSFont(name: "Menlo-Regular", size: 20)!, requiringSecureCoding: true)
         var values: [String: Any] = ["type": "Window Settings", "ProfileCurrentVersion": 2.07,
             "Font": try NSKeyedArchiver.archivedData(withRootObject: NSFont(name: "Menlo-Regular", size: 13)!, requiringSecureCoding: true),
-            "BackgroundColor": black, "TextColor": whiteArchive, "TextBoldColor": whiteArchive, "CursorColor": whiteArchive,
+            "BackgroundColor": black, "TextColor": whiteArchive, "TextBoldColor": whiteArchive,
+            "CursorColor": try NSKeyedArchiver.archivedData(withRootObject: cursorColor, requiringSecureCoding: true),
             "UnknownPreservedSetting": "private copy complete data", "BackgroundImagePath": "/example/original-background.png"]
         for key in TerminalThemeCatalog.ansiProfileKeys { values[key.profile] = whiteArchive }
         template = values

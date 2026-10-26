@@ -254,7 +254,10 @@ final class TerminalRecoveryBaselineRegistry {
                 if profile[key] == nil, let inherited { return inherited }
                 guard let archive = profile[key] as? Data,
                       let decoded = try NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: archive),
-                      let color = decoded.usingColorSpace(.sRGB) else { throw TerminalProfileApplicationError.invalidRecoveryBaseline }
+                      // Cocoa scripting's 16-bit RGB lists are calibrated RGB,
+                      // not sRGB. Converting calibrated midtones to sRGB changes
+                      // their numbers and falsely rejects an identical copy.
+                      let color = decoded.usingColorSpace(.genericRGB) else { throw TerminalProfileApplicationError.invalidRecoveryBaseline }
                 let channels = [color.redComponent, color.greenComponent, color.blueComponent]
                 guard channels.allSatisfy({ $0.isFinite && (0...1).contains($0) }) else { throw TerminalProfileApplicationError.invalidRecoveryBaseline }
                 let values = channels.map { UInt16(($0 * 65_535).rounded()) }

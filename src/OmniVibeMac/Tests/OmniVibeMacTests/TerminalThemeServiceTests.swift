@@ -249,10 +249,12 @@ final class TerminalThemeServiceTests: XCTestCase {
     }
 
     @MainActor
-    func testNSColorsConvertToBoundedSixteenBitSRGB() throws {
-        let color = NSColor(srgbRed: 0.25, green: 0.5, blue: 1, alpha: 1)
+    func testNSColorsConvertToBoundedSixteenBitCalibratedRGBForAppleScript() throws {
+        let color = NSColor(calibratedRed: 0.25, green: 0.5, blue: 1, alpha: 1)
         let palette = try TerminalThemePalette(background: color, normalText: color, boldText: color, cursor: color)
         XCTAssertEqual(palette.background, .init(red: 16_384, green: 32_768, blue: 65_535))
+        let midGray = try TerminalThemePalette.RGB(NSColor(calibratedWhite: 0.5, alpha: 1))
+        XCTAssertEqual(midGray, .init(red: 32_768, green: 32_768, blue: 32_768))
         XCTAssertEqual(try JSONDecoder().decode(TerminalThemePalette.self, from: JSONEncoder().encode(palette)), palette)
     }
 

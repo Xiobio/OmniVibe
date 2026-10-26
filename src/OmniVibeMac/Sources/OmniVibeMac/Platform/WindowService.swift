@@ -974,9 +974,21 @@ final class WindowService {
             read: { self.boolAttribute(application, enhancedAttribute) },
             isSettable: { self.isSettable(application, enhancedAttribute) },
             write: { enabled in
-                try self.set(application, enhancedAttribute, enabled ? kCFBooleanTrue : kCFBooleanFalse)
+                let result = AXUIElementSetAttributeValue(application, enhancedAttribute as CFString,
+                                                        enabled ? kCFBooleanTrue : kCFBooleanFalse)
+                do { try self.check(result, operation: "更新窗口状态") }
+                catch {
+                    if !enabled, [.attributeUnsupported, .actionUnsupported, .notImplemented].contains(result) {
+                        throw WindowEnhancedUIAdjustment.UnsupportedDisable(underlyingError: error)
+                    }
+                    throw error
+                }
                 guard self.boolAttribute(application, enhancedAttribute) == enabled else {
-                    throw WindowServiceError.operation("目标应用未确认窗口辅助功能状态，请稍后重试。")
+                    let error = WindowServiceError.operation("目标应用未确认窗口辅助功能状态，请稍后重试。")
+                    // AX accepted the write. Even an unavailable confirmation
+                    // must not leave the original enabled mode disabled.
+                    if !enabled { throw WindowEnhancedUIAdjustment.UnconfirmedDisable(underlyingError: error) }
+                    throw error
                 }
                 if enabled { self.activationLogger.debug("stage=enhanced-ui-restored") }
                 else { self.activationLogger.debug("stage=enhanced-ui-suspended") }
@@ -1132,6 +1144,19 @@ enum WindowEnhancedUIAdjustment {
                                adjustment: () throws -> Value,
                                verifyRestored: (Value) throws -> Value) throws -> Value {
         guard read() == true, isSettable() else { return try adjustment() }
+        var disableError: Error?
+        do { try write(false) }
+        catch let failure as UnsupportedDisable {
+            // Some apps advertise this optional attribute as writable but
+            // reject the write. Continue in the unchanged original mode only
+            // when it is still confirmed enabled; do not invent a restore.
+            guard read() == true else { throw failure.underlyingError }
+            return try adjustment()
+        } catch let failure as UnconfirmedDisable {
+            // The actual AX write succeeded: restoration is required even
+            // though its post-write read failed and geometry must not run.
+            disableError = failure.underlyingError
+        }
         var restorationError: Error?
         let outcome: Result<Value, Error> = {
             defer {
@@ -1139,7 +1164,7 @@ enum WindowEnhancedUIAdjustment {
                 catch { restorationError = error }
             }
             return Result {
-                try write(false)
+                if let disableError { throw disableError }
                 return try adjustment()
             }
         }()
@@ -1152,6 +1177,14 @@ enum WindowEnhancedUIAdjustment {
             throw RestorationFailure(adjustmentError: adjustmentError, restorationError: restorationError)
         }
         return try verifyRestored(outcome.get())
+    }
+
+    struct UnsupportedDisable: Error {
+        let underlyingError: Error
+    }
+
+    struct UnconfirmedDisable: Error {
+        let underlyingError: Error
     }
 
     struct RestorationFailure: LocalizedError {

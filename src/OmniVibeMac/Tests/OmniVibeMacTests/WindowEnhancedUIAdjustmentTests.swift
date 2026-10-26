@@ -52,11 +52,73 @@ final class WindowEnhancedUIAdjustmentTests: XCTestCase {
 
     @MainActor
     func testUnconfirmedDisableStillRestoresAndDoesNotRunAdjustment() {
+        var state = true
+        var writes: [Bool] = []
+        XCTAssertThrowsError(try WindowEnhancedUIAdjustment.perform(read: { state }, isSettable: { true },
+            write: { enabled in
+                writes.append(enabled); state = enabled
+                if !enabled { throw WindowEnhancedUIAdjustment.UnconfirmedDisable(underlyingError: Failure.disable) }
+            },
+            adjustment: { XCTFail("Do not adjust after disabling failed"); return 17 }, verifyRestored: { $0 })) { error in
+                XCTAssertEqual(error as? Failure, .disable)
+            }
+        XCTAssertEqual(writes, [false, true])
+        XCTAssertTrue(state, "An accepted disable write still requires restoration when its confirmation fails.")
+    }
+
+    @MainActor
+    func testUnsupportedDisableKeepsTheEnabledModeAndStillAdjustsGeometry() throws {
+        var writes: [Bool] = []
+        var adjustments = 0
+        let result = try WindowEnhancedUIAdjustment.perform(read: { true }, isSettable: { true },
+            write: { enabled in
+                writes.append(enabled)
+                throw WindowEnhancedUIAdjustment.UnsupportedDisable(underlyingError: Failure.disable)
+            },
+            adjustment: { adjustments += 1; return 17 },
+            verifyRestored: { _ in XCTFail("The original mode was never changed"); return 0 })
+        XCTAssertEqual(result, 17)
+        XCTAssertEqual(adjustments, 1)
+        XCTAssertEqual(writes, [false], "A rejected optional disable must not invent a restore write.")
+    }
+
+    @MainActor
+    func testUnsupportedDisableNeverHidesARealGeometryFailure() {
         var writes: [Bool] = []
         XCTAssertThrowsError(try WindowEnhancedUIAdjustment.perform(read: { true }, isSettable: { true },
-            write: { enabled in writes.append(enabled); if !enabled { throw Failure.disable } },
-            adjustment: { XCTFail("Do not adjust after disabling failed"); return 17 }, verifyRestored: { $0 }))
-        XCTAssertEqual(writes, [false, true])
+            write: { enabled in
+                writes.append(enabled)
+                throw WindowEnhancedUIAdjustment.UnsupportedDisable(underlyingError: Failure.disable)
+            },
+            adjustment: { () throws -> Int in throw Failure.adjustment },
+            verifyRestored: { _ in XCTFail("The original mode was never changed"); return 0 })) { error in
+                XCTAssertEqual(error as? Failure, .adjustment)
+            }
+        XCTAssertEqual(writes, [false])
+    }
+
+    @MainActor
+    func testUnrelatedDisableFailureIsNotIgnoredOrTreatedAsASuccessfulWrite() {
+        var writes: [Bool] = []
+        XCTAssertThrowsError(try WindowEnhancedUIAdjustment.perform(read: { true }, isSettable: { true },
+            write: { enabled in writes.append(enabled); throw Failure.disable },
+            adjustment: { XCTFail("Only a rejected optional attribute may fall back"); return 17 },
+            verifyRestored: { $0 })) { error in
+                XCTAssertEqual(error as? Failure, .disable)
+            }
+        XCTAssertEqual(writes, [false])
+    }
+
+    @MainActor
+    func testUnsupportedDisableRequiresConfirmationThatTheOriginalModeIsUnchanged() {
+        var reads = 0
+        XCTAssertThrowsError(try WindowEnhancedUIAdjustment.perform(
+            read: { reads += 1; return reads == 1 ? true : nil }, isSettable: { true },
+            write: { _ in throw WindowEnhancedUIAdjustment.UnsupportedDisable(underlyingError: Failure.disable) },
+            adjustment: { XCTFail("Do not continue when the original mode cannot be verified"); return 17 },
+            verifyRestored: { $0 })) { error in
+                XCTAssertEqual(error as? Failure, .disable)
+            }
     }
 
     @MainActor
