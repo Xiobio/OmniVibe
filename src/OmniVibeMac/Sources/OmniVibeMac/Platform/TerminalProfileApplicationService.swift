@@ -3,6 +3,7 @@ import Carbon
 import Combine
 import Foundation
 import OmniVibeCore
+import OSLog
 
 struct TerminalPersistentProfile: Codable, Equatable, Sendable {
     var id: Int
@@ -122,6 +123,24 @@ struct TerminalProfileImportStatus: Equatable, Sendable {
     var isReady: Bool { missingNames.isEmpty && temporaryOriginalCount == 0 && ambiguousNames.isEmpty && errorMessage == nil }
 }
 
+enum TerminalProfileVerificationStep: Equatable {
+    case complete, readAgain, timedOut
+}
+
+/// One metadata AppleEvent can outlast the settling interval. A first exact
+/// fit still needs its confirmation read; this does not loosen frame fitting.
+enum TerminalProfileVerification {
+    static func step(matches: Bool, previousBounds: TerminalProfileWindowBounds?,
+                     actualBounds: TerminalProfileWindowBounds, elapsed: Double,
+                     readCount: Int) -> TerminalProfileVerificationStep {
+        guard elapsed.isFinite, elapsed >= 0, (1...4).contains(readCount) else { return .timedOut }
+        if matches, previousBounds == actualBounds { return .complete }
+        guard readCount < 4 else { return .timedOut }
+        if matches { return .readAgain }
+        return elapsed < 0.7 ? .readAgain : .timedOut
+    }
+}
+
 /// Every method runs on the service's serial worker. The protocol exposes only
 /// profile and tab metadata, never terminal text, history or shell execution.
 protocol TerminalProfileApplicationBackend: AnyObject {
@@ -215,6 +234,7 @@ final class TerminalProfileApplicationService: ObservableObject {
     }
 
     private final class Worker: @unchecked Sendable {
+        private static let verificationLog = Logger(subsystem: "io.github.xiobio.OmniVibe", category: "TerminalProfileVerification")
         struct TrackedProfile: Codable {
             var tab: TerminalProfileTabKey
             var name: String
@@ -591,22 +611,42 @@ final class TerminalProfileApplicationService: ObservableObject {
             try backend.setBounds(bounds, windowID: tab.windowID)
             try ensureSession(session)
             let started = ProcessInfo.processInfo.systemUptime
-            var stable: TerminalProfileTabSnapshot?
+            var stableBounds: TerminalProfileWindowBounds?
+            var readCount = 0
             var retry = 0
             while true {
                 let current = try backend.snapshot().validated()
                 try ensureSession(session)
-                guard current.persistent(profile), let actual = current.tabs.first(where: { $0.tab == tab }),
-                      actual.profile.name == profile.name else { throw TerminalProfileApplicationError.verificationFailed }
+                readCount += 1
+                guard current.persistent(profile) else {
+                    Self.verificationLog.error("terminal-profile-verify stage=persistent-profile-missing")
+                    throw TerminalProfileApplicationError.verificationFailed
+                }
+                guard let actual = current.tabs.first(where: { $0.tab == tab }) else {
+                    Self.verificationLog.error("terminal-profile-verify stage=exact-tab-missing")
+                    throw TerminalProfileApplicationError.verificationFailed
+                }
+                guard actual.profile.name == profile.name else {
+                    Self.verificationLog.error("terminal-profile-verify stage=profile-name-mismatch")
+                    throw TerminalProfileApplicationError.verificationFailed
+                }
                 let matches = strictBounds ? WindowFrameFit.restored(actual.bounds.frame, before: bounds.frame)
                                            : WindowFrameFit.accepts(actual.bounds.frame, target: bounds.frame)
-                if matches {
-                    if stable?.bounds == actual.bounds { return actual }
-                    stable = actual
-                } else { stable = nil }
                 let elapsed = ProcessInfo.processInfo.systemUptime - started
-                guard elapsed < 0.7 else { throw TerminalProfileApplicationError.verificationFailed }
-                if !matches, retry < 2, elapsed >= (retry == 0 ? 0.12 : 0.32) {
+                switch TerminalProfileVerification.step(matches: matches, previousBounds: stableBounds,
+                    actualBounds: actual.bounds, elapsed: elapsed, readCount: readCount) {
+                case .complete: return actual
+                case .readAgain: stableBounds = matches ? actual.bounds : nil
+                case .timedOut:
+                    let dx = actual.bounds.left - bounds.left, dy = actual.bounds.top - bounds.top
+                    let dw = (actual.bounds.right - actual.bounds.left) - (bounds.right - bounds.left)
+                    let dh = (actual.bounds.bottom - actual.bounds.top) - (bounds.bottom - bounds.top)
+                    Self.verificationLog.error("terminal-profile-verify stage=bounds-timeout strict=\(strictBounds, privacy: .public) dx=\(dx, privacy: .public) dy=\(dy, privacy: .public) dw=\(dw, privacy: .public) dh=\(dh, privacy: .public) matched=\(matches, privacy: .public)")
+                    throw TerminalProfileApplicationError.verificationFailed
+                }
+                // Keep both corrections inside the four-read budget, leaving
+                // two reads to confirm the unchanged strict frame predicate.
+                if !matches, retry < 2 {
                     try backend.setBounds(bounds, windowID: tab.windowID)
                     retry += 1
                 }

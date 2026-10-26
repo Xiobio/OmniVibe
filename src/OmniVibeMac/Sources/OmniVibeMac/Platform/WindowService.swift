@@ -937,7 +937,20 @@ final class WindowService {
     }
 
     private func set(_ element: AXUIElement, _ name: String, _ value: CFTypeRef) throws {
-        try check(AXUIElementSetAttributeValue(element, name as CFString, value), operation: "更新窗口状态")
+        let result = AXUIElementSetAttributeValue(element, name as CFString, value)
+        if result != .success {
+            switch name {
+            case kAXPositionAttribute:
+                activationLogger.error("stage=setter-position-rejected ax_error=\(result.rawValue, privacy: .public)")
+            case kAXSizeAttribute:
+                activationLogger.error("stage=setter-size-rejected ax_error=\(result.rawValue, privacy: .public)")
+            case kAXMinimizedAttribute:
+                activationLogger.error("stage=setter-minimized-rejected ax_error=\(result.rawValue, privacy: .public)")
+            default:
+                activationLogger.error("stage=setter-other-rejected ax_error=\(result.rawValue, privacy: .public)")
+            }
+        }
+        try check(result, operation: "更新窗口状态")
     }
 
     private func activationRequest(_ result: AXError, operation: String) throws {
@@ -976,6 +989,10 @@ final class WindowService {
             write: { enabled in
                 let result = AXUIElementSetAttributeValue(application, enhancedAttribute as CFString,
                                                         enabled ? kCFBooleanTrue : kCFBooleanFalse)
+                if result != .success {
+                    if enabled { self.activationLogger.error("stage=enhanced-ui-restore-rejected ax_error=\(result.rawValue, privacy: .public)") }
+                    else { self.activationLogger.error("stage=enhanced-ui-disable-rejected ax_error=\(result.rawValue, privacy: .public)") }
+                }
                 do { try self.check(result, operation: "更新窗口状态") }
                 catch {
                     if !enabled, [.attributeUnsupported, .actionUnsupported, .notImplemented].contains(result) {
@@ -984,6 +1001,8 @@ final class WindowService {
                     throw error
                 }
                 guard self.boolAttribute(application, enhancedAttribute) == enabled else {
+                    if enabled { self.activationLogger.error("stage=enhanced-ui-restore-unconfirmed") }
+                    else { self.activationLogger.error("stage=enhanced-ui-disable-unconfirmed") }
                     let error = WindowServiceError.operation("目标应用未确认窗口辅助功能状态，请稍后重试。")
                     // AX accepted the write. Even an unavailable confirmation
                     // must not leave the original enabled mode disabled.
