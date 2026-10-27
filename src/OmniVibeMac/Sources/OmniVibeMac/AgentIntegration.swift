@@ -144,12 +144,7 @@ enum AgentCommandLine {
                     if chunk.isEmpty { break }
                     payload.append(chunk)
                 }
-                guard payload.count <= 1_048_576,
-                      let event = HookBridge.parse(provider: provider, taskID: id, payload: payload) else { return 0 }
-                _ = try StatusEventInbox.publish(event, root: root)
-                if (try? WorkspaceStore(root: root).load().state.slots.contains(where: { $0.id == id && $0.window != nil })) == true {
-                    try? TaskLaunchRecordStore(root: root).updateSession(taskID: id, provider: event.provider, sessionID: event.sessionID)
-                }
+                _ = try publishHook(provider: provider, taskID: id, payload: payload, root: root)
                 return 0
             }
             let store = WorkspaceStore(root: root)
@@ -215,6 +210,15 @@ enum AgentCommandLine {
             fputs("OmniVibe：\(error.localizedDescription)\n", stderr)
             return 1
         }
+    }
+
+    /// Hook processes only enqueue observations. The coordinator decides
+    /// whether their session/time identity is current before saving a recipe.
+    @discardableResult
+    static func publishHook(provider: String, taskID: UUID, payload: Data, root: URL) throws -> URL? {
+        guard payload.count <= 1_048_576,
+              let event = HookBridge.parse(provider: provider, taskID: taskID, payload: payload) else { return nil }
+        return try StatusEventInbox.publish(event, root: root)
     }
 
     private struct Options {

@@ -518,6 +518,107 @@ final class ApplicationControllerTests: XCTestCase {
     }
 
     @MainActor
+    func testOnlyAnAcceptedSessionCanReplaceTheSavedResumeRecipe() async throws {
+        let context = try ControllerContext()
+        defer { context.removeFiles() }
+        let task = context.controller.workspace.slots[1], other = context.controller.workspace.slots[7]
+        let recipes = TaskLaunchRecordStore(root: context.root)
+        let previous = launchConfiguration(context), accepted = UUID().uuidString
+        try recipes.save(previous, for: task.id)
+        try recipes.save(launchConfiguration(context), for: other.id)
+        let base = Date().addingTimeInterval(-5)
+        try StatusEventInbox.publish(.init(taskID: task.id, state: .running, at: base, provider: "codex",
+            sessionID: accepted, eventName: "SessionStart"), root: context.root)
+        await context.controller.pollStatusEvents()
+        XCTAssertEqual(try context.store.load().state.slots[1].sessionID, accepted)
+        XCTAssertEqual(try recipes.record(for: task.id)?.configuration.resumeSessionID, accepted)
+        let recipeBytes = try Data(contentsOf: recipes.fileURL)
+
+        for event in [
+            AgentStatusEvent(taskID: task.id, state: .unknown, at: base.addingTimeInterval(1), provider: "codex",
+                sessionID: previous.resumeSessionID, eventName: "SessionEnd"),
+            AgentStatusEvent(taskID: task.id, state: .ready, at: base.addingTimeInterval(-1), provider: "codex",
+                sessionID: accepted, eventName: "Stop"),
+            AgentStatusEvent(taskID: other.id, state: .running, at: base.addingTimeInterval(2), provider: "codex",
+                sessionID: accepted, eventName: "SessionStart")
+        ] { try StatusEventInbox.publish(event, root: context.root) }
+        await context.controller.pollStatusEvents()
+
+        XCTAssertEqual(context.controller.workspace.slots[1].sessionID, accepted)
+        XCTAssertEqual(context.controller.workspace.slots[7].sessionID, "")
+        XCTAssertEqual(try Data(contentsOf: recipes.fileURL), recipeBytes,
+                       "Old timestamps, old sessions and a session already owned by another task must not write recipes.")
+    }
+
+    @MainActor
+    func testManualStatusDoesNotRewriteTheSavedLaunchSession() async throws {
+        let context = try ControllerContext()
+        defer { context.removeFiles() }
+        let task = context.controller.workspace.slots[1]
+        let base = Date().addingTimeInterval(-3), liveSession = UUID().uuidString
+        try StatusEventInbox.publish(.init(taskID: task.id, state: .running, at: base, provider: "codex",
+            sessionID: liveSession, eventName: "SessionStart"), root: context.root)
+        await context.controller.pollStatusEvents()
+        let recipes = TaskLaunchRecordStore(root: context.root)
+        let explicitlyConfigured = launchConfiguration(context)
+        try recipes.save(explicitlyConfigured, for: task.id)
+        let bytes = try Data(contentsOf: recipes.fileURL)
+        try StatusEventInbox.publish(.init(taskID: task.id, state: .waiting, at: base.addingTimeInterval(1),
+            provider: "manual", eventName: "Manual"), root: context.root)
+
+        await context.controller.pollStatusEvents()
+
+        XCTAssertEqual(context.controller.workspace.slots[1].stateSource, "手动标记")
+        XCTAssertEqual(context.controller.workspace.slots[1].sessionID, liveSession)
+        XCTAssertEqual(try Data(contentsOf: recipes.fileURL), bytes,
+                       "A manual state change does not authorize replacing an explicitly configured resume session.")
+    }
+
+    @MainActor
+    func testAcceptedSessionRecipeWaitsForSuccessfulWorkspacePersistence() async throws {
+        let context = try ControllerContext()
+        defer { context.removeFiles() }
+        let task = context.controller.workspace.slots[1]
+        let recipes = TaskLaunchRecordStore(root: context.root), session = UUID().uuidString
+        try recipes.save(launchConfiguration(context), for: task.id)
+        let recipeBytes = try Data(contentsOf: recipes.fileURL)
+        let workspaceBytes = try Data(contentsOf: context.store.stateFile)
+        let event = AgentStatusEvent(taskID: task.id, state: .running, provider: "codex",
+            sessionID: session, eventName: "SessionStart")
+        try StatusEventInbox.publish(event, root: context.root)
+        try FileManager.default.removeItem(at: context.store.stateFile)
+        try FileManager.default.createDirectory(at: context.store.stateFile, withIntermediateDirectories: false)
+
+        await context.controller.pollStatusEvents()
+
+        XCTAssertEqual(try Data(contentsOf: recipes.fileURL), recipeBytes)
+        XCTAssertEqual(context.controller.workspace.slots[1].sessionID, "")
+        let pending = try await StatusEventInbox(root: context.root).read()
+        XCTAssertEqual(pending.map(\.event.id), [event.id])
+        try FileManager.default.removeItem(at: context.store.stateFile)
+        try workspaceBytes.write(to: context.store.stateFile)
+        await context.controller.pollStatusEvents()
+        XCTAssertEqual(try context.store.load().state.slots[1].sessionID, session)
+        XCTAssertEqual(try recipes.record(for: task.id)?.configuration.resumeSessionID, session)
+    }
+
+    @MainActor
+    func testAcceptedTranscriptUpdatesTheRecipeWhileKeepingTheSessionRecordSource() async throws {
+        let context = try ControllerContext()
+        defer { context.removeFiles() }
+        let task = context.controller.workspace.slots[1], session = UUID().uuidString
+        let recipes = TaskLaunchRecordStore(root: context.root)
+        try recipes.save(launchConfiguration(context), for: task.id)
+        try StatusEventInbox.publish(.init(taskID: task.id, state: .running, provider: "codex",
+            sessionID: session, eventName: "Transcript"), root: context.root)
+
+        await context.controller.pollStatusEvents()
+
+        XCTAssertEqual(context.controller.workspace.slots[1].stateSource, "Codex 会话记录")
+        XCTAssertEqual(try recipes.record(for: task.id)?.configuration.resumeSessionID, session)
+    }
+
+    @MainActor
     func testFailedWorkspaceSaveRetainsHookForRetryWithoutFalseAlert() async throws {
         let context = try ControllerContext()
         defer { context.removeFiles() }

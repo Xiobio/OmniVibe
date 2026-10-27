@@ -1478,11 +1478,15 @@ final class ApplicationController: ObservableObject {
             guard !stopping, !batch.isEmpty else { return }
             var updated = workspace
             var changed = false
+            var acceptedSessionTasks = Set<UUID>()
             var attention: [UUID: AudioCue] = [:]
             for item in batch {
                 let previous = updated.slots.first { $0.id == item.event.taskID }
                 if try updated.apply(item.event) {
                     changed = true
+                    if ["claude", "codex"].contains(item.event.provider), UUID(uuidString: item.event.sessionID) != nil {
+                        acceptedSessionTasks.insert(item.event.taskID)
+                    }
                     if let slot = updated.slots.first(where: { $0.id == item.event.taskID }) {
                         if slot.unread && (previous?.unread != true || previous?.agentState != slot.agentState) {
                             switch slot.agentState {
@@ -1497,7 +1501,7 @@ final class ApplicationController: ObservableObject {
             }
             if changed {
                 try persist(updated)
-                for slot in workspace.slots where !slot.sessionID.isEmpty {
+                for slot in workspace.slots where acceptedSessionTasks.contains(slot.id) {
                     do { try taskLaunchRecords.updateSession(taskID: slot.id, provider: slot.agentProvider, sessionID: slot.sessionID) }
                     catch { sessionLinkWarning = error.localizedDescription }
                 }

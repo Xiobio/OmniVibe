@@ -56,7 +56,7 @@ https://github.com/user-attachments/assets/a795d7f8-cdca-4ec2-8f01-de79e9c18142
 
 ## 快速开始
 
-**macOS 原生开发预览：** 按原版移植透明悬浮入口、装备轮盘、主题图录与配装，复用原有 13 套主题素材；提供任务启动与续接、CLI 状态连接、原主题音效和可选窗口预览。在 Mac 上执行 `./scripts/macos/run.sh`；需 macOS 13+、Swift 5.9+ 工具链，窗口控制需辅助功能权限，窗口预览需 macOS 14+ 及屏幕录制权限。Mac 预览包使用 Apple Development 签名、尚未公证；正式公开分发仍需 Developer ID 签名、公证与独立系统验收。本次 Mac 改动不改变现有 Windows 版本。[macOS 开发与限制](docs/macos-development.md)
+**macOS 原生开发预览：** [下载 Apple Silicon 安装包](https://github.com/Xiobio/OmniVibe/releases/tag/macos-preview-20261027)。 按原版移植透明悬浮入口、装备轮盘、主题图录与配装，复用原有 13 套主题素材；提供任务启动与续接、CLI 状态连接、原主题音效和可选窗口预览。在 Mac 上执行 `./scripts/macos/run.sh`；运行需 macOS 13+，源码构建需 Xcode 16+（macOS 15 SDK），窗口控制需辅助功能权限，窗口预览需 macOS 14+ 及屏幕录制权限。Mac 预览包使用 Apple Development 签名、尚未公证；正式公开分发仍需 Developer ID 签名、公证与独立系统验收。本次 Mac 改动不改变现有 Windows 版本。[macOS 开发与限制](docs/macos-development.md)
 
 **Mac 悬浮入口：** 核心点击区域固定为 54 pt，悬停展开 / 收起时保持原屏幕锚点，只有周围装备展开。靠近屏幕边缘时，轮盘向可用区域偏心展开，并以连接线对应原核心；槽位保持可见、可点击。展开轮盘大小仍沿用已有设置，13 套主题和 117 件器物整图等比缩放。
 

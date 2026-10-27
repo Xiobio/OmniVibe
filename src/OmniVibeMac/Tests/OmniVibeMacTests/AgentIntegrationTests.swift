@@ -1,5 +1,6 @@
 import Foundation
 import XCTest
+import OmniVibeCore
 @testable import OmniVibeMac
 
 final class AgentIntegrationTests: XCTestCase {
@@ -204,6 +205,37 @@ final class AgentIntegrationTests: XCTestCase {
         }
         XCTAssertEqual(try Data(contentsOf: config), original)
         XCTAssertEqual(try FileManager.default.contentsOfDirectory(atPath: folder.path), ["config.toml"])
+    }
+
+    func testPublishingAnOldSessionHookOnlyEnqueuesAndCannotRewriteTheResumeRecipe() throws {
+        let folder = FileManager.default.temporaryDirectory.appendingPathComponent("OmniVibeHookRecipeTests-\(UUID())")
+        defer { try? FileManager.default.removeItem(at: folder) }
+        let currentSession = UUID().uuidString, oldSession = UUID().uuidString
+        let window = WindowIdentity(processID: 123, processStartedAt: Date(), bundleIdentifier: "com.example.terminal",
+            applicationName: "Terminal", title: "Exact task")
+        var workspace = WorkspaceState()
+        try workspace.bind(window, to: 2)
+        let task = workspace.slots[1].id
+        _ = try workspace.apply(.init(taskID: task, state: .running, provider: "codex",
+            sessionID: currentSession, eventName: "SessionStart"))
+        let store = WorkspaceStore(root: folder)
+        try store.save(workspace)
+        let recipes = TaskLaunchRecordStore(root: folder)
+        try recipes.save(.init(mode: .codex, projectDirectory: folder.path, executablePath: "/bin/echo",
+            resumeSessionID: currentSession), for: task)
+        let recipeBytes = try Data(contentsOf: recipes.fileURL)
+        let workspaceBytes = try Data(contentsOf: store.stateFile)
+        let body = "private payload must never be persisted"
+        let payload = try JSONSerialization.data(withJSONObject: ["hook_event_name": "SessionEnd",
+            "session_id": oldSession, "prompt": body])
+
+        let eventURL = try XCTUnwrap(AgentCommandLine.publishHook(provider: "codex", taskID: task, payload: payload, root: folder))
+
+        let bytes = try Data(contentsOf: eventURL)
+        XCTAssertEqual(try JSONDecoder().decode(AgentStatusEvent.self, from: bytes).sessionID, oldSession)
+        XCTAssertFalse(String(decoding: bytes, as: UTF8.self).contains(body))
+        XCTAssertEqual(try Data(contentsOf: recipes.fileURL), recipeBytes)
+        XCTAssertEqual(try Data(contentsOf: store.stateFile), workspaceBytes)
     }
 
     private func assertObserverCommand(_ command: String, provider: AgentProvider,

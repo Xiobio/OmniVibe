@@ -480,6 +480,7 @@ final class TerminalProfileApplicationService: ObservableObject {
             }
             guard temporary.isEmpty else { throw TerminalProfileApplicationError.needsBaselineSave(temporary.count) }
             for entry in backup?.manualBaselines ?? [] {
+                try verifyNativeProfile(entry, session: session)
                 guard snapshot.persistent(entry.persistentProfile),
                       entry.appearance.matches(try backend.appearance(profile: entry.persistentProfile, tab: nil)) else {
                     throw TerminalProfileApplicationError.recoveryBaselineMismatch
@@ -541,6 +542,7 @@ final class TerminalProfileApplicationService: ObservableObject {
             guard var backup = try loadBackup() else { throw TerminalProfileApplicationError.noBackup }
             try ensureSession(backup.session)
             for entry in backup.manualBaselines ?? [] {
+                try verifyNativeProfile(entry, session: backup.session)
                 guard entry.appearance.matches(try backend.appearance(profile: entry.persistentProfile, tab: nil)) else {
                     throw TerminalProfileApplicationError.recoveryBaselineMismatch
                 }
@@ -588,6 +590,7 @@ final class TerminalProfileApplicationService: ObservableObject {
         private func manualBaseline(_ tab: TerminalProfileTabSnapshot, session: String,
                                     snapshot: TerminalProfileApplicationSnapshot) throws -> TerminalRecoveryBaselineEvidence? {
             guard let entry = try baselines.resolve(tab, session: session, profiles: snapshot.profiles) else { return nil }
+            try verifyNativeProfile(entry, session: session)
             let current = try backend.appearance(profile: tab.profile, tab: tab.tab)
             let saved = try backend.appearance(profile: entry.persistentProfile, tab: nil)
             try ensureSession(session)
@@ -595,6 +598,14 @@ final class TerminalProfileApplicationService: ObservableObject {
                 throw TerminalProfileApplicationError.recoveryBaselineMismatch
             }
             return entry
+        }
+
+        private func verifyNativeProfile(_ entry: TerminalRecoveryBaselineEvidence, session: String) throws {
+            guard entry.origin == .nativeCopy else { return }
+            try ensureSession(session)
+            let liveData = try profilePreferences.profileData(named: entry.persistentProfile.name)
+            try ensureSession(session)
+            try baselines.verifyNativeProfile(entry, liveData: liveData)
         }
 
         private func track(_ actual: TerminalProfileTabSnapshot, in backup: inout Backup) {
@@ -1020,7 +1031,7 @@ enum TerminalProfileApplicationError: LocalizedError {
     case recoveryRequired, verificationFailed, workerRequired, scriptFailed(Int)
     case applyFailed(String, Int), restoreIncomplete(Int)
     case invalidRecoveryBaseline, recoveryBaselineMismatch, baselineMetadataUnavailable
-    case nativeCopyUnsupported, nativeCopyNotPersisted, nativeCopyVerificationFailed
+    case nativeCopyUnsupported, nativeCopyNotPersisted, nativeCopyVerificationFailed, nativeCopyChanged
 
     var errorDescription: String? {
         let localizedSource: String? = {
@@ -1041,6 +1052,7 @@ enum TerminalProfileApplicationError: LocalizedError {
             case .nativeCopyUnsupported: return "当前 Terminal 未完成原配置的原生复制，原标签页尚未切换。可稍后重试自动备份；原窗口和已有备份均保留。"
             case .nativeCopyNotPersisted: return "Terminal 的原配置副本尚未持久保存或无法完整读取，尚未切换主题。请稍后重试，原窗口和已有备份均保留。"
             case .nativeCopyVerificationFailed: return "原配置副本的身份、完整文件、配色或字体未通过核验，尚未切换主题。原窗口和已有备份均保留，可重试自动备份。"
+            case .nativeCopyChanged: return "原生恢复配置已被修改，与完整备份不一致。已停止切换或恢复，完整备份仍保留。请先恢复该备份配置后重试。"
             case .originalProfileUnavailable: return "原终端配置已改名或删除，无法保证恢复；已停止切换并保留备份。"
             case .tabMoved: return "已有备份的标签页已移到其他窗口。请先移回原窗口并恢复原配置，再重新应用主题。"
             case .invalidBackup: return "原终端配置备份无法安全读取，已保留原文件并停止修改。"

@@ -62,6 +62,7 @@ struct TaskLaunchRecord: Codable, Equatable, Identifiable, Sendable {
 struct TaskLaunchRecordStore {
     let root: URL
     var fileURL: URL { root.appendingPathComponent("task-launches.json") }
+    var lockURL: URL { root.appendingPathComponent(".task-launches.lock") }
 
     init(root: URL = WorkspaceStore().root) { self.root = root }
 
@@ -80,27 +81,64 @@ struct TaskLaunchRecordStore {
     func save(_ configuration: TaskLaunchConfiguration, for taskID: UUID, at date: Date = Date()) throws {
         _ = try configuration.validated(checkFiles: false)
         guard date.timeIntervalSince1970.isFinite else { throw TaskLaunchError.invalidStore }
-        var records = try load().filter { $0.id != taskID }
-        records.append(TaskLaunchRecord(id: taskID, configuration: configuration, updatedAt: date))
-        records.sort { $0.updatedAt > $1.updatedAt }
-        try TaskLaunchMetadataFile.save(Array(records.prefix(64)), to: fileURL)
+        try transaction { records in
+            records.removeAll { $0.id == taskID }
+            records.append(TaskLaunchRecord(id: taskID, configuration: configuration, updatedAt: date))
+            return true
+        }
     }
 
     func updateSession(taskID: UUID, provider: String, sessionID: String) throws {
-        guard UUID(uuidString: sessionID) != nil,
-              var record = try record(for: taskID), record.configuration.mode.rawValue == provider else { return }
-        record.configuration.resumeSessionID = sessionID
-        try save(record.configuration, for: taskID)
+        guard UUID(uuidString: sessionID) != nil else { return }
+        try transaction { records in
+            guard let index = records.firstIndex(where: { $0.id == taskID }),
+                  records[index].configuration.mode.rawValue == provider else { return false }
+            records[index].configuration.resumeSessionID = sessionID
+            records[index].updatedAt = Date()
+            return true
+        }
     }
 
     func transfer(from oldTaskID: UUID, to newTaskID: UUID) throws {
-        guard oldTaskID != newTaskID, let original = try record(for: oldTaskID) else { return }
-        try save(original.configuration, for: newTaskID)
+        guard oldTaskID != newTaskID else { return }
+        try transaction { records in
+            guard let original = records.first(where: { $0.id == oldTaskID }) else { return false }
+            records.removeAll { $0.id == newTaskID }
+            records.append(TaskLaunchRecord(id: newTaskID, configuration: original.configuration, updatedAt: Date()))
+            return true
+        }
     }
 
     func remove(_ taskID: UUID) throws {
-        let records = try load().filter { $0.id != taskID }
-        try TaskLaunchMetadataFile.save(records, to: fileURL)
+        try transaction { records in
+            records.removeAll { $0.id == taskID }
+            return true
+        }
+    }
+
+    /// The CLI and GUI are separate processes. Atomic replacement protects
+    /// readers, while this stable sidecar lock protects the entire read/modify/
+    /// write transaction. Never lock the JSON inode itself: replacement would
+    /// leave later writers locking a different inode.
+    private func transaction(_ change: (inout [TaskLaunchRecord]) throws -> Bool) throws {
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        let descriptor = Darwin.open(lockURL.path, O_CREAT | O_RDWR | O_NOFOLLOW | O_CLOEXEC, mode_t(0o600))
+        guard descriptor >= 0 else { throw TaskLaunchError.invalidStore }
+        defer { Darwin.close(descriptor) }
+        var information = stat()
+        guard fstat(descriptor, &information) == 0,
+              information.st_mode & mode_t(S_IFMT) == mode_t(S_IFREG),
+              information.st_uid == geteuid(), information.st_mode & 0o077 == 0 else {
+            throw TaskLaunchError.invalidStore
+        }
+        while flock(descriptor, LOCK_EX) != 0 {
+            guard errno == EINTR else { throw TaskLaunchError.invalidStore }
+        }
+        defer { _ = flock(descriptor, LOCK_UN) }
+        var records = try load()
+        guard try change(&records) else { return }
+        records.sort { $0.updatedAt > $1.updatedAt }
+        try TaskLaunchMetadataFile.save(Array(records.prefix(64)), to: fileURL)
     }
 }
 

@@ -237,6 +237,7 @@
     "原窗口只是暂时不可访问，尚不能确认已经关闭。请先重连原窗口，或在空槽位新建任务。": "The original window is temporarily inaccessible; it may still be open. Reconnect it first, or create a task in an empty slot.",
     "原终端配置备份无法安全读取，已保留原文件并停止修改。": "The original terminal profile backup could not be safely read. Its file is retained and changes have stopped.",
     "原终端配置已改名或删除，无法保证恢复；已停止切换并保留备份。": "The original terminal profile was renamed or deleted, so restoration cannot be guaranteed. Switching stopped and the backup is retained.",
+    "原生恢复配置已被修改，与完整备份不一致。已停止切换或恢复，完整备份仍保留。请先恢复该备份配置后重试。": "The native recovery profile was modified and no longer matches the complete backup. Switching or restoration has stopped, and the complete backup is retained. Restore that backup profile before trying again.",
     "原配置副本的身份、完整文件、配色或字体未通过核验，尚未切换主题。原窗口和已有备份均保留，可重试自动备份。": "The copied original profile failed verification of its identity, complete profile data, colors, or font. The theme has not been switched. The original windows and existing backups are retained; you can retry automatic backup.",
     "原配置已恢复，但备份未能清理；备份仍保留。": "The original profile was restored, but the backup could not be removed. It is retained.",
     "原配色已恢复，但未能清理备份；备份仍保留。": "The original colors were restored, but the backup could not be removed. It is retained.",

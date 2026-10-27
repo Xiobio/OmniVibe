@@ -62,6 +62,57 @@ final class AppearanceTerminalProfileTests: XCTestCase {
     }
 
     @MainActor
+    func testRestorePreferenceFailureKeepsLinkAndBackupWithoutContactingTerminal() async throws {
+        let (root, catalog, fake, service) = try fixture()
+        let model = AppearanceModel(root: root, terminalProfileService: service, terminalCatalog: { catalog })
+        model.applyFullTerminalTheme(); await settle(model)
+        let backup = try Data(contentsOf: service.backupURL)
+        let originalProfile = fake.current.profile
+        let appearanceFile = root.appendingPathComponent("appearance.json")
+        let preferencesBefore = try Data(contentsOf: appearanceFile)
+        try FileManager.default.removeItem(at: appearanceFile)
+        try FileManager.default.createDirectory(at: appearanceFile, withIntermediateDirectories: true)
+        let retained = appearanceFile.appendingPathComponent("retained-preferences.json")
+        try preferencesBefore.write(to: retained)
+        let calls = fake.calls
+
+        model.restoreFullTerminalTheme(); await settle(model)
+
+        XCTAssertTrue(model.terminalProfileLinked)
+        XCTAssertEqual(fake.calls, calls, "A failed durable-off write must stop before any Terminal recovery request")
+        XCTAssertEqual(fake.current.profile, originalProfile)
+        XCTAssertTrue(service.hasBackup)
+        XCTAssertEqual(try Data(contentsOf: service.backupURL), backup)
+        XCTAssertEqual(try Data(contentsOf: retained), preferencesBefore)
+        XCTAssertTrue(model.assetWarning?.contains("外观设置未能保存") == true)
+        XCTAssertTrue(model.terminalProfileStatus?.contains("操作未完成") == true)
+        XCTAssertFalse(model.terminalProfileStatus?.contains("完整主题联动已关闭") == true)
+    }
+
+    @MainActor
+    func testRestorePersistsLinkOffBeforeProfileWriteAndReloadedThemeChangesStayNative() async throws {
+        let (root, catalog, fake, service) = try fixture()
+        let model = AppearanceModel(root: root, terminalProfileService: service, terminalCatalog: { catalog })
+        model.applyFullTerminalTheme(); await settle(model)
+        fake.appearanceFile = root.appendingPathComponent("appearance.json")
+
+        model.restoreFullTerminalTheme(); await settle(model)
+
+        XCTAssertEqual(fake.linksObservedBeforeRestore, [false])
+        XCTAssertFalse(model.terminalProfileLinked)
+        XCTAssertEqual(try preferences(root)["terminalProfileLinked"] as? Bool, false)
+        XCTAssertFalse(service.hasBackup)
+        let calls = fake.calls
+        let reloaded = AppearanceModel(root: root, terminalProfileService: service, terminalCatalog: { catalog })
+        reloaded.setTheme("midnight")
+        XCTAssertFalse(reloaded.terminalProfileLinked)
+        XCTAssertEqual(reloaded.themeSlug, "midnight")
+        XCTAssertEqual(fake.calls, calls)
+        XCTAssertEqual(fake.current.profile.name, "Original")
+        XCTAssertEqual(try preferences(root)["terminalProfileLinked"] as? Bool, false)
+    }
+
+    @MainActor
     func testLinkedCombinedDraftAppliesOneMinimalProfileBeforePublishingBothFields() async throws {
         let (root, catalog, fake, service) = try fixture()
         let model = AppearanceModel(root: root, terminalProfileService: service, terminalCatalog: { catalog })
@@ -236,18 +287,27 @@ private final class ProfileUIBackend: TerminalProfileApplicationBackend, @unchec
         profile: .init(id: 1, name: "Original"), bounds: .init(left: 30, top: 40, right: 830, bottom: 640))
     private var count = 0
     private var targets: [String] = []
+    private var restoreLinks: [Bool?] = []
+    var appearanceFile: URL?
     init(names: [String]) {
         globals = [.init(id: 1, name: "Original")] + names.enumerated().map { .init(id: $0.offset + 2, name: $0.element) }
     }
     var calls: Int { locked { count } }
     var current: TerminalProfileTabSnapshot { locked { state } }
     var writes: [String] { locked { targets } }
+    var linksObservedBeforeRestore: [Bool?] { locked { restoreLinks } }
     func remove(name: String) { locked { globals.removeAll { $0.name == name } } }
     func makeOriginalTemporary() { locked { state.profile.id = 9999 } }
     func sessionIdentifier() throws -> String { locked { count += 1; return "profile-ui-session" } }
     func snapshot() throws -> TerminalProfileApplicationSnapshot { locked { count += 1; return .init(profiles: globals, tabs: [state]) } }
     func setProfile(_ profile: TerminalPersistentProfile, tab: TerminalProfileTabKey) throws {
-        locked { count += 1; targets.append(profile.name); state.profile = .init(id: 1000 + count, name: profile.name) }
+        locked {
+            if profile.name == "Original", let appearanceFile {
+                let values = (try? JSONSerialization.jsonObject(with: Data(contentsOf: appearanceFile))) as? [String: Any]
+                restoreLinks.append(values?["terminalProfileLinked"] as? Bool)
+            }
+            count += 1; targets.append(profile.name); state.profile = .init(id: 1000 + count, name: profile.name)
+        }
     }
     func setBounds(_ bounds: TerminalProfileWindowBounds, windowID: Int) throws { locked { count += 1; state.bounds = bounds } }
     private func locked<T>(_ body: () -> T) -> T { lock.lock(); defer { lock.unlock() }; return body() }

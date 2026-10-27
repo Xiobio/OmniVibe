@@ -1,4 +1,5 @@
 import Foundation
+import Darwin
 import XCTest
 import OmniVibeCore
 @testable import OmniVibeMac
@@ -43,6 +44,63 @@ final class TaskLaunchTests: XCTestCase {
         try store.remove(replacement)
         XCTAssertNil(try store.record(for: replacement))
         XCTAssertNotNil(try store.record(for: task))
+    }
+
+    func testConcurrentStoreInstancesKeepEveryLaunchRecipeAndSessionUpdate() throws {
+        let (root, configuration) = try fixture()
+        let tasks = (0..<32).map { _ in UUID() }, sessions = (0..<32).map { _ in UUID().uuidString }
+        let errors = LaunchStoreTestErrors()
+        DispatchQueue.concurrentPerform(iterations: tasks.count) { index in
+            do { try TaskLaunchRecordStore(root: root).save(configuration, for: tasks[index]) }
+            catch { errors.append(error) }
+        }
+        XCTAssertEqual(errors.count, 0)
+        XCTAssertEqual(Set(try TaskLaunchRecordStore(root: root).load().map(\.id)), Set(tasks))
+
+        DispatchQueue.concurrentPerform(iterations: tasks.count) { index in
+            do { try TaskLaunchRecordStore(root: root).updateSession(taskID: tasks[index], provider: "codex", sessionID: sessions[index]) }
+            catch { errors.append(error) }
+        }
+
+        XCTAssertEqual(errors.count, 0)
+        let records = try TaskLaunchRecordStore(root: root).load()
+        XCTAssertEqual(records.count, tasks.count)
+        for index in tasks.indices {
+            XCTAssertEqual(records.first(where: { $0.id == tasks[index] })?.configuration.resumeSessionID, sessions[index])
+        }
+    }
+
+    func testSessionUpdateWaitsForTheSharedLockAndRereadsTheLatestRecipe() throws {
+        let (root, configuration) = try fixture()
+        let store = TaskLaunchRecordStore(root: root), task = UUID(), session = UUID().uuidString
+        try store.save(configuration, for: task)
+        let descriptor = Darwin.open(store.lockURL.path, O_RDWR | O_NOFOLLOW | O_CLOEXEC)
+        XCTAssertGreaterThanOrEqual(descriptor, 0)
+        guard descriptor >= 0 else { return }
+        defer { _ = flock(descriptor, LOCK_UN); Darwin.close(descriptor) }
+        XCTAssertEqual(flock(descriptor, LOCK_EX), 0)
+        let started = DispatchSemaphore(value: 0), finished = DispatchSemaphore(value: 0)
+        let errors = LaunchStoreTestErrors()
+        DispatchQueue.global().async {
+            started.signal()
+            defer { finished.signal() }
+            do { try TaskLaunchRecordStore(root: root).updateSession(taskID: task, provider: "codex", sessionID: session) }
+            catch { errors.append(error) }
+        }
+        XCTAssertEqual(started.wait(timeout: .now() + 2), .success)
+        XCTAssertEqual(finished.wait(timeout: .now() + 0.05), .timedOut,
+                       "Every store instance must participate in the same per-file transaction lock.")
+        var replacement = configuration
+        replacement.projectDirectory = root.appendingPathComponent("latest project").path
+        // Model the writer currently holding the shared lock. A waiting update
+        // must read these bytes after locking, rather than restore a stale cwd.
+        try TaskLaunchMetadataFile.save([TaskLaunchRecord(id: task, configuration: replacement, updatedAt: Date())], to: store.fileURL)
+        XCTAssertEqual(flock(descriptor, LOCK_UN), 0)
+        XCTAssertEqual(finished.wait(timeout: .now() + 2), .success)
+        XCTAssertEqual(errors.count, 0)
+        let updated = try XCTUnwrap(store.record(for: task))
+        XCTAssertEqual(updated.configuration.projectDirectory, replacement.projectDirectory)
+        XCTAssertEqual(updated.configuration.resumeSessionID, session)
     }
 
     func testExecutableResolutionUsesExplicitAbsolutePATHBeforeConventionalDirectoriesWithoutRunningAnything() throws {
@@ -179,6 +237,13 @@ final class TaskLaunchTests: XCTestCase {
         let original = candidate(fake.session.processID, layer: 0)
         XCTAssertFalse(request.matchesCurrentWindow(sessionID: "test-login", serverWindows: [original, original]))
     }
+}
+
+private final class LaunchStoreTestErrors: @unchecked Sendable {
+    private let lock = NSLock()
+    private var values: [Error] = []
+    func append(_ error: Error) { lock.lock(); defer { lock.unlock() }; values.append(error) }
+    var count: Int { lock.lock(); defer { lock.unlock() }; return values.count }
 }
 
 private final class FakeTaskTerminalLaunchBackend: TaskTerminalLaunchBackend, @unchecked Sendable {

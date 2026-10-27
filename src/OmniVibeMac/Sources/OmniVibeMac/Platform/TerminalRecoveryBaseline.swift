@@ -180,6 +180,25 @@ final class TerminalRecoveryBaselineRegistry {
               source.appearance == entry.appearance else { throw TerminalProfileApplicationError.invalidRecoveryBaseline }
     }
 
+    /// A native copy's full settings, including opaque ANSI/background data,
+    /// must still equal the retained archive before it can be used. Property
+    /// list formatting and dictionary order are immaterial; no keys are ignored.
+    func verifyNativeProfile(_ entry: TerminalRecoveryBaselineEvidence, liveData: Data) throws {
+        guard entry.origin == .nativeCopy else { return }
+        try validateArchive(entry)
+        let url = root.appendingPathComponent("TerminalRecoveryProfiles", isDirectory: true).appendingPathComponent(entry.filename)
+        let archivedData = try Self.boundedFile(url, maximum: 2 * 1_048_576)
+        guard Self.digest(archivedData) == entry.sha256,
+              !liveData.isEmpty, liveData.count <= 2 * 1_048_576,
+              let archived = try PropertyListSerialization.propertyList(from: archivedData, format: nil) as? [String: Any],
+              let live = try PropertyListSerialization.propertyList(from: liveData, format: nil) as? [String: Any],
+              live["name"] as? String == entry.persistentProfile.name,
+              live["type"] as? String == "Window Settings",
+              (archived as NSDictionary).isEqual(live as NSDictionary) else {
+            throw TerminalProfileApplicationError.nativeCopyChanged
+        }
+    }
+
     private func load() throws -> Document? {
         guard files.fileExists(atPath: registryURL.path) else { return nil }
         do {

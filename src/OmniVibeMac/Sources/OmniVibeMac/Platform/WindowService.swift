@@ -370,11 +370,11 @@ final class WindowService {
         var role: CFTypeRef?
         guard AXUIElementCopyAttributeValue(entry.element, kAXRoleAttribute as CFString, &role) == .invalidUIElement else { return false }
         if let number = window.platformWindowNumber,
-           WindowSessionIdentity.matches(saved: window.platformSessionID, current: platformSessionID),
-           WindowSessionIdentity.serverWindows()?.contains(where: { $0.number == number && $0.processID == window.processID }) == true {
-            // The AX proxy was rebuilt, while the original WindowServer window
-            // is still alive. Keep the task available for verified reconnect.
-            return false
+           WindowSessionIdentity.matches(saved: window.platformSessionID, current: platformSessionID) {
+            // A rebuilt AX proxy or an unreadable WindowServer inventory does
+            // not prove the original window closed. Preserve binding/journal.
+            return WindowReconnectionMatcher.isClosedAfterInvalidProxy(windowNumber: number,
+                processID: window.processID, server: WindowSessionIdentity.serverWindows())
         }
         return true
     }

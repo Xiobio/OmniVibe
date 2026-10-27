@@ -465,8 +465,21 @@ final class AppearanceModel: ObservableObject {
 
     func restoreFullTerminalTheme() {
         runTerminalOperation(full: true, status: "正在恢复 Terminal 原完整配置…") {
+            // Disable future linking durably before restoration can remove its
+            // recovery backup. A failed preference write must not touch Terminal.
+            do {
+                guard self.persistenceEnabled else {
+                    throw NSError(domain: "OmniVibe.Appearance", code: 2,
+                        userInfo: [NSLocalizedDescriptionKey: "外观设置无法读取或备份，本次保留原文件。"])
+                }
+                try self.writePreferences(selections: self.selections, terminalProfileLinked: false)
+            } catch {
+                self.assetWarning = "外观设置未能保存：\(error.localizedDescription)"
+                throw error
+            }
+            self.terminalProfileLinked = false
             let receipt = try await self.terminalProfileService.restoreLatest()
-            self.terminalProfileLinked = false; self.terminalProfileImportStatus = nil; self.save()
+            self.terminalProfileImportStatus = nil
             if receipt.nativeCopyCount > 0 {
                 return "已恢复 \(receipt.tabCount) 个 Terminal 标签页的原配置，其中 \(receipt.nativeCopyCount) 个使用原生自动备份，\(receipt.manualBaselineCount) 个使用你指定的恢复基准。完整主题联动已关闭。"
             }
@@ -658,10 +671,11 @@ final class AppearanceModel: ObservableObject {
         catch { assetWarning = "外观设置未能保存：\(error.localizedDescription)" }
     }
 
-    private func writePreferences(selections candidate: [String: [String: String]], customImages candidateImages: [String: String]? = nil) throws {
+    private func writePreferences(selections candidate: [String: [String: String]], customImages candidateImages: [String: String]? = nil,
+                                  terminalProfileLinked candidateLink: Bool? = nil) throws {
         let values = Preferences(themeSlug: themeSlug, decorations: decorations, animate: animate,
                                  selections: candidate, customImages: candidateImages ?? customImages,
-                                 soundEnabled: soundEnabled, soundVolume: soundVolume, terminalProfileLinked: terminalProfileLinked,
+                                 soundEnabled: soundEnabled, soundVolume: soundVolume, terminalProfileLinked: candidateLink ?? terminalProfileLinked,
                                  claudeThemeLinked: claudeThemeLinked)
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         let data = try encoder.encode(values)

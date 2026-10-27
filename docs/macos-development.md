@@ -4,7 +4,7 @@ macOS 移植采用 SwiftUI / AppKit / Accessibility，沿用原版透明悬浮�
 
 ## 构建与运行
 
-需要 macOS 13 或以上及支持 Swift 5.9 或以上的 Xcode / Command Line Tools。无需额外下载第三方 Swift 包，在仓库根目录执行：
+运行应用需要 macOS 13 或以上。从源码构建需要 Xcode 16 或更新版本（macOS 15 SDK，Swift 6 工具链），构建机器须满足该 Xcode 版本的系统要求。无需额外下载第三方 Swift 包，在仓库根目录执行：
 
 ```sh
 ./scripts/macos/run.sh

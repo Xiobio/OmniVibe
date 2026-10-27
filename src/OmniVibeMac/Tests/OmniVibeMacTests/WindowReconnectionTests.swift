@@ -6,6 +6,13 @@ import OmniVibeCore
 final class WindowReconnectionTests: XCTestCase {
     private let frame = WindowFrame(x: -800, y: 40, width: 720, height: 480)
 
+    func testInvalidProxyWithUnavailableServerInventoryDoesNotProveClosure() {
+        XCTAssertFalse(WindowReconnectionMatcher.isClosedAfterInvalidProxy(windowNumber: 80, processID: 120, server: nil))
+        XCTAssertFalse(WindowReconnectionMatcher.isClosedAfterInvalidProxy(windowNumber: 80, processID: 120, server: [cg()]))
+        XCTAssertTrue(WindowReconnectionMatcher.isClosedAfterInvalidProxy(windowNumber: 80, processID: 120, server: []))
+        XCTAssertTrue(WindowReconnectionMatcher.isClosedAfterInvalidProxy(windowNumber: 80, processID: 120, server: [cg(pid: 121)]))
+    }
+
     private func ax(_ index: Int = 0, pid: Int32 = 120, title: String = "Project", frame: WindowFrame? = nil) -> AccessibilityWindowCandidate {
         AccessibilityWindowCandidate(index: index, processID: pid, title: title, frame: frame ?? self.frame)
     }

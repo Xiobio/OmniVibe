@@ -351,6 +351,52 @@ final class TerminalAutomaticRecoveryTests: XCTestCase {
     }
 
     @MainActor
+    func testNativeANSIChangeStopsApplyBeforeSwitchingAndRetainsOriginalArchive() async throws {
+        let context = try fixture()
+        _ = try await context.service.prepareAutomaticRecoveryBaselines()
+        let archive = try XCTUnwrap(try FileManager.default.contentsOfDirectory(at: context.root.appendingPathComponent("TerminalRecoveryProfiles"), includingPropertiesForKeys: nil).first)
+        let originalBytes = try Data(contentsOf: archive)
+        context.preferences.changedANSI = true
+        do { _ = try await context.service.apply(profileName: themeName); XCTFail("Hidden ANSI changes must be checked before switching") }
+        catch TerminalProfileApplicationError.nativeCopyChanged {}
+        XCTAssertTrue(context.backend.profileWrites.isEmpty)
+        XCTAssertEqual(context.backend.boundsWrites, 0)
+        XCTAssertFalse(context.service.hasBackup)
+        XCTAssertEqual(try Data(contentsOf: archive), originalBytes)
+    }
+
+    @MainActor
+    func testNativeBackgroundChangeStopsRestoreAndPreservesBackupForRetry() async throws {
+        let context = try fixture()
+        _ = try await context.service.prepareAutomaticRecoveryBaselines()
+        _ = try await context.service.apply(profileName: themeName)
+        let backup = try Data(contentsOf: context.service.backupURL)
+        let writes = context.backend.profileWrites.count
+        context.preferences.changedBackground = true
+        do { _ = try await context.service.restoreLatest(); XCTFail("Changed background cannot be called a complete restore") }
+        catch TerminalProfileApplicationError.nativeCopyChanged {}
+        XCTAssertEqual(context.backend.profileWrites.count, writes)
+        XCTAssertEqual(try Data(contentsOf: context.service.backupURL), backup)
+        XCTAssertTrue(context.service.hasBackup)
+        context.preferences.changedBackground = false
+        _ = try await context.service.restoreLatest()
+        XCTAssertFalse(context.service.hasBackup)
+    }
+
+    @MainActor
+    func testNativeCompleteComparisonIgnoresOnlyPropertyListEncodingAndDictionaryOrder() async throws {
+        let context = try fixture()
+        _ = try await context.service.prepareAutomaticRecoveryBaselines()
+        let archive = try XCTUnwrap(try FileManager.default.contentsOfDirectory(at: context.root.appendingPathComponent("TerminalRecoveryProfiles"), includingPropertiesForKeys: nil).first)
+        let originalBytes = try Data(contentsOf: archive)
+        context.preferences.binarySerialization = true
+        _ = try await context.service.apply(profileName: themeName)
+        _ = try await context.service.restoreLatest()
+        XCTAssertEqual(try Data(contentsOf: archive), originalBytes)
+        XCTAssertFalse(context.service.hasBackup)
+    }
+
+    @MainActor
     func testAppearanceModelOnlyCopiesAfterExplicitAutomaticBackupAction() async throws {
         let context = try fixture()
         let model = AppearanceModel(root: context.root, terminalProfileService: context.service)
@@ -483,6 +529,9 @@ private final class AutomaticRecoveryPreferences: TerminalProfilePreferencesRead
     var failure: FailureMode?
     var omitFont = false
     var omitColors = false
+    var changedANSI = false
+    var changedBackground = false
+    var binarySerialization = false
     var requests: [String] = []
     var generatedByName: [String: Data] = [:]
 
@@ -513,7 +562,9 @@ private final class AutomaticRecoveryPreferences: TerminalProfilePreferencesRead
         if omitColors {
             for key in ["BackgroundColor", "TextColor", "TextBoldColor", "CursorColor"] { profile.removeValue(forKey: key) }
         }
-        let data = try PropertyListSerialization.data(fromPropertyList: profile, format: .xml, options: 0)
+        if changedANSI { profile["ANSIRedColor"] = template["BackgroundColor"] }
+        if changedBackground { profile["BackgroundImagePath"] = "/example/changed-background.png" }
+        let data = try PropertyListSerialization.data(fromPropertyList: profile, format: binarySerialization ? .binary : .xml, options: 0)
         generatedByName[named] = data
         return data
     }

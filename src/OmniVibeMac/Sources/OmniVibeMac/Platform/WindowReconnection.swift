@@ -21,6 +21,14 @@ struct WindowServerCandidate: Equatable, Sendable {
 }
 
 enum WindowReconnectionMatcher {
+    /// Only call after the cached AX object is invalid and the saved process /
+    /// session identity is verified. An unreadable CG inventory is unknown.
+    static func isClosedAfterInvalidProxy(windowNumber: UInt32, processID: Int32,
+                                          server: [WindowServerCandidate]?) -> Bool {
+        guard let server else { return false }
+        return !server.contains { $0.number == windowNumber && $0.processID == processID }
+    }
+
     /// This establishes only the current AX-to-CG association. Geometry must
     /// uniquely identify one AX window and one ordinary CG window for this PID.
     /// A visible CG title is an additional exact check, never a fuzzy lookup.
