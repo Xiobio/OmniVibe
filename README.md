@@ -70,11 +70,11 @@ https://github.com/user-attachments/assets/a795d7f8-cdca-4ec2-8f01-de79e9c18142
 
 **Mac 槽位管理：** 拖动图录卡片主预览区或轮盘任务到其他槽位，按插入顺序排序；图录右键还可仅移到空槽位。轮盘任务拖出区域并继续拖远后松手，或点击 × / 使用右键菜单，可移出管理并保留原窗口。配装、状态、未读及 Agent 会话跟随任务 UUID；操作失败会保留绑定并说明原因。[详细操作](docs/macos-development.md#调整槽位与移出管理)
 
-**Mac Terminal 主题：** 设置中可导出 13 主题 × 装饰 / 简洁共 26 套完整静态 `.terminal` profile，包含 16 色 ANSI、文字 / 光标 / 选区配色、等宽字体和背景图。先在 Terminal 官方设置中导入，再检查并明确应用；无法独立定位的原配置优先通过“自动备份原配置”创建 Terminal 原生副本并登记恢复依据，手工指定完整原导出与独立备份配置作为后备。完整文件备份先于写入，失败记录可重试；检查 / 应用需本人确认自动化权限。未开启联动时普通主题应用只修改 OmniVibe。本机已识别真实导入的 26 套配置，并在两个真实标签页通过自动备份、完整黑神话主题应用和原配置恢复的读后核验；最后一次完整应用 → 恢复已确认两个标签页回到原配置，主题联动关闭。背景图像尚未完成目视验收。不支持动态背景、系统窗口外框或 iTerm 联动。[流程与范围](docs/macos-development.md#apple-terminal-配色)
+**Mac Terminal 主题：** 默认保留系统 Terminal 原生无皮肤外观，轮盘换肤不修改终端。可选的实验性主题功能在设置中可导出 13 主题 × 装饰 / 简洁共 26 套完整静态 `.terminal` profile，包含 16 色 ANSI、文字 / 光标 / 选区配色、等宽字体和背景图。先在 Terminal 官方设置中导入，再检查并明确应用；无法独立定位的原配置优先通过“自动备份原配置”创建 Terminal 原生副本并登记恢复依据，手工指定完整原导出与独立备份配置作为后备。完整文件备份先于写入，失败记录可重试；检查 / 应用需本人确认自动化权限。未开启联动时普通主题应用只修改 OmniVibe。本机已识别真实导入的 26 套配置，并在两个真实标签页通过自动备份、完整黑神话主题应用和原配置恢复的读后核验；最后一次完整应用 → 恢复已确认两个标签页回到原配置，主题联动关闭。插画背景与部分终端 TUI 的浅色区域可能冲突，推荐使用默认原生外观。不支持动态背景、系统窗口外框或 iTerm 联动。[流程与范围](docs/macos-development.md#apple-terminal-配色)
 
 **Mac 外观与语言：** 可明确生成并联动 Claude Code 官方格式的 `themes/omnivibe.json`，先保留原文件，检测到外部修改时停止覆盖；可恢复原文件，在 Claude 的 `/theme` 选择 OmniVibe。界面提供跟随系统、简体中文和 English，即时切换。窗口预览采用低频静态捕获。
 
-独立交付包位于 `artifacts/macos/delivery/OmniVibe.app`，最终自动检查结果以同目录 `validation.log` 为准，GitHub macOS 预览验证与 Windows CI 均已通过。此前 Lark 曾拒绝窗口操作；当前轮已用原有两个 Terminal 与一个 Lark 窗口完成 3/3 排列及完整原布局恢复，原三槽绑定保留。该结果不保证其他应用或多屏场景。真实 CLI 生命周期及 Terminal 背景图像目视呈现仍需分别验收。[验证记录](docs/macos-development.md#验证)
+独立交付包位于 `artifacts/macos/delivery/OmniVibe.app`，最终自动检查结果以同目录 `validation.log` 为准，GitHub macOS 预览验证与 Windows CI 均已通过。此前 Lark 曾拒绝窗口操作；当前轮已用原有两个 Terminal 与一个 Lark 窗口完成 3/3 排列及完整原布局恢复，原三槽绑定保留。该结果不保证其他应用或多屏场景。真实 CLI 生命周期仍需单独验收；终端插画背景不作为推荐的默认外观。[验证记录](docs/macos-development.md#验证)
 
 **下载开发预览版：[Windows x64 · v0.1.1-preview](https://github.com/Xiobio/OmniVibe/releases/tag/v0.1.1-preview)**。完整解压后运行 `CodeManager.exe`，需要 .NET 10 Windows Desktop Runtime x64。安装、更新与已知限制见[安装说明](docs/project-kit/INSTALL.md)。
 
