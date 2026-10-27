@@ -1,0 +1,19 @@
+name: macOS preview validation
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native-preview:
+    runs-on: macos-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set the source language for UI text assertions
+        # Source-text assertions use Chinese; localization tests select their
+        # own language. This changes only the disposable GitHub runner.
+        run: defaults write NSGlobalDomain AppleLanguages -array zh-Hans en
+      - name: Core tests and native application build
+        run: ./scripts/macos/validate.sh

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key><string>zh_CN</string>
+    <key>CFBundleDisplayName</key><string>OmniVibe</string>
+    <key>CFBundleExecutable</key><string>OmniVibeMac</string>
+    <key>CFBundleIdentifier</key><string>io.github.xiobio.OmniVibe.mac</string>
+    <key>CFBundleIconFile</key><string>OmniVibe</string>
+    <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
+    <key>CFBundleName</key><string>OmniVibe</string>
+    <key>CFBundlePackageType</key><string>APPL</string>
+    <key>CFBundleShortVersionString</key><string>0.1.0</string>
+    <key>CFBundleVersion</key><string>2</string>
+    <key>LSMinimumSystemVersion</key><string>13.0</string>
+    <key>NSHighResolutionCapable</key><true/>
+    <key>NSPrincipalClass</key><string>NSApplication</string>
+    <key>NSAppleEventsUsageDescription</key><string>根据你的操作，OmniVibe 为 Terminal 应用或恢复主题，并创建项目终端、启动或继续你选择的 CLI 任务；不会读取或保存终端正文。</string>
+</dict>
+</plist>

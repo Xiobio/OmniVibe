@@ -56,9 +56,29 @@ https://github.com/user-attachments/assets/a795d7f8-cdca-4ec2-8f01-de79e9c18142
 
 ## 快速开始
 
+**macOS 原生开发预览：** [下载 Apple Silicon 安装包](https://github.com/Xiobio/OmniVibe/releases/tag/macos-preview-20261027)。 按原版移植透明悬浮入口、装备轮盘、主题图录与配装，复用原有 13 套主题素材；提供任务启动与续接、CLI 状态连接、原主题音效和可选窗口预览。在 Mac 上执行 `./scripts/macos/run.sh`；运行需 macOS 13+，源码构建需 Xcode 16+（macOS 15 SDK），窗口控制需辅助功能权限，窗口预览需 macOS 14+ 及屏幕录制权限。Mac 预览包使用 Apple Development 签名、尚未公证；正式公开分发仍需 Developer ID 签名、公证与独立系统验收。本次 Mac 改动不改变现有 Windows 版本。[macOS 开发与限制](docs/macos-development.md)
+
+**Mac 悬浮入口：** 核心点击区域固定为 54 pt，悬停展开 / 收起时保持原屏幕锚点，只有周围装备展开。靠近屏幕边缘时，轮盘向可用区域偏心展开，并以连接线对应原核心；槽位保持可见、可点击。展开轮盘大小仍沿用已有设置，13 套主题和 117 件器物整图等比缩放。
+
+**Mac 快捷键：** 默认 `Option + 1–9` 直达任务，按住 `Option + Q` 指向选择，`Option + 反引号` 排列 / 恢复，`Option + H` 控制入口显隐。设置 → 快捷键可逐项录制组合、停用或恢复默认，也可选择总览优先等预设；切换到另一预设会重置全部自定义与停用项。保存组合、停用或恢复后立即生效；录制期间暂停 OmniVibe 热键，Esc 取消。重复组合、Esc 及含 Command 的 Q / Tab / Space 组合会拒绝，保留原设置。
+
+**Mac 窗口行为：** 切换前先收起管理界面；同号仅在目标窗口正处于最前台时恢复，否则重新进入。Lark 等后台窗口暂不可访问时，明确切换会先核验原进程与确切 CG 窗口，再唤醒并重连原窗口。排列先唤醒所有尚未关闭的不可用窗口，全部确认成功才移动；准备失败或取消时不执行排列移动，避免三窗静默只排两窗。标题栏拖入先恢复原位再保存绑定。均衡排列两窗左右、三窗上二下一且底行满宽，四窗起网格；窗口自身限制可能使排列失败，原因会保留显示。
+
+**Mac 偏好与恢复：** 可保存唤醒方式、收纳后最小化、间距与界面大小，默认 `Option + 滚轮` 循环切换已连接任务；滚轮先预检辅助功能与输入监控权限，未授权不安装监听。窗口变更前写入恢复 journal，重启后可重试恢复；重连用稳定的系统启动 UUID、用户与登录会话，连同原进程和确切窗口身份核验，保留原任务绑定，不按标题猜测。确认关闭的任务进入最多 30 条“最近关闭”：可恢复到空槽或选择具体窗口，也可明确选择“启动／继续…”迁移名称、配装及启动配置；手动移出不归档，并清理启动与会话关联。[偏好与恢复](docs/macos-development.md#窗口偏好滚轮与恢复)
+
+**Mac 启动与会话：** 可保存项目、程序绝对路径和确切会话 UUID；新建 Terminal 窗口后，先确认新 TTY 并持久化任务绑定，再发送启动请求。配置已运行任务只保存，不重复启动；CLI 续接保存的会话，不还原旧进程内存。本地会话自动发现仅提取元数据与白名单状态字段，首次需明确选择；已知 provider + UUID 可自动关联，不读取终端正文或保存对话正文。真实 hooks / notify 优先于会话记录，避免迟到记录覆盖和重复提醒。[启动与继续任务](docs/macos-development.md#启动与继续任务)
+
+**Mac 槽位管理：** 拖动图录卡片主预览区或轮盘任务到其他槽位，按插入顺序排序；图录右键还可仅移到空槽位。轮盘任务拖出区域并继续拖远后松手，或点击 × / 使用右键菜单，可移出管理并保留原窗口。配装、状态、未读及 Agent 会话跟随任务 UUID；操作失败会保留绑定并说明原因。[详细操作](docs/macos-development.md#调整槽位与移出管理)
+
+**Mac Terminal 主题：** 默认保留系统 Terminal 原生无皮肤外观，轮盘换肤不修改终端。可选的实验性主题功能在设置中可导出 13 主题 × 装饰 / 简洁共 26 套完整静态 `.terminal` profile，包含 16 色 ANSI、文字 / 光标 / 选区配色、等宽字体和背景图。先在 Terminal 官方设置中导入，再检查并明确应用；无法独立定位的原配置优先通过“自动备份原配置”创建 Terminal 原生副本并登记恢复依据，手工指定完整原导出与独立备份配置作为后备。完整文件备份先于写入，失败记录可重试；检查 / 应用需本人确认自动化权限。未开启联动时普通主题应用只修改 OmniVibe。本机已识别真实导入的 26 套配置，并在两个真实标签页通过自动备份、完整黑神话主题应用和原配置恢复的读后核验；最后一次完整应用 → 恢复已确认两个标签页回到原配置，主题联动关闭。插画背景与部分终端 TUI 的浅色区域可能冲突，推荐使用默认原生外观。不支持动态背景、系统窗口外框或 iTerm 联动。[流程与范围](docs/macos-development.md#apple-terminal-配色)
+
+**Mac 外观与语言：** 可明确生成并联动 Claude Code 官方格式的 `themes/omnivibe.json`，先保留原文件，检测到外部修改时停止覆盖；可恢复原文件，在 Claude 的 `/theme` 选择 OmniVibe。界面提供跟随系统、简体中文和 English，即时切换。窗口预览采用低频静态捕获。
+
+独立交付包位于 `artifacts/macos/delivery/OmniVibe.app`，最终自动检查结果以同目录 `validation.log` 为准，GitHub macOS 预览验证与 Windows CI 均已通过。此前 Lark 曾拒绝窗口操作；当前轮已用原有两个 Terminal 与一个 Lark 窗口完成 3/3 排列及完整原布局恢复，原三槽绑定保留。该结果不保证其他应用或多屏场景。真实 CLI 生命周期仍需单独验收；终端插画背景不作为推荐的默认外观。[验证记录](docs/macos-development.md#验证)
+
 **下载开发预览版：[Windows x64 · v0.1.1-preview](https://github.com/Xiobio/OmniVibe/releases/tag/v0.1.1-preview)**。完整解压后运行 `CodeManager.exe`，需要 .NET 10 Windows Desktop Runtime x64。安装、更新与已知限制见[安装说明](docs/project-kit/INSTALL.md)。
 
-当前是开发预览版，从源码运行需要 **Windows + .NET 10 SDK**，SDK 基线见 [global.json](global.json)。
+Windows 版当前为开发预览，从源码运行需要 **Windows + .NET 10 SDK**，SDK 基线见 [global.json](global.json)。
 
 ```powershell
 git clone https://github.com/Xiobio/OmniVibe.git
@@ -70,9 +90,9 @@ powershell -ExecutionPolicy Bypass -File .\run.ps1
 
 预览包的运行库、安装、更新与回退步骤见 [安装说明](docs/project-kit/INSTALL.md)。
 
-**语言：** 右键入口 → 设置 → 通用 → **界面语言 / Language**，选择 English 或简体中文，保存并重启。默认跟随系统；也可通过 `--language=en` 启动参数临时指定英文。[查看英文界面与语言说明](docs/localization/README.md)。
+**Windows 语言：** 右键入口 → 设置 → 通用 → **界面语言 / Language**，选择 English 或简体中文，保存并重启。默认跟随系统；也可通过 `--language=en` 启动参数临时指定英文。[查看英文界面与语言说明](docs/localization/README.md)。
 
-| 默认操作 | 功能 |
+| Windows 默认操作 | 功能 |
 | --- | --- |
 | `Alt + 1–9` | 进入对应任务，再按恢复先前窗口状态 |
 | `Alt + 滚轮` | 切换任务 |

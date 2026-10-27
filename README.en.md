@@ -56,9 +56,29 @@ Keep using your existing terminals and CLI tools, including Claude Code and Code
 
 ## Get started
 
+**macOS native preview:** [Download for Apple Silicon](https://github.com/Xiobio/OmniVibe/releases/tag/macos-preview-20261027). The native port retains the original transparent launcher, equipment wheel, themed inventory, and loadouts using the existing 13 theme packs, with task launching and resuming, CLI status connections, theme audio, and optional window previews. Run `./scripts/macos/run.sh` with Xcode 16+ (macOS 15 SDK); the built app supports macOS 13+. Window control requires Accessibility access; previews require macOS 14+ and Screen Recording access. The Mac preview is signed with Apple Development and is not notarized; a formal public release still needs Developer ID signing, notarization, and independent system validation. These Mac changes leave the existing Windows version unchanged. See [macOS development and limitations](docs/macos-development.md).
+
+**Mac launcher:** The clickable core stays at 54 pt and keeps its screen anchor throughout hover expansion and collapse. Only the surrounding equipment deploys. Near a screen edge, the orbit fits inward with a connector back to the fixed core, keeping its slots visible and clickable. Existing expanded-wheel size preferences remain in effect; all 13 themes and 117 equipment images retain their complete artwork at the new scale.
+
+**Mac shortcuts:** Defaults are `Option + 1–9` for tasks, hold `Option + Q` for radial selection, `Option + Backtick` to arrange / restore, and `Option + H` to show / hide the launcher. Settings → Shortcuts lets you record, disable, or reset each action, or choose another preset. Switching presets resets all custom bindings and disabled actions. Saving a binding, disabling, or resetting takes effect immediately; recording pauses OmniVibe's shortcuts, and Esc cancels. Duplicate combinations, Esc, and Command combinations with Q, Tab, or Space are rejected without replacing the existing configuration.
+
+**Mac window behavior:** Switching first hides the management UI. Repeating a task number restores its previous state only when that exact window is frontmost; otherwise it re-enters the task. If a background app such as Lark temporarily exposes no accessible window, explicit switching verifies the original process and exact CG window before waking the app and reconnecting that window. Arrangement first wakes every unavailable window that has not been confirmed closed, and moves windows only after all are verified. Preparation failure or cancellation performs no layout moves, preventing a silent three-to-two reduction. Title-bar capture restores the original position before saving a binding. Balanced layout uses two columns for two windows, two above one full-width lower window for three, and a grid from four onward. Window restrictions can prevent arrangement, with the reason kept visible.
+
+**Mac preferences and recovery:** Save wake behavior, minimize-on-capture, gaps, and interface sizes. `Option + Scroll` cycles connected tasks by default; Accessibility and Input Monitoring are checked before installing the scroll listener. A recovery journal is written before window changes for retry after OmniVibe restarts. Reconnection verifies the stable boot UUID, user and login session, original process, and exact window identity while preserving the task binding; titles are never used to guess a match. Confirmed closed tasks enter a 30-item Recent list: reconnect through an empty slot or an explicit window picker, or explicitly launch / resume with the saved name, equipment, and launch configuration. Manual removal does not archive a task and clears its launch and session association. [Details (Chinese)](docs/macos-development.md#窗口偏好滚轮与恢复).
+
+**Mac launching and sessions:** Save a project directory, executable absolute path, and exact session UUID. Launch first opens a new Terminal window, verifies its new TTY, and persists the task binding before dispatching the command. Configuring a live task only saves settings. CLI resume continues a saved conversation; it does not restore process memory. Local session discovery extracts metadata and allowlisted status fields, with an explicit initial selection; known provider + UUID associations can reconnect automatically. Terminal contents are not read, and conversation bodies are not stored. Actual hooks / notify take priority over session records, preventing late record updates from overwriting them or repeating alerts. [Launching and resuming (Chinese)](docs/macos-development.md#启动与继续任务).
+
+**Mac slot management:** Drag a card's main preview or a wheel task to another slot to insert it there and shift the intervening tasks. The inventory context menu can also move a task directly into an empty slot. Drag a wheel task well outside the wheel, click ×, or use its context menu to remove it from management while keeping the original window open. Equipment, status, unread reminders, and Agent sessions follow the task UUID. Failed operations retain the binding and explain the cause. [Detailed instructions (Chinese)](docs/macos-development.md#调整槽位与移出管理).
+
+**Mac Terminal themes:** Native Terminal appearance is preserved by default; wheel themes do not change it. The optional experimental integration can export 26 complete static `.terminal` profiles: decorated and minimal variants of all 13 themes, including ANSI 16 colors, text / cursor / selection colors, a monospace font, and background artwork. Import them through Terminal's official settings, then inspect and explicitly apply them in OmniVibe. For original profiles that cannot be independently located, automatic backup first creates a native Terminal copy and records a restoration basis; explicitly selecting a complete original export and separate backup profile remains a fallback. Full file backups precede writes, and failed recovery can be retried. Inspection / application requires your Automation consent. Without linking, applying an OmniVibe theme changes only OmniVibe. This machine has recognized all 26 imported profiles. On two live tabs, automatic backup, full Relic theme application, and original-profile restoration have passed read-back verification. The final full apply → restore cycle confirmed both original profiles restored and theme linking disabled. Background artwork can clash with light surfaces in terminal TUIs; the default native appearance is recommended. Animated backgrounds, system window frames, and iTerm linking are unsupported. [Workflow and scope (Chinese)](docs/macos-development.md#apple-terminal-配色).
+
+**Mac appearance and language:** Explicitly generate and link Claude Code's supported `themes/omnivibe.json` format, retaining the original file before writing and refusing to overwrite external changes. Restore the original file when needed; select OmniVibe in Claude's `/theme` menu. Choose System, Simplified Chinese, or English with immediate interface updates. Window previews use low-frequency still captures.
+
+The separate delivery bundle is at `artifacts/macos/delivery/OmniVibe.app`; final automated results are recorded in `validation.log` beside it. GitHub macOS preview validation and Windows CI have both passed. Lark previously rejected a window operation; the current live round successfully arranged all three original windows—two Terminal windows and Lark—and fully restored their original layout, retaining all three bindings. This result does not establish compatibility with other applications or multiple displays. Real CLI lifecycles still require separate validation; Terminal artwork is not the recommended default. [Validation records (Chinese)](docs/macos-development.md#验证).
+
 **Download the development preview: [Windows x64 · v0.1.1-preview](https://github.com/Xiobio/OmniVibe/releases/tag/v0.1.1-preview)**. Extract the complete archive and run `CodeManager.exe`. Requires .NET 10 Windows Desktop Runtime x64. See [installation and known limits](docs/project-kit/INSTALL.md).
 
-This is a development preview. Building from source requires **Windows and the .NET 10 SDK**. See [global.json](global.json) for the SDK baseline.
+The Windows version is a development preview. Building it from source requires **Windows and the .NET 10 SDK**. See [global.json](global.json) for the SDK baseline.
 
 ```powershell
 git clone https://github.com/Xiobio/OmniVibe.git
@@ -70,7 +90,7 @@ The script builds and launches the app, requesting a normal exit of an existing 
 
 For preview packages, see the [runtime, installation, update and rollback guide](docs/project-kit/INSTALL.md).
 
-**Language:** right-click the launcher → Settings → General → **Language** → English. Save and restart. The default follows your system language; non-Chinese systems use English. [See the English UI and language guide](docs/localization/README.md). To override it for one launch:
+**Windows language:** right-click the launcher → Settings → General → **Language** → English. Save and restart. The default follows your system language; non-Chinese systems use English. [See the English UI and language guide](docs/localization/README.md). To override it for one launch:
 
 ```powershell
 .\src\CodeManager\bin\Debug\net10.0-windows\CodeManager.exe --language=en
@@ -78,7 +98,7 @@ For preview packages, see the [runtime, installation, update and rollback guide]
 
 Exit the existing manager first when launching with a language override.
 
-| Default shortcut | Action |
+| Windows default shortcut | Action |
 | --- | --- |
 | `Alt + 1–9` | Open a task; press again to restore its previous window state |
 | `Alt + Mouse wheel` | Cycle through tasks |

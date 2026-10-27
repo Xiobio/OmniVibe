@@ -12,6 +12,7 @@
 | Terminal 正式预览 | [13 套预览](terminal-frame-refinement/index.html)、[背景源图](terminal-scene-gallery/index.html) |
 | 主题统一应用 | [统一主题](unified-themes/README.md) |
 | 开发、构建与验证 | [开发指南](project-kit/development.md) |
+| macOS 原生预览、授权与迁移范围 | [macOS 开发说明](macos-development.md) |
 | 目录清理与体积记录 | [项目整理](project-footprint.md) |
 | 发布验证与限制 | [发布验收](reviews/2026-10-21-release-validation.md)、[补充验证](reviews/2026-10-21-remaining-validation.md) |
 

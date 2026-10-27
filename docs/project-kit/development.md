@@ -2,6 +2,8 @@
 
 当前实现为 C# / WPF / Win32，目标框架 `net10.0-windows`，程序集名 `CodeManager`。先阅读 [贡献指南](../../CONTRIBUTING.md)。
 
+macOS 原生开发预览位于 `src/OmniVibeMac/`，采用 SwiftUI / AppKit。构建、辅助功能授权、验证和当前迁移范围见 [macOS 开发说明](../macos-development.md)。下文为现有 Windows 工程流程。
+
 ## 目录
 
 | 路径 | 用途 |
